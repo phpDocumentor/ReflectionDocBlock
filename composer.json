@@ -1,0 +1,14 @@
+{
+    "name":    "phpdocumentor/reflection-docblock",
+    "type":    "library",
+    "license": "MIT",
+    "authors": [
+        {"name": "Mike van Riel", "email": "mike.vanriel@naenius.com"}
+    ],
+    "require": {
+        "php": ">=5.3.2"
+    },
+    "autoload": {
+        "psr-0": {"phpDocumentor/Reflection": "src/phpDocumentor"}
+    }
+}
