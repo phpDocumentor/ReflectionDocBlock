@@ -78,7 +78,7 @@ class LongDescription implements \Reflector
             );
         }
 
-        if (class_exists('\dflydev\markdown\MarkdownExtraParser()')) {
+        if (class_exists('\dflydev\markdown\MarkdownExtraParser')) {
             $md = new \dflydev\markdown\MarkdownExtraParser();
             $result = $md->transformMarkdown($result);
         }
