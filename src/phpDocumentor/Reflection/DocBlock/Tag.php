@@ -59,7 +59,7 @@ class Tag implements \Reflector
         $tag_name = str_replace(
             ' ', '', ucwords(str_replace('-', ' ', $matches[1]))
         ).'Tag';
-        $class_name = '\\phpDocumentor\\Reflection\\DocBlock\\Tag\\' . $tag_name;
+        $class_name = 'phpDocumentor\\Reflection\\DocBlock\\Tag\\' . $tag_name;
 
         return (@class_exists($class_name))
             ? new $class_name($matches[1], isset($matches[2]) ? $matches[2] : '')
