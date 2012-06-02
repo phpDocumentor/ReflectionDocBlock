@@ -19,7 +19,7 @@ Installation
 You can install the component in the following ways:
 
 * Use the official Github repository (https://github.com/phpDocumentor/ReflectionDocBlock)
-* Via composer (add the Github Repository as VCS repository in your composer.yml)
+* Via Composer (http://packagist.org/packages/phpdocumentor/reflection-docblock)
 
 Usage
 -----
