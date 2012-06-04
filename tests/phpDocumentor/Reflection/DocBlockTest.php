@@ -44,4 +44,22 @@ DOCBLOCK;
         $this->assertTrue($object->hasTag('see'));
         $this->assertTrue($object->hasTag('return'));
     }
+
+    public function testDotSeperation()
+    {
+        $fixture = <<<DOCBLOCK
+/**
+ * This is a short description. This is a long description.
+ * This is a continuation of the long description.
+ */
+DOCBLOCK;
+        $object = new DocBlock($fixture);
+        $this->assertEquals(
+            'This is a short description.', $object->getShortDescription()
+        );
+        $this->assertEquals(
+            "This is a long description.\nThis is a continuation of the long description.", $object->getLongDescription()->getContents()
+	        );
+    }
 }
+
