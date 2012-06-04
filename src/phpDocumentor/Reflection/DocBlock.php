@@ -127,11 +127,11 @@ class DocBlock implements \Reflector
             preg_match(
                 '/(?x)
         \A (
-          [^\n]+
+          [^\n.]+
           (?:
-            (?! (?<=\.) \n | \n{2} ) # disallow the first seperator here
-            \n (?! [ \t]* @\pL ) # disallow second seperator
-            [^\n]+
+            (?! \. \s | \n{2} ) # disallow the first seperator here
+            [\n.] (?! [ \t]* @\pL ) # disallow second seperator
+            [^\n.]+
           )*
           \.?
         )
