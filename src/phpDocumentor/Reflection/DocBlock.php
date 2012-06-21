@@ -217,7 +217,9 @@ class DocBlock implements \Reflector
 
         // create proper Tag objects
         foreach ($result as $key => $tag_line) {
-            $result[$key] = DocBlock\Tag::createInstance($tag_line);
+            $tag = DocBlock\Tag::createInstance($tag_line);
+            $tag->setDocBlock($this);
+            $result[$key] = $tag;
         }
 
         $this->tags = $result;
