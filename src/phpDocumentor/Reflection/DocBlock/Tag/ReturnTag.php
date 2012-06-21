@@ -42,25 +42,4 @@ class ReturnTag extends ParamTag
         $this->description = implode(' ', $content);
     }
 
-    /**
-     * Returns the type of the variable.
-     *
-     * @return string
-     */
-    public function getTypes()
-    {
-        $types = explode('|', $this->type);
-        array_walk($types, 'trim');
-        return $types;
-    }
-
-    /**
-     * Returns the type of the variable.
-     *
-     * @return string
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
 }
