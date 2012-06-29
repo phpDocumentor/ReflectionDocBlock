@@ -330,7 +330,7 @@ class DocBlock implements \Reflector
         }
 
         $namespace = '';
-        if ($this->namespace != 'default') {
+        if ($this->namespace != 'default' && $this->namespace != 'global') {
             $namespace = rtrim($this->namespace, '\\') . '\\';
         }
 

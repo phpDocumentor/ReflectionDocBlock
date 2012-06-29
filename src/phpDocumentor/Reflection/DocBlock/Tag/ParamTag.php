@@ -79,7 +79,7 @@ class ParamTag extends Tag
      */
     public function getType()
     {
-        return $this->type;
+        return $this->docblock->expandType($this->type);
     }
 
     /**
