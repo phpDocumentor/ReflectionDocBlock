@@ -350,21 +350,12 @@ class DocBlock implements \Reflector
             ) {
                 $type_parts = explode('\\', $item);
 
-                // if the first part is the keyword 'namespace', replace it
-                // with the current namespace
-                if ($type_parts[0] == 'namespace') {
-                    $type_parts[0] = $this->getNamespace();
-                    $item = implode('\\', $type_parts);
-                }
-
                 // if the first segment is an alias; replace with full name
                 if (isset($this->namespace_aliases[$type_parts[0]])) {
                     $type_parts[0] = $this->namespace_aliases[$type_parts[0]];
-
                     $item = implode('\\', $type_parts);
-                } elseif (count($type_parts) == 1) {
-                    // prefix the item with the namespace if there is only one
-                    // part and no alias
+                } else {
+                    // otherwise prepend the current namespace
                     $item = $namespace . $item;
                 }
             }
