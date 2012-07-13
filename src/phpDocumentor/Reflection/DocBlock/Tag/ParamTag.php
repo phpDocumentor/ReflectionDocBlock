@@ -63,7 +63,12 @@ class ParamTag extends Tag
     public function getTypes()
     {
         $types = explode('|', $this->type);
-        array_walk($types, 'trim');
+        foreach ($types as &$type) {
+            $type = !empty($type) && $this->docblock
+                ? $this->docblock->expandType($type)
+                : trim($type);
+        }
+
         return $types;
     }
 
@@ -74,7 +79,7 @@ class ParamTag extends Tag
      */
     public function getType()
     {
-        return $this->type;
+        return $this->docblock->expandType($this->type);
     }
 
     /**
