@@ -99,7 +99,7 @@ class DocBlock implements \Reflector
     {
         $comment = trim(
             preg_replace(
-                '#[ \t]*(?:\/\*\*|\*\/|\*)?[ \t]{0,1}(.*)?#', '$1', $comment
+                '#[ \t]*(?:\/\*\*|\*\/|\*)?[ \t]{0,1}(.*)?#u', '$1', $comment
             )
         );
 

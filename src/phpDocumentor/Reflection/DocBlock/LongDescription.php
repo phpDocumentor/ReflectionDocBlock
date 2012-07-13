@@ -35,7 +35,7 @@ class LongDescription implements \Reflector
      */
     public function __construct($content)
     {
-        if (preg_match('/\{\@(.+?)\}/', $content, $matches)) {
+        if (preg_match('/\{\@(.+?)\}/u', $content, $matches)) {
             array_shift($matches);
             foreach ($matches as $tag) {
                 $this->tags[] = Tag::createInstance('@' . $tag);
