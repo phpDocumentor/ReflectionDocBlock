@@ -33,7 +33,7 @@ class Tag implements \Reflector
     /** @var int line number of the tag */
     protected $line_number = 0;
 
-    /** @var object docblock class */
+    /** @var \phpDocumentor\Reflection\DocBlock docblock class */
     protected $docblock;
 
     /**
