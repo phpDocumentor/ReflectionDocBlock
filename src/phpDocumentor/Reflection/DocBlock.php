@@ -325,7 +325,7 @@ class DocBlock implements \Reflector
             $ignore_keywords = array(
                 'string', 'int', 'integer', 'bool', 'boolean', 'float', 'double',
                 'object', 'mixed', 'array', 'resource', 'void', 'null',
-                'callback', 'false', 'true'
+                'callback', 'false', 'true', 'self', '$this', 'callable'
             );
         }
 
