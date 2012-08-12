@@ -69,7 +69,7 @@ class ParamTag extends Tag
                 : trim($type);
         }
 
-        return array_unique($types, SORT_NUMERIC);
+        return array_values(array_unique($types, SORT_REGULAR));
     }
 
     /**
