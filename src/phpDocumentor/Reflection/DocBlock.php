@@ -199,8 +199,6 @@ class DocBlock implements \Reflector
                 continue;
             }
 
-            $tag_line = ltrim($tag_line);
-
             if (isset($tag_line[0]) && ($tag_line[0] === '@')) {
                 $result[] = $tag_line;
             } else {
