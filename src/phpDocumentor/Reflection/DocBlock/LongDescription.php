@@ -26,6 +26,9 @@ class LongDescription implements \Reflector
 
     /** @var \phpDocumentor\Reflection\DocBlock\Tags[] */
     protected $tags = array();
+    
+    /** @var array The contents, as an array of strings and Tag objects. */
+    protected $parsedContents = array();
 
     /**
      * Parses the string for inline tags and if the Markdown class is included;
@@ -35,13 +38,13 @@ class LongDescription implements \Reflector
      */
     public function __construct($content)
     {
-        if (preg_match('/\{\@(.+?)\}/u', $content, $matches)) {
-            array_shift($matches);
-            foreach ($matches as $tag) {
-                $this->tags[] = Tag::createInstance('@' . $tag);
-            }
+        $this->parsedContents = preg_split('/{\@(.+?)\}/uS', $content, null, PREG_SPLIT_DELIM_CAPTURE);
+        for ($i=1, $l = count($this->parsedContents); $i<$l; $i += 2) {
+            $this->parsedContents[$i] = $this->tags[] = Tag::createInstance(
+                '@' . $this->parsedContents[$i]
+            );
         }
-
+        
         $this->contents = trim($content);
     }
 
@@ -53,6 +56,11 @@ class LongDescription implements \Reflector
     public function getContents()
     {
         return $this->contents;
+    }
+    
+    public function getParsedContents()
+    {
+        return $this->parsedContents;
     }
 
     /**
