@@ -38,14 +38,16 @@ class LongDescription implements \Reflector
      */
     public function __construct($content)
     {
-        $this->parsedContents = preg_split('/{\@(.+?)\}/uS', $content, null, PREG_SPLIT_DELIM_CAPTURE);
+        $this->parsedContents = preg_split(
+            '/\{(\@.*)\}/uS',
+            $this->contents = trim($content),
+            null, PREG_SPLIT_DELIM_CAPTURE
+        );
         for ($i=1, $l = count($this->parsedContents); $i<$l; $i += 2) {
             $this->parsedContents[$i] = $this->tags[] = Tag::createInstance(
-                '@' . $this->parsedContents[$i]
+                $this->parsedContents[$i]
             );
         }
-        
-        $this->contents = trim($content);
     }
 
     /**
