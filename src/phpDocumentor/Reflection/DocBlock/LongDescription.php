@@ -2,7 +2,7 @@
 /**
  * phpDocumentor
  *
- * PHP Version 5
+ * PHP Version 5.3
  *
  * @author    Mike van Riel <mike.vanriel@naenius.com>
  * @copyright 2010-2011 Mike van Riel / Naenius (http://www.naenius.com)
@@ -24,7 +24,7 @@ class LongDescription implements \Reflector
     /** @var string */
     protected $contents = '';
 
-    /** @var \phpDocumentor\Reflection\DocBlock\Tags[] */
+    /** @var Tag[] */
     protected $tags = array();
 
     /**
