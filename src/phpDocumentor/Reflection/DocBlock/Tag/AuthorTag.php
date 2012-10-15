@@ -15,7 +15,7 @@ namespace phpDocumentor\Reflection\DocBlock\Tag;
 use phpDocumentor\Reflection\DocBlock\Tag;
 
 /**
- * Reflection class for a {@author} tag in a Docblock.
+ * Reflection class for an @author tag in a Docblock.
  *
  * @author   Mike van Riel <mike.vanriel@naenius.com>
  * @license  http://www.opensource.org/licenses/mit-license.php MIT
@@ -46,11 +46,21 @@ class AuthorTag extends Tag
         }
     }
     
+    /**
+     * Gets the author's name.
+     * 
+     * @return string The author's name.
+     */
     public function getAuthorName()
     {
         return $this->name;
     }
     
+    /**
+     * Gets the author's email.
+     * 
+     * @return string The author's email.
+     */
     public function getAuthorEmail()
     {
         return $this->email;
