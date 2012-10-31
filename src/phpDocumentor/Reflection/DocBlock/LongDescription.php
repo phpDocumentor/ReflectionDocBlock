@@ -58,7 +58,7 @@ class LongDescription implements \Reflector
     {
         if (null === $this->parsedContents) {
             $this->parsedContents = preg_split(
-                '/\{(\@.*)\}/uS', $this->contents,
+                '/\{(\@.*?)\}/uS', $this->contents,
                 null, PREG_SPLIT_DELIM_CAPTURE
             );
             for ($i=1, $l = count($this->parsedContents); $i<$l; $i += 2) {
