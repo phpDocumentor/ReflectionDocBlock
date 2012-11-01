@@ -24,13 +24,16 @@ class Tag implements \Reflector
     /** @var string Name of the tag */
     protected $tag = '';
 
-    /** @var string content of the tag */
+    /** @var string Content of the tag */
     protected $content = '';
 
-    /** @var string description of the content of this tag */
+    /** @var string Description of the content of this tag */
     protected $description = '';
+    
+    /** @var array The description, as an array of strings and Tag objects. */
+    protected $parsedDescription = null;
 
-    /** @var int line number of the tag */
+    /** @var int Line number of the tag */
     protected $line_number = 0;
 
     /** @var \phpDocumentor\Reflection\DocBlock docblock class */
@@ -107,6 +110,21 @@ class Tag implements \Reflector
     public function getDescription()
     {
         return $this->description;
+    }
+    
+    /*
+     * Returns the parsed text of this description.
+     * 
+     * @return array An array of strings and tag objects, in the order they
+     * occur within the description.
+     */
+    public function getParsedDescription()
+    {
+        if (null === $this->parsedDescription) {
+            $description = new LongDescription($this->description);
+            $this->parsedDescription = $description->getParsedContents();
+        }
+        return $this->parsedDescription;
     }
 
     /**
