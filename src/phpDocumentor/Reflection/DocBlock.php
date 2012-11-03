@@ -327,7 +327,7 @@ class DocBlock implements \Reflector
             );
         }
 
-        $namespace = '';
+        $namespace = '\\';
         if ($this->namespace != 'default' && $this->namespace != 'global') {
             $namespace = rtrim($this->namespace, '\\') . '\\';
         }
@@ -398,4 +398,16 @@ class DocBlock implements \Reflector
         return 'Not yet implemented';
     }
 
+    /**
+     * @return string
+     */
+    public function getNamespace()
+    {
+        return $this->namespace;
+    }
+
+    public function getNamespaceAliases()
+    {
+        return $this->namespace_aliases;
+    }
 }

@@ -23,7 +23,7 @@ use phpDocumentor\Reflection\DocBlock\Tag;
 class ParamTag extends Tag
 {
     /** @var string */
-    protected $type = null;
+    protected $type = '';
 
     /**
      * @var string
@@ -33,7 +33,7 @@ class ParamTag extends Tag
     /**
      * Parses a tag and populates the member variables.
      *
-     * @param string $type    Tag identifier for this tag (should be 'return')
+     * @param string $type    Tag identifier for this tag (should be 'param')
      * @param string $content Contents for this tag.
      */
     public function __construct($type, $content)
@@ -42,13 +42,13 @@ class ParamTag extends Tag
         $this->content = $content;
         $content = preg_split('/\s+/u', $content);
 
-        // if there is only 1, it is either a piece of content or a variable name
-        if (count($content) > 1) {
+        // if the first item that is encountered is not a variable; it is a type
+        if (isset($content[0]) && (strlen($content[0]) > 0) && ($content[0][0] !== '$')) {
             $this->type = array_shift($content);
         }
 
         // if the next item starts with a $ it must be the variable name
-        if ((strlen($content[0]) > 0) && ($content[0][0] == '$')) {
+        if (isset($content[0]) && (strlen($content[0]) > 0) && ($content[0][0] == '$')) {
             $this->variableName = array_shift($content);
         }
 
@@ -62,14 +62,13 @@ class ParamTag extends Tag
      */
     public function getTypes()
     {
-        $types = explode('|', $this->type);
-        foreach ($types as &$type) {
-            $type = !empty($type) && $this->docblock
-                ? $this->docblock->expandType($type)
-                : trim($type);
-        }
+        $types = new \phpDocumentor\Reflection\DocBlock\Type\Collection(
+            array($this->type),
+            $this->docblock ? $this->docblock->getNamespace() : null,
+            $this->docblock ? $this->docblock->getNamespaceAliases() : array()
+        );
 
-        return array_values(array_unique($types, SORT_REGULAR));
+        return $types->getArrayCopy();
     }
 
     /**
@@ -79,7 +78,7 @@ class ParamTag extends Tag
      */
     public function getType()
     {
-        return $this->docblock->expandType($this->type);
+        return implode('|', $this->getTypes());
     }
 
     /**

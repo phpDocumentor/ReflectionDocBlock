@@ -10,10 +10,6 @@
 
 namespace phpDocumentor\Reflection;
 
-require_once __DIR__.'/../../../src/phpDocumentor/Reflection/DocBlock.php';
-require_once __DIR__
-    .'/../../../src/phpDocumentor/Reflection/DocBlock/LongDescription.php';
-
 /**
  * Test class for phpDocumentor_Reflection_DocBlock
  *

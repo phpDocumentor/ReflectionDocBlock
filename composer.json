@@ -10,6 +10,6 @@
         "dflydev/markdown": "1.0.*"
     },
     "autoload": {
-        "psr-0": {"phpDocumentor\\Reflection": "src/"}
+        "psr-0": {"phpDocumentor": ["src/"]}
     }
 }

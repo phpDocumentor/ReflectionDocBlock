@@ -8,10 +8,6 @@
 
 namespace phpDocumentor\Reflection\DocBlock\Tag;
 
-require_once __DIR__.'/../../../../../src/phpDocumentor/Reflection/DocBlock/Tag.php';
-require_once __DIR__.'/../../../../../src/phpDocumentor/Reflection/DocBlock/Tag/SeeTag.php';
-require_once __DIR__.'/../../../../../src/phpDocumentor/Reflection/DocBlock/Tag/CoversTag.php';
-
 /**
  * Test class for phpDocumentor_Reflection_DocBlock_Tag_Covers
  *
