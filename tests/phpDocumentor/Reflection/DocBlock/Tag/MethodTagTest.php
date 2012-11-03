@@ -8,9 +8,6 @@
 
 namespace phpDocumentor\Reflection\DocBlock\Tag;
 
-require_once __DIR__ . '/../../../../../src/phpDocumentor/Reflection/DocBlock/Tag/ParamTag.php';
-require_once __DIR__ . '/../../../../../src/phpDocumentor/Reflection/DocBlock/Tag/MethodTag.php';
-
 /**
  * Test class for \phpDocumentor\Reflection\DocBlock\Tag\MethodTag
  *
