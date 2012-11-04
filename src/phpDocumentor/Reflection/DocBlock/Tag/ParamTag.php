@@ -2,7 +2,7 @@
 /**
  * phpDocumentor
  *
- * PHP Version 5
+ * PHP Version 5.3
  *
  * @author    Mike van Riel <mike.vanriel@naenius.com>
  * @copyright 2010-2011 Mike van Riel / Naenius (http://www.naenius.com)
@@ -16,9 +16,9 @@ use phpDocumentor\Reflection\DocBlock\Tag;
 /**
  * Reflection class for a {@param} tag in a Docblock.
  *
- * @author   Mike van Riel <mike.vanriel@naenius.com>
- * @license  http://www.opensource.org/licenses/mit-license.php MIT
- * @link     http://phpdoc.org
+ * @author  Mike van Riel <mike.vanriel@naenius.com>
+ * @license http://www.opensource.org/licenses/mit-license.php MIT
+ * @link    http://phpdoc.org
  */
 class ParamTag extends Tag
 {
@@ -43,12 +43,18 @@ class ParamTag extends Tag
         $content = preg_split('/\s+/u', $content);
 
         // if the first item that is encountered is not a variable; it is a type
-        if (isset($content[0]) && (strlen($content[0]) > 0) && ($content[0][0] !== '$')) {
+        if (isset($content[0])
+            && (strlen($content[0]) > 0)
+            && ($content[0][0] !== '$')
+        ) {
             $this->type = array_shift($content);
         }
 
         // if the next item starts with a $ it must be the variable name
-        if (isset($content[0]) && (strlen($content[0]) > 0) && ($content[0][0] == '$')) {
+        if (isset($content[0])
+            && (strlen($content[0]) > 0)
+            && ($content[0][0] == '$')
+        ) {
             $this->variableName = array_shift($content);
         }
 

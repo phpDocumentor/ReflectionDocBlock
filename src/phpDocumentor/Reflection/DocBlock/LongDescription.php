@@ -15,9 +15,9 @@ namespace phpDocumentor\Reflection\DocBlock;
 /**
  * Parses a Long Description of a DocBlock.
  *
- * @author   Mike van Riel <mike.vanriel@naenius.com>
- * @license  http://www.opensource.org/licenses/mit-license.php MIT
- * @link     http://phpdoc.org
+ * @author  Mike van Riel <mike.vanriel@naenius.com>
+ * @license http://www.opensource.org/licenses/mit-license.php MIT
+ * @link    http://phpdoc.org
  */
 class LongDescription implements \Reflector
 {
@@ -51,7 +51,7 @@ class LongDescription implements \Reflector
         return $this->contents;
     }
 
-    /*
+    /**
      * Returns the parsed text of this description.
      *
      * @return array An array of strings and tag objects, in the order they
@@ -97,8 +97,8 @@ class LongDescription implements \Reflector
         }
 
         if (class_exists('dflydev\markdown\MarkdownExtraParser')) {
-            $md = new \dflydev\markdown\MarkdownExtraParser();
-            $result = $md->transformMarkdown($result);
+            $markdown = new \dflydev\markdown\MarkdownExtraParser();
+            $result = $markdown->transformMarkdown($result);
         }
 
         return trim($result);
