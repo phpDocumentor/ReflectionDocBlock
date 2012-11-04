@@ -27,8 +27,8 @@ class ReturnTagTest extends ParamTagTest
      * understand the Return DocBlock.
      *
      * @param string $content
-     * @param string $extracted_type
-     * @param string $extracted_description
+     * @param string $extractedType
+     * @param string $extractedDescription
      *
      * @covers \phpDocumentor\Reflection\DocBlock\Tag\ReturnTag::__construct
      *
@@ -38,13 +38,13 @@ class ReturnTagTest extends ParamTagTest
      */
     public function testConstructorParsesInputsIntoCorrectFields(
         $content,
-        $extracted_type,
-        $extracted_description
+        $extractedType,
+        $extractedDescription
     ) {
         $tag = new ReturnTag('return', $content);
 
-        $this->assertEquals($extracted_type, $tag->getTypes());
-        $this->assertEquals($extracted_description, $tag->getDescription());
+        $this->assertEquals($extractedType, $tag->getTypes());
+        $this->assertEquals($extractedDescription, $tag->getDescription());
     }
 
     /**
