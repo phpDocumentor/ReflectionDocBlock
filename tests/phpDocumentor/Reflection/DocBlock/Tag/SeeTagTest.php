@@ -13,7 +13,7 @@
 namespace phpDocumentor\Reflection\DocBlock\Tag;
 
 /**
- * Test class for phpDocumentor_Reflection_DocBlock_Tag_See
+ * Test class for \phpDocumentor\Reflection\DocBlock\Tag\SeeTag
  *
  * @author    Daniel O'Connor <daniel.oconnor@gmail.com>
  * @copyright 2010-2011 Mike van Riel / Naenius. (http://www.naenius.com)

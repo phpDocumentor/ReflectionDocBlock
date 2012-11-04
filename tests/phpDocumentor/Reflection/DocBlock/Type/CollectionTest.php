@@ -1,6 +1,6 @@
 <?php
 /**
- * phpDocumentor Covers Tag Test
+ * phpDocumentor Collection Test
  * 
  * PHP version 5.3
  *
@@ -13,7 +13,7 @@
 namespace phpDocumentor\Reflection\DocBlock\Type;
 
 /**
- * Test class for phpDocumentor_Reflection_DocBlock
+ * Test class for \phpDocumentor\Reflection\DocBlock\Type\Collection
  * 
  * @covers phpDocumentor\Reflection\DocBlock\Type\Collection
  *
