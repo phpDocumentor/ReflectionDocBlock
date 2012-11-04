@@ -1,0 +1,177 @@
+<?php
+/**
+ * phpDocumentor Long Description Test
+ *
+ * PHP Version 5.3
+ *
+ * @author    Vasil Rangelov <boen.robot@gmail.com>
+ * @copyright 2010-2011 Mike van Riel / Naenius. (http://www.naenius.com)
+ * @license   http://www.opensource.org/licenses/mit-license.php MIT
+ * @link      http://phpdoc.org
+ */
+
+namespace phpDocumentor\Reflection\DocBlock;
+
+/**
+ * Test class for phpDocumentor\Reflection\DocBlock\LongDescription
+ *
+ * @author    Vasil Rangelov <boen.robot@gmail.com>
+ * @copyright 2010-2011 Mike van Riel / Naenius. (http://www.naenius.com)
+ * @license   http://www.opensource.org/licenses/mit-license.php MIT
+ * @link      http://phpdoc.org
+ */
+class LongDescriptionTest extends \PHPUnit_Framework_TestCase
+{
+    public function testConstruct()
+    {
+        $fixture = <<<LONGDESC
+This is text for a description.
+LONGDESC;
+        $object = new LongDescription($fixture);
+        $this->assertSame($fixture, $object->getContents());
+
+        $parsedContents = $object->getParsedContents();
+        $this->assertCount(1, $parsedContents);
+        $this->assertSame($fixture, $parsedContents[0]);
+    }
+
+    public function testInlineTagParsing()
+    {
+        $fixture = <<<LONGDESC
+This is text for a {@link http://phpdoc.org/ description} that uses inline
+tags.
+LONGDESC;
+        $object = new LongDescription($fixture);
+        $this->assertSame($fixture, $object->getContents());
+
+        $parsedContents = $object->getParsedContents();
+        $this->assertCount(3, $parsedContents);
+        $this->assertSame('This is text for a ', $parsedContents[0]);
+        $this->assertInstanceOf(
+            __NAMESPACE__ . '\Tag\LinkTag',
+            $parsedContents[1]
+        );
+        $this->assertSame(
+            ' that uses inline
+tags.',
+            $parsedContents[2]
+        );
+    }
+    
+    public function testInlineTagAtStartParsing()
+    {
+        $fixture = <<<LONGDESC
+{@link http://phpdoc.org/ This} is text for a description that uses inline
+tags.
+LONGDESC;
+        $object = new LongDescription($fixture);
+        $this->assertSame($fixture, $object->getContents());
+
+        $parsedContents = $object->getParsedContents();
+        $this->assertCount(3, $parsedContents);
+        
+        $this->assertSame('', $parsedContents[0]);
+        $this->assertInstanceOf(
+            __NAMESPACE__ . '\Tag\LinkTag',
+            $parsedContents[1]
+        );
+        $this->assertSame(
+            ' is text for a description that uses inline
+tags.',
+            $parsedContents[2]
+        );
+    }
+    
+    public function testNestedInlineTagParsing()
+    {
+        $fixture = <<<LONGDESC
+This is text for a description with {@internal inline tag with
+{@link http://phpdoc.org another inline tag} in it}.
+LONGDESC;
+        $object = new LongDescription($fixture);
+        $this->assertSame($fixture, $object->getContents());
+
+        $parsedContents = $object->getParsedContents();
+        $this->assertCount(3, $parsedContents);
+        
+        $this->assertSame(
+            'This is text for a description with ',
+            $parsedContents[0]
+        );
+        $this->assertInstanceOf(
+            __NAMESPACE__ . '\Tag',
+            $parsedContents[1]
+        );
+        $this->assertSame('.', $parsedContents[2]);
+    }
+    
+    public function testEmptyInlineTag()
+    {
+        $fixture = <<<LONGDESC
+This is text for a description with an empty inline tag - {@}.
+LONGDESC;
+        $object = new LongDescription($fixture);
+        $this->assertSame($fixture, $object->getContents());
+
+        $parsedContents = $object->getParsedContents();
+        $this->assertCount(1, $parsedContents);
+        $this->assertSame($fixture, $parsedContents[0]);
+    }
+
+    public function testNestedEmptyInlineTag()
+    {
+        $fixture = <<<LONGDESC
+This is text for a description with an {@internal inline tag with an empty
+inline tag - {@} in it}.
+LONGDESC;
+        $object = new LongDescription($fixture);
+        $this->assertSame($fixture, $object->getContents());
+
+        $parsedContents = $object->getParsedContents();
+        $this->assertCount(3, $parsedContents);
+        $this->assertSame(
+            'This is text for a description with an ',
+            $parsedContents[0]
+        );
+        $this->assertInstanceOf(
+            __NAMESPACE__ . '\Tag',
+            $parsedContents[1]
+        );
+        $this->assertSame('.', $parsedContents[2]);
+    }
+
+    public function testInlineTagDelimiters()
+    {
+        $fixture = <<<LONGDESC
+This is text for a description with {} that is not a tag.
+LONGDESC;
+        $object = new LongDescription($fixture);
+        $this->assertSame($fixture, $object->getContents());
+
+        $parsedContents = $object->getParsedContents();
+        $this->assertCount(1, $parsedContents);
+        $this->assertSame($fixture, $parsedContents[0]);
+    }
+
+    public function testNestedInlineTagDelimiters()
+    {
+        $fixture = <<<LONGDESC
+This is text for a description with {@internal inline tag with {} that is not an
+inline tag}.
+LONGDESC;
+        $object = new LongDescription($fixture);
+        $this->assertSame($fixture, $object->getContents());
+
+        $parsedContents = $object->getParsedContents();
+        $this->assertCount(3, $parsedContents);
+        $this->assertSame(
+            'This is text for a description with ',
+            $parsedContents[0]
+        );
+        $this->assertInstanceOf(
+            __NAMESPACE__ . '\Tag',
+            $parsedContents[1]
+        );
+        $this->assertSame('.', $parsedContents[2]);
+    }
+}
