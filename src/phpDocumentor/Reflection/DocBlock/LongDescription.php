@@ -71,11 +71,14 @@ class LongDescription implements \Reflector
                             # Match nested inline tags.
                             # Because we did not catch the tag delimiters
                             # earlier, we must be explicit with them here.
+                            # Notice that this also matches "{}", as a way to
+                            # later introduce it as an escape sequence.
                             \{(?1)?\}
                             |
                             # "{@}" is not a valid inline tag. This ensures that
                             # having it occur inside an inline tag does not trip
-                            # us up.
+                            # us up. While this is required in any event, notice
+                            # that this is also later an escape sequence.
                             \{\@\}
                             |
                             # If we are not dealing with a nested inline tag,
@@ -95,6 +98,17 @@ class LongDescription implements \Reflector
             );
             for ($i=1, $l = count($this->parsedContents); $i<$l; $i += 2) {
                 $this->parsedContents[$i] = Tag::createInstance(
+                    $this->parsedContents[$i]
+                );
+            }
+            
+            //In order to allow "literal" inline tags, the otherwise invalid
+            //sequence "{@}" is changed to "@", and "{}" is changed to "}".
+            //See unit tests for examples.
+            for ($i=0, $l = count($this->parsedContents); $i<$l; $i += 2) {
+                $this->parsedContents[$i] = str_replace(
+                    array('{@}', '{}'),
+                    array('@', '}'),
                     $this->parsedContents[$i]
                 );
             }
