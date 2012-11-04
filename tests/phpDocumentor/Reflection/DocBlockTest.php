@@ -36,7 +36,8 @@ class DocBlockTest extends \PHPUnit_Framework_TestCase
 DOCBLOCK;
         $object = new DocBlock($fixture);
         $this->assertEquals(
-            'This is a short description.', $object->getShortDescription()
+            'This is a short description.',
+            $object->getShortDescription()
         );
         $this->assertEquals(
             'This is a long description.',
@@ -57,11 +58,13 @@ DOCBLOCK;
 DOCBLOCK;
         $object = new DocBlock($fixture);
         $this->assertEquals(
-            'This is a short description.', $object->getShortDescription()
+            'This is a short description.',
+            $object->getShortDescription()
         );
         $this->assertEquals(
             "This is a long description.\nThis is a continuation of the long "
-            ."description.", $object->getLongDescription()->getContents()
+            ."description.",
+            $object->getLongDescription()->getContents()
         );
     }
 
@@ -103,17 +106,21 @@ DOCBLOCK;
     public function testExpandTypeUsingNamespaceAlias()
     {
         $docblock = new DocBlock(
-            '', '\My\Namespace', array('Alias' => '\My\Namespace\Alias')
+            '',
+            '\My\Namespace',
+            array('Alias' => '\My\Namespace\Alias')
         );
 
         // first try a normal resolution without alias
         $this->assertEquals(
-            '\My\Namespace\Al', $docblock->expandType('Al')
+            '\My\Namespace\Al',
+            $docblock->expandType('Al')
         );
 
         // try to use the alias
         $this->assertEquals(
-            '\My\Namespace\Alias\Al', $docblock->expandType('Alias\Al')
+            '\My\Namespace\Alias\Al',
+            $docblock->expandType('Alias\Al')
         );
     }
 
@@ -145,4 +152,3 @@ DOCBLOCK;
         );
     }
 }
-

@@ -38,13 +38,17 @@ class VarTagTest extends \PHPUnit_Framework_TestCase
      * @return void
      */
     public function testConstructorParesInputsIntoCorrectFields(
-        $type, $content, $exType, $exVariable, $exDescription
+        $type,
+        $content,
+        $exType,
+        $exVariable,
+        $exDescription
     ) {
         $tag = new VarTag($type, $content);
 
         $this->assertEquals($exType, $tag->getType());
-        $this->assertEquals($exVariable,  $tag->getVariableName());
-        $this->assertEquals($exDescription,  $tag->getDescription());
+        $this->assertEquals($exVariable, $tag->getVariableName());
+        $this->assertEquals($exDescription, $tag->getDescription());
     }
 
     /**

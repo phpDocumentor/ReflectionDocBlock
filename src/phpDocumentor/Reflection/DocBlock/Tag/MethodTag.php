@@ -125,5 +125,4 @@ class MethodTag extends ParamTag
 
         return $arguments;
     }
-
 }

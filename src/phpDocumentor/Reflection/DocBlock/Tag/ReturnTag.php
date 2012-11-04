@@ -42,5 +42,4 @@ class ReturnTag extends ParamTag
 
         $this->description = implode(' ', $content);
     }
-
 }

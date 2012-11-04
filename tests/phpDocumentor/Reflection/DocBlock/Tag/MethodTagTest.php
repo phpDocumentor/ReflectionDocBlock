@@ -38,15 +38,21 @@ class MethodTagTest extends \PHPUnit_Framework_TestCase
      *
      * @return void
      */
-    public function testConstruct($signature, $valid, $expected_name,
-        $expected_return, $has_params, $description
+    public function testConstruct(
+        $signature,
+        $valid,
+        $expected_name,
+        $expected_return,
+        $has_params,
+        $description
     ) {
         ob_start();
         $tag = new MethodTag('method', $signature);
         $stdout = ob_get_clean();
 
         $this->assertSame(
-            $valid, empty($stdout),
+            $valid,
+            empty($stdout),
             'No error should have been output if the signature is valid'
         );
 
@@ -54,11 +60,12 @@ class MethodTagTest extends \PHPUnit_Framework_TestCase
             return;
         }
 
-        $this->assertEquals($expected_name,   $tag->getMethodName());
+        $this->assertEquals($expected_name, $tag->getMethodName());
         $this->assertEquals($expected_return, $tag->getType());
-        $this->assertEquals($description,     $tag->getDescription());
+        $this->assertEquals($description, $tag->getDescription());
         $this->assertSame(
-            $has_params, (bool)(count($tag->getArguments()) > 0),
+            $has_params,
+            (bool)(count($tag->getArguments()) > 0),
             'Number of found arguments should exceed 0'
         );
     }

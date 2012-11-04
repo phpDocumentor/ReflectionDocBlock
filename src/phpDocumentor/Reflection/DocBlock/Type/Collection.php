@@ -68,7 +68,8 @@ class Collection extends \ArrayObject
      *     pairs that are used in the resolving process.
      */
     public function __construct(
-        array $types = array(), $namespace = null,
+        array $types = array(),
+        $namespace = null,
         array $namespace_aliases = array()
     ) {
         // only set the namespace if overridden

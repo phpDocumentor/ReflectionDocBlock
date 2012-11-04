@@ -37,12 +37,14 @@ class ReturnTagTest extends ParamTagTest
      * @return void
      */
     public function testConstructorParsesInputsIntoCorrectFields(
-        $content, $extracted_type, $extracted_description
+        $content,
+        $extracted_type,
+        $extracted_description
     ) {
         $tag = new ReturnTag('return', $content);
 
-        $this->assertEquals($extracted_type,          $tag->getTypes());
-        $this->assertEquals($extracted_description,   $tag->getDescription());
+        $this->assertEquals($extracted_type, $tag->getTypes());
+        $this->assertEquals($extracted_description, $tag->getDescription());
     }
 
     /**

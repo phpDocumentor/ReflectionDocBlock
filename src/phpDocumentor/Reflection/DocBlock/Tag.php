@@ -29,7 +29,7 @@ class Tag implements \Reflector
 
     /** @var string Description of the content of this tag */
     protected $description = '';
-    
+
     /** @var array The description, as an array of strings and Tag objects. */
     protected $parsedDescription = null;
 
@@ -51,7 +51,9 @@ class Tag implements \Reflector
     public static function createInstance($tag_line)
     {
         if (!preg_match(
-            '/^@([\w\-\_\\\\]+)(?:\s*([^\s].*)|$)?/us', $tag_line, $matches
+            '/^@([\w\-\_\\\\]+)(?:\s*([^\s].*)|$)?/us',
+            $tag_line,
+            $matches
         )) {
             throw new \InvalidArgumentException(
                 'Invalid tag_line detected: ' . $tag_line
@@ -60,7 +62,9 @@ class Tag implements \Reflector
 
         // support hypphen separated tag names
         $tag_name = str_replace(
-            ' ', '', ucwords(str_replace('-', ' ', $matches[1]))
+            ' ',
+            '',
+            ucwords(str_replace('-', ' ', $matches[1]))
         ).'Tag';
         $class_name = 'phpDocumentor\\Reflection\\DocBlock\\Tag\\' . $tag_name;
 
@@ -111,7 +115,7 @@ class Tag implements \Reflector
     {
         return $this->description;
     }
-    
+
     /**
      * Returns the parsed text of this description.
      * 
@@ -170,7 +174,7 @@ class Tag implements \Reflector
      *
      * @return void
      */
-    static public function export()
+    public static function export()
     {
         throw new \Exception('Not yet implemented');
     }
@@ -185,5 +189,4 @@ class Tag implements \Reflector
     {
         return 'Not yet implemented';
     }
-
 }

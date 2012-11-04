@@ -223,6 +223,4 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
     {
         return $this->provideTypesToExpand($method, '\\');
     }
-
 }
-
