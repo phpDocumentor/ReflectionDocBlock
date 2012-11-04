@@ -61,8 +61,10 @@ class LongDescription implements \Reflector
     {
         if (null === $this->parsedContents) {
             $this->parsedContents = preg_split(
-                '/\{(\@.*?)\}/uS', $this->contents,
-                null, PREG_SPLIT_DELIM_CAPTURE
+                '/\{(\@.*?)\}/uS',
+                $this->contents,
+                null,
+                PREG_SPLIT_DELIM_CAPTURE
             );
             for ($i=1, $l = count($this->parsedContents); $i<$l; $i += 2) {
                 $this->parsedContents[$i] = Tag::createInstance(
@@ -111,7 +113,7 @@ class LongDescription implements \Reflector
      *
      * @return void
      */
-    static public function export()
+    public static function export()
     {
         throw new \Exception('Not yet implemented');
     }

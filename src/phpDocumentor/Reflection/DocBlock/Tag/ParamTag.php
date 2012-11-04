@@ -11,6 +11,7 @@
  */
 
 namespace phpDocumentor\Reflection\DocBlock\Tag;
+
 use phpDocumentor\Reflection\DocBlock\Tag;
 
 /**

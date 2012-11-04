@@ -64,7 +64,9 @@ class DocBlock implements \Reflector
      * getDocComment method.
      */
     public function __construct(
-        $docblock, $namespace = '\\', $namespace_aliases = array()
+        $docblock,
+        $namespace = '\\',
+        $namespace_aliases = array()
     ) {
         if (is_object($docblock)) {
             if (!method_exists($docblock, 'getDocComment')) {
@@ -99,7 +101,9 @@ class DocBlock implements \Reflector
     {
         $comment = trim(
             preg_replace(
-                '#[ \t]*(?:\/\*\*|\*\/|\*)?[ \t]{0,1}(.*)?#u', '$1', $comment
+                '#[ \t]*(?:\/\*\*|\*\/|\*)?[ \t]{0,1}(.*)?#u',
+                '$1',
+                $comment
             )
         );
 
@@ -173,7 +177,9 @@ class DocBlock implements \Reflector
           )
         )?
         (\s+ [\s\S]*)? # everything that follows
-        /u', $comment, $matches
+        /u',
+                $comment,
+                $matches
             );
             array_shift($matches);
         }
@@ -382,7 +388,7 @@ class DocBlock implements \Reflector
      *
      * @return string
      */
-    static public function export()
+    public static function export()
     {
         throw new \Exception('Not yet implemented');
     }

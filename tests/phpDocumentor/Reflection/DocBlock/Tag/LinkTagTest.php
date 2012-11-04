@@ -39,7 +39,12 @@ class LinkTagTest extends \PHPUnit_Framework_TestCase
      * @return void
      */
     public function testConstructorParesInputsIntoCorrectFields(
-        $type, $content, $exName, $exContent, $exDescription, $exLink
+        $type,
+        $content,
+        $exName,
+        $exContent,
+        $exDescription,
+        $exLink
     ) {
         $tag = new LinkTag($type, $content);
 

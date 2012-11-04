@@ -25,10 +25,10 @@ class AuthorTag extends Tag
 {
     /** @var string The name of the author */
     protected $name = '';
-    
+
     /** @var string The email of the author */
     protected $email = '';
-    
+
     /**
      * Parses a tag and populates the member variables.
      *
@@ -45,7 +45,7 @@ class AuthorTag extends Tag
             }
         }
     }
-    
+
     /**
      * Gets the author's name.
      * 
@@ -55,7 +55,7 @@ class AuthorTag extends Tag
     {
         return $this->name;
     }
-    
+
     /**
      * Gets the author's email.
      * 

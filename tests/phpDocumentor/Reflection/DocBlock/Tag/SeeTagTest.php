@@ -38,7 +38,12 @@ class SeeTagTest extends \PHPUnit_Framework_TestCase
      * @return void
      */
     public function testConstructorParesInputsIntoCorrectFields(
-        $type, $content, $exName, $exContent, $exDescription, $exReference
+        $type,
+        $content,
+        $exName,
+        $exContent,
+        $exDescription,
+        $exReference
     ) {
         $tag = new SeeTag($type, $content);
 

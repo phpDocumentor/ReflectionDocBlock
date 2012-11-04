@@ -39,14 +39,17 @@ class ParamTagTest extends \PHPUnit_Framework_TestCase
      * @return void
      */
     public function testConstructorParsesInputsIntoCorrectFields(
-        $type, $content, $extracted_type, $extracted_variable_name,
+        $type,
+        $content,
+        $extracted_type,
+        $extracted_variable_name,
         $extracted_description
     ) {
         $tag = new ParamTag($type, $content);
 
-        $this->assertEquals($extracted_type,          $tag->getTypes());
+        $this->assertEquals($extracted_type, $tag->getTypes());
         $this->assertEquals($extracted_variable_name, $tag->getVariableName());
-        $this->assertEquals($extracted_description,   $tag->getDescription());
+        $this->assertEquals($extracted_description, $tag->getDescription());
     }
 
     /**

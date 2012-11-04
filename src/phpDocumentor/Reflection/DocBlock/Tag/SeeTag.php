@@ -11,6 +11,7 @@
  */
 
 namespace phpDocumentor\Reflection\DocBlock\Tag;
+
 use phpDocumentor\Reflection\DocBlock\Tag;
 
 /**
@@ -52,5 +53,4 @@ class SeeTag extends Tag
     {
         return $this->refers;
     }
-
 }
