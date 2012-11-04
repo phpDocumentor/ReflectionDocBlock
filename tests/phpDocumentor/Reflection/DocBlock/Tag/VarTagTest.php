@@ -13,7 +13,7 @@
 namespace phpDocumentor\Reflection\DocBlock\Tag;
 
 /**
- * Test class for phpDocumentor_Reflection_DocBlock_Tag_Link
+ * Test class for \phpDocumentor\Reflection\DocBlock\Tag\VarTag
  *
  * @author    Daniel O'Connor <daniel.oconnor@gmail.com>
  * @copyright 2010-2011 Mike van Riel / Naenius. (http://www.naenius.com)
@@ -23,8 +23,8 @@ namespace phpDocumentor\Reflection\DocBlock\Tag;
 class VarTagTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Test that the \phpDocumentor\Reflection\DocBlock\Tag\VarTag can understand
-     * the @var doc block
+     * Test that the \phpDocumentor\Reflection\DocBlock\Tag\VarTag can
+     * understand the @var doc block
      *
      * @param string $type
      * @param string $content
