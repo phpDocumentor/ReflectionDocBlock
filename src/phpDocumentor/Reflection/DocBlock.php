@@ -2,7 +2,7 @@
 /**
  * phpDocumentor
  *
- * PHP Version 5
+ * PHP Version 5.3
  *
  * @author    Mike van Riel <mike.vanriel@naenius.com>
  * @copyright 2010-2011 Mike van Riel / Naenius (http://www.naenius.com)
@@ -15,9 +15,9 @@ namespace phpDocumentor\Reflection;
 /**
  * Parses the DocBlock for any structure.
  *
- * @author   Mike van Riel <mike.vanriel@naenius.com>
- * @license  http://www.opensource.org/licenses/mit-license.php MIT
- * @link     http://phpdoc.org
+ * @author  Mike van Riel <mike.vanriel@naenius.com>
+ * @license http://www.opensource.org/licenses/mit-license.php MIT
+ * @link    http://phpdoc.org
  */
 class DocBlock implements \Reflector
 {
@@ -31,8 +31,8 @@ class DocBlock implements \Reflector
     protected $long_description = null;
 
     /**
-     * @var \phpDocumentor\Reflection\DocBlock\Tags[] An array containing all the tags
-     *     in this docblock; except inline.
+     * @var \phpDocumentor\Reflection\DocBlock\Tags[] An array containing all
+     * the tags in this docblock; except inline.
      */
     protected $tags = array();
 
@@ -52,16 +52,16 @@ class DocBlock implements \Reflector
      * For example the param and return tags use this to expand their type
      * information.
      *
-     * @param \Reflector|string $docblock A docblock comment (including asterisks)
-     *     or reflector supporting the getDocComment method.
-     * @param string $namespace The namespace where this DocBlock resides in;
-     *    defaults to `\`.
-     * @param string[] $namespace_aliases a list of namespace aliases as
-     *     provided by the `use` keyword; the key of the array is the alias name
-     *     or last part of the alias array if no alias name is provided.
+     * @param \Reflector|string $docblock          A docblock comment (including
+     * asterisks) or reflector supporting the getDocComment method.
+     * @param string            $namespace         The namespace where this
+     * DocBlock resides in; defaults to `\`.
+     * @param string[]          $namespace_aliases A list of namespace aliases
+     * as provided by the `use` keyword; the key of the array is the alias name
+     * or last part of the alias array if no alias name is provided.
      *
      * @throws \InvalidArgumentException if the given argument does not have the
-     *     getDocComment method.
+     * getDocComment method.
      */
     public function __construct(
         $docblock, $namespace = '\\', $namespace_aliases = array()
