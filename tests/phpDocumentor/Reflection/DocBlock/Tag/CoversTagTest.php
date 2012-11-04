@@ -26,7 +26,7 @@ class CoversTagTest extends \PHPUnit_Framework_TestCase
      * @param string $exContent
      * @param string $exReference
      *
-     * @covers \phpDocumentor\Reflection\DocBlock\Tag\Covers::__construct
+     * @covers \phpDocumentor\Reflection\DocBlock\Tag\CoversTag::__construct
      * @dataProvider provideDataForConstuctor
      *
      * @return void
