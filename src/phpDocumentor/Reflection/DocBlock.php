@@ -25,14 +25,14 @@ class DocBlock implements \Reflector
     protected $short_description = '';
 
     /**
-     * @var \phpDocumentor\Reflection\DocBlock\LongDescription The actual description
-     *     for this docblock.
+     * @var \phpDocumentor\Reflection\DocBlock\LongDescription The actual
+     *     description for this docblock.
      */
     protected $long_description = null;
 
     /**
      * @var \phpDocumentor\Reflection\DocBlock\Tags[] An array containing all
-     * the tags in this docblock; except inline.
+     *     the tags in this docblock; except inline.
      */
     protected $tags = array();
 
@@ -53,15 +53,15 @@ class DocBlock implements \Reflector
      * information.
      *
      * @param \Reflector|string $docblock          A docblock comment (including
-     * asterisks) or reflector supporting the getDocComment method.
+     *     asterisks) or reflector supporting the getDocComment method.
      * @param string            $namespace         The namespace where this
-     * DocBlock resides in; defaults to `\`.
+     *     DocBlock resides in; defaults to `\`.
      * @param string[]          $namespace_aliases A list of namespace aliases
-     * as provided by the `use` keyword; the key of the array is the alias name
-     * or last part of the alias array if no alias name is provided.
+     *     as provided by the `use` keyword; the key of the array is the alias
+     *     name or last part of the alias array if no alias name is provided.
      *
      * @throws \InvalidArgumentException if the given argument does not have the
-     * getDocComment method.
+     *     getDocComment method.
      */
     public function __construct(
         $docblock,
@@ -125,7 +125,7 @@ class DocBlock implements \Reflector
      * @param string $comment Comment to split into the sub-parts.
      *
      * @author RichardJ Special thanks to RichardJ for the regex responsible
-     *     for the split/
+     *     for the split.
      *
      * @return string[] containing the short-, long description and an element
      *     containing the tags.
@@ -312,9 +312,10 @@ class DocBlock implements \Reflector
      * @param string   $type            Type to expand into full namespaced
      *     equivalent.
      * @param string[] $ignore_keywords Whether to ignore given keywords, when
-     *     null it will use the default keywords: 'string', 'int', 'integer',
-     *     'bool', 'boolean', 'float', 'double', 'object', 'mixed', 'array',
-     *     'resource', 'void', 'null', 'callback', 'false', 'true'.
+     *     null it will use the default keywords:
+     *     'string', 'int', 'integer', 'bool', 'boolean', 'float', 'double',
+     *     'object', 'mixed', 'array', 'resource', 'void', 'null', 'callback',
+     *     'false', 'true', 'self', '$this', 'callable'.
      *     Default value for this parameter is null.
      *
      * @return string
@@ -327,9 +328,9 @@ class DocBlock implements \Reflector
 
         if ($ignore_keywords === null) {
             $ignore_keywords = array(
-                'string', 'int', 'integer', 'bool', 'boolean', 'float', 'double',
-                'object', 'mixed', 'array', 'resource', 'void', 'null',
-                'callback', 'false', 'true', 'self', '$this', 'callable'
+                'string', 'int', 'integer', 'bool', 'boolean', 'float',
+                'double', 'object', 'mixed', 'array', 'resource', 'void',
+                'null', 'callback', 'false', 'true', 'self', '$this', 'callable'
             );
         }
 

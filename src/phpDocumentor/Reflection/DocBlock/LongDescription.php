@@ -55,7 +55,7 @@ class LongDescription implements \Reflector
      * Returns the parsed text of this description.
      *
      * @return array An array of strings and tag objects, in the order they
-     * occur within the description.
+     *     occur within the description.
      */
     public function getParsedContents()
     {
@@ -109,7 +109,8 @@ class LongDescription implements \Reflector
     /**
      * Builds a string representation of this object.
      *
-     * @todo determine the exact format as used by PHP Reflection and implement it.
+     * @todo determine the exact format as used by PHP Reflection
+     *     and implement it.
      *
      * @return void
      */
