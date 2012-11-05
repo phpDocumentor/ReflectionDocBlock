@@ -120,7 +120,7 @@ class Tag implements \Reflector
      * Returns the parsed text of this description.
      * 
      * @return array An array of strings and tag objects, in the order they
-     * occur within the description.
+     *     occur within the description.
      */
     public function getParsedDescription()
     {
