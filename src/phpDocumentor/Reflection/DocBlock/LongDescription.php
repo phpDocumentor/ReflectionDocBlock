@@ -62,36 +62,35 @@ class LongDescription implements \Reflector
         if (null === $this->parsedContents) {
             $this->parsedContents = preg_split(
                 '/\{
-                    # We want the whole tag line, but without the inline tag
-                    # delimiters.
+                    # "{@}" is not a valid inline tag. This ensures that
+                    # we do not treat it as one, but treat it literally.
+                    (?!@\})
+                    # We want to capture the whole tag line, but without the
+                    # inline tag delimiters.
                     (\@
-                        # The content should not be captured, or it will appear
-                        # in the result separately.
+                        # Match everything up to the next delimiter.
+                        [^{}]*
+                        # Nested inline tag content should not be captured, or
+                        # it will appear in the result separately.
                         (?:
                             # Match nested inline tags.
-                            # Because we did not catch the tag delimiters
-                            # earlier, we must be explicit with them here.
-                            # Notice that this also matches "{}", as a way to
-                            # later introduce it as an escape sequence.
-                            \{(?1)?\}
-                            |
-                            # "{@}" is not a valid inline tag. This ensures that
-                            # having it occur inside an inline tag does not trip
-                            # us up. While this is required in any event, notice
-                            # that this is also later an escape sequence.
-                            \{\@\}
-                            |
-                            # If we are not dealing with a nested inline tag,
-                            # get the character, as long as it is not a closing
-                            # tag delimiter.
-                            # This is an alternative way of non-greedy matching.
-                            [^\}]
-                        )+  # We need to keep doing these checks for every
-                            # character, since we never know where an inline tag
-                            # is going to start at. The "+" ensures we are not
-                            # treating "{@}" as a valid inline tag.
+                            (?:
+                                # Because we did not catch the tag delimiters
+                                # earlier, we must be explicit with them here.
+                                # Notice that this also matches "{}", as a way
+                                # to later introduce it as an escape sequence.
+                                \{(?1)?\}
+                                |
+                                # Make sure we match hanging "{".
+                                \{
+                            )
+                            # Match content after the nested inline tag.
+                            [^{}]*
+                        )* # If there are more inline tags, match them as well.
+                           # We use "*" since there may not be any nested inline
+                           # tags.
                     )
-                \}/xuS',
+                \}/Sux',
                 $this->contents,
                 null,
                 PREG_SPLIT_DELIM_CAPTURE
