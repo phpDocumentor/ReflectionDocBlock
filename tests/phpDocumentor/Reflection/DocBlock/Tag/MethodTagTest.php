@@ -1,9 +1,13 @@
 <?php
 /**
  * phpDocumentor Method Tag Test
+ * 
+ * PHP version 5.3
  *
- * @author     Mike van Riel <mike.vanriel@naenius.com>
- * @copyright  Copyright (c) 2010-2011 Mike van Riel / Naenius. (http://www.naenius.com)
+ * @author    Mike van Riel <mike.vanriel@naenius.com>
+ * @copyright 2010-2011 Mike van Riel / Naenius. (http://www.naenius.com)
+ * @license   http://www.opensource.org/licenses/mit-license.php MIT
+ * @link      http://phpdoc.org
  */
 
 namespace phpDocumentor\Reflection\DocBlock\Tag;
@@ -11,14 +15,14 @@ namespace phpDocumentor\Reflection\DocBlock\Tag;
 /**
  * Test class for \phpDocumentor\Reflection\DocBlock\Tag\MethodTag
  *
- * @author     Mike van Riel <mike.vanriel@naenius.com>
- * @copyright  Copyright (c) 2010-2011 Mike van Riel / Naenius. (http://www.naenius.com)
+ * @author    Mike van Riel <mike.vanriel@naenius.com>
+ * @copyright 2010-2011 Mike van Riel / Naenius. (http://www.naenius.com)
+ * @license   http://www.opensource.org/licenses/mit-license.php MIT
+ * @link      http://phpdoc.org
  */
 class MethodTagTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @dataProvider getTestSignatures
-     *
      * @param string $signature       The signature to test
      * @param bool   $valid           Whether the given signature is expected to
      *     be valid.
@@ -29,28 +33,39 @@ class MethodTagTest extends \PHPUnit_Framework_TestCase
      * @param bool   $has_params      whether this signature features parameters.
      * @param string $description     The short description mentioned in the
      *     signature.
+     * 
+     * @dataProvider getTestSignatures
      *
      * @return void
      */
-    public function testConstruct($signature, $valid, $expected_name,
-        $expected_return, $has_params, $description)
-    {
+    public function testConstruct(
+        $signature,
+        $valid,
+        $expected_name,
+        $expected_return,
+        $has_params,
+        $description
+    ) {
         ob_start();
         $tag = new MethodTag('method', $signature);
         $stdout = ob_get_clean();
 
         $this->assertSame(
-            $valid, empty($stdout),
+            $valid,
+            empty($stdout),
             'No error should have been output if the signature is valid'
         );
 
-        if (!$valid) return;
+        if (!$valid) {
+            return;
+        }
 
-        $this->assertEquals($expected_name,   $tag->getMethodName());
+        $this->assertEquals($expected_name, $tag->getMethodName());
         $this->assertEquals($expected_return, $tag->getType());
-        $this->assertEquals($description,     $tag->getDescription());
+        $this->assertEquals($description, $tag->getDescription());
         $this->assertSame(
-            $has_params, (bool)(count($tag->getArguments()) > 0),
+            $has_params,
+            (bool)(count($tag->getArguments()) > 0),
             'Number of found arguments should exceed 0'
         );
     }

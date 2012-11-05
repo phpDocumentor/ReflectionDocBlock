@@ -2,7 +2,7 @@
 /**
  * phpDocumentor
  *
- * PHP Version 5
+ * PHP Version 5.3
  *
  * @author    Ben Selby <benmatselby@gmail.com>
  * @copyright 2010-2011 Mike van Riel / Naenius (http://www.naenius.com)
@@ -11,14 +11,15 @@
  */
 
 namespace phpDocumentor\Reflection\DocBlock\Tag;
+
 use phpDocumentor\Reflection\DocBlock\Tag;
 
 /**
  * Reflection class for a @link tag in a Docblock.
  *
- * @author   Ben Selby <benmatselby@gmail.com>
- * @license  http://www.opensource.org/licenses/mit-license.php MIT
- * @link     http://phpdoc.org
+ * @author  Ben Selby <benmatselby@gmail.com>
+ * @license http://www.opensource.org/licenses/mit-license.php MIT
+ * @link    http://phpdoc.org
  */
 class LinkTag extends Tag
 {
