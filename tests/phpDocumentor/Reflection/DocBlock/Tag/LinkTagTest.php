@@ -34,6 +34,7 @@ class LinkTagTest extends \PHPUnit_Framework_TestCase
      * @param string $exLink
      *
      * @covers \phpDocumentor\Reflection\DocBlock\Tag\LinkTag::__construct
+     * @covers \phpDocumentor\Reflection\DocBlock\Tag\LinkTag::getLink
      * @dataProvider provideDataForConstuctor
      *
      * @return void
@@ -41,22 +42,16 @@ class LinkTagTest extends \PHPUnit_Framework_TestCase
     public function testConstructorParesInputsIntoCorrectFields(
         $type,
         $content,
-        $exName,
         $exContent,
         $exDescription,
         $exLink
     ) {
         $tag = new LinkTag($type, $content);
 
-        $actualName        = $tag->getName();
-        $actualContent     = $tag->getContent();
-        $actualDescription = $tag->getDescription();
-        $actualLink        = $tag->getLink();
-
-        $this->assertEquals($exName, $actualName);
-        $this->assertEquals($exContent, $actualContent);
-        $this->assertEquals($exDescription, $actualDescription);
-        $this->assertEquals($exLink, $actualLink);
+        $this->assertEquals($type, $tag->getName());
+        $this->assertEquals($exContent, $tag->getContent());
+        $this->assertEquals($exDescription, $tag->getDescription());
+        $this->assertEquals($exLink, $tag->getLink());
     }
 
     /**
@@ -71,7 +66,6 @@ class LinkTagTest extends \PHPUnit_Framework_TestCase
             array(
                 'link',
                 'http://www.phpdoc.org/',
-                'link',
                 'http://www.phpdoc.org/',
                 'http://www.phpdoc.org/',
                 'http://www.phpdoc.org/'
@@ -79,7 +73,6 @@ class LinkTagTest extends \PHPUnit_Framework_TestCase
             array(
                 'link',
                 'http://www.phpdoc.org/ Testing',
-                'link',
                 'http://www.phpdoc.org/ Testing',
                 'Testing',
                 'http://www.phpdoc.org/'
@@ -87,7 +80,6 @@ class LinkTagTest extends \PHPUnit_Framework_TestCase
             array(
                 'link',
                 'http://www.phpdoc.org/ Testing comments',
-                'link',
                 'http://www.phpdoc.org/ Testing comments',
                 'Testing comments',
                 'http://www.phpdoc.org/'

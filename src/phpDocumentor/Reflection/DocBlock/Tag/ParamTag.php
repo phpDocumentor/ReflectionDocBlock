@@ -12,8 +12,6 @@
 
 namespace phpDocumentor\Reflection\DocBlock\Tag;
 
-use phpDocumentor\Reflection\DocBlock\Tag;
-
 /**
  * Reflection class for a @param tag in a Docblock.
  *
@@ -21,11 +19,8 @@ use phpDocumentor\Reflection\DocBlock\Tag;
  * @license http://www.opensource.org/licenses/mit-license.php MIT
  * @link    http://phpdoc.org
  */
-class ParamTag extends Tag
+class ParamTag extends ReturnTag
 {
-    /** @var string */
-    protected $type = '';
-
     /**
      * @var string
      */
@@ -60,32 +55,6 @@ class ParamTag extends Tag
         }
 
         $this->description = implode(' ', $content);
-    }
-
-    /**
-     * Returns the unique types of the variable.
-     *
-     * @return string[]
-     */
-    public function getTypes()
-    {
-        $types = new \phpDocumentor\Reflection\DocBlock\Type\Collection(
-            array($this->type),
-            $this->docblock ? $this->docblock->getNamespace() : null,
-            $this->docblock ? $this->docblock->getNamespaceAliases() : array()
-        );
-
-        return $types->getArrayCopy();
-    }
-
-    /**
-     * Returns the type section of the variable.
-     *
-     * @return string
-     */
-    public function getType()
-    {
-        return implode('|', $this->getTypes());
     }
 
     /**
