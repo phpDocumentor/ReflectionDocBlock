@@ -2,7 +2,7 @@
 /**
  * phpDocumentor
  *
- * PHP Version 5
+ * PHP Version 5.3
  *
  * @author    Mike van Riel <mike.vanriel@naenius.com>
  * @copyright 2010-2011 Mike van Riel / Naenius (http://www.naenius.com)
@@ -15,9 +15,9 @@ namespace phpDocumentor\Reflection\DocBlock;
 /**
  * Parses a tag definition for a DocBlock.
  *
- * @author   Mike van Riel <mike.vanriel@naenius.com>
- * @license  http://www.opensource.org/licenses/mit-license.php MIT
- * @link     http://phpdoc.org
+ * @author  Mike van Riel <mike.vanriel@naenius.com>
+ * @license http://www.opensource.org/licenses/mit-license.php MIT
+ * @link    http://phpdoc.org
  */
 class Tag implements \Reflector
 {
@@ -29,7 +29,7 @@ class Tag implements \Reflector
 
     /** @var string Description of the content of this tag */
     protected $description = '';
-    
+
     /** @var array The description, as an array of strings and Tag objects. */
     protected $parsedDescription = null;
 
@@ -51,7 +51,9 @@ class Tag implements \Reflector
     public static function createInstance($tag_line)
     {
         if (!preg_match(
-            '/^@([\w\-\_\\\\]+)(?:\s*([^\s].*)|$)?/us', $tag_line, $matches
+            '/^@([\w\-\_\\\\]+)(?:\s*([^\s].*)|$)?/us',
+            $tag_line,
+            $matches
         )) {
             throw new \InvalidArgumentException(
                 'Invalid tag_line detected: ' . $tag_line
@@ -60,7 +62,9 @@ class Tag implements \Reflector
 
         // support hypphen separated tag names
         $tag_name = str_replace(
-            ' ', '', ucwords(str_replace('-', ' ', $matches[1]))
+            ' ',
+            '',
+            ucwords(str_replace('-', ' ', $matches[1]))
         ).'Tag';
         $class_name = 'phpDocumentor\\Reflection\\DocBlock\\Tag\\' . $tag_name;
 
@@ -111,12 +115,12 @@ class Tag implements \Reflector
     {
         return $this->description;
     }
-    
-    /*
+
+    /**
      * Returns the parsed text of this description.
      * 
      * @return array An array of strings and tag objects, in the order they
-     * occur within the description.
+     *     occur within the description.
      */
     public function getParsedDescription()
     {
@@ -170,7 +174,7 @@ class Tag implements \Reflector
      *
      * @return void
      */
-    static public function export()
+    public static function export()
     {
         throw new \Exception('Not yet implemented');
     }
@@ -185,5 +189,4 @@ class Tag implements \Reflector
     {
         return 'Not yet implemented';
     }
-
 }

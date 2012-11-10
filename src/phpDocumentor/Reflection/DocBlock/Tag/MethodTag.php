@@ -2,7 +2,7 @@
 /**
  * phpDocumentor
  *
- * PHP Version 5
+ * PHP Version 5.3
  *
  * @author    Mike van Riel <mike.vanriel@naenius.com>
  * @copyright 2010-2011 Mike van Riel / Naenius (http://www.naenius.com)
@@ -15,9 +15,9 @@ namespace phpDocumentor\Reflection\DocBlock\Tag;
 /**
  * Reflection class for a {@method} in a Docblock.
  *
- * @author   Mike van Riel <mike.vanriel@naenius.com>
- * @license  http://www.opensource.org/licenses/mit-license.php MIT
- * @link     http://phpdoc.org
+ * @author  Mike van Riel <mike.vanriel@naenius.com>
+ * @license http://www.opensource.org/licenses/mit-license.php MIT
+ * @link    http://phpdoc.org
  */
 class MethodTag extends ParamTag
 {
@@ -49,8 +49,8 @@ class MethodTag extends ParamTag
         //    until a ) and whitespace : as method name with signature
         // 5. any remaining text : as description
         if (preg_match(
-            '/^[\s]*(?:([\w\|_\\\\]+)[\s]+)?(?:[\w_]+\(\)[\s]+)?([\w\|_\\\\]+)\(([^\)]*)\)'
-            .'[\s]*(.*)/u',
+            '/^[\s]*(?:([\w\|_\\\\]+)[\s]+)?(?:[\w_]+\(\)[\s]+)?([\w\|_\\\\]+)'
+            .'\(([^\)]*)\)[\s]*(.*)/u',
             $content,
             $matches
         )) {
@@ -61,8 +61,7 @@ class MethodTag extends ParamTag
                 $this->arguments,
                 $this->description
             ) = $matches;
-            if (!$this->type)
-            {
+            if (!$this->type) {
                 $this->type = 'void';
             }
         } else {
@@ -126,5 +125,4 @@ class MethodTag extends ParamTag
 
         return $arguments;
     }
-
 }

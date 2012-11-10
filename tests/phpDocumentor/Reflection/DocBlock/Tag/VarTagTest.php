@@ -1,24 +1,30 @@
 <?php
 /**
  * phpDocumentor Var Tag Test
+ * 
+ * PHP version 5.3
  *
- * @author     Daniel O'Connor <daniel.oconnor@gmail.com>
- * @copyright  Copyright (c) 2010-2011 Mike van Riel / Naenius. (http://www.naenius.com)
+ * @author    Daniel O'Connor <daniel.oconnor@gmail.com>
+ * @copyright 2010-2011 Mike van Riel / Naenius. (http://www.naenius.com)
+ * @license   http://www.opensource.org/licenses/mit-license.php MIT
+ * @link      http://phpdoc.org
  */
 
 namespace phpDocumentor\Reflection\DocBlock\Tag;
 
 /**
- * Test class for phpDocumentor_Reflection_DocBlock_Tag_Link
+ * Test class for \phpDocumentor\Reflection\DocBlock\Tag\VarTag
  *
- * @author     Daniel O'Connor <daniel.oconnor@gmail.com>
- * @copyright  Copyright (c) 2010-2011 Mike van Riel / Naenius. (http://www.naenius.com)
+ * @author    Daniel O'Connor <daniel.oconnor@gmail.com>
+ * @copyright 2010-2011 Mike van Riel / Naenius. (http://www.naenius.com)
+ * @license   http://www.opensource.org/licenses/mit-license.php MIT
+ * @link      http://phpdoc.org
  */
 class VarTagTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Test that the \phpDocumentor\Reflection\DocBlock\Tag\VarTag can understand
-     * the @var doc block
+     * Test that the \phpDocumentor\Reflection\DocBlock\Tag\VarTag can
+     * understand the @var doc block
      *
      * @param string $type
      * @param string $content
@@ -32,14 +38,17 @@ class VarTagTest extends \PHPUnit_Framework_TestCase
      * @return void
      */
     public function testConstructorParesInputsIntoCorrectFields(
-        $type, $content, $exType, $exVariable, $exDescription
-    )
-    {
+        $type,
+        $content,
+        $exType,
+        $exVariable,
+        $exDescription
+    ) {
         $tag = new VarTag($type, $content);
 
         $this->assertEquals($exType, $tag->getType());
-        $this->assertEquals($exVariable,  $tag->getVariableName());
-        $this->assertEquals($exDescription,  $tag->getDescription());
+        $this->assertEquals($exVariable, $tag->getVariableName());
+        $this->assertEquals($exDescription, $tag->getDescription());
     }
 
     /**

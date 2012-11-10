@@ -1,18 +1,24 @@
 <?php
 /**
  * phpDocumentor Param tag test.
+ * 
+ * PHP version 5.3
  *
  * @author    Mike van Riel <mike.vanriel@naenius.com>
- * @copyright Copyright (c) 2010-2011 Mike van Riel / Naenius. (http://www.naenius.com)
+ * @copyright 2010-2011 Mike van Riel / Naenius. (http://www.naenius.com)
+ * @license   http://www.opensource.org/licenses/mit-license.php MIT
+ * @link      http://phpdoc.org
  */
 
 namespace phpDocumentor\Reflection\DocBlock\Tag;
 
 /**
- * Test class for phpDocumentor_Reflection_DocBlock_Param.
+ * Test class for \phpDocumentor\Reflection\DocBlock\ParamTag.
  *
- * @author     Mike van Riel <mike.vanriel@naenius.com>
- * @copyright  Copyright (c) 2010-2011 Mike van Riel / Naenius. (http://www.naenius.com)
+ * @author    Mike van Riel <mike.vanriel@naenius.com>
+ * @copyright 2010-2011 Mike van Riel / Naenius. (http://www.naenius.com)
+ * @license   http://www.opensource.org/licenses/mit-license.php MIT
+ * @link      http://phpdoc.org
  */
 class ParamTagTest extends \PHPUnit_Framework_TestCase
 {
@@ -22,9 +28,9 @@ class ParamTagTest extends \PHPUnit_Framework_TestCase
      *
      * @param string $type
      * @param string $content
-     * @param string $extracted_type
-     * @param string $extracted_variable_name
-     * @param string $extracted_description
+     * @param string $extractedType
+     * @param string $extractedVarName
+     * @param string $extractedDescription
      *
      * @covers \phpDocumentor\Reflection\DocBlock\Tag\ParamTag::__construct
      *
@@ -33,14 +39,17 @@ class ParamTagTest extends \PHPUnit_Framework_TestCase
      * @return void
      */
     public function testConstructorParsesInputsIntoCorrectFields(
-        $type, $content, $extracted_type, $extracted_variable_name,
-        $extracted_description
+        $type,
+        $content,
+        $extractedType,
+        $extractedVarName,
+        $extractedDescription
     ) {
         $tag = new ParamTag($type, $content);
 
-        $this->assertEquals($extracted_type,          $tag->getTypes());
-        $this->assertEquals($extracted_variable_name, $tag->getVariableName());
-        $this->assertEquals($extracted_description,   $tag->getDescription());
+        $this->assertEquals($extractedType, $tag->getTypes());
+        $this->assertEquals($extractedVarName, $tag->getVariableName());
+        $this->assertEquals($extractedDescription, $tag->getDescription());
     }
 
     /**

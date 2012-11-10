@@ -2,10 +2,12 @@
 /**
  * phpDocumentor DocBlock Test
  *
- * PHP Version 5
+ * PHP Version 5.3
  *
- * @author     Mike van Riel <mike.vanriel@naenius.com>
- * @copyright  Copyright (c) 2010-2011 Mike van Riel / Naenius. (http://www.naenius.com)
+ * @author    Mike van Riel <mike.vanriel@naenius.com>
+ * @copyright 2010-2011 Mike van Riel / Naenius. (http://www.naenius.com)
+ * @license   http://www.opensource.org/licenses/mit-license.php MIT
+ * @link      http://phpdoc.org
  */
 
 namespace phpDocumentor\Reflection;
@@ -13,8 +15,10 @@ namespace phpDocumentor\Reflection;
 /**
  * Test class for phpDocumentor_Reflection_DocBlock
  *
- * @author     Mike van Riel <mike.vanriel@naenius.com>
- * @copyright  Copyright (c) 2010-2011 Mike van Riel / Naenius. (http://www.naenius.com)
+ * @author    Mike van Riel <mike.vanriel@naenius.com>
+ * @copyright 2010-2011 Mike van Riel / Naenius. (http://www.naenius.com)
+ * @license   http://www.opensource.org/licenses/mit-license.php MIT
+ * @link      http://phpdoc.org
  */
 class DocBlockTest extends \PHPUnit_Framework_TestCase
 {
@@ -32,7 +36,8 @@ class DocBlockTest extends \PHPUnit_Framework_TestCase
 DOCBLOCK;
         $object = new DocBlock($fixture);
         $this->assertEquals(
-            'This is a short description.', $object->getShortDescription()
+            'This is a short description.',
+            $object->getShortDescription()
         );
         $this->assertEquals(
             'This is a long description.',
@@ -53,11 +58,13 @@ DOCBLOCK;
 DOCBLOCK;
         $object = new DocBlock($fixture);
         $this->assertEquals(
-            'This is a short description.', $object->getShortDescription()
+            'This is a short description.',
+            $object->getShortDescription()
         );
         $this->assertEquals(
             "This is a long description.\nThis is a continuation of the long "
-            ."description.", $object->getLongDescription()->getContents()
+            ."description.",
+            $object->getLongDescription()->getContents()
         );
     }
 
@@ -99,17 +106,21 @@ DOCBLOCK;
     public function testExpandTypeUsingNamespaceAlias()
     {
         $docblock = new DocBlock(
-            '', '\My\Namespace', array('Alias' => '\My\Namespace\Alias')
+            '',
+            '\My\Namespace',
+            array('Alias' => '\My\Namespace\Alias')
         );
 
         // first try a normal resolution without alias
         $this->assertEquals(
-            '\My\Namespace\Al', $docblock->expandType('Al')
+            '\My\Namespace\Al',
+            $docblock->expandType('Al')
         );
 
         // try to use the alias
         $this->assertEquals(
-            '\My\Namespace\Alias\Al', $docblock->expandType('Alias\Al')
+            '\My\Namespace\Alias\Al',
+            $docblock->expandType('Alias\Al')
         );
     }
 
@@ -141,4 +152,3 @@ DOCBLOCK;
         );
     }
 }
-
