@@ -39,7 +39,7 @@ class DocBlock implements \Reflector
     /** @var string the current namespace */
     protected $namespace = '\\';
 
-    /** @var string[] List of namespace aliases => Fully Qualified Namespace */
+    /** @var array List of namespace aliases => Fully Qualified Namespace */
     protected $namespace_aliases = array();
 
     /**
@@ -56,7 +56,7 @@ class DocBlock implements \Reflector
      *     asterisks) or reflector supporting the getDocComment method.
      * @param string            $namespace         The namespace where this
      *     DocBlock resides in; defaults to `\`.
-     * @param string[]          $namespace_aliases A list of namespace aliases
+     * @param array             $namespace_aliases A list of namespace aliases
      *     as provided by the `use` keyword; the key of the array is the alias
      *     name or last part of the alias array if no alias name is provided.
      *
@@ -331,13 +331,16 @@ class DocBlock implements \Reflector
     }
 
     /**
-     * @return string
+     * @return string The namespace where this DocBlock resides in.
      */
     public function getNamespace()
     {
         return $this->namespace;
     }
 
+    /**
+     * @return array List of namespace aliases => Fully Qualified Namespace.
+     */
     public function getNamespaceAliases()
     {
         return $this->namespace_aliases;

@@ -25,6 +25,8 @@ class TagTest extends \PHPUnit_Framework_TestCase
     
     /**
      * @expectedException \InvalidArgumentException
+     * 
+     * @return void
      */
     public function testInvalidTagLine()
     {

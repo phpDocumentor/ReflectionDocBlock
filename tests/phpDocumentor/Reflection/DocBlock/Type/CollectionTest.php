@@ -135,8 +135,8 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param $fixture
-     * @param $expected
+     * @param string $fixture
+     * @param array  $expected
      *
      * @dataProvider provideTypesToExpand
      * @covers phpDocumentor\Reflection\DocBlock\Type\Collection::add
@@ -154,8 +154,8 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param $fixture
-     * @param $expected
+     * @param string $fixture
+     * @param array  $expected
      *
      * @dataProvider provideTypesToExpandWithoutNamespace
      * @covers phpDocumentor\Reflection\DocBlock\Type\Collection::add
