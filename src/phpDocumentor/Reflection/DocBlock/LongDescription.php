@@ -61,13 +61,53 @@ class LongDescription implements \Reflector
     {
         if (null === $this->parsedContents) {
             $this->parsedContents = preg_split(
-                '/\{(\@.*?)\}/uS',
+                '/\{
+                    # "{@}" is not a valid inline tag. This ensures that
+                    # we do not treat it as one, but treat it literally.
+                    (?!@\})
+                    # We want to capture the whole tag line, but without the
+                    # inline tag delimiters.
+                    (\@
+                        # Match everything up to the next delimiter.
+                        [^{}]*
+                        # Nested inline tag content should not be captured, or
+                        # it will appear in the result separately.
+                        (?:
+                            # Match nested inline tags.
+                            (?:
+                                # Because we did not catch the tag delimiters
+                                # earlier, we must be explicit with them here.
+                                # Notice that this also matches "{}", as a way
+                                # to later introduce it as an escape sequence.
+                                \{(?1)?\}
+                                |
+                                # Make sure we match hanging "{".
+                                \{
+                            )
+                            # Match content after the nested inline tag.
+                            [^{}]*
+                        )* # If there are more inline tags, match them as well.
+                           # We use "*" since there may not be any nested inline
+                           # tags.
+                    )
+                \}/Sux',
                 $this->contents,
                 null,
                 PREG_SPLIT_DELIM_CAPTURE
             );
             for ($i=1, $l = count($this->parsedContents); $i<$l; $i += 2) {
                 $this->parsedContents[$i] = Tag::createInstance(
+                    $this->parsedContents[$i]
+                );
+            }
+            
+            //In order to allow "literal" inline tags, the otherwise invalid
+            //sequence "{@}" is changed to "@", and "{}" is changed to "}".
+            //See unit tests for examples.
+            for ($i=0, $l = count($this->parsedContents); $i<$l; $i += 2) {
+                $this->parsedContents[$i] = str_replace(
+                    array('{@}', '{}'),
+                    array('@', '}'),
                     $this->parsedContents[$i]
                 );
             }
