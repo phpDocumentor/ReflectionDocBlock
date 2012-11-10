@@ -49,6 +49,9 @@ DOCBLOCK;
         $this->assertFalse($object->hasTag('category'));
     }
 
+    /**
+     * @covers \phpDocumentor\Reflection\DocBlock::__construct
+     */
     public function testConstructFromReflector()
     {
         $object = new DocBlock(new \ReflectionClass($this));
@@ -70,7 +73,7 @@ DOCBLOCK;
      */
     public function testExceptionOnInvalidObject()
     {
-        $object = new DocBlock($this);
+        new DocBlock($this);
     }
 
     public function testDotSeperation()

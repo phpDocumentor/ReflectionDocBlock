@@ -32,7 +32,7 @@ class CoversTagTest extends \PHPUnit_Framework_TestCase
      * @param string $exContent
      * @param string $exReference
      *
-     * @covers \phpDocumentor\Reflection\DocBlock\Tag\CoversTag::__construct
+     * @covers \phpDocumentor\Reflection\DocBlock\Tag\CoversTag
      * @dataProvider provideDataForConstuctor
      *
      * @return void
@@ -40,22 +40,16 @@ class CoversTagTest extends \PHPUnit_Framework_TestCase
     public function testConstructorParesInputsIntoCorrectFields(
         $type,
         $content,
-        $exName,
         $exContent,
         $exDescription,
         $exReference
     ) {
         $tag = new CoversTag($type, $content);
 
-        $actualName        = $tag->getName();
-        $actualContent     = $tag->getContent();
-        $actualDescription = $tag->getDescription();
-        $actualReference   = $tag->getReference();
-
-        $this->assertEquals($exName, $actualName);
-        $this->assertEquals($exContent, $actualContent);
-        $this->assertEquals($exDescription, $actualDescription);
-        $this->assertEquals($exReference, $actualReference);
+        $this->assertEquals($type, $tag->getName());
+        $this->assertEquals($exContent, $tag->getContent());
+        $this->assertEquals($exDescription, $tag->getDescription());
+        $this->assertEquals($exReference, $tag->getReference());
     }
 
     /**
@@ -68,25 +62,22 @@ class CoversTagTest extends \PHPUnit_Framework_TestCase
         // $type, $content, $exName, $exContent, $exDescription, $exReference
         return array(
             array(
-                'uses',
+                'covers',
                 'Foo::bar()',
-                'uses',
                 'Foo::bar()',
                 '',
                 'Foo::bar()'
             ),
             array(
-                'uses',
+                'covers',
                 'Foo::bar() Testing',
-                'uses',
                 'Foo::bar() Testing',
                 'Testing',
                 'Foo::bar()',
             ),
             array(
-                'uses',
+                'covers',
                 'Foo::bar() Testing comments',
-                'uses',
                 'Foo::bar() Testing comments',
                 'Testing comments',
                 'Foo::bar()',

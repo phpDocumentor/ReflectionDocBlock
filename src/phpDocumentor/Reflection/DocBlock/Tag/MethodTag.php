@@ -19,7 +19,7 @@ namespace phpDocumentor\Reflection\DocBlock\Tag;
  * @license http://www.opensource.org/licenses/mit-license.php MIT
  * @link    http://phpdoc.org
  */
-class MethodTag extends ParamTag
+class MethodTag extends ReturnTag
 {
 
     /** @var string */

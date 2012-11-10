@@ -31,19 +31,25 @@ class ReturnTagTest extends ParamTagTest
      * @param string $extractedDescription
      *
      * @covers \phpDocumentor\Reflection\DocBlock\Tag\ReturnTag::__construct
+     * @covers \phpDocumentor\Reflection\DocBlock\Tag\ParamTag::getType
+     * @covers \phpDocumentor\Reflection\DocBlock\Tag\ParamTag::getTypes
      *
      * @dataProvider provideDataForConstructor
      *
      * @return void
      */
     public function testConstructorParsesInputsIntoCorrectFields(
+        $type,
         $content,
         $extractedType,
+        $extractedTypes,
         $extractedDescription
     ) {
-        $tag = new ReturnTag('return', $content);
+        $tag = new ReturnTag($type, $content);
 
-        $this->assertEquals($extractedType, $tag->getTypes());
+        $this->assertEquals($type, $tag->getName());
+        $this->assertEquals($extractedType, $tag->getType());
+        $this->assertEquals($extractedTypes, $tag->getTypes());
         $this->assertEquals($extractedDescription, $tag->getDescription());
     }
 
@@ -55,9 +61,15 @@ class ReturnTagTest extends ParamTagTest
     public function provideDataForConstructor()
     {
         return array(
-            array('', array(), ''),
-            array('int', array('int'), ''),
-            array('int Number of Bobs', array('int'), 'Number of Bobs'),
+            array('return', '', '', array(), ''),
+            array('return', 'int', 'int', array('int'), ''),
+            array(
+                'return',
+                'int Number of Bobs',
+                'int',
+                array('int'),
+                'Number of Bobs'
+            ),
         );
     }
 }
