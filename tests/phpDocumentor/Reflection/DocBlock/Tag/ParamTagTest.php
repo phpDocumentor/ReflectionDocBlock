@@ -29,6 +29,7 @@ class ParamTagTest extends \PHPUnit_Framework_TestCase
      * @param string $type
      * @param string $content
      * @param string $extractedType
+     * @param string $extractedTypes
      * @param string $extractedVarName
      * @param string $extractedDescription
      *

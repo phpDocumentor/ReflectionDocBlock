@@ -10,7 +10,7 @@
  * @link      http://phpdoc.org
  */
 
-namespace phpDocumentor\Reflection\DocBlock\Tag;
+namespace phpDocumentor\Reflection\DocBlock;
 
 /**
  * Test class for \phpDocumentor\Reflection\DocBlock\Tag\VarTag
@@ -20,19 +20,27 @@ namespace phpDocumentor\Reflection\DocBlock\Tag;
  * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      http://phpdoc.org
  */
-class VarTagTest extends \PHPUnit_Framework_TestCase
+class TagTest extends \PHPUnit_Framework_TestCase
 {
+    
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testInvalidTagLine()
+    {
+        Tag::createInstance('Invalid tag line');
+    }
     /**
      * Test that the \phpDocumentor\Reflection\DocBlock\Tag\VarTag can
      * understand the @var doc block.
      *
      * @param string $type
      * @param string $content
-     * @param string $exType
-     * @param string $exVariable
      * @param string $exDescription
      *
-     * @covers \phpDocumentor\Reflection\DocBlock\Tag\VarTag::__construct
+     * @covers \phpDocumentor\Reflection\DocBlock\Tag::__construct
+     * @covers \phpDocumentor\Reflection\DocBlock\Tag::getDescription
+     * @covers \phpDocumentor\Reflection\DocBlock\Tag::getContent
      * @dataProvider provideDataForConstuctor
      *
      * @return void
@@ -40,15 +48,12 @@ class VarTagTest extends \PHPUnit_Framework_TestCase
     public function testConstructorParesInputsIntoCorrectFields(
         $type,
         $content,
-        $exType,
-        $exVariable,
         $exDescription
     ) {
-        $tag = new VarTag($type, $content);
+        $tag = new Tag($type, $content);
 
         $this->assertEquals($type, $tag->getName());
-        $this->assertEquals($exType, $tag->getType());
-        $this->assertEquals($exVariable, $tag->getVariableName());
+        $this->assertEquals($content, $tag->getContent());
         $this->assertEquals($exDescription, $tag->getDescription());
     }
 
@@ -59,36 +64,23 @@ class VarTagTest extends \PHPUnit_Framework_TestCase
      */
     public function provideDataForConstuctor()
     {
-        // $type, $content, $exType, $exVariable, $exDescription
+        // $type, $content, $exDescription
         return array(
             array(
-                'var',
-                'int',
-                'int',
-                '',
-                ''
+                'unknown',
+                'some content',
+                'some content',
             ),
             array(
-                'var',
-                'int $bob',
-                'int',
-                '$bob',
-                ''
+                'unknown',
+                '',
+                '',
             ),
             array(
-                'var',
-                'int $bob Number of bobs',
-                'int',
-                '$bob',
-                'Number of bobs'
-            ),
-            array(
-                'var',
                 '',
-                '',
-                '',
-                ''
-            ),
+                'unknown',
+                'unknown',
+            )
         );
     }
 }

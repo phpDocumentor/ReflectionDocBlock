@@ -28,7 +28,6 @@ class LinkTagTest extends \PHPUnit_Framework_TestCase
      *
      * @param string $type
      * @param string $content
-     * @param string $exName
      * @param string $exContent
      * @param string $exDescription
      * @param string $exLink
@@ -61,7 +60,7 @@ class LinkTagTest extends \PHPUnit_Framework_TestCase
      */
     public function provideDataForConstuctor()
     {
-        // $type, $content, $exName, $exContent, $exDescription, $exLink
+        // $type, $content, $exContent, $exDescription, $exLink
         return array(
             array(
                 'link',

@@ -120,6 +120,9 @@ class LongDescription implements \Reflector
      *
      * @todo this should become a more intelligent piece of code where the
      *     configuration contains a setting what format long descriptions are.
+     * 
+     * @codeCoverageIgnore Will be removed soon, in favor of adapters at
+     *     PhpDocumentor itself that will process text in various formats.
      *
      * @return string
      */

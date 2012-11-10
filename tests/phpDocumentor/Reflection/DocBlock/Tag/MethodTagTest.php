@@ -23,19 +23,20 @@ namespace phpDocumentor\Reflection\DocBlock\Tag;
 class MethodTagTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @param string $signature       The signature to test
+     * @param string $signature       The signature to test.
      * @param bool   $valid           Whether the given signature is expected to
      *     be valid.
      * @param string $expected_name   The method name that is expected from this
-     *     signature
+     *     signature.
      * @param string $expected_return The return type that is expected from this
-     *     signature
-     * @param bool   $has_params      whether this signature features parameters.
+     *     signature.
+     * @param bool   $paramCount      Number of parameters in the signature.
      * @param string $description     The short description mentioned in the
      *     signature.
      * 
      * @covers \phpDocumentor\Reflection\DocBlock\Tag\MethodTag::__construct
      * @covers \phpDocumentor\Reflection\DocBlock\Tag\MethodTag::getMethodName
+     * @covers \phpDocumentor\Reflection\DocBlock\Tag\MethodTag::getArguments
      * 
      * @dataProvider getTestSignatures
      *
@@ -46,7 +47,7 @@ class MethodTagTest extends \PHPUnit_Framework_TestCase
         $valid,
         $expected_name,
         $expected_return,
-        $has_params,
+        $paramCount,
         $description
     ) {
         ob_start();
@@ -66,11 +67,7 @@ class MethodTagTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected_name, $tag->getMethodName());
         $this->assertEquals($expected_return, $tag->getType());
         $this->assertEquals($description, $tag->getDescription());
-        $this->assertSame(
-            $has_params,
-            (bool)(count($tag->getArguments()) > 0),
-            'Number of found arguments should exceed 0'
-        );
+        $this->assertCount($paramCount, $tag->getArguments());
     }
 
     public function getTestSignatures()
@@ -78,55 +75,55 @@ class MethodTagTest extends \PHPUnit_Framework_TestCase
         return array(
             array(
                 'foo',
-                false, 'foo', '', false, ''
+                false, 'foo', '', 0, ''
             ),
             array(
                 'foo()',
-                true, 'foo', 'void', false, ''
+                true, 'foo', 'void', 0, ''
             ),
             array(
                 'foo() description',
-                true, 'foo', 'void', false, 'description'
+                true, 'foo', 'void', 0, 'description'
             ),
             array(
                 'int foo()',
-                true, 'foo', 'int', false, ''
+                true, 'foo', 'int', 0, ''
             ),
             array(
                 'int foo() description',
-                true, 'foo', 'int', false, 'description'
+                true, 'foo', 'int', 0, 'description'
             ),
             array(
                 'int foo($a, $b)',
-                true, 'foo', 'int', true, ''
+                true, 'foo', 'int', 2, ''
             ),
             array(
                 'int foo() foo(int $a, int $b)',
-                true, 'foo', 'int', true, ''
+                true, 'foo', 'int', 2, ''
             ),
             array(
                 'int foo(int $a, int $b)',
-                true, 'foo', 'int', true, ''
+                true, 'foo', 'int', 2, ''
             ),
             array(
                 'null|int foo(int $a, int $b)',
-                true, 'foo', 'null|int', true, ''
+                true, 'foo', 'null|int', 2, ''
             ),
             array(
                 'int foo(null|int $a, int $b)',
-                true, 'foo', 'int', true, ''
+                true, 'foo', 'int', 2, ''
             ),
             array(
                 '\Exception foo() foo(Exception $a, Exception $b)',
-                true, 'foo', '\Exception', true, ''
+                true, 'foo', '\Exception', 2, ''
             ),
             array(
                 'int foo() foo(Exception $a, Exception $b) description',
-                true, 'foo', 'int', true, 'description'
+                true, 'foo', 'int', 2, 'description'
             ),
             array(
                 'int foo() foo(\Exception $a, \Exception $b) description',
-                true, 'foo', 'int', true, 'description'
+                true, 'foo', 'int', 2, 'description'
             ),
         );
     }
