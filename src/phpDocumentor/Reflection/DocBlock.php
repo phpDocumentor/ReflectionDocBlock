@@ -2,7 +2,7 @@
 /**
  * phpDocumentor
  *
- * PHP Version 5
+ * PHP Version 5.3
  *
  * @author    Mike van Riel <mike.vanriel@naenius.com>
  * @copyright 2010-2011 Mike van Riel / Naenius (http://www.naenius.com)
@@ -15,9 +15,9 @@ namespace phpDocumentor\Reflection;
 /**
  * Parses the DocBlock for any structure.
  *
- * @author   Mike van Riel <mike.vanriel@naenius.com>
- * @license  http://www.opensource.org/licenses/mit-license.php MIT
- * @link     http://phpdoc.org
+ * @author  Mike van Riel <mike.vanriel@naenius.com>
+ * @license http://www.opensource.org/licenses/mit-license.php MIT
+ * @link    http://phpdoc.org
  */
 class DocBlock implements \Reflector
 {
@@ -25,14 +25,14 @@ class DocBlock implements \Reflector
     protected $short_description = '';
 
     /**
-     * @var \phpDocumentor\Reflection\DocBlock\LongDescription The actual description
-     *     for this docblock.
+     * @var \phpDocumentor\Reflection\DocBlock\LongDescription The actual
+     *     description for this docblock.
      */
     protected $long_description = null;
 
     /**
-     * @var \phpDocumentor\Reflection\DocBlock\Tags[] An array containing all the tags
-     *     in this docblock; except inline.
+     * @var \phpDocumentor\Reflection\DocBlock\Tags[] An array containing all
+     *     the tags in this docblock; except inline.
      */
     protected $tags = array();
 
@@ -52,19 +52,21 @@ class DocBlock implements \Reflector
      * For example the param and return tags use this to expand their type
      * information.
      *
-     * @param \Reflector|string $docblock A docblock comment (including asterisks)
-     *     or reflector supporting the getDocComment method.
-     * @param string $namespace The namespace where this DocBlock resides in;
-     *    defaults to `\`.
-     * @param string[] $namespace_aliases a list of namespace aliases as
-     *     provided by the `use` keyword; the key of the array is the alias name
-     *     or last part of the alias array if no alias name is provided.
+     * @param \Reflector|string $docblock          A docblock comment (including
+     *     asterisks) or reflector supporting the getDocComment method.
+     * @param string            $namespace         The namespace where this
+     *     DocBlock resides in; defaults to `\`.
+     * @param string[]          $namespace_aliases A list of namespace aliases
+     *     as provided by the `use` keyword; the key of the array is the alias
+     *     name or last part of the alias array if no alias name is provided.
      *
      * @throws \InvalidArgumentException if the given argument does not have the
      *     getDocComment method.
      */
     public function __construct(
-        $docblock, $namespace = '\\', $namespace_aliases = array()
+        $docblock,
+        $namespace = '\\',
+        $namespace_aliases = array()
     ) {
         if (is_object($docblock)) {
             if (!method_exists($docblock, 'getDocComment')) {
@@ -99,7 +101,9 @@ class DocBlock implements \Reflector
     {
         $comment = trim(
             preg_replace(
-                '#[ \t]*(?:\/\*\*|\*\/|\*)?[ \t]{0,1}(.*)?#u', '$1', $comment
+                '#[ \t]*(?:\/\*\*|\*\/|\*)?[ \t]{0,1}(.*)?#u',
+                '$1',
+                $comment
             )
         );
 
@@ -121,7 +125,7 @@ class DocBlock implements \Reflector
      * @param string $comment Comment to split into the sub-parts.
      *
      * @author RichardJ Special thanks to RichardJ for the regex responsible
-     *     for the split/
+     *     for the split.
      *
      * @return string[] containing the short-, long description and an element
      *     containing the tags.
@@ -173,7 +177,9 @@ class DocBlock implements \Reflector
           )
         )?
         (\s+ [\s\S]*)? # everything that follows
-        /u', $comment, $matches
+        /u',
+                $comment,
+                $matches
             );
             array_shift($matches);
         }
@@ -306,9 +312,10 @@ class DocBlock implements \Reflector
      * @param string   $type            Type to expand into full namespaced
      *     equivalent.
      * @param string[] $ignore_keywords Whether to ignore given keywords, when
-     *     null it will use the default keywords: 'string', 'int', 'integer',
-     *     'bool', 'boolean', 'float', 'double', 'object', 'mixed', 'array',
-     *     'resource', 'void', 'null', 'callback', 'false', 'true'.
+     *     null it will use the default keywords:
+     *     'string', 'int', 'integer', 'bool', 'boolean', 'float', 'double',
+     *     'object', 'mixed', 'array', 'resource', 'void', 'null', 'callback',
+     *     'false', 'true', 'self', '$this', 'callable'.
      *     Default value for this parameter is null.
      *
      * @return string
@@ -321,9 +328,9 @@ class DocBlock implements \Reflector
 
         if ($ignore_keywords === null) {
             $ignore_keywords = array(
-                'string', 'int', 'integer', 'bool', 'boolean', 'float', 'double',
-                'object', 'mixed', 'array', 'resource', 'void', 'null',
-                'callback', 'false', 'true', 'self', '$this', 'callable'
+                'string', 'int', 'integer', 'bool', 'boolean', 'float',
+                'double', 'object', 'mixed', 'array', 'resource', 'void',
+                'null', 'callback', 'false', 'true', 'self', '$this', 'callable'
             );
         }
 
@@ -382,7 +389,7 @@ class DocBlock implements \Reflector
      *
      * @return string
      */
-    static public function export()
+    public static function export()
     {
         throw new \Exception('Not yet implemented');
     }

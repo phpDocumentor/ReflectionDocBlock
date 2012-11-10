@@ -1,9 +1,26 @@
 <?php
+/**
+ * phpDocumentor Collection Test
+ * 
+ * PHP version 5.3
+ *
+ * @author    Mike van Riel <mike.vanriel@naenius.com>
+ * @copyright 2010-2011 Mike van Riel / Naenius. (http://www.naenius.com)
+ * @license   http://www.opensource.org/licenses/mit-license.php MIT
+ * @link      http://phpdoc.org
+ */
+
 namespace phpDocumentor\Reflection\DocBlock\Type;
 
 /**
- * Test class for phpDocumentor_Reflection_DocBlock
+ * Test class for \phpDocumentor\Reflection\DocBlock\Type\Collection
+ * 
  * @covers phpDocumentor\Reflection\DocBlock\Type\Collection
+ *
+ * @author    Mike van Riel <mike.vanriel@naenius.com>
+ * @copyright 2010-2011 Mike van Riel / Naenius. (http://www.naenius.com)
+ * @license   http://www.opensource.org/licenses/mit-license.php MIT
+ * @link      http://phpdoc.org
  */
 class CollectionTest extends \PHPUnit_Framework_TestCase
 {
@@ -11,6 +28,8 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
      * @covers phpDocumentor\Reflection\DocBlock\Type\Collection::__construct
      * @covers phpDocumentor\Reflection\DocBlock\Type\Collection::getNamespace
      * @covers phpDocumentor\Reflection\DocBlock\Type\Collection::getNamespaceAliases
+     * 
+     * @return void
      */
     public function testConstruct()
     {
@@ -22,6 +41,8 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers phpDocumentor\Reflection\DocBlock\Type\Collection::__construct
+     * 
+     * @return void
      */
     public function testConstructWithTypes()
     {
@@ -32,6 +53,8 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers phpDocumentor\Reflection\DocBlock\Type\Collection::__construct
      * @covers phpDocumentor\Reflection\DocBlock\Type\Collection::getNamespace
+     * 
+     * @return void
      */
     public function testConstructWithNamespace()
     {
@@ -48,6 +71,8 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers phpDocumentor\Reflection\DocBlock\Type\Collection::__construct
      * @covers phpDocumentor\Reflection\DocBlock\Type\Collection::getNamespaceAliases
+     * 
+     * @return void
      */
     public function testConstructWithNamespaceAliases()
     {
@@ -59,6 +84,8 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers phpDocumentor\Reflection\DocBlock\Type\Collection::setNamespace
      * @covers phpDocumentor\Reflection\DocBlock\Type\Collection::getNamespace
+     * 
+     * @return void
      */
     public function testSetAndGetNamespace()
     {
@@ -78,6 +105,8 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers phpDocumentor\Reflection\DocBlock\Type\Collection::setNamespaceAliases
      * @covers phpDocumentor\Reflection\DocBlock\Type\Collection::getNamespaceAliases
+     * 
+     * @return void
      */
     public function testSetAndGetNamespaceAliases()
     {
@@ -94,6 +123,8 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
      *
      * @dataProvider provideTypesToExpand
      * @covers phpDocumentor\Reflection\DocBlock\Type\Collection::add
+     * 
+     * @return void
      */
     public function testAdd($fixture, $expected)
     {
@@ -111,6 +142,8 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
      *
      * @dataProvider provideTypesToExpandWithoutNamespace
      * @covers phpDocumentor\Reflection\DocBlock\Type\Collection::add
+     * 
+     * @return void
      */
     public function testAddWithoutNamespace($fixture, $expected)
     {
@@ -124,6 +157,8 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers phpDocumentor\Reflection\DocBlock\Type\Collection::add
      * @expectedException InvalidArgumentException
+     * 
+     * @return void
      */
     public function testAddWithInvalidArgument()
     {
@@ -135,7 +170,7 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
      * Returns the types and their expected values to test the retrieval of
      * types.
      *
-     * @param string $method Name of the method consuming this data provider.
+     * @param string $method    Name of the method consuming this data provider.
      * @param string $namespace Name of the namespace to user as basis.
      *
      * @return string[]
@@ -181,7 +216,6 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
      * types when no namespace is available.
      *
      * @param string $method Name of the method consuming this data provider.
-     * @param string $namespace Name of the namespace to user as basis.
      *
      * @return string[]
      */
@@ -189,6 +223,4 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
     {
         return $this->provideTypesToExpand($method, '\\');
     }
-
 }
-

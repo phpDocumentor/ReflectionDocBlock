@@ -1,9 +1,13 @@
 <?php
 /**
  * phpDocumentor Link Tag Test
+ * 
+ * PHP version 5.3
  *
- * @author     Ben Selby <benmatselby@gmail.com>
- * @copyright  Copyright (c) 2010-2011 Mike van Riel / Naenius. (http://www.naenius.com)
+ * @author    Ben Selby <benmatselby@gmail.com>
+ * @copyright 2010-2011 Mike van Riel / Naenius. (http://www.naenius.com)
+ * @license   http://www.opensource.org/licenses/mit-license.php MIT
+ * @link      http://phpdoc.org
  */
 
 namespace phpDocumentor\Reflection\DocBlock\Tag;
@@ -11,8 +15,10 @@ namespace phpDocumentor\Reflection\DocBlock\Tag;
 /**
  * Test class for \phpDocumentor\Reflection\DocBlock\Tag\LinkTag
  *
- * @author     Ben Selby <benmatselby@gmail.com>
- * @copyright  Copyright (c) 2010-2011 Mike van Riel / Naenius. (http://www.naenius.com)
+ * @author    Ben Selby <benmatselby@gmail.com>
+ * @copyright 2010-2011 Mike van Riel / Naenius. (http://www.naenius.com)
+ * @license   http://www.opensource.org/licenses/mit-license.php MIT
+ * @link      http://phpdoc.org
  */
 class LinkTagTest extends \PHPUnit_Framework_TestCase
 {
@@ -33,9 +39,13 @@ class LinkTagTest extends \PHPUnit_Framework_TestCase
      * @return void
      */
     public function testConstructorParesInputsIntoCorrectFields(
-        $type, $content, $exName, $exContent, $exDescription, $exLink
-    )
-    {
+        $type,
+        $content,
+        $exName,
+        $exContent,
+        $exDescription,
+        $exLink
+    ) {
         $tag = new LinkTag($type, $content);
 
         $actualName        = $tag->getName();

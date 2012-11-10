@@ -1,6 +1,25 @@
 <?php
+/**
+ * phpDocumentor
+ *
+ * PHP Version 5.3
+ *
+ * @author    Mike van Riel <mike.vanriel@naenius.com>
+ * @copyright 2010-2011 Mike van Riel / Naenius (http://www.naenius.com)
+ * @license   http://www.opensource.org/licenses/mit-license.php MIT
+ * @link      http://phpdoc.org
+ */
+
 namespace phpDocumentor\Reflection\DocBlock\Type;
 
+/**
+ * Collection
+ *
+ * @author    Mike van Riel <mike.vanriel@naenius.com>
+ * @copyright 2010-2011 Mike van Riel / Naenius (http://www.naenius.com)
+ * @license   http://www.opensource.org/licenses/mit-license.php MIT
+ * @link      http://phpdoc.org
+ */
 class Collection extends \ArrayObject
 {
     /** @var string Definition of the OR operator for types */
@@ -49,7 +68,8 @@ class Collection extends \ArrayObject
      *     pairs that are used in the resolving process.
      */
     public function __construct(
-        array $types = array(), $namespace = null,
+        array $types = array(),
+        $namespace = null,
         array $namespace_aliases = array()
     ) {
         // only set the namespace if overridden
@@ -58,7 +78,7 @@ class Collection extends \ArrayObject
         }
         $this->namespace_aliases = $namespace_aliases;
 
-        foreach($types as $type) {
+        foreach ($types as $type) {
             $this->add($type);
         }
     }
@@ -150,7 +170,7 @@ class Collection extends \ArrayObject
 
         // separate the type by the OR operator
         $type_parts = explode(self::OPERATOR_OR, $type);
-        foreach($type_parts as $part) {
+        foreach ($type_parts as $part) {
             $expanded_type = $this->expand($part);
             if ($expanded_type) {
                 $this[] = $expanded_type;
@@ -168,11 +188,11 @@ class Collection extends \ArrayObject
      * This method only works as expected if the namespace and aliases are set;
      * no dynamic reflection is being performed here.
      *
+     * @param string $type The relative or absolute type.
+     *
      * @uses getNamespace to determine with what to prefix the type name.
      * @uses getNamespaceAliases to check whether the first part of the relative
      *     type name should not be replaced with another namespace.
-     *
-     * @param string $type The relative or absolute type.
      *
      * @return string
      */
