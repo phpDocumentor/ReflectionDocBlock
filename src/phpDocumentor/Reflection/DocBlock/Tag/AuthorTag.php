@@ -26,8 +26,11 @@ class AuthorTag extends Tag
     /** @var string The name of the author */
     protected $name = '';
 
-    /** @var string The email of the author */
-    protected $email = '';
+    /** @var array Array of URIs belonging to the author, including email */
+    protected $uris = array();
+    
+    /** @var string The role of the author */
+    protected $role = '';
 
     /**
      * Parses a tag and populates the member variables.
@@ -37,12 +40,36 @@ class AuthorTag extends Tag
      */
     public function __construct($type, $content)
     {
-        parent::__construct($type, $content);
-        if (preg_match('/^([^\<]*)(\<([^\>]*)\>)?$/', $content, $matches)) {
+        $this->tag = $type;
+        $this->content = $content;
+        if (preg_match(
+                '/^
+                    # Name
+                    ([^\<]*)
+                    (?:
+                        # URIs
+                        \<([^>]*)\>\s*
+                        # Role
+                        (?:
+                          \(([^\)]*)\) 
+                        )?
+                        # Description
+                        (.*)
+                    )?
+                $/sux',
+                $content,
+                $matches
+            )
+        ) {
             $this->name = trim($matches[1]);
-            if (isset($matches[3])) {
-                $this->email = trim($matches[3]);
+            if (isset($matches[2])) {
+                $matches[2] = trim($matches[2]);
+                if ('' !== $matches[2]) {
+                    $this->uris = preg_split('/\s+/u', $matches[2]);
+                }
             }
+            $this->role        = isset($matches[3]) ? trim($matches[3]) : '';
+            $this->description = isset($matches[4]) ? trim($matches[4]) : '';
         }
     }
 
@@ -57,12 +84,22 @@ class AuthorTag extends Tag
     }
 
     /**
-     * Gets the author's email.
+     * Gets the author's URIs.
      * 
-     * @return string The author's email.
+     * @return array Array of URIs belonging to the author, including email.
      */
-    public function getAuthorEmail()
+    public function getAuthorURIs()
     {
-        return $this->email;
+        return $this->uris;
+    }
+
+    /**
+     * Gets the author's role.
+     * 
+     * @return string The role of the author.
+     */
+    public function getAuthorRole()
+    {
+        return $this->role;
     }
 }
