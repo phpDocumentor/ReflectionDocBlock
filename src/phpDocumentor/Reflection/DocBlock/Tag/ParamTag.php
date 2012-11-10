@@ -15,7 +15,7 @@ namespace phpDocumentor\Reflection\DocBlock\Tag;
 use phpDocumentor\Reflection\DocBlock\Tag;
 
 /**
- * Reflection class for a {@param} tag in a Docblock.
+ * Reflection class for a @param tag in a Docblock.
  *
  * @author  Mike van Riel <mike.vanriel@naenius.com>
  * @license http://www.opensource.org/licenses/mit-license.php MIT
@@ -34,7 +34,7 @@ class ParamTag extends Tag
     /**
      * Parses a tag and populates the member variables.
      *
-     * @param string $type    Tag identifier for this tag (should be 'param')
+     * @param string $type    Tag identifier for this tag (should be 'param').
      * @param string $content Contents for this tag.
      */
     public function __construct($type, $content)
