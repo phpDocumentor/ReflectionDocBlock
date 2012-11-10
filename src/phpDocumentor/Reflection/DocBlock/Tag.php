@@ -68,7 +68,8 @@ class Tag implements \Reflector
         ).'Tag';
         $class_name = 'phpDocumentor\\Reflection\\DocBlock\\Tag\\' . $tag_name;
 
-        return (@class_exists($class_name))
+        return ($matches[1] === strtolower($matches[1])
+            && @class_exists($class_name))
             ? new $class_name($matches[1], isset($matches[2]) ? $matches[2] : '')
             : new self($matches[1], isset($matches[2]) ? $matches[2] : '');
     }
