@@ -173,6 +173,7 @@ class Tag implements \Reflector
      * @todo determine the exact format as used by PHP Reflection and implement it.
      *
      * @return void
+     * @codeCoverageIgnore Not yet implemented
      */
     public static function export()
     {
@@ -184,6 +185,7 @@ class Tag implements \Reflector
      * BUT this throws an exception at this point).
      *
      * @return string
+     * @codeCoverageIgnore Not yet implemented
      */
     public function __toString()
     {

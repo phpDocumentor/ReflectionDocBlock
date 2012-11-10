@@ -24,7 +24,7 @@ class LinkTagTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Test that the \phpDocumentor\Reflection\DocBlock\Tag\LinkTag can create
-     * a link for the @link doc block
+     * a link for the @link doc block.
      *
      * @param string $type
      * @param string $content

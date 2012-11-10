@@ -24,7 +24,7 @@ class ParamTagTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Test that the \phpDocumentor\Reflection\DocBlock\Tag\ParamTag can
-     * understand the param DocBlock.
+     * understand the @param DocBlock.
      *
      * @param string $type
      * @param string $content

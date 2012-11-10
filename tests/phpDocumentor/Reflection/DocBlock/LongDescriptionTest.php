@@ -57,7 +57,7 @@ tags.',
             $parsedContents[2]
         );
     }
-    
+
     public function testInlineTagAtStartParsing()
     {
         $fixture = <<<LONGDESC
@@ -69,7 +69,7 @@ LONGDESC;
 
         $parsedContents = $object->getParsedContents();
         $this->assertCount(3, $parsedContents);
-        
+
         $this->assertSame('', $parsedContents[0]);
         $this->assertInstanceOf(
             __NAMESPACE__ . '\Tag\LinkTag',
@@ -81,7 +81,7 @@ tags.',
             $parsedContents[2]
         );
     }
-    
+
     public function testNestedInlineTagParsing()
     {
         $fixture = <<<LONGDESC
@@ -93,7 +93,7 @@ LONGDESC;
 
         $parsedContents = $object->getParsedContents();
         $this->assertCount(3, $parsedContents);
-        
+
         $this->assertSame(
             'This is text for a description with ',
             $parsedContents[0]
@@ -198,7 +198,7 @@ inline tag'),
             $parsedContents[1]->getParsedDescription()
         );
     }
-    
+
     public function testInlineTagEscapingSequence()
     {
         $fixture = <<<LONGDESC

@@ -100,7 +100,7 @@ class LongDescription implements \Reflector
                     $this->parsedContents[$i]
                 );
             }
-            
+
             //In order to allow "literal" inline tags, the otherwise invalid
             //sequence "{@}" is changed to "@", and "{}" is changed to "}".
             //See unit tests for examples.
@@ -153,6 +153,7 @@ class LongDescription implements \Reflector
      *     and implement it.
      *
      * @return void
+     * @codeCoverageIgnore Not yet implemented
      */
     public static function export()
     {
@@ -164,6 +165,7 @@ class LongDescription implements \Reflector
      * BUT this throws an exception at this point).
      *
      * @return string
+     * @codeCoverageIgnore Not yet implemented
      */
     public function __toString()
     {
