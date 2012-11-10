@@ -38,6 +38,30 @@ class Tag implements \Reflector
 
     /** @var \phpDocumentor\Reflection\DocBlock docblock class */
     protected $docblock;
+    
+    /**
+     * @var array An array with a tag as a key, and an FQCN to a class that
+     *     handles it as an array value. The class is expected to inherit this
+     *     class.
+     */
+    private static $tagHandlerMappings = array(
+        'author' => '\phpDocumentor\Reflection\DocBlock\Tag\AuthorTag',
+        'covers' => '\phpDocumentor\Reflection\DocBlock\Tag\CoversTag',
+        'link' => '\phpDocumentor\Reflection\DocBlock\Tag\LinkTag',
+        'method' => '\phpDocumentor\Reflection\DocBlock\Tag\MethodTag',
+        'param' => '\phpDocumentor\Reflection\DocBlock\Tag\ParamTag',
+        'property-read'
+            => '\phpDocumentor\Reflection\DocBlock\Tag\PropertyReadTag',
+        'property' => '\phpDocumentor\Reflection\DocBlock\Tag\PropertyTag',
+        'property-write'
+            => '\phpDocumentor\Reflection\DocBlock\Tag\PropertyWriteTag',
+        'return' => '\phpDocumentor\Reflection\DocBlock\Tag\ReturnTag',
+        'see' => '\phpDocumentor\Reflection\DocBlock\Tag\SeeTag',
+        'throw' => '\phpDocumentor\Reflection\DocBlock\Tag\ThrowsTag',
+        'throws' => '\phpDocumentor\Reflection\DocBlock\Tag\ThrowsTag',
+        'uses' => '\phpDocumentor\Reflection\DocBlock\Tag\UsesTag',
+        'var' => '\phpDocumentor\Reflection\DocBlock\Tag\VarTag'
+    );
 
     /**
      * Factory method responsible for instantiating the correct sub type.
@@ -48,7 +72,7 @@ class Tag implements \Reflector
      *
      * @return \phpDocumentor\Reflection\DocBlock\Tag
      */
-    public static function createInstance($tag_line)
+    final public static function createInstance($tag_line)
     {
         if (!preg_match(
             '/^@([\w\-\_\\\\]+)(?:\s*([^\s].*)|$)?/us',
@@ -60,18 +84,44 @@ class Tag implements \Reflector
             );
         }
 
-        // support hypphen separated tag names
-        $tag_name = str_replace(
-            ' ',
-            '',
-            ucwords(str_replace('-', ' ', $matches[1]))
-        ).'Tag';
-        $class_name = 'phpDocumentor\\Reflection\\DocBlock\\Tag\\' . $tag_name;
+        if (isset(self::$tagHandlerMappings[$matches[1]])) {
+            $handler = self::$tagHandlerMappings[$matches[1]];
+            return new $handler(
+                $matches[1],
+                isset($matches[2]) ? $matches[2] : ''
+            );
+        }
+        return new self($matches[1], isset($matches[2]) ? $matches[2] : '');
+    }
 
-        return ($matches[1] === strtolower($matches[1])
-            && @class_exists($class_name))
-            ? new $class_name($matches[1], isset($matches[2]) ? $matches[2] : '')
-            : new self($matches[1], isset($matches[2]) ? $matches[2] : '');
+    /**
+     * Registers a handler for tags.
+     * 
+     * Registers a handler for tags. The class specified is autoloaded if it's
+     * not available. It must inherit from this class.
+     * 
+     * @param string $tag     Name of tag to regiser a handler for.
+     * @param string $handler FQCN of handler. Specifing NULL removes the
+     *     handler for the specified tag, if any.
+     * 
+     * @return bool TRUE on success, FALSE on failure.
+     */
+    final public static function registerTagHandler($tag, $handler)
+    {
+        $tag = trim((string)$tag);
+        if (null === $handler) {
+            unset(self::$tagHandlerMappings[$tag]);
+            return true;
+        }
+        if ('' !== $tag
+            && class_exists($handler, true)
+            && is_subclass_of($handler, '\\' . __CLASS__)
+        ) {
+            self::$tagHandlerMappings[$tag] = $handler;
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
