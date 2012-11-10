@@ -100,6 +100,8 @@ DOCBLOCK;
 
     /**
      * @covers \phpDocumentor\Reflection\DocBlock::__construct
+     * 
+     * @return void
      */
     public function testConstructFromReflector()
     {
@@ -119,6 +121,8 @@ DOCBLOCK;
 
     /**
      * @expectedException \InvalidArgumentException
+     * 
+     * @return void
      */
     public function testExceptionOnInvalidObject()
     {
@@ -187,6 +191,8 @@ DOCBLOCK;
     /**
      * @depends testConstructFromReflector
      * @covers \phpDocumentor\Reflection\DocBlock::getTagsByName
+     * 
+     * @return void
      */
     public function testGetTagsByNameZeroAndOneMatch()
     {
@@ -198,6 +204,8 @@ DOCBLOCK;
     /**
      * @depends testConstructWithTagsOnly
      * @covers \phpDocumentor\Reflection\DocBlock::parseTags
+     * 
+     * @return void
      */
     public function testParseMultilineTag()
     {
@@ -214,6 +222,8 @@ DOCBLOCK;
     /**
      * @depends testConstructWithTagsOnly
      * @covers \phpDocumentor\Reflection\DocBlock::parseTags
+     * 
+     * @return void
      */
     public function testParseMultilineTagWithLineBreaks()
     {
@@ -232,6 +242,8 @@ DOCBLOCK;
     /**
      * @depends testConstructWithTagsOnly
      * @covers \phpDocumentor\Reflection\DocBlock::getTagsByName
+     * 
+     * @return void
      */
     public function testGetTagsByNameMultipleMatch()
     {
