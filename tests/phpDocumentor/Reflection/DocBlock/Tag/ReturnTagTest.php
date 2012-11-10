@@ -20,7 +20,7 @@ namespace phpDocumentor\Reflection\DocBlock\Tag;
  * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      http://phpdoc.org
  */
-class ReturnTagTest extends ParamTagTest
+class ReturnTagTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Test that the \phpDocumentor\Reflection\DocBlock\Tag\ReturnTag can
@@ -28,6 +28,7 @@ class ReturnTagTest extends ParamTagTest
      *
      * @param string $content
      * @param string $extractedType
+     * @param string $extractedTypes
      * @param string $extractedDescription
      *
      * @covers \phpDocumentor\Reflection\DocBlock\Tag\ReturnTag::__construct

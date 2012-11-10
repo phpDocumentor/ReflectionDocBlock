@@ -28,7 +28,6 @@ class SeeTagTest extends \PHPUnit_Framework_TestCase
      *
      * @param string $type
      * @param string $content
-     * @param string $exName
      * @param string $exContent
      * @param string $exReference
      *
