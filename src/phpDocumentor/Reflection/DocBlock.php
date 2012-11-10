@@ -200,30 +200,32 @@ class DocBlock implements \Reflector
     protected function parseTags($tags)
     {
         $result = array();
-        foreach (explode("\n", trim($tags)) as $tag_line) {
-            if (trim($tag_line) === '') {
-                continue;
+        $tags = trim($tags);
+        if ('' !== $tags) {
+            if ('@' !== $tags[0]) {
+                throw new \LogicException(
+                    'A tag block started with text instead of an actual tag,'
+                    . ' this makes the tag block invalid: ' . $tags
+                );
             }
-
-            if (isset($tag_line[0]) && ($tag_line[0] === '@')) {
-                $result[] = $tag_line;
-            } else {
-                if (count($result) == 0) {
-                    throw new \LogicException(
-                        'A tag block started with text instead of an actual tag,'
-                        . ' this makes the tag block invalid: ' . $tags
-                    );
+            foreach (explode("\n", $tags) as $tag_line) {
+                if (trim($tag_line) === '') {
+                    continue;
                 }
 
-                $result[count($result) - 1] .= PHP_EOL . $tag_line;
+                if (isset($tag_line[0]) && ($tag_line[0] === '@')) {
+                    $result[] = $tag_line;
+                } else {
+                    $result[count($result) - 1] .= PHP_EOL . $tag_line;
+                }
             }
-        }
 
-        // create proper Tag objects
-        foreach ($result as $key => $tag_line) {
-            $tag = DocBlock\Tag::createInstance($tag_line);
-            $tag->setDocBlock($this);
-            $result[$key] = $tag;
+            // create proper Tag objects
+            foreach ($result as $key => $tag_line) {
+                $tag = DocBlock\Tag::createInstance($tag_line);
+                $tag->setDocBlock($this);
+                $result[$key] = $tag;
+            }
         }
 
         $this->tags = $result;
@@ -388,6 +390,7 @@ class DocBlock implements \Reflector
      *     implement it.
      *
      * @return string
+     * @codeCoverageIgnore Not yet implemented
      */
     public static function export()
     {
@@ -399,6 +402,7 @@ class DocBlock implements \Reflector
      * BUT this throws an exception at this point).
      *
      * @return string
+     * @codeCoverageIgnore Not yet implemented
      */
     public function __toString()
     {

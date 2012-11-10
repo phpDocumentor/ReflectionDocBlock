@@ -13,7 +13,7 @@
 namespace phpDocumentor\Reflection;
 
 /**
- * Test class for phpDocumentor_Reflection_DocBlock
+ * Test class for phpDocumentor\Reflection\DocBlock
  *
  * @author    Mike van Riel <mike.vanriel@naenius.com>
  * @copyright 2010-2011 Mike van Riel / Naenius. (http://www.naenius.com)
@@ -46,6 +46,31 @@ DOCBLOCK;
         $this->assertEquals(2, count($object->getTags()));
         $this->assertTrue($object->hasTag('see'));
         $this->assertTrue($object->hasTag('return'));
+        $this->assertFalse($object->hasTag('category'));
+    }
+
+    public function testConstructFromReflector()
+    {
+        $object = new DocBlock(new \ReflectionClass($this));
+        $this->assertEquals(
+            'Test class for phpDocumentor\Reflection\DocBlock',
+            $object->getShortDescription()
+        );
+        $this->assertEquals('', $object->getLongDescription()->getContents());
+        $this->assertEquals(4, count($object->getTags()));
+        $this->assertTrue($object->hasTag('author'));
+        $this->assertTrue($object->hasTag('copyright'));
+        $this->assertTrue($object->hasTag('license'));
+        $this->assertTrue($object->hasTag('link'));
+        $this->assertFalse($object->hasTag('category'));
+    }
+    
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testExceptionOnInvalidObject()
+    {
+        $object = new DocBlock($this);
     }
 
     public function testDotSeperation()
@@ -139,16 +164,18 @@ DOCBLOCK;
     public function testThatExpandTypeDoesNotExpandAllKeywords($keyword)
     {
         $docblock = new DocBlock('', '\My\Namespace');
-        $this->assertEquals($keyword, $docblock->expandType($keyword));
+        $this->assertSame($keyword, $docblock->expandType($keyword));
     }
 
     public function getNonExpandableKeywordsForExpandType()
     {
         return array(
+            array(null),
             array('string'), array('int'), array('integer'), array('bool'),
             array('boolean'), array('float'), array('double'), array('object'),
             array('mixed'), array('array'), array('resource'), array('void'),
-            array('null'), array('callback'), array('false'), array('true')
+            array('null'), array('callback'), array('false'), array('true'),
+            array('self'), array('$this'), array('callable')
         );
     }
 }

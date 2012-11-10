@@ -24,7 +24,7 @@ class ReturnTagTest extends ParamTagTest
 {
     /**
      * Test that the \phpDocumentor\Reflection\DocBlock\Tag\ReturnTag can
-     * understand the Return DocBlock.
+     * understand the @return DocBlock.
      *
      * @param string $content
      * @param string $extractedType

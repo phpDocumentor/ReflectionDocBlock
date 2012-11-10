@@ -24,7 +24,7 @@ class VarTagTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Test that the \phpDocumentor\Reflection\DocBlock\Tag\VarTag can
-     * understand the @var doc block
+     * understand the @var doc block.
      *
      * @param string $type
      * @param string $content
