@@ -13,7 +13,7 @@
 namespace phpDocumentor\Reflection\DocBlock\Tag;
 
 /**
- * Reflection class for a {@var} tag in a Docblock.
+ * Reflection class for a @var tag in a Docblock.
  *
  * @author  Mike van Riel <mike.vanriel@naenius.com>
  * @license http://www.opensource.org/licenses/mit-license.php MIT
@@ -24,7 +24,7 @@ class VarTag extends ParamTag
     /**
      * Parses a tag and populates the member variables.
      *
-     * @param string $type    Tag identifier for this tag (should be 'return')
+     * @param string $type    Tag identifier for this tag (should be 'var').
      * @param string $content Contents for this tag.
      */
     public function __construct($type, $content)

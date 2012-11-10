@@ -13,7 +13,7 @@
 namespace phpDocumentor\Reflection\DocBlock\Tag;
 
 /**
- * Reflection class for a {@method} in a Docblock.
+ * Reflection class for a @method in a Docblock.
  *
  * @author  Mike van Riel <mike.vanriel@naenius.com>
  * @license http://www.opensource.org/licenses/mit-license.php MIT
@@ -31,8 +31,8 @@ class MethodTag extends ParamTag
     /**
      * Parses a tag and populates the member variables.
      *
-     * @param string $type    Tag identifier for this tag (should be 'return')
-     * @param string $content Contents for this tag.
+     * @param string $type    Tag identifier for this tag (should be 'method').
+     * @param string $content The contents of the given tag.
      */
     public function __construct($type, $content)
     {

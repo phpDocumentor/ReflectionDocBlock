@@ -29,8 +29,8 @@ class LinkTag extends Tag
     /**
      * Parses a tag and populates the member variables.
      *
-     * @param string $type    Tag type
-     * @param string $content Content of the tag
+     * @param string $type    Tag identifier for this tag (should be 'link').
+     * @param string $content The contents of the given tag.
      */
     public function __construct($type, $content)
     {

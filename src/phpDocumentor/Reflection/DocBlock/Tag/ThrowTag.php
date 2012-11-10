@@ -24,10 +24,10 @@ namespace phpDocumentor\Reflection\DocBlock\Tag;
 class ThrowTag extends ThrowsTag
 {
     /**
-     * Sets the type to {@throws} and lets parent parse the tag and populates the
+     * Sets the type to @throws and lets parent parse the tag and populates the
      * member variables.
      *
-     * @param string $type    Tag identifier for this tag (should be 'return')
+     * @param string $type    Tag identifier for this tag (should be 'throw').
      * @param string $content Contents for this tag.
      */
     public function __construct($type, $content)
