@@ -64,7 +64,7 @@ DOCBLOCK;
         $this->assertTrue($object->hasTag('link'));
         $this->assertFalse($object->hasTag('category'));
     }
-    
+
     /**
      * @expectedException \InvalidArgumentException
      */
@@ -90,6 +90,45 @@ DOCBLOCK;
             "This is a long description.\nThis is a continuation of the long "
             ."description.",
             $object->getLongDescription()->getContents()
+        );
+    }
+
+    public function testTagCaseSensitivity()
+    {
+        $fixture = <<<DOCBLOCK
+/**
+ * This is a short description.
+ *
+ * This is a long description.
+ *
+ * @method null something()
+ * @Method({"GET", "POST"})
+ */
+DOCBLOCK;
+        $object = new DocBlock($fixture);
+        $this->assertEquals(
+            'This is a short description.',
+            $object->getShortDescription()
+        );
+        $this->assertEquals(
+            'This is a long description.',
+            $object->getLongDescription()->getContents()
+        );
+        $tags = $object->getTags();
+        $this->assertEquals(2, count($tags));
+        $this->assertTrue($object->hasTag('method'));
+        $this->assertTrue($object->hasTag('Method'));
+        $this->assertInstanceOf(
+            __NAMESPACE__ . '\DocBlock\Tag\MethodTag',
+            $tags[0]
+        );
+        $this->assertInstanceOf(
+            __NAMESPACE__ . '\DocBlock\Tag',
+            $tags[1]
+        );
+        $this->assertNotInstanceOf(
+            __NAMESPACE__ . '\DocBlock\Tag\MethodTag',
+            $tags[1]
         );
     }
 
