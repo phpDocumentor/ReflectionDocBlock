@@ -76,6 +76,15 @@ class ParamTagTest extends \PHPUnit_Framework_TestCase
                 'param', 'int $bob Number of bobs', 'int', array('int'), '$bob',
                 'Number of bobs'
             ),
+            array('param', "int Description \n on multiple lines", 'int',
+                array('int'), '', "Description \n on multiple lines"
+            ),
+            array('param', "int \n\$bob Variable name on a new line", 'int',
+                array('int'), '$bob', "Variable name on a new line"
+            ),
+            array('param', "\nint \$bob Type on a new line", 'int',
+                array('int'), '$bob', "Type on a new line"
+            )
         );
     }
 }

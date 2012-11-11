@@ -36,7 +36,12 @@ class ParamTag extends ReturnTag
     {
         $this->tag = $type;
         $this->content = $content;
-        $content = preg_split('/\s+/u', $content);
+        $content = preg_split(
+            '/(\s+)/u',
+            trim($content),
+            3,
+            PREG_SPLIT_DELIM_CAPTURE
+        );
 
         // if the first item that is encountered is not a variable; it is a type
         if (isset($content[0])
@@ -44,6 +49,7 @@ class ParamTag extends ReturnTag
             && ($content[0][0] !== '$')
         ) {
             $this->type = array_shift($content);
+            array_shift($content);
         }
 
         // if the next item starts with a $ it must be the variable name
@@ -52,9 +58,10 @@ class ParamTag extends ReturnTag
             && ($content[0][0] == '$')
         ) {
             $this->variableName = array_shift($content);
+            array_shift($content);
         }
 
-        $this->description = implode(' ', $content);
+        $this->description = implode('', $content);
     }
 
     /**
