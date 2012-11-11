@@ -149,6 +149,32 @@ DOCBLOCK;
         );
     }
 
+    /**
+     * @covers \phpDocumentor\Reflection\DocBlock::parseTags
+     * @expectedException \LogicException
+     * 
+     * @return void
+     */
+    public function testInvalidTagBlock()
+    {
+        if (0 == ini_get('allow_url_include')) {
+            $this->markTestSkipped('"data" URIs for includes are required.');
+        }
+
+        require 'data:text/plain;base64,'. base64_encode(
+<<<'TAG_HANDLER'
+<?php
+class MyReflectionDocBlock extends \phpDocumentor\Reflection\DocBlock {
+    protected function splitDocBlock($comment) {
+        return array('', '', 'Invalid tag block');
+    }
+}
+TAG_HANDLER
+        );
+        new \MyReflectionDocBlock('');
+        
+    }
+
     public function testTagCaseSensitivity()
     {
         $fixture = <<<DOCBLOCK

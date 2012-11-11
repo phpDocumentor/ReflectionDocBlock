@@ -37,7 +37,7 @@ class ReturnTag extends Tag
         $this->tag = $type;
         $this->content = $content;
 
-        $content = preg_split('/[\ \t]+/u', $content, 2);
+        $content = preg_split('/[\ \t]+/u', trim($content), 2);
 
         // any output is considered a type
         $this->type = array_shift($content);

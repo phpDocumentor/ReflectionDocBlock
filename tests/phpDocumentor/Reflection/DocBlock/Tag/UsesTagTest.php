@@ -31,7 +31,7 @@ class UsesTagTest extends \PHPUnit_Framework_TestCase
      * @param string $exContent
      * @param string $exReference
      *
-     * @covers \phpDocumentor\Reflection\DocBlock\Tag\UsesTag::__construct
+     * @covers \phpDocumentor\Reflection\DocBlock\Tag\UsesTag
      * @dataProvider provideDataForConstuctor
      *
      * @return void
