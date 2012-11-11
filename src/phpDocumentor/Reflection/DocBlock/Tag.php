@@ -45,22 +45,34 @@ class Tag implements \Reflector
      *     class.
      */
     private static $tagHandlerMappings = array(
-        'author' => '\phpDocumentor\Reflection\DocBlock\Tag\AuthorTag',
-        'covers' => '\phpDocumentor\Reflection\DocBlock\Tag\CoversTag',
-        'link' => '\phpDocumentor\Reflection\DocBlock\Tag\LinkTag',
-        'method' => '\phpDocumentor\Reflection\DocBlock\Tag\MethodTag',
-        'param' => '\phpDocumentor\Reflection\DocBlock\Tag\ParamTag',
+        'author'
+            => '\phpDocumentor\Reflection\DocBlock\Tag\AuthorTag',
+        'covers'
+            => '\phpDocumentor\Reflection\DocBlock\Tag\CoversTag',
+        'link'
+            => '\phpDocumentor\Reflection\DocBlock\Tag\LinkTag',
+        'method'
+            => '\phpDocumentor\Reflection\DocBlock\Tag\MethodTag',
+        'param'
+            => '\phpDocumentor\Reflection\DocBlock\Tag\ParamTag',
         'property-read'
             => '\phpDocumentor\Reflection\DocBlock\Tag\PropertyReadTag',
-        'property' => '\phpDocumentor\Reflection\DocBlock\Tag\PropertyTag',
+        'property'
+            => '\phpDocumentor\Reflection\DocBlock\Tag\PropertyTag',
         'property-write'
             => '\phpDocumentor\Reflection\DocBlock\Tag\PropertyWriteTag',
-        'return' => '\phpDocumentor\Reflection\DocBlock\Tag\ReturnTag',
-        'see' => '\phpDocumentor\Reflection\DocBlock\Tag\SeeTag',
-        'throw' => '\phpDocumentor\Reflection\DocBlock\Tag\ThrowsTag',
-        'throws' => '\phpDocumentor\Reflection\DocBlock\Tag\ThrowsTag',
-        'uses' => '\phpDocumentor\Reflection\DocBlock\Tag\UsesTag',
-        'var' => '\phpDocumentor\Reflection\DocBlock\Tag\VarTag'
+        'return'
+            => '\phpDocumentor\Reflection\DocBlock\Tag\ReturnTag',
+        'see'
+            => '\phpDocumentor\Reflection\DocBlock\Tag\SeeTag',
+        'throw'
+            => '\phpDocumentor\Reflection\DocBlock\Tag\ThrowsTag',
+        'throws'
+            => '\phpDocumentor\Reflection\DocBlock\Tag\ThrowsTag',
+        'uses'
+            => '\phpDocumentor\Reflection\DocBlock\Tag\UsesTag',
+        'var'
+            => '\phpDocumentor\Reflection\DocBlock\Tag\VarTag'
     );
 
     /**
@@ -100,8 +112,8 @@ class Tag implements \Reflector
      * Registers a handler for tags. The class specified is autoloaded if it's
      * not available. It must inherit from this class.
      * 
-     * @param string $tag     Name of tag to regiser a handler for.
-     * @param string $handler FQCN of handler. Specifing NULL removes the
+     * @param string      $tag     Name of tag to regiser a handler for.
+     * @param string|null $handler FQCN of handler. Specifing NULL removes the
      *     handler for the specified tag, if any.
      * 
      * @return bool TRUE on success, FALSE on failure.
@@ -109,19 +121,21 @@ class Tag implements \Reflector
     final public static function registerTagHandler($tag, $handler)
     {
         $tag = trim((string)$tag);
+
         if (null === $handler) {
             unset(self::$tagHandlerMappings[$tag]);
             return true;
         }
+
         if ('' !== $tag
             && class_exists($handler, true)
-            && is_subclass_of($handler, '\\' . __CLASS__)
+            && is_subclass_of($handler, __CLASS__)
         ) {
             self::$tagHandlerMappings[$tag] = $handler;
             return true;
-        } else {
-            return false;
         }
+
+        return false;
     }
 
     /**
