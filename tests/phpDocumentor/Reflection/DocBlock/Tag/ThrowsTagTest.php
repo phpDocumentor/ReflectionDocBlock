@@ -20,7 +20,7 @@ namespace phpDocumentor\Reflection\DocBlock\Tag;
  * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      http://phpdoc.org
  */
-class ReturnTagTest extends \PHPUnit_Framework_TestCase
+class ThrowsTagTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Test that the \phpDocumentor\Reflection\DocBlock\Tag\ReturnTag can
@@ -32,9 +32,7 @@ class ReturnTagTest extends \PHPUnit_Framework_TestCase
      * @param string $extractedTypes
      * @param string $extractedDescription
      *
-     * @covers \phpDocumentor\Reflection\DocBlock\Tag\ReturnTag::__construct
-     * @covers \phpDocumentor\Reflection\DocBlock\Tag\ReturnTag::getType
-     * @covers \phpDocumentor\Reflection\DocBlock\Tag\ReturnTag::getTypes
+     * @covers \phpDocumentor\Reflection\DocBlock\Tag\ThrowsTag
      *
      * @dataProvider provideDataForConstructor
      *
@@ -47,7 +45,7 @@ class ReturnTagTest extends \PHPUnit_Framework_TestCase
         $extractedTypes,
         $extractedDescription
     ) {
-        $tag = new ReturnTag($type, $content);
+        $tag = new ThrowsTag($type, $content);
 
         $this->assertEquals($type, $tag->getName());
         $this->assertEquals($extractedType, $tag->getType());
@@ -63,31 +61,31 @@ class ReturnTagTest extends \PHPUnit_Framework_TestCase
     public function provideDataForConstructor()
     {
         return array(
-            array('return', '', '', array(), ''),
-            array('return', 'int', 'int', array('int'), ''),
+            array('throws', '', '', array(), ''),
+            array('throws', 'int', 'int', array('int'), ''),
             array(
-                'return',
+                'throws',
                 'int Number of Bobs',
                 'int',
                 array('int'),
                 'Number of Bobs'
             ),
             array(
-                'return',
+                'throws',
                 'int|double Number of Bobs',
                 'int|double',
                 array('int', 'double'),
                 'Number of Bobs'
             ),
             array(
-                'return',
+                'throws',
                 "int Number of \n Bobs",
                 'int',
                 array('int'),
                 "Number of \n Bobs"
             ),
             array(
-                'return',
+                'throws',
                 " int Number of Bobs",
                 'int',
                 array('int'),

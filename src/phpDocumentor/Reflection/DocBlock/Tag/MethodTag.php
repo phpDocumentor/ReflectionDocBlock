@@ -12,6 +12,9 @@
 
 namespace phpDocumentor\Reflection\DocBlock\Tag;
 
+use phpDocumentor\Reflection\DocBlock;
+use phpDocumentor\Reflection\DocBlock\Tag;
+
 /**
  * Reflection class for a @method in a Docblock.
  *
@@ -19,7 +22,7 @@ namespace phpDocumentor\Reflection\DocBlock\Tag;
  * @license http://www.opensource.org/licenses/mit-license.php MIT
  * @link    http://phpdoc.org
  */
-class MethodTag extends ParamTag
+class MethodTag extends ReturnTag
 {
 
     /** @var string */
@@ -31,13 +34,13 @@ class MethodTag extends ParamTag
     /**
      * Parses a tag and populates the member variables.
      *
-     * @param string $type    Tag identifier for this tag (should be 'method').
-     * @param string $content The contents of the given tag.
+     * @param string   $type     Tag identifier for this tag (should be 'method').
+     * @param string   $content  Contents for this tag.
+     * @param DocBlock $docblock The DocBlock which this tag belongs to.
      */
-    public function __construct($type, $content)
+    public function __construct($type, $content, DocBlock $docblock = null)
     {
-        $this->tag = $type;
-        $this->content = $content;
+        Tag::__construct($type, $content, $docblock);
 
         $matches = array();
         // 1. none or more whitespace
@@ -51,7 +54,7 @@ class MethodTag extends ParamTag
         if (preg_match(
             '/^[\s]*(?:([\w\|_\\\\]+)[\s]+)?(?:[\w_]+\(\)[\s]+)?([\w\|_\\\\]+)'
             .'\(([^\)]*)\)[\s]*(.*)/u',
-            $content,
+            $this->description,
             $matches
         )) {
             list(

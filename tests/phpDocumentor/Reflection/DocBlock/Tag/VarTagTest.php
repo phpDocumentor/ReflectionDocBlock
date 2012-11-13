@@ -46,6 +46,7 @@ class VarTagTest extends \PHPUnit_Framework_TestCase
     ) {
         $tag = new VarTag($type, $content);
 
+        $this->assertEquals($type, $tag->getName());
         $this->assertEquals($exType, $tag->getType());
         $this->assertEquals($exVariable, $tag->getVariableName());
         $this->assertEquals($exDescription, $tag->getDescription());
@@ -58,7 +59,7 @@ class VarTagTest extends \PHPUnit_Framework_TestCase
      */
     public function provideDataForConstuctor()
     {
-        // $type, $content
+        // $type, $content, $exType, $exVariable, $exDescription
         return array(
             array(
                 'var',
@@ -80,6 +81,13 @@ class VarTagTest extends \PHPUnit_Framework_TestCase
                 'int',
                 '$bob',
                 'Number of bobs'
+            ),
+            array(
+                'var',
+                '',
+                '',
+                '',
+                ''
             ),
         );
     }

@@ -12,6 +12,8 @@
 
 namespace phpDocumentor\Reflection\DocBlock;
 
+use phpDocumentor\Reflection\DocBlock;
+
 /**
  * Parses a tag definition for a DocBlock.
  *
@@ -36,20 +38,59 @@ class Tag implements \Reflector
     /** @var int Line number of the tag */
     protected $line_number = 0;
 
-    /** @var \phpDocumentor\Reflection\DocBlock docblock class */
-    protected $docblock;
+    /** @var DocBlock The DocBlock which this tag belongs to. */
+    protected $docblock = null;
+    
+    /**
+     * @var array An array with a tag as a key, and an FQCN to a class that
+     *     handles it as an array value. The class is expected to inherit this
+     *     class.
+     */
+    private static $tagHandlerMappings = array(
+        'author'
+            => '\phpDocumentor\Reflection\DocBlock\Tag\AuthorTag',
+        'covers'
+            => '\phpDocumentor\Reflection\DocBlock\Tag\CoversTag',
+        'link'
+            => '\phpDocumentor\Reflection\DocBlock\Tag\LinkTag',
+        'method'
+            => '\phpDocumentor\Reflection\DocBlock\Tag\MethodTag',
+        'param'
+            => '\phpDocumentor\Reflection\DocBlock\Tag\ParamTag',
+        'property-read'
+            => '\phpDocumentor\Reflection\DocBlock\Tag\PropertyReadTag',
+        'property'
+            => '\phpDocumentor\Reflection\DocBlock\Tag\PropertyTag',
+        'property-write'
+            => '\phpDocumentor\Reflection\DocBlock\Tag\PropertyWriteTag',
+        'return'
+            => '\phpDocumentor\Reflection\DocBlock\Tag\ReturnTag',
+        'see'
+            => '\phpDocumentor\Reflection\DocBlock\Tag\SeeTag',
+        'throw'
+            => '\phpDocumentor\Reflection\DocBlock\Tag\ThrowsTag',
+        'throws'
+            => '\phpDocumentor\Reflection\DocBlock\Tag\ThrowsTag',
+        'uses'
+            => '\phpDocumentor\Reflection\DocBlock\Tag\UsesTag',
+        'var'
+            => '\phpDocumentor\Reflection\DocBlock\Tag\VarTag'
+    );
 
     /**
      * Factory method responsible for instantiating the correct sub type.
      *
-     * @param string $tag_line The text for this tag, including description.
+     * @param string   $tag_line The text for this tag, including description.
+     * @param DocBlock $docblock The DocBlock which this tag belongs to.
      *
      * @throws \InvalidArgumentException if an invalid tag line was presented.
      *
-     * @return \phpDocumentor\Reflection\DocBlock\Tag
+     * @return static A new tag object.
      */
-    public static function createInstance($tag_line)
-    {
+    final public static function createInstance(
+        $tag_line,
+        DocBlock $docblock = null
+    ) {
         if (!preg_match(
             '/^@([\w\-\_\\\\]+)(?:\s*([^\s].*)|$)?/us',
             $tag_line,
@@ -60,31 +101,66 @@ class Tag implements \Reflector
             );
         }
 
-        // support hypphen separated tag names
-        $tag_name = str_replace(
-            ' ',
-            '',
-            ucwords(str_replace('-', ' ', $matches[1]))
-        ).'Tag';
-        $class_name = 'phpDocumentor\\Reflection\\DocBlock\\Tag\\' . $tag_name;
+        if (isset(self::$tagHandlerMappings[$matches[1]])) {
+            $handler = self::$tagHandlerMappings[$matches[1]];
+            return new $handler(
+                $matches[1],
+                isset($matches[2]) ? $matches[2] : '',
+                $docblock
+            );
+        }
+        return new self(
+            $matches[1],
+            isset($matches[2]) ? $matches[2] : '',
+            $docblock
+        );
+    }
 
-        return ($matches[1] === strtolower($matches[1])
-            && @class_exists($class_name))
-            ? new $class_name($matches[1], isset($matches[2]) ? $matches[2] : '')
-            : new self($matches[1], isset($matches[2]) ? $matches[2] : '');
+    /**
+     * Registers a handler for tags.
+     * 
+     * Registers a handler for tags. The class specified is autoloaded if it's
+     * not available. It must inherit from this class.
+     * 
+     * @param string      $tag     Name of tag to regiser a handler for.
+     * @param string|null $handler FQCN of handler. Specifing NULL removes the
+     *     handler for the specified tag, if any.
+     * 
+     * @return bool TRUE on success, FALSE on failure.
+     */
+    final public static function registerTagHandler($tag, $handler)
+    {
+        $tag = trim((string)$tag);
+
+        if (null === $handler) {
+            unset(self::$tagHandlerMappings[$tag]);
+            return true;
+        }
+
+        if ('' !== $tag
+            && class_exists($handler, true)
+            && is_subclass_of($handler, __CLASS__)
+        ) {
+            self::$tagHandlerMappings[$tag] = $handler;
+            return true;
+        }
+
+        return false;
     }
 
     /**
      * Parses a tag and populates the member variables.
      *
-     * @param string $type    Name of the tag.
-     * @param string $content The contents of the given tag.
+     * @param string   $type     Name of the tag.
+     * @param string   $content  The contents of the given tag.
+     * @param DocBlock $docblock The DocBlock which this tag belongs to.
      */
-    public function __construct($type, $content)
+    public function __construct($type, $content, DocBlock $docblock = null)
     {
         $this->tag = $type;
         $this->content = $content;
-        $this->description = $content;
+        $this->description = trim($content);
+        $this->docblock = $docblock;
     }
 
     /**
@@ -126,7 +202,7 @@ class Tag implements \Reflector
     public function getParsedDescription()
     {
         if (null === $this->parsedDescription) {
-            $description = new LongDescription($this->description);
+            $description = new Description($this->description, $this->docblock);
             $this->parsedDescription = $description->getParsedContents();
         }
         return $this->parsedDescription;
@@ -152,20 +228,6 @@ class Tag implements \Reflector
     public function getLineNumber()
     {
         return $this->line_number;
-    }
-
-    /**
-     * Inject the docblock class
-     *
-     * This exposes some common functionality contained in the docblock abstract.
-     *
-     * @param object $docblock Object containing the DocBlock.
-     *
-     * @return void
-     */
-    public function setDocBlock($docblock)
-    {
-        $this->docblock = $docblock;
     }
 
     /**
