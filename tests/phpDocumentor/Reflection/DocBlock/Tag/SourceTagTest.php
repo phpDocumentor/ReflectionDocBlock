@@ -112,7 +112,7 @@ class SourceTagTest extends \PHPUnit_Framework_TestCase
                 '-1 1 Testing comments',
                 1,
                 null
-            ),
+            )
         );
     }
 }
