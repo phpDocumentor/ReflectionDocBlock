@@ -83,7 +83,7 @@ class DocBlock implements \Reflector
 
         list($short, $long, $tags) = $this->splitDocBlock($docblock);
         $this->short_description = $short;
-        $this->long_description = new DocBlock\LongDescription($long);
+        $this->long_description = new DocBlock\Description($long);
         $this->parseTags($tags);
 
         $this->namespace = $namespace;
@@ -222,9 +222,7 @@ class DocBlock implements \Reflector
 
             // create proper Tag objects
             foreach ($result as $key => $tag_line) {
-                $tag = DocBlock\Tag::createInstance($tag_line);
-                $tag->setDocBlock($this);
-                $result[$key] = $tag;
+                $result[$key] = DocBlock\Tag::createInstance($tag_line, $this);
             }
         }
 
