@@ -162,14 +162,14 @@ DOCBLOCK;
         }
 
         require 'data:text/plain;base64,'. base64_encode(
-<<<'TAG_HANDLER'
+            <<<DOCBLOCK_EXTENSION
 <?php
 class MyReflectionDocBlock extends \phpDocumentor\Reflection\DocBlock {
-    protected function splitDocBlock($comment) {
+    protected function splitDocBlock(\$comment) {
         return array('', '', 'Invalid tag block');
     }
 }
-TAG_HANDLER
+DOCBLOCK_EXTENSION
         );
         new \MyReflectionDocBlock('');
         

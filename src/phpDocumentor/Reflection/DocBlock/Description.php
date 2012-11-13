@@ -13,13 +13,13 @@
 namespace phpDocumentor\Reflection\DocBlock;
 
 /**
- * Parses a Long Description of a DocBlock.
+ * Parses a Description of a DocBlock or tag.
  *
  * @author  Mike van Riel <mike.vanriel@naenius.com>
  * @license http://www.opensource.org/licenses/mit-license.php MIT
  * @link    http://phpdoc.org
  */
-class LongDescription implements \Reflector
+class Description implements \Reflector
 {
     /** @var string */
     protected $contents = '';
@@ -30,15 +30,20 @@ class LongDescription implements \Reflector
     /** @var \phpDocumentor\Reflection\DocBlock\Tags[] */
     protected $tags = array();
 
+    /** @var DocBlock The DocBlock which this description belongs to. */
+    protected $docblock = null;
+
     /**
      * Parses the string for inline tags and if the Markdown class is included;
      * format the found text.
      *
-     * @param string $content the DocBlock contents without asterisks.
+     * @param string   $content  The DocBlock contents without asterisks.
+     * @param DocBlock $docblock The DocBlock which this description belongs to.
      */
-    public function __construct($content)
+    public function __construct($content, DocBlock $docblock = null)
     {
         $this->contents = trim($content);
+        $this->docblock = $docblock;
     }
 
     /**
@@ -97,7 +102,8 @@ class LongDescription implements \Reflector
             );
             for ($i=1, $l = count($this->parsedContents); $i<$l; $i += 2) {
                 $this->parsedContents[$i] = Tag::createInstance(
-                    $this->parsedContents[$i]
+                    $this->parsedContents[$i],
+                    $this->docblock
                 );
             }
 
