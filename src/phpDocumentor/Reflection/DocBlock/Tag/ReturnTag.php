@@ -12,6 +12,7 @@
 
 namespace phpDocumentor\Reflection\DocBlock\Tag;
 
+use phpDocumentor\Reflection\DocBlock;
 use phpDocumentor\Reflection\DocBlock\Tag;
 
 /**
@@ -29,15 +30,14 @@ class ReturnTag extends Tag
     /**
      * Parses a tag and populates the member variables.
      *
-     * @param string $type    Tag identifier for this tag (should be 'return').
-     * @param string $content Contents for this tag.
+     * @param string   $type     Tag identifier for this tag (should be 'return').
+     * @param string   $content  Contents for this tag.
+     * @param DocBlock $docblock The DocBlock which this tag belongs to.
      */
-    public function __construct($type, $content)
+    public function __construct($type, $content, DocBlock $docblock = null)
     {
-        $this->tag = $type;
-        $this->content = $content;
-
-        $content = preg_split('/[\ \t]+/u', trim($content), 2);
+        parent::__construct($type, $content, $docblock);
+        $content = preg_split('/[\ \t]+/u', $this->description, 2);
 
         // any output is considered a type
         $this->type = array_shift($content);
