@@ -46,11 +46,8 @@ class DocBlock implements \Reflector
      * Parses the given docblock and populates the member fields.
      *
      * The constructor may also receive namespace information such as the
-     * current namespace and aliases. This information is used in the
-     * {@link expandType()} method to transform a relative Type into a FQCN.
-     *
-     * For example the param and return tags use this to expand their type
-     * information.
+     * current namespace and aliases. This information is used by some tags
+     * (e.g. @return, @param, etc.) to turn a relative Type into a FQCN.
      *
      * @param \Reflector|string $docblock          A docblock comment (including
      *     asterisks) or reflector supporting the getDocComment method.
@@ -260,7 +257,7 @@ class DocBlock implements \Reflector
     }
 
     /**
-     * Returns an array of tags matching the given name; if no tags are found
+     * Returns an array of tags matching the given name. If no tags are found
      * an empty array is returned.
      *
      * @param string $name String to search by.

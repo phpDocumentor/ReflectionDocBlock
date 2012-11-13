@@ -13,7 +13,7 @@
 namespace phpDocumentor\Reflection\DocBlock;
 
 /**
- * Test class for phpDocumentor\Reflection\DocBlock\Description
+ * Test class for \phpDocumentor\Reflection\DocBlock\Description
  *
  * @author    Vasil Rangelov <boen.robot@gmail.com>
  * @copyright 2010-2011 Mike van Riel / Naenius. (http://www.naenius.com)

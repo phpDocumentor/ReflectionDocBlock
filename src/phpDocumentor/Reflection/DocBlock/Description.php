@@ -34,8 +34,7 @@ class Description implements \Reflector
     protected $docblock = null;
 
     /**
-     * Parses the string for inline tags and if the Markdown class is included;
-     * format the found text.
+     * Populates the fields of a description.
      *
      * @param string   $content  The DocBlock contents without asterisks.
      * @param DocBlock $docblock The DocBlock which this description belongs to.

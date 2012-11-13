@@ -13,7 +13,7 @@
 namespace phpDocumentor\Reflection\DocBlock\Tag;
 
 /**
- * Test class for \phpDocumentor\Reflection\DocBlock\ReturnTag.
+ * Test class for \phpDocumentor\Reflection\DocBlock\ReturnTag
  *
  * @author    Mike van Riel <mike.vanriel@naenius.com>
  * @copyright 2010-2011 Mike van Riel / Naenius. (http://www.naenius.com)

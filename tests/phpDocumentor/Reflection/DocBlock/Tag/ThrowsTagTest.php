@@ -1,6 +1,6 @@
 <?php
 /**
- * phpDocumentor Return tag test.
+ * phpDocumentor Throws tag test.
  * 
  * PHP version 5.3
  *
@@ -13,7 +13,7 @@
 namespace phpDocumentor\Reflection\DocBlock\Tag;
 
 /**
- * Test class for \phpDocumentor\Reflection\DocBlock\ReturnTag.
+ * Test class for \phpDocumentor\Reflection\DocBlock\ThrowsTag
  *
  * @author    Mike van Riel <mike.vanriel@naenius.com>
  * @copyright 2010-2011 Mike van Riel / Naenius. (http://www.naenius.com)
@@ -23,8 +23,8 @@ namespace phpDocumentor\Reflection\DocBlock\Tag;
 class ThrowsTagTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Test that the \phpDocumentor\Reflection\DocBlock\Tag\ReturnTag can
-     * understand the @return DocBlock.
+     * Test that the \phpDocumentor\Reflection\DocBlock\Tag\ThrowsTag can
+     * understand the @throws DocBlock.
      *
      * @param string $type
      * @param string $content
