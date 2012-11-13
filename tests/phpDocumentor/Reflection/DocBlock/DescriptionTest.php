@@ -1,6 +1,6 @@
 <?php
 /**
- * phpDocumentor Long Description Test
+ * phpDocumentor Description Test
  *
  * PHP Version 5.3
  *
@@ -13,21 +13,21 @@
 namespace phpDocumentor\Reflection\DocBlock;
 
 /**
- * Test class for phpDocumentor\Reflection\DocBlock\LongDescription
+ * Test class for phpDocumentor\Reflection\DocBlock\Description
  *
  * @author    Vasil Rangelov <boen.robot@gmail.com>
  * @copyright 2010-2011 Mike van Riel / Naenius. (http://www.naenius.com)
  * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      http://phpdoc.org
  */
-class LongDescriptionTest extends \PHPUnit_Framework_TestCase
+class DescriptionTest extends \PHPUnit_Framework_TestCase
 {
     public function testConstruct()
     {
         $fixture = <<<LONGDESC
 This is text for a description.
 LONGDESC;
-        $object = new LongDescription($fixture);
+        $object = new Description($fixture);
         $this->assertSame($fixture, $object->getContents());
 
         $parsedContents = $object->getParsedContents();
@@ -41,7 +41,7 @@ LONGDESC;
 This is text for a {@link http://phpdoc.org/ description} that uses inline
 tags.
 LONGDESC;
-        $object = new LongDescription($fixture);
+        $object = new Description($fixture);
         $this->assertSame($fixture, $object->getContents());
 
         $parsedContents = $object->getParsedContents();
@@ -64,7 +64,7 @@ tags.',
 {@link http://phpdoc.org/ This} is text for a description that uses inline
 tags.
 LONGDESC;
-        $object = new LongDescription($fixture);
+        $object = new Description($fixture);
         $this->assertSame($fixture, $object->getContents());
 
         $parsedContents = $object->getParsedContents();
@@ -88,7 +88,7 @@ tags.',
 This is text for a description with {@internal inline tag with
 {@link http://phpdoc.org another inline tag} in it}.
 LONGDESC;
-        $object = new LongDescription($fixture);
+        $object = new Description($fixture);
         $this->assertSame($fixture, $object->getContents());
 
         $parsedContents = $object->getParsedContents();
@@ -119,7 +119,7 @@ LONGDESC;
         $fixture = <<<LONGDESC
 This is text for a description containing { that is literal.
 LONGDESC;
-        $object = new LongDescription($fixture);
+        $object = new Description($fixture);
         $this->assertSame($fixture, $object->getContents());
 
         $parsedContents = $object->getParsedContents();
@@ -133,7 +133,7 @@ LONGDESC;
 This is text for a description containing {@internal inline tag that has { that
 is literal}.
 LONGDESC;
-        $object = new LongDescription($fixture);
+        $object = new Description($fixture);
         $this->assertSame($fixture, $object->getContents());
 
         $parsedContents = $object->getParsedContents();
@@ -160,7 +160,7 @@ is literal'),
         $fixture = <<<LONGDESC
 This is text for a description with {} that is not a tag.
 LONGDESC;
-        $object = new LongDescription($fixture);
+        $object = new Description($fixture);
         $this->assertSame($fixture, $object->getContents());
 
         $parsedContents = $object->getParsedContents();
@@ -177,7 +177,7 @@ LONGDESC;
 This is text for a description with {@internal inline tag with {} that is not an
 inline tag}.
 LONGDESC;
-        $object = new LongDescription($fixture);
+        $object = new Description($fixture);
         $this->assertSame($fixture, $object->getContents());
 
         $parsedContents = $object->getParsedContents();
@@ -204,7 +204,7 @@ inline tag'),
         $fixture = <<<LONGDESC
 This is text for a description with literal {{@}link}.
 LONGDESC;
-        $object = new LongDescription($fixture);
+        $object = new Description($fixture);
         $this->assertSame($fixture, $object->getContents());
 
         $parsedContents = $object->getParsedContents();
@@ -221,7 +221,7 @@ LONGDESC;
 This is text for a description with an {@internal inline tag with literal
 {{@}link{} in it}.
 LONGDESC;
-        $object = new LongDescription($fixture);
+        $object = new Description($fixture);
         $this->assertSame($fixture, $object->getContents());
 
         $parsedContents = $object->getParsedContents();
