@@ -18,7 +18,7 @@ use phpDocumentor\Reflection\DocBlock\Tag;
 /**
  * Reflection class for an @author tag in a Docblock.
  *
- * @author  Mike van Riel <mike.vanriel@naenius.com>
+ * @author  Vasil Rangelov <boen.robot@gmail.com>
  * @license http://www.opensource.org/licenses/mit-license.php MIT
  * @link    http://phpdoc.org
  */
@@ -42,28 +42,26 @@ class AuthorTag extends Tag
      */
     public function __construct($type, $content, DocBlock $docblock = null)
     {
-        $this->tag = $type;
-        $this->content = $content;
+        parent::__construct($type, $content, $docblock);
         if (preg_match(
-                '/^
-                    # Name
-                    ([^\<]*)
+            '/^
+                # Name
+                ([^\<]*)
+                (?:
+                    # URIs
+                    \<([^>]*)\>\s*
+                    # Role
                     (?:
-                        # URIs
-                        \<([^>]*)\>\s*
-                        # Role
-                        (?:
-                          \(([^\)]*)\) 
-                        )?
-                        # Description
-                        (.*)
+                      \(([^\)]*)\) 
                     )?
-                $/sux',
-                $content,
-                $matches
-            )
-        ) {
-            $this->name = trim($matches[1]);
+                    # Description
+                    (.*)
+                )?
+            $/sux',
+            $this->description,
+            $matches
+        )) {
+            $this->name = rtrim($matches[1]);
             if (isset($matches[2])) {
                 $matches[2] = trim($matches[2]);
                 if ('' !== $matches[2]) {
