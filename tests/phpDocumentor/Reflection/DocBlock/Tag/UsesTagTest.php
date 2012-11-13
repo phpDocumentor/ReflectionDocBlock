@@ -28,11 +28,10 @@ class UsesTagTest extends \PHPUnit_Framework_TestCase
      *
      * @param string $type
      * @param string $content
-     * @param string $exName
      * @param string $exContent
      * @param string $exReference
      *
-     * @covers \phpDocumentor\Reflection\DocBlock\Tag\UsesTag::__construct
+     * @covers \phpDocumentor\Reflection\DocBlock\Tag\UsesTag
      * @dataProvider provideDataForConstuctor
      *
      * @return void
@@ -40,22 +39,16 @@ class UsesTagTest extends \PHPUnit_Framework_TestCase
     public function testConstructorParesInputsIntoCorrectFields(
         $type,
         $content,
-        $exName,
         $exContent,
         $exDescription,
         $exReference
     ) {
         $tag = new UsesTag($type, $content);
 
-        $actualName        = $tag->getName();
-        $actualContent     = $tag->getContent();
-        $actualDescription = $tag->getDescription();
-        $actualReference   = $tag->getReference();
-
-        $this->assertEquals($exName, $actualName);
-        $this->assertEquals($exContent, $actualContent);
-        $this->assertEquals($exDescription, $actualDescription);
-        $this->assertEquals($exReference, $actualReference);
+        $this->assertEquals($type, $tag->getName());
+        $this->assertEquals($exContent, $tag->getContent());
+        $this->assertEquals($exDescription, $tag->getDescription());
+        $this->assertEquals($exReference, $tag->getReference());
     }
 
     /**
@@ -65,12 +58,11 @@ class UsesTagTest extends \PHPUnit_Framework_TestCase
      */
     public function provideDataForConstuctor()
     {
-        // $type, $content, $exName, $exContent, $exDescription, $exReference
+        // $type, $content, $exContent, $exDescription, $exReference
         return array(
             array(
                 'uses',
                 'Foo::bar()',
-                'uses',
                 'Foo::bar()',
                 '',
                 'Foo::bar()'
@@ -78,7 +70,6 @@ class UsesTagTest extends \PHPUnit_Framework_TestCase
             array(
                 'uses',
                 'Foo::bar() Testing',
-                'uses',
                 'Foo::bar() Testing',
                 'Testing',
                 'Foo::bar()',
@@ -86,7 +77,6 @@ class UsesTagTest extends \PHPUnit_Framework_TestCase
             array(
                 'uses',
                 'Foo::bar() Testing comments',
-                'uses',
                 'Foo::bar() Testing comments',
                 'Testing comments',
                 'Foo::bar()',

@@ -41,6 +41,23 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers phpDocumentor\Reflection\DocBlock\Type\Collection::__construct
+     * @covers phpDocumentor\Reflection\DocBlock\Type\Collection::setNamespace
+     * @covers phpDocumentor\Reflection\DocBlock\Type\Collection::getNamespace
+     * @covers phpDocumentor\Reflection\DocBlock\Type\Collection::getNamespaceAliases
+     * 
+     * @return void
+     */
+    public function testGlobalIgnore()
+    {
+        $collection = new Collection();
+        $collection->setNamespace('global');
+        $this->assertCount(0, $collection);
+        $this->assertEquals('\\', $collection->getNamespace());
+        $this->assertCount(0, $collection->getNamespaceAliases());
+    }
+
+    /**
+     * @covers phpDocumentor\Reflection\DocBlock\Type\Collection::__construct
      * 
      * @return void
      */
@@ -118,8 +135,8 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param $fixture
-     * @param $expected
+     * @param string $fixture
+     * @param array  $expected
      *
      * @dataProvider provideTypesToExpand
      * @covers phpDocumentor\Reflection\DocBlock\Type\Collection::add
@@ -137,8 +154,8 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param $fixture
-     * @param $expected
+     * @param string $fixture
+     * @param array  $expected
      *
      * @dataProvider provideTypesToExpandWithoutNamespace
      * @covers phpDocumentor\Reflection\DocBlock\Type\Collection::add

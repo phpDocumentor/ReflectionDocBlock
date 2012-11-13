@@ -39,7 +39,7 @@ class DocBlock implements \Reflector
     /** @var string the current namespace */
     protected $namespace = '\\';
 
-    /** @var string[] List of namespace aliases => Fully Qualified Namespace */
+    /** @var array List of namespace aliases => Fully Qualified Namespace */
     protected $namespace_aliases = array();
 
     /**
@@ -56,7 +56,7 @@ class DocBlock implements \Reflector
      *     asterisks) or reflector supporting the getDocComment method.
      * @param string            $namespace         The namespace where this
      *     DocBlock resides in; defaults to `\`.
-     * @param string[]          $namespace_aliases A list of namespace aliases
+     * @param array             $namespace_aliases A list of namespace aliases
      *     as provided by the `use` keyword; the key of the array is the alias
      *     name or last part of the alias array if no alias name is provided.
      *
@@ -66,7 +66,7 @@ class DocBlock implements \Reflector
     public function __construct(
         $docblock,
         $namespace = '\\',
-        $namespace_aliases = array()
+        array $namespace_aliases = array()
     ) {
         if (is_object($docblock)) {
             if (!method_exists($docblock, 'getDocComment')) {
@@ -83,7 +83,7 @@ class DocBlock implements \Reflector
 
         list($short, $long, $tags) = $this->splitDocBlock($docblock);
         $this->short_description = $short;
-        $this->long_description = new DocBlock\LongDescription($long);
+        $this->long_description = new DocBlock\Description($long);
         $this->parseTags($tags);
 
         $this->namespace = $namespace;
@@ -222,9 +222,7 @@ class DocBlock implements \Reflector
 
             // create proper Tag objects
             foreach ($result as $key => $tag_line) {
-                $tag = DocBlock\Tag::createInstance($tag_line);
-                $tag->setDocBlock($this);
-                $result[$key] = $tag;
+                $result[$key] = DocBlock\Tag::createInstance($tag_line, $this);
             }
         }
 
@@ -305,85 +303,6 @@ class DocBlock implements \Reflector
     }
 
     /**
-     * Tries to expand a type to it's full namespaced equivalent (FQCN).
-     *
-     * This method will take the given type and examine the current namespace
-     * and namespace aliases to see whether it should expand it into a FQCN
-     * as defined by the rules in PHP.
-     *
-     * @param string   $type            Type to expand into full namespaced
-     *     equivalent.
-     * @param string[] $ignore_keywords Whether to ignore given keywords, when
-     *     null it will use the default keywords:
-     *     'string', 'int', 'integer', 'bool', 'boolean', 'float', 'double',
-     *     'object', 'mixed', 'array', 'resource', 'void', 'null', 'callback',
-     *     'false', 'true', 'self', '$this', 'callable'.
-     *     Default value for this parameter is null.
-     *
-     * @return string
-     */
-    public function expandType($type, $ignore_keywords = null)
-    {
-        if ($type === null) {
-            return null;
-        }
-
-        if ($ignore_keywords === null) {
-            $ignore_keywords = array(
-                'string', 'int', 'integer', 'bool', 'boolean', 'float',
-                'double', 'object', 'mixed', 'array', 'resource', 'void',
-                'null', 'callback', 'false', 'true', 'self', '$this', 'callable'
-            );
-        }
-
-        $namespace = '\\';
-        if ($this->namespace != 'default' && $this->namespace != 'global') {
-            $namespace = rtrim($this->namespace, '\\') . '\\';
-        }
-
-        $type = explode('|', $type);
-        foreach ($type as &$item) {
-            $item = trim($item);
-
-            // add support for array notation
-            $is_array = false;
-            if (substr($item, -2) == '[]') {
-                $item = substr($item, 0, -2);
-                $is_array = true;
-            }
-
-            if ((substr($item, 0, 1) != '\\')
-                && (!in_array(strtolower($item), $ignore_keywords))
-            ) {
-                $type_parts = explode('\\', $item);
-
-                // if the first segment is an alias; replace with full name
-                if (isset($this->namespace_aliases[$type_parts[0]])) {
-                    $type_parts[0] = $this->namespace_aliases[$type_parts[0]];
-                    $item = implode('\\', $type_parts);
-                } else {
-                    // otherwise prepend the current namespace
-                    $item = $namespace . $item;
-                }
-            }
-
-            // full paths always start with a slash
-            if (isset($item[0]) && ($item[0] !== '\\')
-                && (!in_array(strtolower($item), $ignore_keywords))
-            ) {
-                $item = '\\' . $item;
-            }
-
-            // re-add the array notation markers
-            if ($is_array) {
-                $item .= '[]';
-            }
-        }
-
-        return implode('|', $type);
-    }
-
-    /**
      * Builds a string representation of this object.
      *
      * @todo determine the exact format as used by PHP Reflection and
@@ -410,13 +329,16 @@ class DocBlock implements \Reflector
     }
 
     /**
-     * @return string
+     * @return string The namespace where this DocBlock resides in.
      */
     public function getNamespace()
     {
         return $this->namespace;
     }
 
+    /**
+     * @return array List of namespace aliases => Fully Qualified Namespace.
+     */
     public function getNamespaceAliases()
     {
         return $this->namespace_aliases;

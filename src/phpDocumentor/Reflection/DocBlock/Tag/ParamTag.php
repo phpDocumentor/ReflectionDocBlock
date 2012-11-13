@@ -12,6 +12,7 @@
 
 namespace phpDocumentor\Reflection\DocBlock\Tag;
 
+use phpDocumentor\Reflection\DocBlock;
 use phpDocumentor\Reflection\DocBlock\Tag;
 
 /**
@@ -21,11 +22,8 @@ use phpDocumentor\Reflection\DocBlock\Tag;
  * @license http://www.opensource.org/licenses/mit-license.php MIT
  * @link    http://phpdoc.org
  */
-class ParamTag extends Tag
+class ParamTag extends ReturnTag
 {
-    /** @var string */
-    protected $type = '';
-
     /**
      * @var string
      */
@@ -34,14 +32,19 @@ class ParamTag extends Tag
     /**
      * Parses a tag and populates the member variables.
      *
-     * @param string $type    Tag identifier for this tag (should be 'param').
-     * @param string $content Contents for this tag.
+     * @param string   $type     Tag identifier for this tag (should be 'param').
+     * @param string   $content  Contents for this tag.
+     * @param DocBlock $docblock The DocBlock which this tag belongs to.
      */
-    public function __construct($type, $content)
+    public function __construct($type, $content, DocBlock $docblock = null)
     {
-        $this->tag = $type;
-        $this->content = $content;
-        $content = preg_split('/\s+/u', $content);
+        Tag::__construct($type, $content, $docblock);
+        $content = preg_split(
+            '/(\s+)/u',
+            $this->description,
+            3,
+            PREG_SPLIT_DELIM_CAPTURE
+        );
 
         // if the first item that is encountered is not a variable; it is a type
         if (isset($content[0])
@@ -49,6 +52,7 @@ class ParamTag extends Tag
             && ($content[0][0] !== '$')
         ) {
             $this->type = array_shift($content);
+            array_shift($content);
         }
 
         // if the next item starts with a $ it must be the variable name
@@ -57,35 +61,10 @@ class ParamTag extends Tag
             && ($content[0][0] == '$')
         ) {
             $this->variableName = array_shift($content);
+            array_shift($content);
         }
 
-        $this->description = implode(' ', $content);
-    }
-
-    /**
-     * Returns the unique types of the variable.
-     *
-     * @return string[]
-     */
-    public function getTypes()
-    {
-        $types = new \phpDocumentor\Reflection\DocBlock\Type\Collection(
-            array($this->type),
-            $this->docblock ? $this->docblock->getNamespace() : null,
-            $this->docblock ? $this->docblock->getNamespaceAliases() : array()
-        );
-
-        return $types->getArrayCopy();
-    }
-
-    /**
-     * Returns the type section of the variable.
-     *
-     * @return string
-     */
-    public function getType()
-    {
-        return implode('|', $this->getTypes());
+        $this->description = implode('', $content);
     }
 
     /**

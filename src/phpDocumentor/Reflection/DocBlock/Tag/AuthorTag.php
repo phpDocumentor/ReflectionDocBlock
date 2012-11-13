@@ -12,6 +12,7 @@
 
 namespace phpDocumentor\Reflection\DocBlock\Tag;
 
+use phpDocumentor\Reflection\DocBlock;
 use phpDocumentor\Reflection\DocBlock\Tag;
 
 /**
@@ -35,10 +36,11 @@ class AuthorTag extends Tag
     /**
      * Parses a tag and populates the member variables.
      *
-     * @param string $type    Tag identifier for this tag (should be 'author').
-     * @param string $content The contents of the given tag.
+     * @param string   $type     Tag identifier for this tag (should be 'author').
+     * @param string   $content  Contents for this tag.
+     * @param DocBlock $docblock The DocBlock which this tag belongs to.
      */
-    public function __construct($type, $content)
+    public function __construct($type, $content, DocBlock $docblock = null)
     {
         $this->tag = $type;
         $this->content = $content;

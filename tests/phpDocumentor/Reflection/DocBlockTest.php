@@ -34,7 +34,11 @@ class DocBlockTest extends \PHPUnit_Framework_TestCase
  * @return void
  */
 DOCBLOCK;
-        $object = new DocBlock($fixture);
+        $object = new DocBlock(
+            $fixture,
+            '\MyNamespace',
+            array('PHPDoc' => '\phpDocumentor')
+        );
         $this->assertEquals(
             'This is a short description.',
             $object->getShortDescription()
@@ -43,12 +47,62 @@ DOCBLOCK;
             'This is a long description.',
             $object->getLongDescription()->getContents()
         );
-        $this->assertEquals(2, count($object->getTags()));
+        $this->assertCount(2, $object->getTags());
+        $this->assertTrue($object->hasTag('see'));
+        $this->assertTrue($object->hasTag('return'));
+        $this->assertFalse($object->hasTag('category'));
+        
+        $this->assertSame('\MyNamespace', $object->getNamespace());
+        $this->assertSame(
+            array('PHPDoc' => '\phpDocumentor'),
+            $object->getNamespaceAliases()
+        );
+    }
+
+    /**
+     * @covers \phpDocumentor\Reflection\DocBlock::splitDocBlock
+     * 
+     * @return void
+     */
+    public function testConstructWithTagsOnly()
+    {
+        $fixture = <<<DOCBLOCK
+/**
+ * @see \MyClass
+ * @return void
+ */
+DOCBLOCK;
+        $object = new DocBlock($fixture);
+        $this->assertEquals('', $object->getShortDescription());
+        $this->assertEquals('', $object->getLongDescription()->getContents());
+        $this->assertCount(2, $object->getTags());
         $this->assertTrue($object->hasTag('see'));
         $this->assertTrue($object->hasTag('return'));
         $this->assertFalse($object->hasTag('category'));
     }
 
+    /**
+     * @covers \phpDocumentor\Reflection\DocBlock::cleanInput
+     * 
+     * @return void
+     */
+    public function testConstructOneLiner()
+    {
+        $fixture = '/** Short description and nothing more. */';
+        $object = new DocBlock($fixture);
+        $this->assertEquals(
+            'Short description and nothing more.',
+            $object->getShortDescription()
+        );
+        $this->assertEquals('', $object->getLongDescription()->getContents());
+        $this->assertCount(0, $object->getTags());
+    }
+
+    /**
+     * @covers \phpDocumentor\Reflection\DocBlock::__construct
+     * 
+     * @return void
+     */
     public function testConstructFromReflector()
     {
         $object = new DocBlock(new \ReflectionClass($this));
@@ -57,7 +111,7 @@ DOCBLOCK;
             $object->getShortDescription()
         );
         $this->assertEquals('', $object->getLongDescription()->getContents());
-        $this->assertEquals(4, count($object->getTags()));
+        $this->assertCount(4, $object->getTags());
         $this->assertTrue($object->hasTag('author'));
         $this->assertTrue($object->hasTag('copyright'));
         $this->assertTrue($object->hasTag('license'));
@@ -67,10 +121,12 @@ DOCBLOCK;
 
     /**
      * @expectedException \InvalidArgumentException
+     * 
+     * @return void
      */
     public function testExceptionOnInvalidObject()
     {
-        $object = new DocBlock($this);
+        new DocBlock($this);
     }
 
     public function testDotSeperation()
@@ -91,6 +147,32 @@ DOCBLOCK;
             ."description.",
             $object->getLongDescription()->getContents()
         );
+    }
+
+    /**
+     * @covers \phpDocumentor\Reflection\DocBlock::parseTags
+     * @expectedException \LogicException
+     * 
+     * @return void
+     */
+    public function testInvalidTagBlock()
+    {
+        if (0 == ini_get('allow_url_include')) {
+            $this->markTestSkipped('"data" URIs for includes are required.');
+        }
+
+        require 'data:text/plain;base64,'. base64_encode(
+            <<<DOCBLOCK_EXTENSION
+<?php
+class MyReflectionDocBlock extends \phpDocumentor\Reflection\DocBlock {
+    protected function splitDocBlock(\$comment) {
+        return array('', '', 'Invalid tag block');
+    }
+}
+DOCBLOCK_EXTENSION
+        );
+        new \MyReflectionDocBlock('');
+        
     }
 
     public function testTagCaseSensitivity()
@@ -115,7 +197,7 @@ DOCBLOCK;
             $object->getLongDescription()->getContents()
         );
         $tags = $object->getTags();
-        $this->assertEquals(2, count($tags));
+        $this->assertCount(2, $tags);
         $this->assertTrue($object->hasTag('method'));
         $this->assertTrue($object->hasTag('Method'));
         $this->assertInstanceOf(
@@ -133,88 +215,74 @@ DOCBLOCK;
     }
 
     /**
-     * Tests whether a type is expanded with the given namespace and that a
-     * keyword is not expanded.
-     *
-     * @covers \phpDocumentor\Reflection\DocBlock::expandType()
-     *
+     * @depends testConstructFromReflector
+     * @covers \phpDocumentor\Reflection\DocBlock::getTagsByName
+     * 
      * @return void
      */
-    public function testExpandTypeUsingNamespace()
+    public function testGetTagsByNameZeroAndOneMatch()
     {
-        $docblock = new DocBlock('', '\My\Namespace');
-        $this->assertEquals('\My\Namespace\Mine', $docblock->expandType('Mine'));
+        $object = new DocBlock(new \ReflectionClass($this));
+        $this->assertEmpty($object->getTagsByName('category'));
+        $this->assertCount(1, $object->getTagsByName('author'));
     }
 
     /**
-     * Tests whether a type is expanded when no namespace is given.
-     *
-     * @covers \phpDocumentor\Reflection\DocBlock::expandType()
-     *
+     * @depends testConstructWithTagsOnly
+     * @covers \phpDocumentor\Reflection\DocBlock::parseTags
+     * 
      * @return void
      */
-    public function testExpandTypeWithoutNamespace()
+    public function testParseMultilineTag()
     {
-        $docblock = new DocBlock('');
-        $this->assertEquals('\Mine', $docblock->expandType('Mine'));
+        $fixture = <<<DOCBLOCK
+/**
+ * @return void Content on
+ *     multiple lines.
+ */
+DOCBLOCK;
+        $object = new DocBlock($fixture);
+        $this->assertCount(1, $object->getTags());
     }
 
     /**
-     * Tests whether a type is expanded with the given namespace when an alias
-     * is provided.
-     *
-     * @covers \phpDocumentor\Reflection\DocBlock::expandType()
-     *
+     * @depends testConstructWithTagsOnly
+     * @covers \phpDocumentor\Reflection\DocBlock::parseTags
+     * 
      * @return void
      */
-    public function testExpandTypeUsingNamespaceAlias()
+    public function testParseMultilineTagWithLineBreaks()
     {
-        $docblock = new DocBlock(
-            '',
-            '\My\Namespace',
-            array('Alias' => '\My\Namespace\Alias')
-        );
-
-        // first try a normal resolution without alias
-        $this->assertEquals(
-            '\My\Namespace\Al',
-            $docblock->expandType('Al')
-        );
-
-        // try to use the alias
-        $this->assertEquals(
-            '\My\Namespace\Alias\Al',
-            $docblock->expandType('Alias\Al')
-        );
+        $fixture = <<<DOCBLOCK
+/**
+ * @return void Content on
+ *     multiple lines.
+ *
+ *     One more, after the break.
+ */
+DOCBLOCK;
+        $object = new DocBlock($fixture);
+        $this->assertCount(1, $object->getTags());
     }
 
     /**
-     * Tests whether the keywords that should not be converted are not converted.
-     *
-     * @param string $keyword The keyword that is to be tested; this is provided
-     *     by the dataprovider.
-     *
-     * @covers \phpDocumentor\Reflection\DocBlock::expandType()
-     *
-     * @dataProvider getNonExpandableKeywordsForExpandType
-     *
+     * @depends testConstructWithTagsOnly
+     * @covers \phpDocumentor\Reflection\DocBlock::getTagsByName
+     * 
      * @return void
      */
-    public function testThatExpandTypeDoesNotExpandAllKeywords($keyword)
+    public function testGetTagsByNameMultipleMatch()
     {
-        $docblock = new DocBlock('', '\My\Namespace');
-        $this->assertSame($keyword, $docblock->expandType($keyword));
-    }
-
-    public function getNonExpandableKeywordsForExpandType()
-    {
-        return array(
-            array(null),
-            array('string'), array('int'), array('integer'), array('bool'),
-            array('boolean'), array('float'), array('double'), array('object'),
-            array('mixed'), array('array'), array('resource'), array('void'),
-            array('null'), array('callback'), array('false'), array('true'),
-            array('self'), array('$this'), array('callable')
-        );
+        $fixture = <<<DOCBLOCK
+/**
+ * @param string
+ * @param int
+ * @return void
+ */
+DOCBLOCK;
+        $object = new DocBlock($fixture);
+        $this->assertEmpty($object->getTagsByName('category'));
+        $this->assertCount(1, $object->getTagsByName('return'));
+        $this->assertCount(2, $object->getTagsByName('param'));
     }
 }
