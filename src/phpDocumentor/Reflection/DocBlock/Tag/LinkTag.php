@@ -12,6 +12,7 @@
 
 namespace phpDocumentor\Reflection\DocBlock\Tag;
 
+use phpDocumentor\Reflection\DocBlock;
 use phpDocumentor\Reflection\DocBlock\Tag;
 
 /**
@@ -29,13 +30,14 @@ class LinkTag extends Tag
     /**
      * Parses a tag and populates the member variables.
      *
-     * @param string $type    Tag identifier for this tag (should be 'link').
-     * @param string $content The contents of the given tag.
+     * @param string   $type     Tag identifier for this tag (should be 'link').
+     * @param string   $content  Contents for this tag.
+     * @param DocBlock $docblock The DocBlock which this tag belongs to.
      */
-    public function __construct($type, $content)
+    public function __construct($type, $content, DocBlock $docblock = null)
     {
-        $this->tag = $type;
-        $pieces = explode(' ', $content);
+        parent::__construct($type, $content, $docblock);
+        $pieces = explode(' ', $this->description);
 
         if (count($pieces) > 1) {
             $this->link = array_shift($pieces);

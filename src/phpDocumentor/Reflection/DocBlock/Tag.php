@@ -159,7 +159,7 @@ class Tag implements \Reflector
     {
         $this->tag = $type;
         $this->content = $content;
-        $this->description = $content;
+        $this->description = trim($content);
         $this->docblock = $docblock;
     }
 
