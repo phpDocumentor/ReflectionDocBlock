@@ -208,7 +208,7 @@ class Collection extends \ArrayObject
         }
 
         if ($this->isRelativeType($type) && !$this->isTypeAKeyword($type)) {
-            $type_parts = explode(self::OPERATOR_NAMESPACE, $type);
+            $type_parts = explode(self::OPERATOR_NAMESPACE, $type, 2);
 
             // if the first segment is not an alias; prepend namespace name and
             // return
