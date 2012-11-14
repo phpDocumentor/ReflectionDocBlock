@@ -12,6 +12,8 @@
 
 namespace phpDocumentor\Reflection\DocBlock;
 
+use phpDocumentor\Reflection\DocBlock;
+
 /**
  * Parses a Description of a DocBlock or tag.
  *

@@ -80,7 +80,7 @@ class DocBlock implements \Reflector
 
         list($short, $long, $tags) = $this->splitDocBlock($docblock);
         $this->short_description = $short;
-        $this->long_description = new DocBlock\Description($long);
+        $this->long_description = new DocBlock\Description($long, $this);
         $this->parseTags($tags);
 
         $this->namespace = $namespace;
