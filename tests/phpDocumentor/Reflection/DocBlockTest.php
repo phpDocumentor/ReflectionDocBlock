@@ -12,6 +12,8 @@
 
 namespace phpDocumentor\Reflection;
 
+use phpDocumentor\Reflection\DocBlock\Context;
+
 /**
  * Test class for phpDocumentor\Reflection\DocBlock
  *
@@ -36,8 +38,7 @@ class DocBlockTest extends \PHPUnit_Framework_TestCase
 DOCBLOCK;
         $object = new DocBlock(
             $fixture,
-            '\MyNamespace',
-            array('PHPDoc' => '\phpDocumentor')
+            new Context('\MyNamespace', array('PHPDoc' => '\phpDocumentor'))
         );
         $this->assertEquals(
             'This is a short description.',
@@ -52,10 +53,10 @@ DOCBLOCK;
         $this->assertTrue($object->hasTag('return'));
         $this->assertFalse($object->hasTag('category'));
         
-        $this->assertSame('\MyNamespace', $object->getNamespace());
+        $this->assertSame('MyNamespace', $object->getContext()->getNamespace());
         $this->assertSame(
             array('PHPDoc' => '\phpDocumentor'),
-            $object->getNamespaceAliases()
+            $object->getContext()->getNamespaceAliases()
         );
     }
 
