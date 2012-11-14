@@ -35,8 +35,8 @@ class Tag implements \Reflector
     /** @var array The description, as an array of strings and Tag objects. */
     protected $parsedDescription = null;
 
-    /** @var int Line number of the tag */
-    protected $line_number = 0;
+    /** @var Location Location of the tag. */
+    protected $location = null;
 
     /** @var DocBlock The DocBlock which this tag belongs to. */
     protected $docblock = null;
@@ -92,6 +92,7 @@ class Tag implements \Reflector
      *
      * @param string   $tag_line The text for this tag, including description.
      * @param DocBlock $docblock The DocBlock which this tag belongs to.
+     * @param Location $location Location of the tag.
      *
      * @throws \InvalidArgumentException if an invalid tag line was presented.
      *
@@ -99,7 +100,8 @@ class Tag implements \Reflector
      */
     final public static function createInstance(
         $tag_line,
-        DocBlock $docblock = null
+        DocBlock $docblock = null,
+        Location $location = null
     ) {
         if (!preg_match(
             '/^@([\w\-\_\\\\]+)(?:\s*([^\s].*)|$)?/us',
@@ -116,13 +118,15 @@ class Tag implements \Reflector
             return new $handler(
                 $matches[1],
                 isset($matches[2]) ? $matches[2] : '',
-                $docblock
+                $docblock,
+                $location
             );
         }
         return new self(
             $matches[1],
             isset($matches[2]) ? $matches[2] : '',
-            $docblock
+            $docblock,
+            $location
         );
     }
 
@@ -164,13 +168,19 @@ class Tag implements \Reflector
      * @param string   $type     Name of the tag.
      * @param string   $content  The contents of the given tag.
      * @param DocBlock $docblock The DocBlock which this tag belongs to.
+     * @param Location $location Location of the tag.
      */
-    public function __construct($type, $content, DocBlock $docblock = null)
-    {
-        $this->tag = $type;
-        $this->content = $content;
+    public function __construct(
+        $type,
+        $content,
+        DocBlock $docblock = null,
+        Location $location = null
+    ) {
+        $this->tag         = $type;
+        $this->content     = $content;
         $this->description = trim($content);
-        $this->docblock = $docblock;
+        $this->docblock    = $docblock;
+        $this->location    = $location;
     }
 
     /**
@@ -219,25 +229,13 @@ class Tag implements \Reflector
     }
 
     /**
-     * Set the tag line number
+     * Get the location of the tag.
      *
-     * @param int $number the line number of the tag
-     *
-     * @return void
+     * @return Location Tag's location.
      */
-    public function setLineNumber($number)
+    public function getLocation()
     {
-        $this->line_number = (int)$number;
-    }
-
-    /**
-     * Get the line number of the tag
-     *
-     * @return int tag line number
-     */
-    public function getLineNumber()
-    {
-        return $this->line_number;
+        return $this->location;
     }
 
     /**

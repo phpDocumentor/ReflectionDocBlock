@@ -37,10 +37,15 @@ class ReturnTag extends Tag
      * @param string   $type     Tag identifier for this tag (should be 'return').
      * @param string   $content  Contents for this tag.
      * @param DocBlock $docblock The DocBlock which this tag belongs to.
+     * @param Location $location Location of the tag.
      */
-    public function __construct($type, $content, DocBlock $docblock = null)
-    {
-        parent::__construct($type, $content, $docblock);
+    public function __construct(
+        $type,
+        $content,
+        DocBlock $docblock = null,
+        Location $location = null
+    ) {
+        parent::__construct($type, $content, $docblock, $location);
         $content = preg_split('/\s+/u', $this->description, 2);
 
         // any output is considered a type
@@ -70,7 +75,7 @@ class ReturnTag extends Tag
         $this->refreshTypes();
         return (string) $this->types;
     }
-    
+
     /**
      * Parses the type, if needed.
      * 
@@ -81,8 +86,7 @@ class ReturnTag extends Tag
         if (null === $this->types) {
             $this->types = new Collection(
                 array($this->type),
-                $this->docblock ? $this->docblock->getNamespace() : null,
-                $this->docblock ? $this->docblock->getNamespaceAliases() : array()
+                $this->docblock ? $this->docblock->getContext() : null
             );
         }
     }

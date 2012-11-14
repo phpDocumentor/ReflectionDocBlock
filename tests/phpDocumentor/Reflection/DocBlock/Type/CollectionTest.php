@@ -12,6 +12,8 @@
 
 namespace phpDocumentor\Reflection\DocBlock\Type;
 
+use phpDocumentor\Reflection\DocBlock\Context;
+
 /**
  * Test class for \phpDocumentor\Reflection\DocBlock\Type\Collection
  * 
@@ -26,8 +28,7 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @covers phpDocumentor\Reflection\DocBlock\Type\Collection::__construct
-     * @covers phpDocumentor\Reflection\DocBlock\Type\Collection::getNamespace
-     * @covers phpDocumentor\Reflection\DocBlock\Type\Collection::getNamespaceAliases
+     * @covers phpDocumentor\Reflection\DocBlock\Type\Collection::getContext
      * 
      * @return void
      */
@@ -35,25 +36,8 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
     {
         $collection = new Collection();
         $this->assertCount(0, $collection);
-        $this->assertEquals('\\', $collection->getNamespace());
-        $this->assertCount(0, $collection->getNamespaceAliases());
-    }
-
-    /**
-     * @covers phpDocumentor\Reflection\DocBlock\Type\Collection::__construct
-     * @covers phpDocumentor\Reflection\DocBlock\Type\Collection::setNamespace
-     * @covers phpDocumentor\Reflection\DocBlock\Type\Collection::getNamespace
-     * @covers phpDocumentor\Reflection\DocBlock\Type\Collection::getNamespaceAliases
-     * 
-     * @return void
-     */
-    public function testGlobalIgnore()
-    {
-        $collection = new Collection();
-        $collection->setNamespace('global');
-        $this->assertCount(0, $collection);
-        $this->assertEquals('\\', $collection->getNamespace());
-        $this->assertCount(0, $collection->getNamespaceAliases());
+        $this->assertEquals('', $collection->getContext()->getNamespace());
+        $this->assertCount(0, $collection->getContext()->getNamespaceAliases());
     }
 
     /**
@@ -69,69 +53,34 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers phpDocumentor\Reflection\DocBlock\Type\Collection::__construct
-     * @covers phpDocumentor\Reflection\DocBlock\Type\Collection::getNamespace
      * 
      * @return void
      */
     public function testConstructWithNamespace()
     {
-        $collection = new Collection(array(), '\My\Space');
-        $this->assertEquals('\My\Space\\', $collection->getNamespace());
+        $collection = new Collection(array(), new Context('\My\Space'));
+        $this->assertEquals('My\Space', $collection->getContext()->getNamespace());
 
-        $collection = new Collection(array(), 'My\Space');
-        $this->assertEquals('\My\Space\\', $collection->getNamespace());
+        $collection = new Collection(array(), new Context('My\Space'));
+        $this->assertEquals('My\Space', $collection->getContext()->getNamespace());
 
         $collection = new Collection(array(), null);
-        $this->assertEquals('\\', $collection->getNamespace());
+        $this->assertEquals('', $collection->getContext()->getNamespace());
     }
 
     /**
      * @covers phpDocumentor\Reflection\DocBlock\Type\Collection::__construct
-     * @covers phpDocumentor\Reflection\DocBlock\Type\Collection::getNamespaceAliases
      * 
      * @return void
      */
     public function testConstructWithNamespaceAliases()
     {
         $fixture = array('a' => 'b');
-        $collection = new Collection(array(), null, $fixture);
-        $this->assertEquals($fixture, $collection->getNamespaceAliases());
-    }
-
-    /**
-     * @covers phpDocumentor\Reflection\DocBlock\Type\Collection::setNamespace
-     * @covers phpDocumentor\Reflection\DocBlock\Type\Collection::getNamespace
-     * 
-     * @return void
-     */
-    public function testSetAndGetNamespace()
-    {
-        $collection = new Collection();
-        $this->assertEquals('\\', $collection->getNamespace());
-
-        $collection->setNamespace('My');
-        $this->assertEquals('\My\\', $collection->getNamespace());
-
-        $collection->setNamespace('\My');
-        $this->assertEquals('\My\\', $collection->getNamespace());
-
-        $collection->setNamespace('\My\\');
-        $this->assertEquals('\My\\', $collection->getNamespace());
-    }
-
-    /**
-     * @covers phpDocumentor\Reflection\DocBlock\Type\Collection::setNamespaceAliases
-     * @covers phpDocumentor\Reflection\DocBlock\Type\Collection::getNamespaceAliases
-     * 
-     * @return void
-     */
-    public function testSetAndGetNamespaceAliases()
-    {
-        $collection = new Collection();
-        $this->assertEmpty($collection->getNamespaceAliases());
-
-        $collection->setNamespaceAliases(array('My'));
-        $this->assertEquals(array('My'), $collection->getNamespaceAliases());
+        $collection = new Collection(array(), new Context(null, $fixture));
+        $this->assertEquals(
+            array('a' => '\b'),
+            $collection->getContext()->getNamespaceAliases()
+        );
     }
 
     /**
@@ -145,9 +94,10 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
      */
     public function testAdd($fixture, $expected)
     {
-        $collection = new Collection();
-        $collection->setNamespace('\My\Space');
-        $collection->setNamespaceAliases(array('Alias' => '\My\Space\Aliasing'));
+        $collection = new Collection(
+            array(),
+            new Context('\My\Space', array('Alias' => '\My\Space\Aliasing'))
+        );
         $collection->add($fixture);
 
         $this->assertSame($expected, $collection->getArrayCopy());
@@ -164,8 +114,10 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
      */
     public function testAddWithoutNamespace($fixture, $expected)
     {
-        $collection = new Collection();
-        $collection->setNamespaceAliases(array('Alias' => '\My\Space\Aliasing'));
+        $collection = new Collection(
+            array(),
+            new Context(null, array('Alias' => '\My\Space\Aliasing'))
+        );
         $collection->add($fixture);
 
         $this->assertSame($expected, $collection->getArrayCopy());
