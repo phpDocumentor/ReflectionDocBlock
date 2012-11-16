@@ -37,12 +37,12 @@ class ReturnTag extends Tag
     public function __construct($type, $content, DocBlock $docblock = null)
     {
         parent::__construct($type, $content, $docblock);
-        $content = preg_split('/[\ \t]+/u', $this->description, 2);
+        $content = preg_split('/\s+/u', $this->description, 2);
 
         // any output is considered a type
-        $this->type = array_shift($content);
+        $this->type = $content[0];
 
-        $this->description = implode(' ', $content);
+        $this->description = isset($content[1]) ? $content[1] : '';
     }
 
     /**
