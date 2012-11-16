@@ -148,7 +148,9 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
         $collection = new Collection();
         $collection->setNamespace('\My\Space');
         $collection->setNamespaceAliases(array('Alias' => '\My\Space\Aliasing'));
-        $collection->add($fixture);
+        foreach ($fixture as $type) {
+            $collection->add($type);
+        }
 
         $this->assertSame($expected, $collection->getArrayCopy());
     }
@@ -166,7 +168,9 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
     {
         $collection = new Collection();
         $collection->setNamespaceAliases(array('Alias' => '\My\Space\Aliasing'));
-        $collection->add($fixture);
+        foreach ($fixture as $type) {
+            $collection->add($type);
+        }
 
         $this->assertSame($expected, $collection->getArrayCopy());
     }
@@ -195,34 +199,34 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
     public function provideTypesToExpand($method, $namespace = '\My\Space\\')
     {
         return array(
-            array('', array()),
-            array(' ', array()),
-            array('int', array('int')),
-            array('int ', array('int')),
-            array('string', array('string')),
-            array('DocBlock', array($namespace.'DocBlock')),
-            array('DocBlock[]', array($namespace.'DocBlock[]')),
-            array(' DocBlock ', array($namespace.'DocBlock')),
-            array('\My\Space\DocBlock', array('\My\Space\DocBlock')),
-            array('Alias\DocBlock', array('\My\Space\Aliasing\DocBlock')),
+            array(array(''), array()),
+            array(array(' '), array()),
+            array(array('int'), array('int')),
+            array(array('int '), array('int')),
+            array(array('string'), array('string')),
+            array(array('DocBlock'), array($namespace.'DocBlock')),
+            array(array('DocBlock[]'), array($namespace.'DocBlock[]')),
+            array(array(' DocBlock '), array($namespace.'DocBlock')),
+            array(array('\My\Space\DocBlock'), array('\My\Space\DocBlock')),
+            array(array('Alias\DocBlock'), array('\My\Space\Aliasing\DocBlock')),
             array(
-                'DocBlock|Tag',
+                array('DocBlock', 'Tag'),
                 array($namespace .'DocBlock', $namespace .'Tag')
             ),
             array(
-                'DocBlock|null',
+                array('DocBlock', 'null'),
                 array($namespace.'DocBlock', 'null')
             ),
             array(
-                '\My\Space\DocBlock|Tag',
+                array('\My\Space\DocBlock', 'Tag'),
                 array('\My\Space\DocBlock', $namespace.'Tag')
             ),
             array(
-                'DocBlock[]|null',
+                array('DocBlock[]', 'null'),
                 array($namespace.'DocBlock[]', 'null')
             ),
             array(
-                'DocBlock[]|int[]',
+                array('DocBlock[]', 'int[]'),
                 array($namespace.'DocBlock[]', 'int[]')
             ),
         );
