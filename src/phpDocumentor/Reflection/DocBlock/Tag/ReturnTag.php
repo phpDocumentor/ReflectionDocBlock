@@ -53,7 +53,7 @@ class ReturnTag extends Tag
     public function getTypes()
     {
         $types = new \phpDocumentor\Reflection\DocBlock\Type\Collection(
-            array($this->type),
+            explode('|', $this->type),
             $this->docblock ? $this->docblock->getNamespace() : null,
             $this->docblock ? $this->docblock->getNamespaceAliases() : array()
         );

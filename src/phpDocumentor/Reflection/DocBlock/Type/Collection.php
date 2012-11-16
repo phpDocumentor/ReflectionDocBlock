@@ -22,9 +22,6 @@ namespace phpDocumentor\Reflection\DocBlock\Type;
  */
 class Collection extends \ArrayObject
 {
-    /** @var string Definition of the OR operator for types */
-    const OPERATOR_OR = '|';
-
     /** @var string Definition of the ARRAY operator for types */
     const OPERATOR_ARRAY = '[]';
 
@@ -167,14 +164,9 @@ class Collection extends \ArrayObject
                 .var_export($type, true)
             );
         }
-
-        // separate the type by the OR operator
-        $type_parts = explode(self::OPERATOR_OR, $type);
-        foreach ($type_parts as $part) {
-            $expanded_type = $this->expand($part);
-            if ($expanded_type) {
-                $this[] = $expanded_type;
-            }
+        $expanded_type = $this->expand($type);
+        if ($expanded_type) {
+            $this[] = $expanded_type;
         }
     }
 
