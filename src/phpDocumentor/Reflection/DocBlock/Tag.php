@@ -51,6 +51,8 @@ class Tag implements \Reflector
             => '\phpDocumentor\Reflection\DocBlock\Tag\AuthorTag',
         'covers'
             => '\phpDocumentor\Reflection\DocBlock\Tag\CoversTag',
+        'deprecated'
+            => '\phpDocumentor\Reflection\DocBlock\Tag\DeprecatedTag',
         'link'
             => '\phpDocumentor\Reflection\DocBlock\Tag\LinkTag',
         'method'
@@ -67,6 +69,8 @@ class Tag implements \Reflector
             => '\phpDocumentor\Reflection\DocBlock\Tag\ReturnTag',
         'see'
             => '\phpDocumentor\Reflection\DocBlock\Tag\SeeTag',
+        'since'
+            => '\phpDocumentor\Reflection\DocBlock\Tag\SinceTag',
         'throw'
             => '\phpDocumentor\Reflection\DocBlock\Tag\ThrowsTag',
         'throws'
@@ -74,7 +78,9 @@ class Tag implements \Reflector
         'uses'
             => '\phpDocumentor\Reflection\DocBlock\Tag\UsesTag',
         'var'
-            => '\phpDocumentor\Reflection\DocBlock\Tag\VarTag'
+            => '\phpDocumentor\Reflection\DocBlock\Tag\VarTag',
+        'version'
+            => '\phpDocumentor\Reflection\DocBlock\Tag\VersionTag'
     );
 
     /**
