@@ -45,7 +45,6 @@ class SourceTag extends Tag
     public function __construct($type, $content, DocBlock $docblock = null)
     {
         parent::__construct($type, $content, $docblock);
-        $content = preg_split('/[\ \t]+/u', $this->description, 2);
         if (preg_match(
             '/^([1-9]\d*)\s*(?:([1-9]\d*)\s+)?(.*)$/su',
             $this->description,
