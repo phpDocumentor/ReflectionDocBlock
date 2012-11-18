@@ -18,7 +18,7 @@ use phpDocumentor\Reflection\DocBlock\Tag;
 /**
  * Reflection class for an @author tag in a Docblock.
  *
- * @author  Vasil Rangelov <boen.robot@gmail.com>
+ * @author  Mike van Riel <mike.vanriel@naenius.com>
  * @license http://www.opensource.org/licenses/mit-license.php MIT
  * @link    http://phpdoc.org
  */
@@ -27,11 +27,8 @@ class AuthorTag extends Tag
     /** @var string The name of the author */
     protected $name = '';
 
-    /** @var array Array of URIs belonging to the author, including email */
-    protected $uris = array();
-    
-    /** @var string The role of the author */
-    protected $role = '';
+    /** @var string The email of the author */
+    protected $email = '';
 
     /**
      * Parses a tag and populates the member variables.
@@ -44,32 +41,14 @@ class AuthorTag extends Tag
     {
         parent::__construct($type, $content, $docblock);
         if (preg_match(
-            '/^
-                # Name
-                ([^\<]*)
-                (?:
-                    # URIs
-                    \<([^>]*)\>\s*
-                    # Role
-                    (?:
-                      \(([^\)]*)\) 
-                    )?
-                    # Description
-                    (.*)
-                )?
-            $/sux',
+            '/^([^\<]*)(\<([^\>]*)\>)?$/',
             $this->description,
             $matches
         )) {
-            $this->name = rtrim($matches[1]);
-            if (isset($matches[2])) {
-                $matches[2] = trim($matches[2]);
-                if ('' !== $matches[2]) {
-                    $this->uris = preg_split('/\s+/u', $matches[2]);
-                }
+            $this->name = trim($matches[1]);
+            if (isset($matches[3])) {
+                $this->email = trim($matches[3]);
             }
-            $this->role        = isset($matches[3]) ? trim($matches[3]) : '';
-            $this->description = isset($matches[4]) ? trim($matches[4]) : '';
         }
     }
 
@@ -84,22 +63,12 @@ class AuthorTag extends Tag
     }
 
     /**
-     * Gets the author's URIs.
+     * Gets the author's email.
      * 
-     * @return array Array of URIs belonging to the author, including email.
+     * @return string The author's email.
      */
-    public function getAuthorURIs()
+    public function getAuthorEmail()
     {
-        return $this->uris;
-    }
-
-    /**
-     * Gets the author's role.
-     * 
-     * @return string The role of the author.
-     */
-    public function getAuthorRole()
-    {
-        return $this->role;
+        return $this->email;
     }
 }
