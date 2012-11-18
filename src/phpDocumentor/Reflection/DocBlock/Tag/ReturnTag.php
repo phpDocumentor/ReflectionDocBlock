@@ -14,6 +14,7 @@ namespace phpDocumentor\Reflection\DocBlock\Tag;
 
 use phpDocumentor\Reflection\DocBlock;
 use phpDocumentor\Reflection\DocBlock\Tag;
+use phpDocumentor\Reflection\DocBlock\Type\Collection;
 
 /**
  * Reflection class for a @return tag in a Docblock.
@@ -24,8 +25,11 @@ use phpDocumentor\Reflection\DocBlock\Tag;
  */
 class ReturnTag extends Tag
 {
-    /** @var string */
+    /** @var string The raw type component. */
     protected $type = '';
+    
+    /** @var Collection The parsed type component. */
+    protected $types = null;
 
     /**
      * Parses a tag and populates the member variables.
@@ -52,13 +56,8 @@ class ReturnTag extends Tag
      */
     public function getTypes()
     {
-        $types = new \phpDocumentor\Reflection\DocBlock\Type\Collection(
-            explode('|', $this->type),
-            $this->docblock ? $this->docblock->getNamespace() : null,
-            $this->docblock ? $this->docblock->getNamespaceAliases() : array()
-        );
-
-        return $types->getArrayCopy();
+        $this->refreshTypes();
+        return $this->types->getArrayCopy();
     }
 
     /**
@@ -68,6 +67,23 @@ class ReturnTag extends Tag
      */
     public function getType()
     {
-        return implode('|', $this->getTypes());
+        $this->refreshTypes();
+        return (string) $this->types;
+    }
+    
+    /**
+     * Parses the type, if needed.
+     * 
+     * @return void
+     */
+    protected function refreshTypes()
+    {
+        if (null === $this->types) {
+            $this->types = new Collection(
+                array($this->type),
+                $this->docblock ? $this->docblock->getNamespace() : null,
+                $this->docblock ? $this->docblock->getNamespaceAliases() : array()
+            );
+        }
     }
 }
