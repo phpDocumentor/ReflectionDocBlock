@@ -61,8 +61,7 @@ class ReturnTag extends Tag
      */
     public function getTypes()
     {
-        $this->refreshTypes();
-        return $this->types->getArrayCopy();
+        return $this->getTypesCollection()->getArrayCopy();
     }
 
     /**
@@ -72,16 +71,15 @@ class ReturnTag extends Tag
      */
     public function getType()
     {
-        $this->refreshTypes();
-        return (string) $this->types;
+        return (string) $this->getTypesCollection();
     }
 
     /**
-     * Parses the type, if needed.
+     * Returns the type collection.
      * 
      * @return void
      */
-    protected function refreshTypes()
+    protected function getTypesCollection()
     {
         if (null === $this->types) {
             $this->types = new Collection(
@@ -89,5 +87,6 @@ class ReturnTag extends Tag
                 $this->docblock ? $this->docblock->getContext() : null
             );
         }
+        return $this->types;
     }
 }

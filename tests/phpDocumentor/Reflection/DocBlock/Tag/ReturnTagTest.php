@@ -32,9 +32,7 @@ class ReturnTagTest extends \PHPUnit_Framework_TestCase
      * @param string $extractedTypes
      * @param string $extractedDescription
      *
-     * @covers \phpDocumentor\Reflection\DocBlock\Tag\ReturnTag::__construct
-     * @covers \phpDocumentor\Reflection\DocBlock\Tag\ReturnTag::getType
-     * @covers \phpDocumentor\Reflection\DocBlock\Tag\ReturnTag::getTypes
+     * @covers \phpDocumentor\Reflection\DocBlock\Tag\ReturnTag
      *
      * @dataProvider provideDataForConstructor
      *
