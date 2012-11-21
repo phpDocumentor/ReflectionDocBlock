@@ -12,6 +12,8 @@
 
 namespace phpDocumentor\Reflection\DocBlock\Type;
 
+use phpDocumentor\Reflection\DocBlock\Context;
+
 /**
  * Collection
  *
@@ -39,44 +41,28 @@ class Collection extends \ArrayObject
     );
 
     /**
-     * Current namespace of the invoking location.
+     * Current invoking location.
      *
-     * This string is used to prepend to type with a relative location.
+     * This is used to prepend to type with a relative location.
      * May also be 'default' or 'global', in which case they are ignored.
      *
-     * @var string
+     * @var Context
      */
-    protected $namespace = '\\';
-
-    /**
-     * Associative array of alias => namespace pairs.
-     *
-     * @var string[]
-     */
-    protected $namespace_aliases = array();
+    protected $context = null;
 
     /**
      * Registers the namespace and aliases; uses that to add and expand the
      * given types.
      *
-     * @param string[]    $types             Array containing a list of types
-     *     to add to this container.
-     * @param string|null $namespace         The namespace where the types in
-     *     this container are relative to; used to expand any relative
-     *     namespaces.
-     * @param string[]    $namespace_aliases An array containing alias => FQNN
-     *     pairs that are used in the resolving process.
+     * @param string[] $types    Array containing a list of types to add to this
+     *     container.
+     * @param Context  $location The current invoking location.
      */
     public function __construct(
         array $types = array(),
-        $namespace = null,
-        array $namespace_aliases = array()
+        Context $context = null
     ) {
-        // only set the namespace if overridden
-        if (is_string($namespace)) {
-            $this->setNamespace($namespace);
-        }
-        $this->namespace_aliases = $namespace_aliases;
+        $this->context = null === $context ? new Context() : $context;
 
         foreach ($types as $type) {
             $this->add($type);
@@ -84,62 +70,13 @@ class Collection extends \ArrayObject
     }
 
     /**
-     * Returns the namespace name used to expand relative namespaces with.
+     * Returns the current invoking location.
      *
-     * @return string
+     * @return Context
      */
-    public function getNamespace()
+    public function getContext()
     {
-        return $this->namespace;
-    }
-
-    /**
-     * Sets the namespace which is used to resolve types with relative
-     * namespaces.
-     *
-     * Unless the name of the current namespace if default or global we make
-     * sure the namespace is succeeded with a '\'. This makes it clear for
-     * the processing functions that a leading slash is present.
-     *
-     * @param string $namespace
-     *
-     * @return void
-     */
-    public function setNamespace($namespace)
-    {
-        if ($namespace != 'default' && $namespace != 'global') {
-            $namespace = self::OPERATOR_NAMESPACE
-                . trim($namespace, self::OPERATOR_NAMESPACE)
-                . self::OPERATOR_NAMESPACE;
-        } else {
-            $namespace = '\\';
-        }
-
-        $this->namespace = $namespace;
-    }
-
-    /**
-     * Returns the list of namespace aliases used to expand the typed with.
-     *
-     * @return string[] An associative array of Alias => Fully Qualified
-     *     Namespace Names.
-     */
-    public function getNamespaceAliases()
-    {
-        return $this->namespace_aliases;
-    }
-
-    /**
-     * Sets the namespace aliases to expand the added types.
-     *
-     * @param string[] $namespace_aliases An associative array of Alias => Fully
-     *     Qualified Namespace Names.
-     *
-     * @return void
-     */
-    public function setNamespaceAliases($namespace_aliases)
-    {
-        $this->namespace_aliases = $namespace_aliases;
+        return $this->context;
     }
 
     /**
@@ -221,13 +158,18 @@ class Collection extends \ArrayObject
         if ($this->isRelativeType($type) && !$this->isTypeAKeyword($type)) {
             $type_parts = explode(self::OPERATOR_NAMESPACE, $type, 2);
 
+            $namespace_aliases = $this->context->getNamespaceAliases();
             // if the first segment is not an alias; prepend namespace name and
             // return
-            if (!isset($this->namespace_aliases[$type_parts[0]])) {
-                return $this->getNamespace() . $type;
+            if (!isset($namespace_aliases[$type_parts[0]])) {
+                $namespace = $this->context->getNamespace();
+                if ('' !== $namespace) {
+                    $namespace .= self::OPERATOR_NAMESPACE;
+                }
+                return self::OPERATOR_NAMESPACE . $namespace . $type;
             }
 
-            $type_parts[0] = $this->namespace_aliases[$type_parts[0]];
+            $type_parts[0] = $namespace_aliases[$type_parts[0]];
             $type = implode(self::OPERATOR_NAMESPACE, $type_parts);
         }
 
