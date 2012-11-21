@@ -11,5 +11,8 @@
     },
     "autoload": {
         "psr-0": {"phpDocumentor": ["src/"]}
+    },
+    "require-dev": {
+        "phpunit/phpunit": "*@stable"
     }
 }
