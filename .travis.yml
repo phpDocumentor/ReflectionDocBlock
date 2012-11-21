@@ -1,0 +1,23 @@
+language: php
+php:
+  - 5.3.3
+  - 5.3
+  - 5.4
+
+script:
+ - php bin/phpunit 
+
+before_script:
+ - sudo apt-get -qq update > /dev/null
+ - sudo apt-get -qq install graphviz > /dev/null
+ - phpenv rehash > /dev/null
+ - composer selfupdate --quiet
+ - composer install --dev 
+ - php bin/phpunit
+ - composer update --dev 
+
+notifications:
+  irc: "irc.freenode.org#phpdocumentor"
+  email:
+    - mike.vanriel@naenius.com
+    - ashnazg@php.net
