@@ -35,10 +35,15 @@ class ParamTag extends ReturnTag
      * @param string   $type     Tag identifier for this tag (should be 'param').
      * @param string   $content  Contents for this tag.
      * @param DocBlock $docblock The DocBlock which this tag belongs to.
+     * @param Location $location Location of the tag.
      */
-    public function __construct($type, $content, DocBlock $docblock = null)
-    {
-        Tag::__construct($type, $content, $docblock);
+    public function __construct(
+        $type,
+        $content,
+        DocBlock $docblock = null,
+        Location $location = null
+    ) {
+        Tag::__construct($type, $content, $docblock, $location);
         $content = preg_split(
             '/(\s+)/u',
             $this->description,

@@ -12,6 +12,9 @@
 
 namespace phpDocumentor\Reflection;
 
+use phpDocumentor\Reflection\DocBlock\Context;
+use phpDocumentor\Reflection\DocBlock\Location;
+
 /**
  * Parses the DocBlock for any structure.
  *
@@ -36,11 +39,11 @@ class DocBlock implements \Reflector
      */
     protected $tags = array();
 
-    /** @var string the current namespace */
-    protected $namespace = '\\';
+    /** @var Context Information about the context of this DocBlock. */
+    protected $context = null;
 
-    /** @var array List of namespace aliases => Fully Qualified Namespace */
-    protected $namespace_aliases = array();
+    /** @var Location Information about the location of this DocBlock. */
+    protected $location = null;
 
     /**
      * Parses the given docblock and populates the member fields.
@@ -49,21 +52,20 @@ class DocBlock implements \Reflector
      * current namespace and aliases. This information is used by some tags
      * (e.g. @return, @param, etc.) to turn a relative Type into a FQCN.
      *
-     * @param \Reflector|string $docblock          A docblock comment (including
+     * @param \Reflector|string $docblock A docblock comment (including
      *     asterisks) or reflector supporting the getDocComment method.
-     * @param string            $namespace         The namespace where this
-     *     DocBlock resides in; defaults to `\`.
-     * @param array             $namespace_aliases A list of namespace aliases
-     *     as provided by the `use` keyword; the key of the array is the alias
-     *     name or last part of the alias array if no alias name is provided.
+     * @param Context           $context  The context in which the DocBlock
+     *     occurs.
+     * @param Location          $location The location within the file that this
+     *     DocBlock occurs in.
      *
      * @throws \InvalidArgumentException if the given argument does not have the
      *     getDocComment method.
      */
     public function __construct(
         $docblock,
-        $namespace = '\\',
-        array $namespace_aliases = array()
+        Context $context = null,
+        Location $location = null
     ) {
         if (is_object($docblock)) {
             if (!method_exists($docblock, 'getDocComment')) {
@@ -83,8 +85,8 @@ class DocBlock implements \Reflector
         $this->long_description = new DocBlock\Description($long, $this);
         $this->parseTags($tags);
 
-        $this->namespace = $namespace;
-        $this->namespace_aliases = $namespace_aliases;
+        $this->context  = $context;
+        $this->location = $location;
     }
 
     /**
@@ -247,6 +249,26 @@ class DocBlock implements \Reflector
     }
 
     /**
+     * Returns the current context.
+     *
+     * @return Context
+     */
+    public function getContext()
+    {
+        return $this->context;
+    }
+
+    /**
+     * Returns the current location.
+     *
+     * @return Location
+     */
+    public function getLocation()
+    {
+        return $this->location;
+    }
+
+    /**
      * Returns the tags for this DocBlock.
      *
      * @return \phpDocumentor\Reflection\DocBlock\Tag[]
@@ -323,21 +345,5 @@ class DocBlock implements \Reflector
     public function __toString()
     {
         return 'Not yet implemented';
-    }
-
-    /**
-     * @return string The namespace where this DocBlock resides in.
-     */
-    public function getNamespace()
-    {
-        return $this->namespace;
-    }
-
-    /**
-     * @return array List of namespace aliases => Fully Qualified Namespace.
-     */
-    public function getNamespaceAliases()
-    {
-        return $this->namespace_aliases;
     }
 }
