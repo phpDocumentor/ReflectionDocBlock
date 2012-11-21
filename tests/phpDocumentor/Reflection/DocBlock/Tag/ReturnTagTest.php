@@ -92,6 +92,13 @@ class ReturnTagTest extends \PHPUnit_Framework_TestCase
                 'int',
                 array('int'),
                 "Number of Bobs"
+            ),
+            array(
+                'return',
+                "int\nNumber of Bobs",
+                'int',
+                array('int'),
+                "Number of Bobs"
             )
         );
     }

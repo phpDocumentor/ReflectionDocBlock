@@ -51,7 +51,18 @@ class SourceTag extends Tag
     ) {
         parent::__construct($type, $content, $docblock, $location);
         if (preg_match(
-            '/^([1-9]\d*)\s*(?:([1-9]\d*)\s+)?(.*)$/su',
+            '/^
+                # Starting line
+                ([1-9]\d*)
+                \s*
+                # Number of lines
+                (?:
+                    ((?1))
+                    \s+
+                )?
+                # Description
+                (.*)
+            $/sux',
             $this->description,
             $matches
         )) {

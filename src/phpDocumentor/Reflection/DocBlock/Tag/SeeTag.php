@@ -42,12 +42,12 @@ class SeeTag extends Tag
         Location $location = null
     ) {
         parent::__construct($type, $content, $docblock, $location);
-        $content = preg_split('/\s+/u', $content);
+        $content = preg_split('/\s+/u', $this->description, 2);
 
         // any output is considered a type
-        $this->refers = array_shift($content);
+        $this->refers = $content[0];
 
-        $this->description = implode(' ', $content);
+        $this->description = isset($content[1]) ? $content[1] : '';
     }
 
     /**

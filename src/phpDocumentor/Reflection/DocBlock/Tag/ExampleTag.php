@@ -43,7 +43,17 @@ class ExampleTag extends SourceTag
     ) {
         Tag::__construct($type, $content, $docblock, $location);
         if (preg_match(
-            '/^(?:\"([^\"]+)\"|(\S+))(?:\s+(.*))?$/su',
+            '/^
+                (?:
+                    # File path in quotes
+                    \"([^\"]+)\"
+                    |
+                    # File URI
+                    (\S+)
+                )
+                # Remaining content (parsed by SourceTag)
+                (?:\s+(.*))?
+            $/sux',
             $this->description,
             $matches
         )) {

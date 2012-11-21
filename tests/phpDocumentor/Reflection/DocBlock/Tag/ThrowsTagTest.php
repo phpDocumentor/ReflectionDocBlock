@@ -90,6 +90,13 @@ class ThrowsTagTest extends \PHPUnit_Framework_TestCase
                 'int',
                 array('int'),
                 "Number of Bobs"
+            ),
+            array(
+                'throws',
+                "int\nNumber of Bobs",
+                'int',
+                array('int'),
+                "Number of Bobs"
             )
         );
     }

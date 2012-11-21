@@ -42,17 +42,12 @@ class LinkTag extends Tag
         Location $location = null
     ) {
         parent::__construct($type, $content, $docblock, $location);
-        $pieces = explode(' ', $this->description);
+        $content = preg_split('/\s+/u', $this->description, 2);
 
-        if (count($pieces) > 1) {
-            $this->link = array_shift($pieces);
-            $this->description = implode(' ', $pieces);
-        } else {
-            $this->link = $content;
-            $this->description = $content;
-        }
+        // any output is considered a type
+        $this->link = $content[0];
 
-        $this->content = $content;
+        $this->description = isset($content[1]) ? $content[1] : $content[0];
     }
 
     /**

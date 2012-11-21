@@ -57,8 +57,24 @@ class MethodTag extends ReturnTag
         //    until a ) and whitespace : as method name with signature
         // 5. any remaining text : as description
         if (preg_match(
-            '/^[\s]*(?:([\w\|_\\\\]+)[\s]+)?(?:[\w_]+\(\)[\s]+)?([\w\|_\\\\]+)'
-            .'\(([^\)]*)\)[\s]*(.*)/u',
+            '/^
+                # Return type
+                (?:
+                    ([\w\|_\\\\]+)
+                    \s+
+                )?
+                # Legacy method name (not captured)
+                (?:
+                    [\w_]+\(\)\s+
+                )?
+                # Method name
+                ([\w\|_\\\\]+)
+                # Arguments
+                \(([^\)]*)\)
+                \s*
+                # Description
+                (.*)
+            $/sux',
             $this->description,
             $matches
         )) {
