@@ -113,16 +113,21 @@ class Tag implements \Reflector
             );
         }
 
+        $handler = __CLASS__;
         if (isset(self::$tagHandlerMappings[$matches[1]])) {
             $handler = self::$tagHandlerMappings[$matches[1]];
-            return new $handler(
-                $matches[1],
-                isset($matches[2]) ? $matches[2] : '',
-                $docblock,
-                $location
+        } elseif (isset($docblock)) {
+            $tagName = (string)new Type\Collection(
+                array($matches[1]),
+                $docblock->getContext()
             );
+
+            if (isset(self::$tagHandlerMappings[$tagName])) {
+                $handler = self::$tagHandlerMappings[$tagName];
+            }
         }
-        return new self(
+
+        return new $handler(
             $matches[1],
             isset($matches[2]) ? $matches[2] : '',
             $docblock,
@@ -136,7 +141,9 @@ class Tag implements \Reflector
      * Registers a handler for tags. The class specified is autoloaded if it's
      * not available. It must inherit from this class.
      * 
-     * @param string      $tag     Name of tag to regiser a handler for.
+     * @param string      $tag     Name of tag to regiser a handler for. When
+     *     registering a namespaced tag, the full name, along with a prefixing
+     *     slash MUST be provided.
      * @param string|null $handler FQCN of handler. Specifing NULL removes the
      *     handler for the specified tag, if any.
      * 
@@ -154,6 +161,7 @@ class Tag implements \Reflector
         if ('' !== $tag
             && class_exists($handler, true)
             && is_subclass_of($handler, __CLASS__)
+            && !strpos($tag, '\\') //Accept no slash, and 1st slash at offset 0.
         ) {
             self::$tagHandlerMappings[$tag] = $handler;
             return true;
