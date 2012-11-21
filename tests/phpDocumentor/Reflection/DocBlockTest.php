@@ -13,6 +13,7 @@
 namespace phpDocumentor\Reflection;
 
 use phpDocumentor\Reflection\DocBlock\Context;
+use phpDocumentor\Reflection\DocBlock\Location;
 
 /**
  * Test class for phpDocumentor\Reflection\DocBlock
@@ -24,6 +25,9 @@ use phpDocumentor\Reflection\DocBlock\Context;
  */
 class DocBlockTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @covers \phpDocumentor\Reflection\DocBlock
+     */
     public function testConstruct()
     {
         $fixture = <<<DOCBLOCK
@@ -38,7 +42,8 @@ class DocBlockTest extends \PHPUnit_Framework_TestCase
 DOCBLOCK;
         $object = new DocBlock(
             $fixture,
-            new Context('\MyNamespace', array('PHPDoc' => '\phpDocumentor'))
+            new Context('\MyNamespace', array('PHPDoc' => '\phpDocumentor')),
+            new Location(2)
         );
         $this->assertEquals(
             'This is a short description.',
@@ -58,6 +63,7 @@ DOCBLOCK;
             array('PHPDoc' => '\phpDocumentor'),
             $object->getContext()->getNamespaceAliases()
         );
+        $this->assertSame(2, $object->getLocation()->getLineNumber());
     }
 
     /**
