@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<phpunit color="true" strict="true" bootstrap="vendor/autoload.php">
+<phpunit colors="true" strict="true" bootstrap="vendor/autoload.php">
   <testsuites>
     <testsuite name="phpDocumentor\Reflection\DocBlock">
-      <directory>tests/</directory>
+      <directory>./tests/</directory>
     </testsuite>
   </testsuites>
   <filter>
