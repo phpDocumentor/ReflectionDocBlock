@@ -139,10 +139,10 @@ TAG_HANDLER
 
         $tagPostReg = Tag::createInstance(
             '@T something',
-             new DocBlock(
-                '', 
+            new DocBlock(
+                '',
                 new Context('', array('T' => '\MyNamespace\MyTag'))
-             )
+            )
         );
         $this->assertInstanceOf(
             __NAMESPACE__ . '\Tag',
@@ -181,10 +181,10 @@ TAG_HANDLER
 
         $tagPostReg = Tag::createInstance(
             '@T something',
-             new DocBlock(
-                '', 
+            new DocBlock(
+                '',
                 new Context('', array('T' => '\MyNamespace\MyTag'))
-             )
+            )
         );
         $this->assertInstanceOf(
             __NAMESPACE__ . '\Tag',
