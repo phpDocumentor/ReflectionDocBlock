@@ -1,0 +1,22 @@
+language: php
+php:
+  - 5.3.3
+  - 5.3
+  - 5.4
+
+script:
+ - vendor/phpunit/phpunit/composer/bin/phpunit
+
+before_script:
+ - sudo apt-get -qq update > /dev/null
+ - phpenv rehash > /dev/null
+ - composer selfupdate --quiet
+ - composer install --dev 
+ - vendor/phpunit/phpunit/composer/bin/phpunit
+ - composer update --dev 
+
+notifications:
+  irc: "irc.freenode.org#phpdocumentor"
+  email:
+    - mike.vanriel@naenius.com
+    - ashnazg@php.net
