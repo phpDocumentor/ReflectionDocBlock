@@ -27,6 +27,8 @@ class DocBlockTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @covers \phpDocumentor\Reflection\DocBlock
+     * 
+     * @return void
      */
     public function testConstruct()
     {
@@ -168,7 +170,7 @@ DOCBLOCK;
             $this->markTestSkipped('"data" URIs for includes are required.');
         }
 
-        require 'data:text/plain;base64,'. base64_encode(
+        include 'data:text/plain;base64,'. base64_encode(
             <<<DOCBLOCK_EXTENSION
 <?php
 class MyReflectionDocBlock extends \phpDocumentor\Reflection\DocBlock {

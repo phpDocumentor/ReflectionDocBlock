@@ -136,7 +136,7 @@ class DocBlock implements \Reflector
         } else {
             // clears all extra horizontal whitespace from the line endings
             // to prevent parsing issues
-            $comment = preg_replace('~(?m)\h*$~u', '', $comment);
+            $comment = preg_replace('/\h*$/Sum', '', $comment);
 
             /*
              * Splits the docblock into a short description, long description and
@@ -153,7 +153,7 @@ class DocBlock implements \Reflector
              * Big thanks to RichardJ for contributing this Regular Expression
              */
             preg_match(
-                '/(?x)
+                '/
         \A (
           [^\n.]+
           (?:
@@ -176,7 +176,7 @@ class DocBlock implements \Reflector
           )
         )?
         (\s+ [\s\S]*)? # everything that follows
-        /u',
+        /ux',
                 $comment,
                 $matches
             );

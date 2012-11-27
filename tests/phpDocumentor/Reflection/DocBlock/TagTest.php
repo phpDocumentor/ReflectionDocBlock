@@ -90,7 +90,7 @@ class TagTest extends \PHPUnit_Framework_TestCase
             $tagPreReg
         );
 
-        require 'data:text/plain;base64,'. base64_encode(
+        include 'data:text/plain;base64,'. base64_encode(
 <<<TAG_HANDLER
 <?php
     class MyTagHandler extends \phpDocumentor\Reflection\DocBlock\Tag {}
@@ -120,6 +120,8 @@ TAG_HANDLER
      * @depends testTagHandlerCorrectRegistration
      * @covers \phpDocumentor\Reflection\DocBlock\Tag::registerTagHandler
      * @covers \phpDocumentor\Reflection\DocBlock\Tag::createInstance
+     * 
+     * @return void
      */
     public function testNamespacedTagHandlerCorrectRegistration()
     {
@@ -162,6 +164,8 @@ TAG_HANDLER
      * @depends testTagHandlerCorrectRegistration
      * @covers \phpDocumentor\Reflection\DocBlock\Tag::registerTagHandler
      * @covers \phpDocumentor\Reflection\DocBlock\Tag::createInstance
+     * 
+     * @return void
      */
     public function testNamespacedTagHandlerIncorrectRegistration()
     {

@@ -65,7 +65,13 @@ class ExampleTagTest extends \PHPUnit_Framework_TestCase
      */
     public function provideDataForConstuctor()
     {
-        // $type, $content, $exContent, $exDescription, $exStartingLine, $exLineCount, $exFilePath
+        // $type,
+        // $content,
+        // $exContent,
+        // $exDescription,
+        // $exStartingLine,
+        // $exLineCount,
+        // $exFilePath
         return array(
             array(
                 'example',
