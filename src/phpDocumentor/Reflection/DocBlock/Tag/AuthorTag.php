@@ -23,6 +23,16 @@ use phpDocumentor\Reflection\DocBlock\Tag;
  */
 class AuthorTag extends Tag
 {
+    /**
+     * PCRE regular expression matching any valid value for the name component.
+     */
+    const REGEX_AUTHOR_NAME = '[^\<]*';
+
+    /**
+     * PCRE regular expression matching any valid value for the email component.
+     */
+    const REGEX_AUTHOR_EMAIL = '[^\>]*';
+
     /** @var string The name of the author */
     protected $authorName = '';
 
@@ -48,7 +58,9 @@ class AuthorTag extends Tag
     {
         parent::setContent($content);
         if (preg_match(
-            '/^([^\<]*)(\<([^\>]*)\>)?$/u',
+            '/^(' . self::REGEX_AUTHOR_NAME .
+            ')(\<(' . self::REGEX_AUTHOR_EMAIL .
+            ')\>)?$/u',
             $this->description,
             $matches
         )) {
@@ -75,13 +87,16 @@ class AuthorTag extends Tag
      * Sets the author's name.
      * 
      * @param string $authorName The new author name.
+     *     An invalid value will set an empty string.
      * 
      * @return $this
      */
     public function setAuthorName($authorName)
     {
         $this->content = null;
-        $this->authorName = $authorName;
+        $this->authorName
+            = preg_match('/^' . self::REGEX_AUTHOR_NAME . '$/u', $authorName)
+            ? $authorName : '';
 
         return $this;
     }
@@ -100,14 +115,17 @@ class AuthorTag extends Tag
      * Sets the author's email.
      * 
      * @param string $authorEmail The new author email.
+     *     An invalid value will set an empty string.
      * 
      * @return $this
      */
     public function setAuthorEmail($authorEmail)
     {
-        $this->content = null;
-        $this->authorEmail = $authorEmail;
+        $this->authorEmail
+            = preg_match('/^' . self::REGEX_AUTHOR_EMAIL . '$/u', $authorEmail)
+            ? $authorEmail : '';
 
+        $this->content = null;
         return $this;
     }
 }

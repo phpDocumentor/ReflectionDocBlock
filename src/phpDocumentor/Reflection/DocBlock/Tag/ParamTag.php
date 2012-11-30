@@ -12,7 +12,6 @@
 
 namespace phpDocumentor\Reflection\DocBlock\Tag;
 
-use phpDocumentor\Reflection\DocBlock;
 use phpDocumentor\Reflection\DocBlock\Tag;
 
 /**
@@ -46,7 +45,7 @@ class ParamTag extends ReturnTag
     public function setContent($content)
     {
         Tag::setContent($content);
-        $content = preg_split(
+        $parts = preg_split(
             '/(\s+)/Su',
             $this->description,
             3,
@@ -54,25 +53,26 @@ class ParamTag extends ReturnTag
         );
 
         // if the first item that is encountered is not a variable; it is a type
-        if (isset($content[0])
-            && (strlen($content[0]) > 0)
-            && ($content[0][0] !== '$')
+        if (isset($parts[0])
+            && (strlen($parts[0]) > 0)
+            && ($parts[0][0] !== '$')
         ) {
-            $this->type = array_shift($content);
-            array_shift($content);
+            $this->type = array_shift($parts);
+            array_shift($parts);
         }
 
         // if the next item starts with a $ it must be the variable name
-        if (isset($content[0])
-            && (strlen($content[0]) > 0)
-            && ($content[0][0] == '$')
+        if (isset($parts[0])
+            && (strlen($parts[0]) > 0)
+            && ($parts[0][0] == '$')
         ) {
-            $this->variableName = array_shift($content);
-            array_shift($content);
+            $this->variableName = array_shift($parts);
+            array_shift($parts);
         }
 
-        $this->description = implode('', $content);
+        $this->setDescription(implode('', $parts));
 
+        $this->content = $content;
         return $this;
     }
 
@@ -95,9 +95,9 @@ class ParamTag extends ReturnTag
      */
     public function setVariableName($name)
     {
-        $this->content = null;
         $this->variableName = $name;
 
+        $this->content = null;
         return $this;
     }
 }

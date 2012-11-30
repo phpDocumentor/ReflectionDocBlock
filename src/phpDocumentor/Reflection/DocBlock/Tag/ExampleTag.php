@@ -12,7 +12,6 @@
 
 namespace phpDocumentor\Reflection\DocBlock\Tag;
 
-use phpDocumentor\Reflection\DocBlock;
 use phpDocumentor\Reflection\DocBlock\Tag;
 
 /**
@@ -30,13 +29,34 @@ class ExampleTag extends SourceTag
      */
     protected $filePath = '';
 
+    /**
+     * @var bool Whether the file path component represents an URI.
+     *     This determines how the file portion appears at {@link getContent()}.
+     */
+    protected $isURI = false;
+
+    /**
+     * {@inheritdoc}
+     */
     public function getContent()
     {
         if (null === $this->content) {
-            $this->content
-                = (preg_match('/\s/Su', $this->filePath)
-                    ? '"' . $this->filePath . '"'
-                    : $this->filePath) . ' ' . $this->getContent();
+            $filePath = '';
+            if ($this->isURI) {
+                if (false === strpos($this->filePath, ':')) {
+                    $filePath = str_replace(
+                        '%2F',
+                        '/',
+                        rawurlencode($this->filePath)
+                    );
+                } else {
+                    $filePath = $this->filePath;
+                }
+            } else {
+                $filePath = '"' . $this->filePath . '"';
+            }
+
+            $this->content = $filePath . ' ' . $this->getContent();
         }
 
         return $this->content;
@@ -63,14 +83,18 @@ class ExampleTag extends SourceTag
             $this->description,
             $matches
         )) {
-            $this->setFilePath('' === $matches[1] ? $matches[2] : $matches[1]);
+            if ('' !== $matches[1]) {
+                $this->setFilePath($matches[1]);
+            } else {
+                $this->setFileURI($matches[2]);
+            }
 
             if (isset($matches[3])) {
                 parent::setContent($matches[3]);
-                $this->content = $content;
             } else {
-                $this->description = '';
+                $this->setDescription('');
             }
+            $this->content = $content;
         }
 
         return $this;
@@ -90,25 +114,43 @@ class ExampleTag extends SourceTag
     /**
      * Sets the file path.
      * 
-     * @param string $filePath The new file path or URI to use as an example.
+     * @param string $filePath The new file path to use for the example.
      * 
      * @return $this
      */
     public function setFilePath($filePath)
     {
-        if (preg_match('/\s/Su', $filePath)) {
-            //Quoted file path.
-            $this->filePath = trim($filePath);
-        } elseif (false === strpos($filePath, ':')) {
-            //Relative URL or a file path with no spaces in it.
+        $this->isURI = false;
+        $this->filePath = trim($filePath);
+
+        $this->content = null;
+        return $this;
+    }
+    
+    /**
+     * Sets the file path as an URI.
+     * 
+     * This function is equivalent to {@link setFilePath()}, except that it
+     * convers an URI to a file path before that.
+     * 
+     * There is no getFileURI(), as {@link getFilePath()} is compatible.
+     * 
+     * @param type $uri The new file URI to use as an example.
+     */
+    public function setFileURI($uri)
+    {
+        $this->isURI = true;
+        if (false === strpos($uri, ':')) {
+            //Relative URL
             $this->filePath = rawurldecode(
-                str_replace(array('/', '\\'), '%2F', $filePath)
+                str_replace(array('/', '\\'), '%2F', $uri)
             );
         } else {
             //Absolute URL or URI.
-            $this->filePath = $filePath;
+            $this->filePath = $uri;
         }
 
+        $this->content = null;
         return $this;
     }
 }

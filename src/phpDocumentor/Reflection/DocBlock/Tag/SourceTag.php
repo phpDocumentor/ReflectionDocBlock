@@ -74,7 +74,8 @@ class SourceTag extends Tag
             if (isset($matches[2]) && '' !== $matches[2]) {
                 $this->lineCount = (int)$matches[2];
             }
-            $this->description = $matches[3];
+            $this->setDescription($matches[3]);
+            $this->content = $content;
         }
 
         return $this;
@@ -101,9 +102,9 @@ class SourceTag extends Tag
      */
     public function setStartingLine($startingLine)
     {
-        $this->content = null;
         $this->startingLine = $startingLine;
 
+        $this->content = null;
         return $this;
     }
 
@@ -128,9 +129,9 @@ class SourceTag extends Tag
      */
     public function setLineCount($lineCount)
     {
-        $this->content = null;
         $this->lineCount = $lineCount;
 
+        $this->content = null;
         return $this;
     }
 }

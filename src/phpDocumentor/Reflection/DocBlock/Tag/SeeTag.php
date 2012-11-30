@@ -12,7 +12,6 @@
 
 namespace phpDocumentor\Reflection\DocBlock\Tag;
 
-use phpDocumentor\Reflection\DocBlock;
 use phpDocumentor\Reflection\DocBlock\Tag;
 
 /**
@@ -44,13 +43,14 @@ class SeeTag extends Tag
     public function setContent($content)
     {
         parent::setContent($content);
-        $content = preg_split('/\s+/Su', $this->description, 2);
+        $parts = preg_split('/\s+/Su', $this->description, 2);
 
         // any output is considered a type
-        $this->refers = $content[0];
+        $this->refers = $parts[0];
 
-        $this->description = isset($content[1]) ? $content[1] : '';
+        $this->setDescription(isset($parts[1]) ? $parts[1] : '');
 
+        $this->content = $content;
         return $this;
     }
 
@@ -73,9 +73,9 @@ class SeeTag extends Tag
      */
     public function setReference($refers)
     {
-        $this->content = null;
         $this->refers = $refers;
 
+        $this->content = null;
         return $this;
     }
 }
