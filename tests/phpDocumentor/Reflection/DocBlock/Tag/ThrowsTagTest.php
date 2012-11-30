@@ -33,7 +33,6 @@ class ThrowsTagTest extends \PHPUnit_Framework_TestCase
      * @param string $extractedDescription
      *
      * @covers \phpDocumentor\Reflection\DocBlock\Tag\ThrowsTag
-     *
      * @dataProvider provideDataForConstructor
      *
      * @return void

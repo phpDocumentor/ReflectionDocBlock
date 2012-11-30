@@ -12,7 +12,6 @@
 
 namespace phpDocumentor\Reflection\DocBlock\Tag;
 
-use phpDocumentor\Reflection\DocBlock;
 use phpDocumentor\Reflection\DocBlock\Tag;
 use phpDocumentor\Reflection\DocBlock\Type\Collection;
 
@@ -32,26 +31,32 @@ class ReturnTag extends Tag
     protected $types = null;
 
     /**
-     * Parses a tag and populates the member variables.
-     *
-     * @param string   $type     Tag identifier for this tag (should be 'return').
-     * @param string   $content  Contents for this tag.
-     * @param DocBlock $docblock The DocBlock which this tag belongs to.
-     * @param Location $location Location of the tag.
+     * {@inheritdoc}
      */
-    public function __construct(
-        $type,
-        $content,
-        DocBlock $docblock = null,
-        Location $location = null
-    ) {
-        parent::__construct($type, $content, $docblock, $location);
-        $content = preg_split('/\s+/u', $this->description, 2);
+    public function getCotnent()
+    {
+        if (null === $this->content) {
+            $this->content = "{$this->type} {$this->description}";
+        }
+
+        return $this->cotnent;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setContent($content)
+    {
+        parent::setContent($content);
+
+        $content = preg_split('/\s+/Su', $this->description, 2);
 
         // any output is considered a type
         $this->type = $content[0];
 
         $this->description = isset($content[1]) ? $content[1] : '';
+        
+        return $this;
     }
 
     /**

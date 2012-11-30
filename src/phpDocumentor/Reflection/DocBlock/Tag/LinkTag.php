@@ -12,7 +12,6 @@
 
 namespace phpDocumentor\Reflection\DocBlock\Tag;
 
-use phpDocumentor\Reflection\DocBlock;
 use phpDocumentor\Reflection\DocBlock\Tag;
 
 /**
@@ -28,30 +27,34 @@ class LinkTag extends Tag
     protected $link = '';
 
     /**
-     * Parses a tag and populates the member variables.
-     *
-     * @param string   $type     Tag identifier for this tag (should be 'link').
-     * @param string   $content  Contents for this tag.
-     * @param DocBlock $docblock The DocBlock which this tag belongs to.
-     * @param Location $location Location of the tag.
+     * {@inheritdoc}
      */
-    public function __construct(
-        $type,
-        $content,
-        DocBlock $docblock = null,
-        Location $location = null
-    ) {
-        parent::__construct($type, $content, $docblock, $location);
-        $content = preg_split('/\s+/u', $this->description, 2);
+    public function getContent()
+    {
+        if (null === $this->content) {
+            $this->content = "{$this->link} {$this->description}";
+        }
 
-        // any output is considered a type
-        $this->link = $content[0];
-
-        $this->description = isset($content[1]) ? $content[1] : $content[0];
+        return $this->content;
     }
 
     /**
-    * Returns the link
+     * {@inheritdoc}
+     */
+    public function setContent($content)
+    {
+        parent::setContent($content);
+        $content = preg_split('/\s+/Su', $this->description, 2);
+
+        $this->link = $content[0];
+
+        $this->description = isset($content[1]) ? $content[1] : $content[0];
+        
+        return $this;
+    }
+
+    /**
+    * Gets the link
     *
     * @return string
     */
@@ -65,10 +68,13 @@ class LinkTag extends Tag
     *
     * @param string $link The link
     *
-    * @return void
+    * @return $this
     */
     public function setLink($link)
     {
+        $this->content = null;
         $this->link = $link;
+        
+        return $this;
     }
 }

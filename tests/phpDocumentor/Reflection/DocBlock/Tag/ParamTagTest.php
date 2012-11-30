@@ -33,9 +33,7 @@ class ParamTagTest extends \PHPUnit_Framework_TestCase
      * @param string $extractedVarName
      * @param string $extractedDescription
      *
-     * @covers \phpDocumentor\Reflection\DocBlock\Tag\ParamTag::__construct
-     * @covers \phpDocumentor\Reflection\DocBlock\Tag\ParamTag::getVariableName
-     *
+     * @covers \phpDocumentor\Reflection\DocBlock\Tag\ParamTag
      * @dataProvider provideDataForConstructor
      *
      * @return void

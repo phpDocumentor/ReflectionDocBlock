@@ -24,39 +24,45 @@ use phpDocumentor\Reflection\DocBlock\Tag;
  */
 class VersionTag extends Tag
 {
+    /**
+     * PCRE regular expression matching a version vector.
+     * Assumes the "x" modifier.
+     */
+    const REGEX_VECTOR = '(?:
+        # Normal release vectors.
+        \d\S*
+        |
+        # VCS version vectors. Per PHPCS, they are expected to
+        # follow the form of the VCS name, followed by ":", followed
+        # by the version vector itself.
+        # By convention, popular VCSes like CVS, SVN and GIT use "$"
+        # around the actual version vector.
+        [^\s\:]+\:\s*\$[^\$]+\$
+    )';
+
     /** @var string The version vector. */
     protected $version = '';
+    
+    public function getContent()
+    {
+        if (null === $this->content) {
+            $this->content = "{$this->version} {$this->description}";
+        }
+
+        return $this->content;
+    }
 
     /**
-     * Parses a tag and populates the member variables.
-     *
-     * @param string   $type     Tag identifier for this tag (should be 'version').
-     * @param string   $content  Contents for this tag.
-     * @param DocBlock $docblock The DocBlock which this tag belongs to.
-     * @param Location $location Location of the tag.
+     * {@inheritdoc}
      */
-    public function __construct(
-        $type,
-        $content,
-        DocBlock $docblock = null,
-        Location $location = null
-    ) {
-        parent::__construct($type, $content, $docblock, $location);
+    public function setContent($content)
+    {
+        parent::setContent($content);
 
         if (preg_match(
             '/^
                 # The version vector
-                ((?:
-                    # Normal release vectors.
-                    \d\S*
-                    |
-                    # VCS version vectors. Per PHPCS, they are expected to
-                    # follow the form of the VCS name, followed by ":", followed
-                    # by the version vector itself.
-                    # By convention, popular VCSes like CVS, SVN and GIT use "$"
-                    # around the actual version vector.
-                    [^\s\:]+\:\s*\$[^\$]+\$
-                ))
+                (' . self::REGEX_VECTOR . ')
                 \s*
                 # The description
                 (.+)?
@@ -67,15 +73,36 @@ class VersionTag extends Tag
             $this->version = $matches[1];
             $this->description = isset($matches[2]) ? $matches[2] : '';
         }
+
+        return $this;
     }
 
     /**
-     * Returns the version section of the tag.
+     * Gets the version section of the tag.
      *
      * @return string The version section of the tag.
      */
     public function getVersion()
     {
         return $this->version;
+    }
+    
+    /**
+     * Sets the version section of the tag.
+     * 
+     * @param string $version The new version section of the tag.
+     *     Invalid version vectors will set the version to an empty string.
+     * 
+     * @return $this
+     */
+    public function setVersion($version)
+    {
+        $this->content = null;
+        $this->version
+            = preg_match('/^' . self::REGEX_VECTOR . '$/ux', $version)
+            ? $version
+            : '';
+
+        return $this;
     }
 }

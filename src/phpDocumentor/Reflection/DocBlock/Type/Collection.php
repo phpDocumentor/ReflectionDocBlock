@@ -152,7 +152,7 @@ class Collection extends \ArrayObject
         }
 
         if ($this->isTypeAnArray($type)) {
-            return $this->expand(substr($type, 0, -2)).self::OPERATOR_ARRAY;
+            return $this->expand(substr($type, 0, -2)) . self::OPERATOR_ARRAY;
         }
 
         if ($this->isRelativeType($type) && !$this->isTypeAKeyword($type)) {
@@ -186,7 +186,7 @@ class Collection extends \ArrayObject
      */
     protected function isTypeAnArray($type)
     {
-        return (substr($type, -2) == self::OPERATOR_ARRAY);
+        return substr($type, -2) === self::OPERATOR_ARRAY;
     }
 
     /**
@@ -199,7 +199,7 @@ class Collection extends \ArrayObject
      */
     protected function isTypeAKeyword($type)
     {
-        return in_array(strtolower($type), $this->keywords);
+        return in_array(strtolower($type), $this->keywords, true);
     }
 
     /**

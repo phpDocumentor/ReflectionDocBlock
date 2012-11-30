@@ -33,8 +33,7 @@ class ExampleTagTest extends \PHPUnit_Framework_TestCase
      * @param string $exLineCount
      * @param string $exFilepath
      *
-     * @covers \phpDocumentor\Reflection\DocBlock\Tag\ExampleTag::__construct
-     * @covers \phpDocumentor\Reflection\DocBlock\Tag\ExampleTag::getFilePath
+     * @covers \phpDocumentor\Reflection\DocBlock\Tag\ExampleTag
      * @dataProvider provideDataForConstuctor
      *
      * @return void

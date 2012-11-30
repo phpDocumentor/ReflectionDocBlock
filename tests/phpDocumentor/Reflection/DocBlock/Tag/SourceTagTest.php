@@ -32,9 +32,7 @@ class SourceTagTest extends \PHPUnit_Framework_TestCase
      * @param string $exStartingLine
      * @param string $exLineCount
      *
-     * @covers \phpDocumentor\Reflection\DocBlock\Tag\SourceTag::__construct
-     * @covers \phpDocumentor\Reflection\DocBlock\Tag\SourceTag::getStartingLine
-     * @covers \phpDocumentor\Reflection\DocBlock\Tag\SourceTag::getLineCount
+     * @covers \phpDocumentor\Reflection\DocBlock\Tag\SourceTag
      * @dataProvider provideDataForConstuctor
      *
      * @return void
