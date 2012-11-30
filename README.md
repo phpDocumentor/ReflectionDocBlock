@@ -1,4 +1,4 @@
-The ReflectionDocBlock Component
+The ReflectionDocBlock Component [![Build Status](https://secure.travis-ci.org/phpDocumentor/ReflectionDocBlock.png)](https://travis-ci.org/phpDocumentor/ReflectionDocBlock)
 ================================
 
 Introduction
@@ -7,7 +7,7 @@ Introduction
 The ReflectionDocBlock component of phpDocumentor provides a DocBlock parser
 that is 100% compatible with the [PHPDoc standard](http://phpdoc.org/docs/latest).
 
-With this component can a library provide support for annotations via DocBlocks
+With this component, a library can provide support for annotations via DocBlocks
 or otherwise retrieve information that is embedded in a DocBlock.
 
 > **Note**: *this is a core component of phpDocumentor and is constantly being
