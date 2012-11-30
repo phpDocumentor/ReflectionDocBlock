@@ -12,6 +12,7 @@
 
 namespace phpDocumentor\Reflection;
 
+use phpDocumentor\Reflection\DocBlock\Tag;
 use phpDocumentor\Reflection\DocBlock\Context;
 use phpDocumentor\Reflection\DocBlock\Location;
 
@@ -28,13 +29,13 @@ class DocBlock implements \Reflector
     protected $short_description = '';
 
     /**
-     * @var \phpDocumentor\Reflection\DocBlock\LongDescription The actual
+     * @var DocBlock\Description The actual
      *     description for this docblock.
      */
     protected $long_description = null;
 
     /**
-     * @var \phpDocumentor\Reflection\DocBlock\Tags[] An array containing all
+     * @var Tag[] An array containing all
      *     the tags in this docblock; except inline.
      */
     protected $tags = array();
@@ -221,7 +222,7 @@ class DocBlock implements \Reflector
 
             // create proper Tag objects
             foreach ($result as $key => $tag_line) {
-                $result[$key] = DocBlock\Tag::createInstance($tag_line, $this);
+                $result[$key] = Tag::createInstance($tag_line, $this);
             }
         }
 
@@ -271,7 +272,7 @@ class DocBlock implements \Reflector
     /**
      * Returns the tags for this DocBlock.
      *
-     * @return DocBlock\Tag[]
+     * @return Tag[]
      */
     public function getTags()
     {
@@ -284,13 +285,13 @@ class DocBlock implements \Reflector
      *
      * @param string $name String to search by.
      *
-     * @return DocBlock\Tag[]
+     * @return Tag[]
      */
     public function getTagsByName($name)
     {
         $result = array();
 
-        /** @var DocBlock\Tag $tag */
+        /** @var Tag $tag */
         foreach ($this->getTags() as $tag) {
             if ($tag->getName() != $name) {
                 continue;
@@ -311,7 +312,7 @@ class DocBlock implements \Reflector
      */
     public function hasTag($name)
     {
-        /** @var DocBlock\Tag $tag */
+        /** @var Tag $tag */
         foreach ($this->getTags() as $tag) {
             if ($tag->getName() == $name) {
                 return true;
@@ -319,6 +320,32 @@ class DocBlock implements \Reflector
         }
 
         return false;
+    }
+    
+    /**
+     * Appends a tag at the end of the list of tags.
+     * 
+     * @param Tag $tag The tag to add.
+     * 
+     * @return Tag The newly added tag.
+     * 
+     * @throws \LogicException When the tag belongs to a different DocBlock.
+     */
+    public function appendTag(Tag $tag)
+    {
+        if (null === $tag->getDocBlock()) {
+            $tag->setDocBlock($this);
+        }
+        
+        if ($tag->getDocBlock() === $this) {
+            $this->tags[] = $tag;
+        } else {
+            throw new \LogicException(
+                'This tag belongs to a different DocBlock object.'
+            );
+        }
+
+        return $tag;
     }
 
     /**

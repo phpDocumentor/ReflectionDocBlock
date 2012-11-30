@@ -12,7 +12,6 @@
 
 namespace phpDocumentor\Reflection\DocBlock\Tag;
 
-use phpDocumentor\Reflection\DocBlock;
 use phpDocumentor\Reflection\DocBlock\Tag;
 
 /**
@@ -71,7 +70,8 @@ class VersionTag extends Tag
             $matches
         )) {
             $this->version = $matches[1];
-            $this->description = isset($matches[2]) ? $matches[2] : '';
+            $this->setDescription(isset($matches[2]) ? $matches[2] : '');
+            $this->content = $content;
         }
 
         return $this;
@@ -91,18 +91,18 @@ class VersionTag extends Tag
      * Sets the version section of the tag.
      * 
      * @param string $version The new version section of the tag.
-     *     Invalid version vectors will set the version to an empty string.
+     *     An invalid value will set an empty string.
      * 
      * @return $this
      */
     public function setVersion($version)
     {
-        $this->content = null;
         $this->version
             = preg_match('/^' . self::REGEX_VECTOR . '$/ux', $version)
             ? $version
             : '';
 
+        $this->content = null;
         return $this;
     }
 }

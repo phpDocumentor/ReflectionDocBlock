@@ -90,6 +90,7 @@ class MethodTag extends ReturnTag
             if (!$this->type) {
                 $this->type = 'void';
             }
+            $this->parsedDescription = null;
         } else {
             echo date('c') . ' ERR (3): @method contained invalid contents: '
                 . $this->content . PHP_EOL;
@@ -107,9 +108,9 @@ class MethodTag extends ReturnTag
      */
     public function setMethodName($method_name)
     {
-        $this->content = null;
         $this->method_name = $method_name;
-        
+
+        $this->content = null;
         return $this;
     }
 
@@ -132,9 +133,9 @@ class MethodTag extends ReturnTag
      */
     public function setArguments($arguments)
     {
-        $this->content = null;
         $this->arguments = $arguments;
-        
+
+        $this->content = null;
         return $this;
     }
 

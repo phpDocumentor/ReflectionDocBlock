@@ -35,23 +35,37 @@ class Description implements \Reflector
     /**
      * Populates the fields of a description.
      *
-     * @param string   $content  The DocBlock contents without asterisks.
+     * @param string   $content  The description's conetnts.
      * @param DocBlock $docblock The DocBlock which this description belongs to.
      */
     public function __construct($content, DocBlock $docblock = null)
     {
-        $this->contents = trim($content);
-        $this->docblock = $docblock;
+        $this->setContent($content)->setDocBlock($docblock);
     }
 
     /**
-     * Returns the text of this description.
+     * Gets the text of this description.
      *
      * @return string
      */
     public function getContents()
     {
         return $this->contents;
+    }
+
+    /**
+     * Sets the text of this description.
+     * 
+     * @param string $content The new text of this description.
+     * 
+     * @return $this
+     */
+    public function setContent($content)
+    {
+        $this->contents = trim($content);
+        
+        $this->parsedContents = null;
+        return $this;
     }
 
     /**
@@ -98,7 +112,9 @@ class Description implements \Reflector
                 null,
                 PREG_SPLIT_DELIM_CAPTURE
             );
-            for ($i=1, $l = count($this->parsedContents); $i<$l; $i += 2) {
+
+            $count = count($this->parsedContents);
+            for ($i=1; $i<$count; $i += 2) {
                 $this->parsedContents[$i] = Tag::createInstance(
                     $this->parsedContents[$i],
                     $this->docblock
@@ -108,7 +124,7 @@ class Description implements \Reflector
             //In order to allow "literal" inline tags, the otherwise invalid
             //sequence "{@}" is changed to "@", and "{}" is changed to "}".
             //See unit tests for examples.
-            for ($i=0, $l = count($this->parsedContents); $i<$l; $i += 2) {
+            for ($i=0; $i<$count; $i += 2) {
                 $this->parsedContents[$i] = str_replace(
                     array('{@}', '{}'),
                     array('@', '}'),
@@ -151,6 +167,31 @@ class Description implements \Reflector
         }
 
         return trim($result);
+    }
+
+    /**
+     * Gets the docblock this tag belongs to.
+     * 
+     * @return DocBlock The docblock this description belongs to.
+     */
+    public function getDocBlock()
+    {
+        return $this->docblock;
+    }
+
+    /**
+     * Sets the docblock this tag belongs to.
+     * 
+     * @param DocBlock $docblock The new docblock this description belongs to.
+     *     Setting NULL removes any association.
+     * 
+     * @return $this
+     */
+    public function setDocBlock(DocBlock $docblock = null)
+    {
+        $this->docblock = $docblock;
+
+        return $this;
     }
 
     /**

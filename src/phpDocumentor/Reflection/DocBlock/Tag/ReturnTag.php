@@ -49,13 +49,14 @@ class ReturnTag extends Tag
     {
         parent::setContent($content);
 
-        $content = preg_split('/\s+/Su', $this->description, 2);
+        $parts = preg_split('/\s+/Su', $this->description, 2);
 
         // any output is considered a type
-        $this->type = $content[0];
+        $this->type = $parts[0];
 
-        $this->description = isset($content[1]) ? $content[1] : '';
-        
+        $this->setDescription(isset($parts[1]) ? $parts[1] : '');
+
+        $this->content = $content;
         return $this;
     }
 
