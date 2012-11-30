@@ -34,10 +34,7 @@ class MethodTagTest extends \PHPUnit_Framework_TestCase
      * @param string $description     The short description mentioned in the
      *     signature.
      * 
-     * @covers \phpDocumentor\Reflection\DocBlock\Tag\MethodTag::__construct
-     * @covers \phpDocumentor\Reflection\DocBlock\Tag\MethodTag::getMethodName
-     * @covers \phpDocumentor\Reflection\DocBlock\Tag\MethodTag::getArguments
-     * 
+     * @covers \phpDocumentor\Reflection\DocBlock\Tag\MethodTag
      * @dataProvider getTestSignatures
      *
      * @return void

@@ -12,7 +12,6 @@
 
 namespace phpDocumentor\Reflection\DocBlock\Tag;
 
-use phpDocumentor\Reflection\DocBlock;
 use phpDocumentor\Reflection\DocBlock\Tag;
 
 /**
@@ -25,36 +24,41 @@ use phpDocumentor\Reflection\DocBlock\Tag;
 class AuthorTag extends Tag
 {
     /** @var string The name of the author */
-    protected $name = '';
+    protected $authorName = '';
 
     /** @var string The email of the author */
-    protected $email = '';
+    protected $authorEmail = '';
+    
+    public function getContent()
+    {
+        if (null === $this->content) {
+            $this->content = $this->authorName;
+            if ('' != $this->authorEmail) {
+                $this->content .= "<{$this->authorEmail}>";
+            }
+        }
+
+        return $this->content;
+    }
 
     /**
-     * Parses a tag and populates the member variables.
-     *
-     * @param string   $type     Tag identifier for this tag (should be 'author').
-     * @param string   $content  Contents for this tag.
-     * @param DocBlock $docblock The DocBlock which this tag belongs to.
-     * @param Location $location Location of the tag.
+     * {@inheritdoc}
      */
-    public function __construct(
-        $type,
-        $content,
-        DocBlock $docblock = null,
-        Location $location = null
-    ) {
-        parent::__construct($type, $content, $docblock, $location);
+    public function setContent($content)
+    {
+        parent::setContent($content);
         if (preg_match(
-            '/^([^\<]*)(\<([^\>]*)\>)?$/',
+            '/^([^\<]*)(\<([^\>]*)\>)?$/u',
             $this->description,
             $matches
         )) {
-            $this->name = trim($matches[1]);
+            $this->authorName = trim($matches[1]);
             if (isset($matches[3])) {
-                $this->email = trim($matches[3]);
+                $this->authorEmail = trim($matches[3]);
             }
         }
+
+        return $this;
     }
 
     /**
@@ -64,7 +68,22 @@ class AuthorTag extends Tag
      */
     public function getAuthorName()
     {
-        return $this->name;
+        return $this->authorName;
+    }
+    
+    /**
+     * Sets the author's name.
+     * 
+     * @param string $authorName The new author name.
+     * 
+     * @return $this
+     */
+    public function setAuthorName($authorName)
+    {
+        $this->content = null;
+        $this->authorName = $authorName;
+
+        return $this;
     }
 
     /**
@@ -74,6 +93,21 @@ class AuthorTag extends Tag
      */
     public function getAuthorEmail()
     {
-        return $this->email;
+        return $this->authorEmail;
+    }
+    
+    /**
+     * Sets the author's email.
+     * 
+     * @param string $authorEmail The new author email.
+     * 
+     * @return $this
+     */
+    public function setAuthorEmail($authorEmail)
+    {
+        $this->content = null;
+        $this->authorEmail = $authorEmail;
+
+        return $this;
     }
 }

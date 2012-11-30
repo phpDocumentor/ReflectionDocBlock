@@ -272,9 +272,7 @@ TAG_HANDLER
      * @param string $content
      * @param string $exDescription
      *
-     * @covers \phpDocumentor\Reflection\DocBlock\Tag::__construct
-     * @covers \phpDocumentor\Reflection\DocBlock\Tag::getDescription
-     * @covers \phpDocumentor\Reflection\DocBlock\Tag::getContent
+     * @covers \phpDocumentor\Reflection\DocBlock\Tag
      * @dataProvider provideDataForConstuctor
      *
      * @return void
@@ -309,11 +307,6 @@ TAG_HANDLER
                 'unknown',
                 '',
                 '',
-            ),
-            array(
-                '',
-                'unknown',
-                'unknown',
             )
         );
     }

@@ -241,7 +241,7 @@ class DocBlock implements \Reflector
     /**
      * Returns the full description or also known as long description.
      *
-     * @return \phpDocumentor\Reflection\DocBlock\LongDescription
+     * @return DocBlock\Description
      */
     public function getLongDescription()
     {
@@ -271,7 +271,7 @@ class DocBlock implements \Reflector
     /**
      * Returns the tags for this DocBlock.
      *
-     * @return \phpDocumentor\Reflection\DocBlock\Tag[]
+     * @return DocBlock\Tag[]
      */
     public function getTags()
     {
@@ -284,13 +284,13 @@ class DocBlock implements \Reflector
      *
      * @param string $name String to search by.
      *
-     * @return \phpDocumentor\Reflection\DocBlock_Tag[]
+     * @return DocBlock\Tag[]
      */
     public function getTagsByName($name)
     {
         $result = array();
 
-        /** @var \phpDocumentor\Reflection\DocBlock\Tag $tag */
+        /** @var DocBlock\Tag $tag */
         foreach ($this->getTags() as $tag) {
             if ($tag->getName() != $name) {
                 continue;
@@ -311,7 +311,7 @@ class DocBlock implements \Reflector
      */
     public function hasTag($name)
     {
-        /** @var \phpDocumentor\Reflection\DocBlock\Tag $tag */
+        /** @var DocBlock\Tag $tag */
         foreach ($this->getTags() as $tag) {
             if ($tag->getName() == $name) {
                 return true;

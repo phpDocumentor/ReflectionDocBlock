@@ -32,7 +32,7 @@ class VarTagTest extends \PHPUnit_Framework_TestCase
      * @param string $exVariable
      * @param string $exDescription
      *
-     * @covers \phpDocumentor\Reflection\DocBlock\Tag\VarTag::__construct
+     * @covers \phpDocumentor\Reflection\DocBlock\Tag\VarTag
      * @dataProvider provideDataForConstuctor
      *
      * @return void

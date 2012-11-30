@@ -32,8 +32,7 @@ class VersionTagTest extends \PHPUnit_Framework_TestCase
      * @param string $exDescription
      * @param string $exVersion
      *
-     * @covers \phpDocumentor\Reflection\DocBlock\Tag\VersionTag::__construct
-     * @covers \phpDocumentor\Reflection\DocBlock\Tag\VersionTag::getVersion
+     * @covers \phpDocumentor\Reflection\DocBlock\Tag\VersionTag
      * @dataProvider provideDataForConstuctor
      *
      * @return void

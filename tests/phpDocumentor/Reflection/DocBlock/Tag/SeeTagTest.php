@@ -31,8 +31,7 @@ class SeeTagTest extends \PHPUnit_Framework_TestCase
      * @param string $exContent
      * @param string $exReference
      *
-     * @covers \phpDocumentor\Reflection\DocBlock\Tag\SeeTag::__construct
-     * @covers \phpDocumentor\Reflection\DocBlock\Tag\SeeTag::getReference
+     * @covers \phpDocumentor\Reflection\DocBlock\Tag\SeeTag
      * @dataProvider provideDataForConstuctor
      *
      * @return void

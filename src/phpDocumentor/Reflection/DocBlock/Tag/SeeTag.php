@@ -28,35 +28,54 @@ class SeeTag extends Tag
     protected $refers = null;
 
     /**
-     * Parses a tag and populates the member variables.
-     *
-     * @param string   $type     Tag identifier for this tag (should be 'see').
-     * @param string   $content  Contents for this tag.
-     * @param DocBlock $docblock The DocBlock which this tag belongs to.
-     * @param Location $location Location of the tag.
+     * {@inheritdoc}
      */
-    public function __construct(
-        $type,
-        $content,
-        DocBlock $docblock = null,
-        Location $location = null
-    ) {
-        parent::__construct($type, $content, $docblock, $location);
-        $content = preg_split('/\s+/u', $this->description, 2);
+    public function getContent()
+    {
+        if (null === $this->content) {
+            $this->content = "{$this->refers} {$this->description}";
+        }
+        return $this->content;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setContent($content)
+    {
+        parent::setContent($content);
+        $content = preg_split('/\s+/Su', $this->description, 2);
 
         // any output is considered a type
         $this->refers = $content[0];
 
         $this->description = isset($content[1]) ? $content[1] : '';
+
+        return $this;
     }
 
     /**
-     * Returns the type of the variable.
+     * Gets the structural element this tag refers to.
      *
      * @return string
      */
     public function getReference()
     {
         return $this->refers;
+    }
+
+    /**
+     * Sets the structural element this tag refers to.
+     * 
+     * @param string $refers The new type this tag refers to.
+     * 
+     * @return $this
+     */
+    public function setReference($refers)
+    {
+        $this->content = null;
+        $this->refers = $refers;
+
+        return $this;
     }
 }

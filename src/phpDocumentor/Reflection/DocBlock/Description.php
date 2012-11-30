@@ -29,9 +29,6 @@ class Description implements \Reflector
     /** @var array The contents, as an array of strings and Tag objects. */
     protected $parsedContents = null;
 
-    /** @var \phpDocumentor\Reflection\DocBlock\Tags[] */
-    protected $tags = array();
-
     /** @var DocBlock The DocBlock which this description belongs to. */
     protected $docblock = null;
 

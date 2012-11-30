@@ -27,25 +27,27 @@ class ParamTag extends ReturnTag
     /**
      * @var string
      */
-    protected $variableName = null;
+    protected $variableName = '';
 
     /**
-     * Parses a tag and populates the member variables.
-     *
-     * @param string   $type     Tag identifier for this tag (should be 'param').
-     * @param string   $content  Contents for this tag.
-     * @param DocBlock $docblock The DocBlock which this tag belongs to.
-     * @param Location $location Location of the tag.
+     * {@inheritdoc}
      */
-    public function __construct(
-        $type,
-        $content,
-        DocBlock $docblock = null,
-        Location $location = null
-    ) {
-        Tag::__construct($type, $content, $docblock, $location);
+    public function getContent()
+    {
+        if (null === $this->content) {
+            $this->content
+                = "{$this->type} {$this->variableName} {$this->description}";
+        }
+        return $this->content;
+    }
+    /**
+     * {@inheritdoc}
+     */
+    public function setContent($content)
+    {
+        Tag::setContent($content);
         $content = preg_split(
-            '/(\s+)/u',
+            '/(\s+)/Su',
             $this->description,
             3,
             PREG_SPLIT_DELIM_CAPTURE
@@ -70,6 +72,8 @@ class ParamTag extends ReturnTag
         }
 
         $this->description = implode('', $content);
+
+        return $this;
     }
 
     /**
@@ -87,10 +91,13 @@ class ParamTag extends ReturnTag
      *
      * @param string $name The new name for this variable.
      *
-     * @return void
+     * @return $this
      */
     public function setVariableName($name)
     {
+        $this->content = null;
         $this->variableName = $name;
+
+        return $this;
     }
 }

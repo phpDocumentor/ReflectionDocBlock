@@ -12,7 +12,6 @@
 
 namespace phpDocumentor\Reflection\DocBlock\Tag;
 
-use phpDocumentor\Reflection\DocBlock;
 use phpDocumentor\Reflection\DocBlock\Tag;
 
 /**
@@ -32,22 +31,25 @@ class MethodTag extends ReturnTag
     protected $arguments = '';
 
     /**
-     * Parses a tag and populates the member variables.
-     *
-     * @param string   $type     Tag identifier for this tag (should be 'method').
-     * @param string   $content  Contents for this tag.
-     * @param DocBlock $docblock The DocBlock which this tag belongs to.
-     * @param Location $location Location of the tag.
+     * {@inheritdoc}
      */
-    public function __construct(
-        $type,
-        $content,
-        DocBlock $docblock = null,
-        Location $location = null
-    ) {
-        Tag::__construct($type, $content, $docblock, $location);
+    public function getContent()
+    {
+        if (null === $this->content) {
+            $this->content = $this->type .
+                " {$this->method_name}({$this->arguments}) " .
+                $this->description;
+        }
 
-        $matches = array();
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setContent($content)
+    {
+        Tag::setContent($content);
         // 1. none or more whitespace
         // 2. optionally a word with underscores followed by whitespace : as
         //    type for the return value
@@ -92,6 +94,8 @@ class MethodTag extends ReturnTag
             echo date('c') . ' ERR (3): @method contained invalid contents: '
                 . $this->content . PHP_EOL;
         }
+
+        return $this;
     }
 
     /**
@@ -99,11 +103,14 @@ class MethodTag extends ReturnTag
      *
      * @param string $method_name The name of the method.
      *
-     * @return void
+     * @return $this
      */
     public function setMethodName($method_name)
     {
+        $this->content = null;
         $this->method_name = $method_name;
+        
+        return $this;
     }
 
     /**
@@ -125,7 +132,10 @@ class MethodTag extends ReturnTag
      */
     public function setArguments($arguments)
     {
+        $this->content = null;
         $this->arguments = $arguments;
+        
+        return $this;
     }
 
     /**

@@ -33,7 +33,6 @@ class ReturnTagTest extends \PHPUnit_Framework_TestCase
      * @param string $extractedDescription
      *
      * @covers \phpDocumentor\Reflection\DocBlock\Tag\ReturnTag
-     *
      * @dataProvider provideDataForConstructor
      *
      * @return void

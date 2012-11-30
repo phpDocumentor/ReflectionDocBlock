@@ -32,8 +32,7 @@ class LinkTagTest extends \PHPUnit_Framework_TestCase
      * @param string $exDescription
      * @param string $exLink
      *
-     * @covers \phpDocumentor\Reflection\DocBlock\Tag\LinkTag::__construct
-     * @covers \phpDocumentor\Reflection\DocBlock\Tag\LinkTag::getLink
+     * @covers \phpDocumentor\Reflection\DocBlock\Tag\LinkTag
      * @dataProvider provideDataForConstuctor
      *
      * @return void

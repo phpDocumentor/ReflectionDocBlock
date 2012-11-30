@@ -36,20 +36,24 @@ class SourceTag extends Tag
     protected $lineCount = null;
 
     /**
-     * Parses a tag and populates the member variables.
-     *
-     * @param string   $type     Tag identifier for this tag (should be 'source').
-     * @param string   $content  Contents for this tag.
-     * @param DocBlock $docblock The DocBlock which this tag belongs to.
-     * @param Location $location Location of the tag.
+     * {@inheritdoc}
      */
-    public function __construct(
-        $type,
-        $content,
-        DocBlock $docblock = null,
-        Location $location = null
-    ) {
-        parent::__construct($type, $content, $docblock, $location);
+    public function getContent()
+    {
+        if (null === $this->content) {
+            $this->content
+                = "{$this->startingLine} {$this->lineCount} {$this->description}";
+        }
+
+        return $this->content;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setContent($content)
+    {
+        parent::setContent($content);
         if (preg_match(
             '/^
                 # Starting line
@@ -72,10 +76,12 @@ class SourceTag extends Tag
             }
             $this->description = $matches[3];
         }
+
+        return $this;
     }
 
     /**
-     * Returns the starting line.
+     * Gets the starting line.
      *
      * @return int The starting line, relative to the structural element's
      *     location.
@@ -83,6 +89,22 @@ class SourceTag extends Tag
     public function getStartingLine()
     {
         return $this->startingLine;
+    }
+
+    /**
+     * Sets the starting line.
+     * 
+     * @param int $startingLine The new starting line, relative to the
+     *     structural element's location.
+     * 
+     * @return $this
+     */
+    public function setStartingLine($startingLine)
+    {
+        $this->content = null;
+        $this->startingLine = $startingLine;
+
+        return $this;
     }
 
     /**
@@ -94,5 +116,21 @@ class SourceTag extends Tag
     public function getLineCount()
     {
         return $this->lineCount;
+    }
+
+    /**
+     * Sets the number of lines.
+     * 
+     * @param int|null $lineCount The new number of lines, relative to the
+     *     starting line. NULL means "to the end".
+     * 
+     * @return $this
+     */
+    public function setLineCount($lineCount)
+    {
+        $this->content = null;
+        $this->lineCount = $lineCount;
+
+        return $this;
     }
 }
