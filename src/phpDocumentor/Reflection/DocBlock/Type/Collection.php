@@ -34,9 +34,9 @@ class Collection extends \ArrayObject
     const OPERATOR_NAMESPACE = '\\';
 
     /** @var string[] List of recognized keywords */
-    protected $keywords = array(
+    protected static $keywords = array(
         'string', 'int', 'integer', 'bool', 'boolean', 'float', 'double',
-        'object', 'mixed', 'array', 'resource', 'void', 'null',
+        'object', 'mixed', 'array', 'resource', 'void', 'null', 'scalar',
         'callback', 'callable', 'false', 'true', 'self', '$this', 'static'
     );
 
@@ -199,7 +199,7 @@ class Collection extends \ArrayObject
      */
     protected function isTypeAKeyword($type)
     {
-        return in_array(strtolower($type), $this->keywords, true);
+        return in_array(strtolower($type), static::$keywords, true);
     }
 
     /**
