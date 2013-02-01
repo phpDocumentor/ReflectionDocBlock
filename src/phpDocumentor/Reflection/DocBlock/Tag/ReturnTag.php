@@ -33,13 +33,13 @@ class ReturnTag extends Tag
     /**
      * {@inheritdoc}
      */
-    public function getCotnent()
+    public function getContent()
     {
         if (null === $this->content) {
             $this->content = "{$this->type} {$this->description}";
         }
 
-        return $this->cotnent;
+        return $this->content;
     }
 
     /**
