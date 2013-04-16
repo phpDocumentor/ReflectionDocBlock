@@ -158,7 +158,7 @@ class DocBlock implements \Reflector
         \A (
           [^\n.]+
           (?:
-            (?! \. \s | \n{2} ) # disallow the first seperator here
+            (?! \. \n | \n{2} ) # disallow the first seperator here
             [\n.] (?! [ \t]* @\pL ) # disallow second seperator
             [^\n.]+
           )*
