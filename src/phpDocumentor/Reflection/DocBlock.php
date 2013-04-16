@@ -143,7 +143,7 @@ class DocBlock implements \Reflector
              * Splits the docblock into a short description, long description and
              * tags section
              * - The short description is started from the first character until
-             *   a dot is encountered followed by a whitespace OR
+             *   a dot is encountered followed by a newline OR
              *   two consecutive newlines (horizontal whitespace is taken into
              *   account to consider spacing errors)
              * - The long description, any character until a new line is

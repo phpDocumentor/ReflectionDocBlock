@@ -34,9 +34,9 @@ class DocBlockTest extends \PHPUnit_Framework_TestCase
     {
         $fixture = <<<DOCBLOCK
 /**
- * This is a short description.
+ * This is a short description
  *
- * This is a long description.
+ * This is a long description
  *
  * @see \MyClass
  * @return void
@@ -48,11 +48,11 @@ DOCBLOCK;
             new Location(2)
         );
         $this->assertEquals(
-            'This is a short description.',
+            'This is a short description',
             $object->getShortDescription()
         );
         $this->assertEquals(
-            'This is a long description.',
+            'This is a long description',
             $object->getLongDescription()->getContents()
         );
         $this->assertCount(2, $object->getTags());
@@ -142,7 +142,8 @@ DOCBLOCK;
     {
         $fixture = <<<DOCBLOCK
 /**
- * This is a short description. This is a long description.
+ * This is a short description.
+ * This is a long description.
  * This is a continuation of the long description.
  */
 DOCBLOCK;
