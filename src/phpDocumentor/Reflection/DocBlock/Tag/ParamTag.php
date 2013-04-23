@@ -61,10 +61,10 @@ class ParamTag extends ReturnTag
             array_shift($parts);
         }
 
-        // if the next item starts with a $ it must be the variable name
+        // if the next item starts with a $ or &$ it must be the variable name
         if (isset($parts[0])
             && (strlen($parts[0]) > 0)
-            && ($parts[0][0] == '$')
+            && ($parts[0][0] == '$' || substr($parts[0], 0, 2) == '&$')
         ) {
             $this->variableName = array_shift($parts);
             array_shift($parts);
