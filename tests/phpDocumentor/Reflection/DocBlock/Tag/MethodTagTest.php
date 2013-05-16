@@ -44,6 +44,7 @@ class MethodTagTest extends \PHPUnit_Framework_TestCase
         $valid,
         $expected_name,
         $expected_return,
+        $expected_isStatic,
         $paramCount,
         $description
     ) {
@@ -64,6 +65,7 @@ class MethodTagTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected_name, $tag->getMethodName());
         $this->assertEquals($expected_return, $tag->getType());
         $this->assertEquals($description, $tag->getDescription());
+        $this->assertEquals($expected_isStatic, $tag->isStatic());
         $this->assertCount($paramCount, $tag->getArguments());
     }
 
@@ -72,56 +74,72 @@ class MethodTagTest extends \PHPUnit_Framework_TestCase
         return array(
             array(
                 'foo',
-                false, 'foo', '', 0, ''
+                false, 'foo', '', false, 0, ''
             ),
             array(
                 'foo()',
-                true, 'foo', 'void', 0, ''
+                true, 'foo', 'void', false, 0, ''
             ),
             array(
                 'foo() description',
-                true, 'foo', 'void', 0, 'description'
+                true, 'foo', 'void', false, 0, 'description'
             ),
             array(
                 'int foo()',
-                true, 'foo', 'int', 0, ''
+                true, 'foo', 'int', false, 0, ''
             ),
             array(
                 'int foo() description',
-                true, 'foo', 'int', 0, 'description'
+                true, 'foo', 'int', false, 0, 'description'
             ),
             array(
                 'int foo($a, $b)',
-                true, 'foo', 'int', 2, ''
+                true, 'foo', 'int', false, 2, ''
             ),
             array(
                 'int foo() foo(int $a, int $b)',
-                true, 'foo', 'int', 2, ''
+                true, 'foo', 'int', false, 2, ''
             ),
             array(
                 'int foo(int $a, int $b)',
-                true, 'foo', 'int', 2, ''
+                true, 'foo', 'int', false, 2, ''
             ),
             array(
                 'null|int foo(int $a, int $b)',
-                true, 'foo', 'null|int', 2, ''
+                true, 'foo', 'null|int', false, 2, ''
             ),
             array(
                 'int foo(null|int $a, int $b)',
-                true, 'foo', 'int', 2, ''
+                true, 'foo', 'int', false, 2, ''
             ),
             array(
                 '\Exception foo() foo(Exception $a, Exception $b)',
-                true, 'foo', '\Exception', 2, ''
+                true, 'foo', '\Exception', false, 2, ''
             ),
             array(
                 'int foo() foo(Exception $a, Exception $b) description',
-                true, 'foo', 'int', 2, 'description'
+                true, 'foo', 'int', false, 2, 'description'
             ),
             array(
                 'int foo() foo(\Exception $a, \Exception $b) description',
-                true, 'foo', 'int', 2, 'description'
+                true, 'foo', 'int', false, 2, 'description'
             ),
+            array(
+                'void()',
+                true, 'void', 'void', false, 0, ''
+            ),
+            array(
+                'static foo()',
+                true, 'foo', 'static', false, 0, ''
+            ),
+            array(
+                'static void foo()',
+                true, 'foo', 'void', true, 0, ''
+            ),
+            array(
+                'static static foo()',
+                true, 'foo', 'static', true, 0, ''
+            )
         );
     }
 }
