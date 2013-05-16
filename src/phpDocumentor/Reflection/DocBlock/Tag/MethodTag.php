@@ -29,6 +29,9 @@ class MethodTag extends ReturnTag
 
     /** @var string */
     protected $arguments = '';
+    
+    /** @var bool */
+    protected $isStatic = false;
 
     /**
      * {@inheritdoc}
@@ -36,12 +39,16 @@ class MethodTag extends ReturnTag
     public function getContent()
     {
         if (null === $this->content) {
-            $this->content = $this->type .
+            $this->content = '';
+            if ($this->isStatic) {
+                $this->content .= 'static ';
+            }
+            $this->content .= $this->type .
                 " {$this->method_name}({$this->arguments}) " .
                 $this->description;
         }
 
-        return $this;
+        return $this->content;
     }
 
     /**
@@ -51,15 +58,22 @@ class MethodTag extends ReturnTag
     {
         Tag::setContent($content);
         // 1. none or more whitespace
-        // 2. optionally a word with underscores followed by whitespace : as
+        // 2. optionally the keyword "static" followed by whitespace
+        // 3. optionally a word with underscores followed by whitespace : as
         //    type for the return value
-        // 3. then optionally a word with underscores followed by () and
+        // 4. then optionally a word with underscores followed by () and
         //    whitespace : as method name as used by phpDocumentor
-        // 4. then a word with underscores, followed by ( and any character
+        // 5. then a word with underscores, followed by ( and any character
         //    until a ) and whitespace : as method name with signature
-        // 5. any remaining text : as description
+        // 6. any remaining text : as description
         if (preg_match(
             '/^
+                # Static keyword
+                # Declates a static method ONLY if type is also present
+                (?:
+                    (static)
+                    \s+
+                )?
                 # Return type
                 (?:
                     ([\w\|_\\\\]+)
@@ -82,13 +96,22 @@ class MethodTag extends ReturnTag
         )) {
             list(
                 ,
+                $static,
                 $this->type,
                 $this->method_name,
                 $this->arguments,
                 $this->description
             ) = $matches;
-            if (!$this->type) {
-                $this->type = 'void';
+            if ($static) {
+                if (!$this->type) {
+                    $this->type = 'static';
+                } else {
+                    $this->isStatic = true;
+                }
+            } else {
+                if (!$this->type) {
+                    $this->type = 'void';
+                }
             }
             $this->parsedDescription = null;
         } else {
@@ -159,5 +182,31 @@ class MethodTag extends ReturnTag
         }
 
         return $arguments;
+    }
+    
+    /**
+     * Checks whether the method tag describes a static method or not.
+     * 
+     * @return bool TRUE if the method declaration is for a static method, FALSE
+     *     otherwise.
+     */
+    public function isStatic()
+    {
+        return $this->isStatic;
+    }
+    
+    /**
+     * Sets a new value for whether the method is static or not.
+     * 
+     * @param bool $isStatic The new value to set.
+     * 
+     * @return $this
+     */
+    public function setIsStatic($isStatic)
+    {
+        $this->isStatic = $isStatic;
+
+        $this->content = null;
+        return $this;
     }
 }
