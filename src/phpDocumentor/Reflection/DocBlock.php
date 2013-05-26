@@ -229,24 +229,38 @@ class DocBlock implements \Reflector
         $this->tags = $result;
     }
 
-    public function getText(){
+    /**
+     * Gets the text portion of the doc block.
+     * 
+     * Gets the text portion (short and long description combined) of the doc
+     * block.
+     * 
+     * @return string The text portion of the doc block.
+     */
+    public function getText()
+    {
         $short = $this->getShortDescription();
         $long = $this->getLongDescription()->getContents();
 
-        if($long){
+        if ($long) {
             return $short . "\n\n" . $long;
-        }else{
+        } else {
             return $short;
         }
     }
 
     /**
-     * Set the short and long description.
+     * Set the text portion of the doc block.
+     * 
+     * Sets the text portion (short and long description combined) of the doc
+     * block.
      *
-     * @param string $docblock
-     * @return $this
+     * @param string $docblock The new text portion of the doc block.
+     * 
+     * @return $this This doc block.
      */
-    public function setText($comment){
+    public function setText($comment)
+    {
         list($short, $long) = $this->splitDocBlock($comment);
         $this->short_description = $short;
         $this->long_description = new DocBlock\Description($long, $this);
