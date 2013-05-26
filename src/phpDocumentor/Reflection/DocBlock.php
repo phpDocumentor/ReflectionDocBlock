@@ -229,6 +229,29 @@ class DocBlock implements \Reflector
         $this->tags = $result;
     }
 
+    public function getText(){
+        $short = $this->getShortDescription();
+        $long = $this->getLongDescription()->getContents();
+
+        if($long){
+            return $short . "\n\n" . $long;
+        }else{
+            return $short;
+        }
+    }
+
+    /**
+     * Set the short and long description.
+     *
+     * @param string $docblock
+     * @return $this
+     */
+    public function setText($comment){
+        list($short, $long) = $this->splitDocBlock($comment);
+        $this->short_description = $short;
+        $this->long_description = new DocBlock\Description($long, $this);
+        return $this;
+    }
     /**
      * Returns the opening line or also known as short description.
      *
@@ -321,14 +344,14 @@ class DocBlock implements \Reflector
 
         return false;
     }
-    
+
     /**
      * Appends a tag at the end of the list of tags.
-     * 
+     *
      * @param Tag $tag The tag to add.
-     * 
+     *
      * @return Tag The newly added tag.
-     * 
+     *
      * @throws \LogicException When the tag belongs to a different DocBlock.
      */
     public function appendTag(Tag $tag)
@@ -336,7 +359,7 @@ class DocBlock implements \Reflector
         if (null === $tag->getDocBlock()) {
             $tag->setDocBlock($this);
         }
-        
+
         if ($tag->getDocBlock() === $this) {
             $this->tags[] = $tag;
         } else {
@@ -347,6 +370,7 @@ class DocBlock implements \Reflector
 
         return $tag;
     }
+
 
     /**
      * Builds a string representation of this object.
