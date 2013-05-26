@@ -33,17 +33,18 @@ class Serializer
     /** @var bool Whether to indent the first line. */
     protected $isFirstLineIndented = true;
 
-    /** @var int The max length of a line. */
+    /** @var int|null The max length of a line. */
     protected $lineLength = null;
 
     /**
      * Create a Serializer instance.
      *
-     * @param int    $indent          The number of times the indent string is
+     * @param int      $indent          The number of times the indent string is
      *     repeated.
-     * @param string $indentString    The string to indent the comment with.
-     * @param bool   $indentFirstLine Whether to indent the first line.
-     * @param int    $lineLength      The max length of a line.
+     * @param string   $indentString    The string to indent the comment with.
+     * @param bool     $indentFirstLine Whether to indent the first line.
+     * @param int|null $lineLength      The max length of a line or NULL to
+     *     disable line wrapping.
      */
     public function __construct(
         $indent = 0,
@@ -135,7 +136,7 @@ class Serializer
      * Sets the length of each line in the serialization. Content will be
      * wrapped within this limit.
      * 
-     * @param int $lineLength The length of each line. NULL to disable line
+     * @param int|null $lineLength The length of each line. NULL to disable line
      *     wrapping altogether.
      * 
      * @return $this This serializer object.
@@ -149,7 +150,8 @@ class Serializer
     /**
      * Gets the line length.
      * 
-     * @return int The length of each line or NULL if line wrapping is disabled.
+     * @return int|null The length of each line or NULL if line wrapping is
+     *     disabled.
      */
     public function getLineLength()
     {
