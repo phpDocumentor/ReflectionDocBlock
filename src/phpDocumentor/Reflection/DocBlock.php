@@ -229,6 +229,29 @@ class DocBlock implements \Reflector
         $this->tags = $result;
     }
 
+    public function getDescription(){
+        $short = $this->getShortDescription();
+        $long = $this->getLongDescription()->getContents();
+
+        if($long){
+            return $short . "\n" . $long;
+        }else{
+            return $short;
+        }
+    }
+
+    /**
+     * Set the short and long description.
+     *
+     * @param $docblock
+     * @return $this
+     */
+    public function setDescription($docblock){
+        list($short, $long) = $this->splitDocBlock($docblock);
+        $this->short_description = $short;
+        $this->long_description = new DocBlock\Description($long, $this);
+        return $this;
+    }
     /**
      * Returns the opening line or also known as short description.
      *
@@ -346,6 +369,27 @@ class DocBlock implements \Reflector
         }
 
         return $tag;
+    }
+
+    /**
+     * Generate a DocBlock Comment
+     *
+     * @return string
+     */
+    public function getDocComment($indentation = ''){
+
+        $description = str_replace("\n", "\n$indentation * ", $this->getDescription());
+
+        $comment = "$indentation/**\n$indentation * $description\n$indentation *\n";
+
+        /** @var Tag $tag */
+        foreach ($this->getTags() as $tag) {
+            $comment .= $indentation.' * @'. $tag->getName() . " " . $tag->getContent() . "\n";
+        }
+
+        $comment .= $indentation.' */';
+
+        return $comment;
     }
 
     /**
