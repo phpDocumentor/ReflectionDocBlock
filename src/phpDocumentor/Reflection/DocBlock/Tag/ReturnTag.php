@@ -61,18 +61,6 @@ class ReturnTag extends Tag
     }
 
     /**
-     * Set the return type
-     *
-     * @param string $type
-     * @return $this
-     */
-    public function setType($type){
-        $this->type = $type;
-        $this->content = null;
-        return $this;
-    }
-
-    /**
      * Returns the unique types of the variable.
      *
      * @return string[]
