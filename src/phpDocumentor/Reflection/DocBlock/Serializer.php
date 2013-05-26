@@ -172,36 +172,23 @@ class Serializer
 
         $text = $docblock->getText();
         if ($this->lineLength) {
-            $text = wordwrap(
-                $text,
-                $this->lineLength - strlen($indent) - 3/*strlen(' * ')*/
-            );
+            //3 === strlen(' * ')
+            $wrapLength = $this->lineLength - strlen($indent) - 3;
+            $text = wordwrap($text, $wrapLength);
         }
-        $text = str_replace("\n", "\n$indent * ", $text);
+        $text = str_replace("\n", "\n{$indent} * ", $text);
 
-        $comment = "$firstIndent/**\n$indent * $text\n$indent *\n";
+        $comment = "{$firstIndent}/**\n{$indent} * {$text}\n{$indent} *\n";
 
         /** @var Tag $tag */
         foreach ($docblock->getTags() as $tag) {
-            $tagName = $tag->getName();
-            $prefixLength = 1/*strlen('@')*/ + strlen($tagName);
-
-            //Added to take the first line of the tag into account.
-            $tagContent = str_repeat(' ', $prefixLength) . $tag->getContent();
-
+            $tagText = "@{$tag->getName()} {$tag->getContent()}";
             if ($this->lineLength) {
-                $tagContent = wordwrap(
-                    $tagContent,
-                    $this->lineLength - strlen($indent) - 3/*strlen(' * ')*/
-                );
+                $tagText = wordwrap($tagText, $wrapLength);
             }
+            $tagText = str_replace("\n", "\n{$indent} * ", $tagText);
 
-            //Clean up the prefix.
-            substr_replace($tagContent, '', 0, $prefixLength);
-
-            $tagContent = str_replace("\n", "\n$indent * ", $tagContent);
-
-            $comment .= "$indent * @{$tagName} {$tagContent}\n";
+            $comment .= "{$indent} * {$tagText}\n";
         }
 
         $comment .= $indent . ' */';

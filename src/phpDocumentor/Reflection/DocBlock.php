@@ -243,7 +243,7 @@ class DocBlock implements \Reflector
         $long = $this->getLongDescription()->getContents();
 
         if ($long) {
-            return $short . "\n\n" . $long;
+            return "{$short}\n\n{$long}";
         } else {
             return $short;
         }
