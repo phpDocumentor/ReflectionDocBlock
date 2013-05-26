@@ -53,6 +53,7 @@ class ReturnTag extends Tag
 
         // any output is considered a type
         $this->type = $parts[0];
+        $this->types = null;
 
         $this->setDescription(isset($parts[1]) ? $parts[1] : '');
 

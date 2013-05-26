@@ -4,8 +4,8 @@
  *
  * PHP Version 5.3
  *
- * @author    Mike van Riel <mike.vanriel@naenius.com>
- * @copyright 2010-2011 Mike van Riel / Naenius (http://www.naenius.com)
+ * @author    Barry vd. Heuvel <barryvdh@gmail.com>
+ * @copyright 2013 Mike van Riel / Naenius (http://www.naenius.com)
  * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      http://phpdoc.org
  */
@@ -15,7 +15,7 @@ namespace phpDocumentor\Reflection\DocBlock;
 use phpDocumentor\Reflection\DocBlock;
 
 /**
- * Serializes a DocBlock instance
+ * Serializes a DocBlock instance.
  *
  * @author  Barry vd. Heuvel <barryvdh@gmail.com>
  * @license http://www.opensource.org/licenses/mit-license.php MIT
@@ -24,98 +24,185 @@ use phpDocumentor\Reflection\DocBlock;
 class Serializer
 {
 
-    /** @var string The string to indent the comment with */
-    protected $indentString;
+    /** @var string The string to indent the comment with. */
+    protected $indentString = ' ';
 
-    /** @var  int The number of times $indentString is repeated */
-    protected $indent;
+    /** @var int The number of times the indent string is repeated. */
+    protected $indent = 0;
 
-    /** @var  bool Indent the first line */
-    protected $indentFirstLine;
+    /** @var bool Whether to indent the first line. */
+    protected $isFirstLineIndented = true;
 
-    /** @var int The max length of a description line. */
+    /** @var int The max length of a line. */
     protected $lineLength = null;
 
     /**
      * Create a Serializer instance.
      *
-     * @param string $indentString
-     * @param int $indent
-     * @param bool $indentFirstLine
-     * @internal param string $indentationString The indentation string.
+     * @param int    $indent          The number of times the indent string is
+     *     repeated.
+     * @param string $indentString    The string to indent the comment with.
+     * @param bool   $indentFirstLine Whether to indent the first line.
+     * @param int    $lineLength      The max length of a line.
      */
-    public function __construct($indentString = ' ', $indent = 4, $indentFirstLine = true)
+    public function __construct(
+        $indent = 0,
+        $indentString = ' ',
+        $indentFirstLine = true,
+        $lineLength = null
+    ) {
+        $this->setIndentationString($indentString);
+        $this->setIndent($indent);
+        $this->setIsFirstLineIndented($indentFirstLine);
+        $this->setLineLength($lineLength);
+    }
+
+    /**
+     * Sets the string to indent comments with.
+     * 
+     * @param string $indentationString The string to indent comments with.
+     * 
+     * @return $this This serializer object.
+     */
+    public function setIndentationString($indentString)
     {
-        $this->indentString = $indentString;
-        $this->indent = $indent;
-        $this->indentFirstLine = $indentFirstLine;
+        $this->indentString = (string)$indentString;
+        return $this;
     }
 
     /**
-     * @param $indentationString
-     * @return $this
+     * Gets the string to indent comments with.
+     * 
+     * @return string The indent string.
      */
-    public function setIndentationString($indentationString)
+    public function getIndentationString()
     {
-        $this->indentation = $indentationString;
-        return $this;
+        return $this->indentString;
     }
 
     /**
-     * @param $indent
-     * @return $this
+     * Sets the number of indents.
+     * 
+     * @param int $indent The number of times the indent string is repeated.
+     * 
+     * @return $this This serializer object.
      */
-    public function setIndent($indent){
-        $this->indent = $indent;
+    public function setIndent($indent)
+    {
+        $this->indent = (int)$indent;
         return $this;
     }
 
     /**
-     * @param $indentFirstLine
-     * @return $this
+     * Gets the number of indents.
+     * 
+     * @return int The number of times the indent string is repeated.
      */
-    public function setIndentFirstLine($indentFirstLine){
-        $this->indentFirstLine = $indentFirstLine;
-        return $this;
+    public function getIndent()
+    {
+        return $this->indent;
     }
 
     /**
-     * @param $lineLength
-     * @return $this
+     * Sets whether or not the first line should be indented.
+     * 
+     * Sets whether or not the first line (the one with the "/**") should be
+     * indented.
+     * 
+     * @param bool $indentFirstLine The new value for this setting.
+     * 
+     * @return $this This serializer object.
      */
-    public function setLineLength($lineLength){
-        $this->lineLength = $lineLength;
+    public function setIsFirstLineIndented($indentFirstLine)
+    {
+        $this->isFirstLineIndented = (bool)$indentFirstLine;
         return $this;
     }
 
     /**
-     * Generate a DocBlock Comment
+     * Gets whether or not the first line should be indented.
+     * 
+     * @return bool Whether or not the first line should be indented.
+     */
+    public function isFirstLineIndented()
+    {
+        return $this->isFirstLineIndented;
+    }
+
+    /**
+     * Sets the line length.
+     * 
+     * Sets the length of each line in the serialization. Content will be
+     * wrapped within this limit.
+     * 
+     * @param int $lineLength The length of each line. NULL to disable line
+     *     wrapping altogether.
+     * 
+     * @return $this This serializer object.
+     */
+    public function setLineLength($lineLength)
+    {
+        $this->lineLength = null === $lineLength ? null : (int)$lineLength;
+        return $this;
+    }
+
+    /**
+     * Gets the line length.
+     * 
+     * @return int The length of each line or NULL if line wrapping is disabled.
+     */
+    public function getLineLength()
+    {
+        return $this->lineLength;
+    }
+
+    /**
+     * Generate a DocBlock comment.
      *
-     * @param DocBlock  The DocBlock to serialize
-     * @return string
+     * @param DocBlock The DocBlock to serialize.
+     * 
+     * @return string The serialized doc block.
      */
-    public function getDocComment($phpdoc){
+    public function getDocComment(DocBlock $docblock)
+    {
+        $indent = str_repeat($this->indentString, $this->indent);
+        $firstIndent = $this->isFirstLineIndented ? $indent : '';
 
-        $indent = '';
-        for($i=0;$i<$this->indent;$i++){
-            $indent .= $this->indentString;
+        $text = $docblock->getText();
+        if ($this->lineLength) {
+            $text = wordwrap(
+                $text,
+                $this->lineLength - strlen($indent) - 3/*strlen(' * ')*/
+            );
         }
-        $firstIndent = $this->indentFirstLine ? $indent : '';
+        $text = str_replace("\n", "\n$indent * ", $text);
 
-        $description = $phpdoc->getText();
-        if($this->lineLength){
-            $description = wordwrap($description, $this->lineLength);
-        }
-        $description = str_replace("\n", "\n$indent * ", $description);
-
-        $comment = "$firstIndent/**\n$indent * $description\n$indent *\n";
+        $comment = "$firstIndent/**\n$indent * $text\n$indent *\n";
 
         /** @var Tag $tag */
-        foreach ($phpdoc->getTags() as $tag) {
-            $comment .= $indent.' * @'. $tag->getName() . " " . $tag->getContent() . "\n";
+        foreach ($docblock->getTags() as $tag) {
+            $tagName = $tag->getName();
+            $prefixLength = 1/*strlen('@')*/ + strlen($tagName);
+
+            //Added to take the first line of the tag into account.
+            $tagContent = str_repeat(' ', $prefixLength) . $tag->getContent();
+
+            if ($this->lineLength) {
+                $tagContent = wordwrap(
+                    $tagContent,
+                    $this->lineLength - strlen($indent) - 3/*strlen(' * ')*/
+                );
+            }
+
+            //Clean up the prefix.
+            substr_replace($tagContent, '', 0, $prefixLength);
+
+            $tagContent = str_replace("\n", "\n$indent * ", $tagContent);
+
+            $comment .= "$indent * @{$tagName} {$tagContent}\n";
         }
 
-        $comment .= $indent.' */';
+        $comment .= $indent . ' */';
 
         return $comment;
     }
