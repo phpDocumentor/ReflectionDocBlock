@@ -36,7 +36,7 @@ class ReturnTag extends Tag
     public function getContent()
     {
         if (null === $this->content) {
-            $this->content = "{$this->type} {$this->description}";
+            $this->content = "{$this->getType()} {$this->description}";
         }
 
         return $this->content;
@@ -62,7 +62,7 @@ class ReturnTag extends Tag
     }
 
     /**
-     * Returns the unique types of the variable.
+     * Returns the unique parsed types of the variable.
      *
      * @return string[]
      */
@@ -72,7 +72,23 @@ class ReturnTag extends Tag
     }
 
     /**
-     * Returns the type section of the variable.
+     * Sets the types of the variable
+     *
+     * @param $types
+     * @return $this
+     */
+    public function setTypes($types){
+        $this->types = new Collection(
+            $types,
+            $this->docblock ? $this->docblock->getContext() : null
+        );
+        $this->content = null;
+        $this->type = null;
+        return $this;
+    }
+
+    /**
+     * Returns the parsed type section of the variable.
      *
      * @return string
      */
@@ -82,9 +98,33 @@ class ReturnTag extends Tag
     }
 
     /**
+     * Returns the raw type section of the variable.
+     *
+     * @return string
+     */
+    public function getRawType()
+    {
+        return $this->type ?: $this->getType();
+    }
+
+    /**
+     * Set the type section of the variable
+     *
+     * @param $type
+     * @return $this
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+        $this->types = null;
+        $this->content = null;
+        return $this;
+    }
+
+    /**
      * Returns the type collection.
      * 
-     * @return void
+     * @return Collection
      */
     protected function getTypesCollection()
     {
