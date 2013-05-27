@@ -182,7 +182,7 @@ class Serializer
 
         /** @var Tag $tag */
         foreach ($docblock->getTags() as $tag) {
-            $tagText = "@{$tag->getName()} {$tag->getContent()}";
+            $tagText = (string) $tag;
             if ($this->lineLength) {
                 $tagText = wordwrap($tagText, $wrapLength);
             }
