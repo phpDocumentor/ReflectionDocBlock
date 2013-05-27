@@ -366,14 +366,12 @@ class Tag implements \Reflector
     }
 
     /**
-     * Returns the exported information (we should use the export static method
-     * BUT this throws an exception at this point).
+     * Returns the tag as a serialized string
      *
      * @return string
-     * @codeCoverageIgnore Not yet implemented
      */
     public function __toString()
     {
-        return 'Not yet implemented';
+        return "@{$this->getName()} {$this->getContent()}";
     }
 }
