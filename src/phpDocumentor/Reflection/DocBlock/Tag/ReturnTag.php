@@ -62,7 +62,7 @@ class ReturnTag extends Tag
     }
 
     /**
-     * Returns the unique parsed types of the variable.
+     * Returns the unique types of the variable.
      *
      * @return string[]
      */
@@ -72,7 +72,7 @@ class ReturnTag extends Tag
     }
 
     /**
-     * Returns the parsed type section of the variable.
+     * Returns the type section of the variable.
      *
      * @return string
      */
