@@ -55,7 +55,7 @@ class ParamTag extends ReturnTag
         // if the first item that is encountered is not a variable; it is a type
         if (isset($parts[0])
             && (strlen($parts[0]) > 0)
-            && ($parts[0][0] !== '$')
+            && ($parts[0][0] !== '$' || $parts[0][0] !== '&')
         ) {
             $this->type = array_shift($parts);
             array_shift($parts);
@@ -64,7 +64,7 @@ class ParamTag extends ReturnTag
         // if the next item starts with a $ it must be the variable name
         if (isset($parts[0])
             && (strlen($parts[0]) > 0)
-            && ($parts[0][0] == '$')
+            && ($parts[0][0] == '$' || $parts[0][0] == '&')
         ) {
             $this->variableName = array_shift($parts);
             array_shift($parts);
