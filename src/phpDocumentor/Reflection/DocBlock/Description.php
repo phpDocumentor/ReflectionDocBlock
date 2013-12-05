@@ -55,15 +55,15 @@ class Description implements \Reflector
 
     /**
      * Sets the text of this description.
-     * 
+     *
      * @param string $content The new text of this description.
-     * 
+     *
      * @return $this
      */
     public function setContent($content)
     {
         $this->contents = trim($content);
-        
+
         $this->parsedContents = null;
         return $this;
     }
@@ -140,7 +140,7 @@ class Description implements \Reflector
      *
      * @todo this should become a more intelligent piece of code where the
      *     configuration contains a setting what format long descriptions are.
-     * 
+     *
      * @codeCoverageIgnore Will be removed soon, in favor of adapters at
      *     PhpDocumentor itself that will process text in various formats.
      *
@@ -161,7 +161,10 @@ class Description implements \Reflector
             );
         }
 
-        if (class_exists('dflydev\markdown\MarkdownExtraParser')) {
+        if (class_exists('Parsedown')) {
+            $markdown = \Parsedown::instance();
+            $result = $markdown->parse($result);
+        } elseif (class_exists('dflydev\markdown\MarkdownExtraParser')) {
             $markdown = new \dflydev\markdown\MarkdownExtraParser();
             $result = $markdown->transformMarkdown($result);
         }
@@ -171,7 +174,7 @@ class Description implements \Reflector
 
     /**
      * Gets the docblock this tag belongs to.
-     * 
+     *
      * @return DocBlock The docblock this description belongs to.
      */
     public function getDocBlock()
@@ -181,10 +184,10 @@ class Description implements \Reflector
 
     /**
      * Sets the docblock this tag belongs to.
-     * 
+     *
      * @param DocBlock $docblock The new docblock this description belongs to.
      *     Setting NULL removes any association.
-     * 
+     *
      * @return $this
      */
     public function setDocBlock(DocBlock $docblock = null)

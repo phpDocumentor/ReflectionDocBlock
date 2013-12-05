@@ -15,7 +15,8 @@
         "phpunit/phpunit": "3.7.*@stable"
     },
     "suggest": {
-        "dflydev/markdown": "1.0.*"
+        "dflydev/markdown": "1.0.*",
+        "erusev/parsedown": "~0.7"
     },
     "extra": {
         "branch-alias": {
