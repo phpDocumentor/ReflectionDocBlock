@@ -113,6 +113,14 @@ class MethodTagTest extends \PHPUnit_Framework_TestCase
                 true, 'foo', 'int', false, 2, ''
             ),
             array(
+                'int foo(array $a = array())',
+                true, 'foo', 'int', false, 1, ''
+            ),
+            array(
+                'int foo(array $a = array(), array $b = array())',
+                true, 'foo', 'int', false, 2, ''
+            ),
+            array(
                 '\Exception foo() foo(Exception $a, Exception $b)',
                 true, 'foo', '\Exception', false, 2, ''
             ),
