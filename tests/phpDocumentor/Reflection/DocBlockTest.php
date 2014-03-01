@@ -14,6 +14,7 @@ namespace phpDocumentor\Reflection;
 
 use phpDocumentor\Reflection\DocBlock\Context;
 use phpDocumentor\Reflection\DocBlock\Location;
+use phpDocumentor\Reflection\DocBlock\Tag\ReturnTag;
 
 /**
  * Test class for phpDocumentor\Reflection\DocBlock
@@ -272,7 +273,10 @@ DOCBLOCK;
  */
 DOCBLOCK;
         $object = new DocBlock($fixture);
-        $this->assertCount(1, $object->getTags());
+        $this->assertCount(1, $tags = $object->getTags());
+	    /** @var ReturnTag $tag */
+	    $tag = reset($tags);
+	    $this->assertEquals("Content on\n    multiple lines.\n\n    One more, after the break.", $tag->getDescription());
     }
 
     /**
