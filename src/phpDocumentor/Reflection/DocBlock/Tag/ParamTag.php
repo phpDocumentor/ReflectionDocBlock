@@ -23,10 +23,11 @@ use phpDocumentor\Reflection\DocBlock\Tag;
  */
 class ParamTag extends ReturnTag
 {
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $variableName = '';
+
+    /** @var bool determines whether this is a variadic argument */
+    protected $isVariadic = false;
 
     /**
      * {@inheritdoc}
@@ -61,13 +62,18 @@ class ParamTag extends ReturnTag
             array_shift($parts);
         }
 
-        // if the next item starts with a $ it must be the variable name
+        // if the next item starts with a $ or ...$ it must be the variable name
         if (isset($parts[0])
             && (strlen($parts[0]) > 0)
-            && ($parts[0][0] == '$')
+            && ($parts[0][0] == '$' || substr($parts[0], 0, 4) === '...$')
         ) {
             $this->variableName = array_shift($parts);
             array_shift($parts);
+
+            if (substr($this->variableName, 0, 3) === '...') {
+                $this->isVariadic = true;
+                $this->variableName = substr($this->variableName, 3);
+            }
         }
 
         $this->setDescription(implode('', $parts));
@@ -99,5 +105,15 @@ class ParamTag extends ReturnTag
 
         $this->content = null;
         return $this;
+    }
+
+    /**
+     * Returns whether this tag is variadic.
+     *
+     * @return boolean
+     */
+    public function isVariadic()
+    {
+        return $this->isVariadic;
     }
 }
