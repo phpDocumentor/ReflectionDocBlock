@@ -36,6 +36,16 @@ class ExampleTag extends SourceTag
     protected $isURI = false;
 
     /**
+     * @var string
+     */
+    protected static $sourceDirectory = '';
+
+    /**
+     * @var string
+     */
+    protected static $exampleDirectory = '';
+
+    /**
      * {@inheritdoc}
      */
     public function getContent()
@@ -153,4 +163,118 @@ class ExampleTag extends SourceTag
         $this->content = null;
         return $this;
     }
+
+    /**
+     * @return string
+     */
+    function getExample()
+    {
+        $filename = $this->getFilePath();
+
+        $file = array();
+
+        if (is_file($this->getExamplePathFromConfig($filename))) {
+            $file = file($this->getExamplePathFromConfig($filename));
+        } elseif (is_file($this->getExamplePathFromSource($filename))) {
+            $file = file($this->getExamplePathFromSource($filename));
+        } elseif (is_file($this->getExamplePath($filename))) {
+            $file = file($this->getExamplePath($filename));
+        } else {
+            $file = @file($filename);
+        }
+
+        if (empty($file)) {
+            $content = "** File not found : {$filename} ** ";
+        } else {
+            $offset = $this->getStartingLine() - 1;
+            $filepart = array_slice($file, $offset, $this->getLineCount());
+            $content = implode('', $filepart);
+        }
+
+        return $content;
+    }
+    
+    /**
+     * Set the Source Directory
+     *
+     * @param string $directory
+     */
+    public static function setSourceDirectory($directory = '')
+    {
+        self::$sourceDirectory = $directory;
+    }
+    
+    /**
+     * Get the Source Directory
+     *
+     * @return string
+     */
+    public static function getSourceDirectory()
+    {
+        return self::$sourceDirectory;
+    }
+    
+    /**
+     * Set the Examples Directory
+     *
+     * @param string $directory
+     */
+    public static function setExampleDirectory($directory = '')
+    {
+        self::$exampleDirectory = $directory;
+    }
+    
+    /**
+     * Get the Examples Directory
+     *
+     * @return string
+     */
+    public static function getExampleDirectory()
+    {
+        return self::$exampleDirectory;
+    }
+    
+    /**
+     * Get example filepath based on the example directory inside your project.
+     *
+     * @param string $file
+     *
+     * @return string
+     */
+    protected function getExamplePath($file)
+    {
+        return getcwd() . DIRECTORY_SEPARATOR . 'examples' . DIRECTORY_SEPARATOR . $file;
+    }
+
+    /**
+     * Get example filepath based on config.
+     *
+     * @param string $file
+     *
+     * @return string
+     */
+    protected function getExamplePathFromConfig($file)
+    {
+        return rtrim(self::getExampleDirectory(), '\\/') . DIRECTORY_SEPARATOR . $file;
+    }
+
+    /**
+     * Get example filepath based on sourcecode.
+     *
+     * @param string $file
+     *
+     * @return string
+     */
+    protected function getExamplePathFromSource($file)
+    {
+        return sprintf(
+            '%s%s%s%s%s',
+            getcwd(),
+            DIRECTORY_SEPARATOR,
+            trim(self::getSourceDirectory(), '\\/'),
+            DIRECTORY_SEPARATOR,
+            trim($file, '"')
+        );
+    }
+ 
 }
