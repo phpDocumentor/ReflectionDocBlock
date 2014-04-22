@@ -13,8 +13,6 @@
 namespace phpDocumentor\Reflection\DocBlock\Tag;
 
 use phpDocumentor\Reflection\DocBlock\Tag;
-use phpDocumentor\Reflection\DocBlock\Location;
-use phpDocumentor\Reflection\DocBlock;
 
 /**
  * Reflection class for a @example tag in a Docblock.
@@ -40,33 +38,12 @@ class ExampleTag extends SourceTag
     /**
      * @var string
      */
-    protected $sourceDirectory = '';
+    protected static $sourceDirectory = '';
 
     /**
      * @var string
      */
-    protected $exampleDirectory = '';
-
-    /**
-     * {@inheritdoc}
-     */
-    public function __construct(
-        $name,
-        $content,
-        DocBlock $docblock = null,
-        Location $location = null
-    ) {
-		global $app;
-		
-		$this->sourceDirectory = is_array($app['config']['files']['directory'])
-			? $app['config']['files']['directory'][0]
-			: (string) $app['config']['files']['directory'];
-		$this->exampleDirectory = is_array($app['config']['examples']['directory'])
-			? $app['config']['examples']['directory'][0]
-			: (string) $app['config']['examples']['directory'];
-		
-        parent::__construct($name, $content, $docblock, $location);
-    }
+    protected static $exampleDirectory = '';
 
     /**
      * {@inheritdoc}
@@ -134,38 +111,6 @@ class ExampleTag extends SourceTag
     }
 
     /**
-     * @param ExampleDescriptor $example
-     *
-     * @return string
-     */
-    protected function getExampleContent()
-    {
-        $filename = $this->getFilePath();
-
-        $file = array();
-
-        if (is_file($this->getExamplePathFromConfig($filename))) {
-            $file = file($this->getExamplePathFromConfig($filename));
-        } elseif (is_file($this->getExamplePathFromSource($filename))) {
-            $file = file($this->getExamplePathFromSource($filename));
-        } elseif (is_file($this->getExamplePath($filename))) {
-            $file = file($this->getExamplePath($filename));
-        } else {
-            $file = @file($filename);
-        }
-
-        if (empty($file)) {
-            $content = "** File not found : {$filename} ** ";
-        } else {
-            $offset = $this->getStartingLine() - 1;
-            $filepart = array_slice($file, $offset, $this->getLineCount());
-            $content = implode('', $filepart);
-        }
-
-        return $content;
-    }
-
-    /**
      * Returns the file path.
      *
      * @return string Path to a file to use as an example.
@@ -218,8 +163,77 @@ class ExampleTag extends SourceTag
         $this->content = null;
         return $this;
     }
-	
-	
+
+    /**
+     * @return string
+     */
+    function getExample()
+    {
+        $filename = $this->getFilePath();
+
+        $file = array();
+
+        if (is_file($this->getExamplePathFromConfig($filename))) {
+            $file = file($this->getExamplePathFromConfig($filename));
+        } elseif (is_file($this->getExamplePathFromSource($filename))) {
+            $file = file($this->getExamplePathFromSource($filename));
+        } elseif (is_file($this->getExamplePath($filename))) {
+            $file = file($this->getExamplePath($filename));
+        } else {
+            $file = @file($filename);
+        }
+
+        if (empty($file)) {
+            $content = "** File not found : {$filename} ** ";
+        } else {
+            $offset = $this->getStartingLine() - 1;
+            $filepart = array_slice($file, $offset, $this->getLineCount());
+            $content = implode('', $filepart);
+        }
+
+        return $content;
+    }
+    
+    /**
+     * Set the Source Directory
+     *
+     * @param string $directory
+     */
+    public static function setSourceDirectory($directory = '')
+    {
+        self::$sourceDirectory = $directory;
+    }
+    
+    /**
+     * Get the Source Directory
+     *
+     * @return string
+     */
+    public static function getSourceDirectory()
+    {
+        return self::$sourceDirectory;
+    }
+    
+    /**
+     * Set the Examples Directory
+     *
+     * @param string $directory
+     */
+    public static function setExampleDirectory($directory = '')
+    {
+        self::$exampleDirectory = $directory;
+    }
+    
+    /**
+     * Get the Examples Directory
+     *
+     * @return string
+     */
+    public static function getExampleDirectory()
+    {
+        return self::$exampleDirectory;
+    }
+    
     /**
      * Get example filepath based on the example directory inside your project.
      *
@@ -241,7 +255,7 @@ class ExampleTag extends SourceTag
      */
     protected function getExamplePathFromConfig($file)
     {
-        return rtrim($this->exampleDirectory, '\\/') . DIRECTORY_SEPARATOR . $file;
+        return rtrim(self::getExampleDirectory(), '\\/') . DIRECTORY_SEPARATOR . $file;
     }
 
     /**
@@ -257,7 +271,7 @@ class ExampleTag extends SourceTag
             '%s%s%s%s%s',
             getcwd(),
             DIRECTORY_SEPARATOR,
-            trim($this->sourceDirectory, '\\/'),
+            trim(self::getSourceDirectory(), '\\/'),
             DIRECTORY_SEPARATOR,
             trim($file, '"')
         );
