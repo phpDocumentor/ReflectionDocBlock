@@ -209,20 +209,16 @@ class DocBlock implements \Reflector
                 );
             }
             foreach (explode("\n", $tags) as $tag_line) {
-                if (trim($tag_line) === '') {
-                    continue;
-                }
-
                 if (isset($tag_line[0]) && ($tag_line[0] === '@')) {
                     $result[] = $tag_line;
                 } else {
-                    $result[count($result) - 1] .= PHP_EOL . $tag_line;
+                    $result[count($result) - 1] .= "\n" . $tag_line;
                 }
             }
 
             // create proper Tag objects
             foreach ($result as $key => $tag_line) {
-                $result[$key] = Tag::createInstance($tag_line, $this);
+                $result[$key] = Tag::createInstance(trim($tag_line), $this);
             }
         }
 

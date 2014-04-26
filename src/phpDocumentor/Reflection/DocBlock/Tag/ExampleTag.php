@@ -56,7 +56,7 @@ class ExampleTag extends SourceTag
                 $filePath = '"' . $this->filePath . '"';
             }
 
-            $this->content = $filePath . ' ' . $this->getContent();
+            $this->content = $filePath . ' ' . parent::getContent();
         }
 
         return $this->content;
