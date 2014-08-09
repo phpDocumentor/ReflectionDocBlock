@@ -114,9 +114,6 @@ class MethodTag extends ReturnTag
                 }
             }
             $this->parsedDescription = null;
-        } else {
-            echo date('c') . ' ERR (3): @method contained invalid contents: '
-                . $this->content . PHP_EOL;
         }
 
         return $this;
