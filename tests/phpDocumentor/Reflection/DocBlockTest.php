@@ -71,8 +71,7 @@ DOCBLOCK;
 
     /**
      * @covers \phpDocumentor\Reflection\DocBlock::splitDocBlock
-     * @group test
-     * 
+     *
      * @return void
      */
     public function testConstructWithTagsOnly()
@@ -92,6 +91,9 @@ DOCBLOCK;
         $this->assertFalse($object->hasTag('category'));
     }
 
+    /**
+     * @covers \phpDocumentor\Reflection\DocBlock::isTemplateStart
+     */
     public function testIfStartOfTemplateIsDiscovered()
     {
         $fixture = <<<DOCBLOCK
@@ -110,6 +112,9 @@ DOCBLOCK;
         $this->assertTrue($object->isTemplateStart());
     }
 
+    /**
+     * @covers \phpDocumentor\Reflection\DocBlock::isTemplateEnd
+     */
     public function testIfEndOfTemplateIsDiscovered()
     {
         $fixture = <<<DOCBLOCK

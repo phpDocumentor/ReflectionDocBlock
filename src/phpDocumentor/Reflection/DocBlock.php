@@ -303,6 +303,24 @@ class DocBlock implements \Reflector
     }
 
     /**
+     * Returns whether this DocBlock is the start of a Template section.
+     *
+     * A Docblock may serve as template for a series of subsequent DocBlocks. This is indicated by a special marker
+     * (`#@+`) that is appended directly after the opening `/**` of a DocBlock.
+     *
+     * An example of such an opening is:
+     *
+     * ```
+     * /**#@+
+     *  * My DocBlock
+     *  * /
+     * ```
+     *
+     * The description and tags (not the summary!) are copied onto all subsequent DocBlocks and also applied to all
+     * elements that follow until another DocBlock is found that contains the closing marker (`#@-`).
+     *
+     * @see self::isTemplateEnd() for the check whether a closing marker was provided.
+     *
      * @return boolean
      */
     public function isTemplateStart()
@@ -311,6 +329,10 @@ class DocBlock implements \Reflector
     }
 
     /**
+     * Returns whether this DocBlock is the end of a Template section.
+     *
+     * @see self::isTemplateStart() for a more complete description of the Docblock Template functionality.
+     *
      * @return boolean
      */
     public function isTemplateEnd()
