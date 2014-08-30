@@ -71,6 +71,7 @@ DOCBLOCK;
 
     /**
      * @covers \phpDocumentor\Reflection\DocBlock::splitDocBlock
+     * @group test
      * 
      * @return void
      */
@@ -89,6 +90,35 @@ DOCBLOCK;
         $this->assertTrue($object->hasTag('see'));
         $this->assertTrue($object->hasTag('return'));
         $this->assertFalse($object->hasTag('category'));
+    }
+
+    public function testIfStartOfTemplateIsDiscovered()
+    {
+        $fixture = <<<DOCBLOCK
+/**#@+
+ * @see \MyClass
+ * @return void
+ */
+DOCBLOCK;
+        $object = new DocBlock($fixture);
+        $this->assertEquals('', $object->getShortDescription());
+        $this->assertEquals('', $object->getLongDescription()->getContents());
+        $this->assertCount(2, $object->getTags());
+        $this->assertTrue($object->hasTag('see'));
+        $this->assertTrue($object->hasTag('return'));
+        $this->assertFalse($object->hasTag('category'));
+        $this->assertTrue($object->isTemplateStart());
+    }
+
+    public function testIfEndOfTemplateIsDiscovered()
+    {
+        $fixture = <<<DOCBLOCK
+/**#@-*/
+DOCBLOCK;
+        $object = new DocBlock($fixture);
+        $this->assertEquals('', $object->getShortDescription());
+        $this->assertEquals('', $object->getLongDescription()->getContents());
+        $this->assertTrue($object->isTemplateEnd());
     }
 
     /**
