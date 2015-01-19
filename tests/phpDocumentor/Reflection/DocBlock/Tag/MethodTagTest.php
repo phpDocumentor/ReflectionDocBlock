@@ -24,8 +24,6 @@ class MethodTagTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @param string $signature       The signature to test.
-     * @param bool   $valid           Whether the given signature is expected to
-     *     be valid.
      * @param string $expected_name   The method name that is expected from this
      *     signature.
      * @param string $expected_return The return type that is expected from this
@@ -41,26 +39,13 @@ class MethodTagTest extends \PHPUnit_Framework_TestCase
      */
     public function testConstruct(
         $signature,
-        $valid,
         $expected_name,
         $expected_return,
         $expected_isStatic,
         $paramCount,
         $description
     ) {
-        ob_start();
         $tag = new MethodTag('method', $signature);
-        $stdout = ob_get_clean();
-
-        $this->assertSame(
-            $valid,
-            empty($stdout),
-            'No error should have been output if the signature is valid'
-        );
-
-        if (!$valid) {
-            return;
-        }
 
         $this->assertEquals($expected_name, $tag->getMethodName());
         $this->assertEquals($expected_return, $tag->getType());
@@ -74,71 +59,75 @@ class MethodTagTest extends \PHPUnit_Framework_TestCase
         return array(
             array(
                 'foo',
-                false, 'foo', '', false, 0, ''
+                '', '', false, 0, 'foo'
+            ),
+            array(
+                'foo description',
+                '', '', false, 0, 'foo description'
             ),
             array(
                 'foo()',
-                true, 'foo', 'void', false, 0, ''
+                'foo', 'void', false, 0, ''
             ),
             array(
                 'foo() description',
-                true, 'foo', 'void', false, 0, 'description'
+                'foo', 'void', false, 0, 'description'
             ),
             array(
                 'int foo()',
-                true, 'foo', 'int', false, 0, ''
+                'foo', 'int', false, 0, ''
             ),
             array(
                 'int foo() description',
-                true, 'foo', 'int', false, 0, 'description'
+                'foo', 'int', false, 0, 'description'
             ),
             array(
                 'int foo($a, $b)',
-                true, 'foo', 'int', false, 2, ''
+                'foo', 'int', false, 2, ''
             ),
             array(
                 'int foo() foo(int $a, int $b)',
-                true, 'foo', 'int', false, 2, ''
+                'foo', 'int', false, 2, ''
             ),
             array(
                 'int foo(int $a, int $b)',
-                true, 'foo', 'int', false, 2, ''
+                'foo', 'int', false, 2, ''
             ),
             array(
                 'null|int foo(int $a, int $b)',
-                true, 'foo', 'null|int', false, 2, ''
+                'foo', 'null|int', false, 2, ''
             ),
             array(
                 'int foo(null|int $a, int $b)',
-                true, 'foo', 'int', false, 2, ''
+                'foo', 'int', false, 2, ''
             ),
             array(
                 '\Exception foo() foo(Exception $a, Exception $b)',
-                true, 'foo', '\Exception', false, 2, ''
+                'foo', '\Exception', false, 2, ''
             ),
             array(
                 'int foo() foo(Exception $a, Exception $b) description',
-                true, 'foo', 'int', false, 2, 'description'
+                'foo', 'int', false, 2, 'description'
             ),
             array(
                 'int foo() foo(\Exception $a, \Exception $b) description',
-                true, 'foo', 'int', false, 2, 'description'
+                'foo', 'int', false, 2, 'description'
             ),
             array(
                 'void()',
-                true, 'void', 'void', false, 0, ''
+                'void', 'void', false, 0, ''
             ),
             array(
                 'static foo()',
-                true, 'foo', 'static', false, 0, ''
+                'foo', 'static', false, 0, ''
             ),
             array(
                 'static void foo()',
-                true, 'foo', 'void', true, 0, ''
+                'foo', 'void', true, 0, ''
             ),
             array(
                 'static static foo()',
-                true, 'foo', 'static', true, 0, ''
+                'foo', 'static', true, 0, ''
             )
         );
     }
