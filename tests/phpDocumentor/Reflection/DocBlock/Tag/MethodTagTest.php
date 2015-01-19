@@ -105,6 +105,10 @@ class MethodTagTest extends \PHPUnit_Framework_TestCase
                 true, 'foo', 'int', false, 2, ''
             ),
             array(
+                'int[] foo(int $a, int $b)',
+                true, 'foo', 'int[]', false, 2, ''
+            ),
+            array(
                 'null|int foo(int $a, int $b)',
                 true, 'foo', 'null|int', false, 2, ''
             ),
