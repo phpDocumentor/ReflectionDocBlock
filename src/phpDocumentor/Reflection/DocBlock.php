@@ -57,17 +57,14 @@ class DocBlock implements \Reflector
      *
      * The constructor may also receive namespace information such as the
      * current namespace and aliases. This information is used by some tags
-     * (e.g. @return, @param, etc.) to turn a relative Type into a FQCN.
+     * (e.g. return, param, etc.) to turn a relative Type into a FQCN.
      *
-     * @param \Reflector|string $docblock A docblock comment (including
-     *     asterisks) or reflector supporting the getDocComment method.
-     * @param Context           $context  The context in which the DocBlock
-     *     occurs.
-     * @param Location          $location The location within the file that this
-     *     DocBlock occurs in.
-     *
-     * @throws \InvalidArgumentException if the given argument does not have the
+     * @param \Reflector|string $docblock A docblock comment (including asterisks) or reflector supporting the
      *     getDocComment method.
+     * @param Context           $context  The context in which the DocBlock occurs.
+     * @param Location          $location The location within the file that this DocBlock occurs in.
+     *
+     * @throws \InvalidArgumentException if the given argument does not have the getDocComment method.
      */
     public function __construct(
         $docblock,
@@ -77,8 +74,7 @@ class DocBlock implements \Reflector
         if (is_object($docblock)) {
             if (!method_exists($docblock, 'getDocComment')) {
                 throw new \InvalidArgumentException(
-                    'Invalid object passed; the given reflector must support '
-                    . 'the getDocComment method'
+                    'Invalid object passed; the given reflector must support the getDocComment method'
                 );
             }
 
@@ -266,14 +262,13 @@ class DocBlock implements \Reflector
     }
 
     /**
-     * Set the text portion of the doc block.
+     * Set the text portion of the DocBlock.
      * 
-     * Sets the text portion (short and long description combined) of the doc
-     * block.
+     * Sets the text portion (short and long description combined) of the DocBlock.
      *
-     * @param string $docblock The new text portion of the doc block.
+     * @param string $comment The new text portion of the DocBlock.
      * 
-     * @return $this This doc block.
+     * @return $this
      */
     public function setText($comment)
     {
