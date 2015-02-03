@@ -41,19 +41,11 @@ class ExampleTag extends SourceTag
     public function getContent()
     {
         if (null === $this->content) {
-            $filePath = '';
+            $filePath = '"' . $this->filePath . '"';
             if ($this->isURI) {
-                if (false === strpos($this->filePath, ':')) {
-                    $filePath = str_replace(
-                        '%2F',
-                        '/',
-                        rawurlencode($this->filePath)
-                    );
-                } else {
-                    $filePath = $this->filePath;
-                }
-            } else {
-                $filePath = '"' . $this->filePath . '"';
+                $filePath = $this->isUriRelative($this->filePath)
+                    ? str_replace('%2F', '/', rawurlencode($this->filePath))
+                    :$this->filePath;
             }
 
             $this->content = $filePath . ' ' . parent::getContent();
@@ -61,6 +53,7 @@ class ExampleTag extends SourceTag
 
         return $this->content;
     }
+
     /**
      * {@inheritdoc}
      */
@@ -131,26 +124,35 @@ class ExampleTag extends SourceTag
      * Sets the file path as an URI.
      * 
      * This function is equivalent to {@link setFilePath()}, except that it
-     * convers an URI to a file path before that.
+     * converts an URI to a file path before that.
      * 
      * There is no getFileURI(), as {@link getFilePath()} is compatible.
      * 
-     * @param type $uri The new file URI to use as an example.
+     * @param string $uri The new file URI to use as an example.
+     *
+     * @return $this
      */
     public function setFileURI($uri)
     {
-        $this->isURI = true;
-        if (false === strpos($uri, ':')) {
-            //Relative URL
-            $this->filePath = rawurldecode(
-                str_replace(array('/', '\\'), '%2F', $uri)
-            );
-        } else {
-            //Absolute URL or URI.
-            $this->filePath = $uri;
-        }
-
+        $this->isURI   = true;
         $this->content = null;
+
+        $this->filePath = $this->isUriRelative($uri)
+            ? rawurldecode(str_replace(array('/', '\\'), '%2F', $uri))
+            : $this->filePath = $uri;
+
         return $this;
+    }
+
+    /**
+     * Returns true if the provided URI is relative or contains a complete scheme (and thus is absolute).
+     *
+     * @param string $uri
+     *
+     * @return bool
+     */
+    private function isUriRelative($uri)
+    {
+        return false === strpos($uri, ':');
     }
 }
