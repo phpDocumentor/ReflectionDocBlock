@@ -35,7 +35,7 @@ class Description implements \Reflector
     /**
      * Populates the fields of a description.
      *
-     * @param string   $content  The description's conetnts.
+     * @param string   $content  The description's content.
      * @param DocBlock $docblock The DocBlock which this description belongs to.
      */
     public function __construct($content, DocBlock $docblock = null)
