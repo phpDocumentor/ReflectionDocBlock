@@ -167,6 +167,9 @@ class Description implements \Reflector
         } elseif (class_exists('dflydev\markdown\MarkdownExtraParser')) {
             $markdown = new \dflydev\markdown\MarkdownExtraParser();
             $result = $markdown->transformMarkdown($result);
+        } elseif (class_exists('League\CommonMark\CommonMarkConverter')) {
+            $markdown = new \League\CommonMark\CommonMarkConverter();
+            $result = $markdown->convertToHtml($result);
         }
 
         return trim($result);
