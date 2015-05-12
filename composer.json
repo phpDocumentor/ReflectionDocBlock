@@ -15,7 +15,6 @@
         "phpunit/phpunit": "~4.0"
     },
     "suggest": {
-        "dflydev/markdown": "~1.0",
         "erusev/parsedown": "~1.0",
         "league/commonmark": "*"
     },
