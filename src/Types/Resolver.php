@@ -13,10 +13,9 @@
 namespace phpDocumentor\Reflection\Types;
 
 use phpDocumentor\Reflection\DocBlock\Context;
-use phpDocumentor\Reflection\Fqsen;
 use phpDocumentor\Reflection\Type;
 
-class Resolver
+final class Resolver
 {
     /** @var string Definition of the ARRAY operator for types */
     const OPERATOR_ARRAY = '[]';
