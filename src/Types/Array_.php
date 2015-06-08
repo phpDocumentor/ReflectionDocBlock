@@ -10,12 +10,21 @@
  * @link      http://phpdoc.org
  */
 
-
 namespace phpDocumentor\Reflection\Types;
 
+use phpDocumentor\Reflection\Fqsen;
 use phpDocumentor\Reflection\Type;
 
-class Array_ implements Type
+/**
+ * Represents an array type as described in the PSR-5, the PHPDoc Standard.
+ *
+ * An array can be represented in two forms:
+ *
+ * 1. Untyped (`array`), where the key and value type is unknown and hence classified as 'Mixed'.
+ * 2. Types (`string[]`), where the value type is provided by preceding an opening and closing square bracket with a
+ *    type name.
+ */
+final class Array_ implements Type
 {
     /** @var Type */
     private $valueType;
@@ -23,6 +32,12 @@ class Array_ implements Type
     /** @var Type */
     private $keyType;
 
+    /**
+     * Initializes this representation of an array with the given Type or Fqsen.
+     *
+     * @param Type $valueType
+     * @param Type $keyType
+     */
     public function __construct(Type $valueType = null, Type $keyType = null)
     {
         if ($keyType === null) {
@@ -37,6 +52,8 @@ class Array_ implements Type
     }
 
     /**
+     * Returns the type for the keys of this array.
+     *
      * @return Type
      */
     public function getKeyType()
@@ -45,6 +62,8 @@ class Array_ implements Type
     }
 
     /**
+     * Returns the value for the keys of this array.
+     *
      * @return Type
      */
     public function getValueType()
@@ -52,6 +71,11 @@ class Array_ implements Type
         return $this->valueType;
     }
 
+    /**
+     * Returns a rendered output of the Type as it would be used in a DocBlock.
+     *
+     * @return string
+     */
     public function __toString()
     {
         if ($this->valueType instanceof Mixed) {

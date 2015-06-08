@@ -65,7 +65,7 @@ class Resolver
      * @uses Context::getNamespaceAliases() to check whether the first part of the relative type name should not be
      *     replaced with another namespace.
      *
-     * @return Fqsen|Type|null
+     * @return Type|null
      */
     public function resolve($type, Context $context)
     {
@@ -99,6 +99,32 @@ class Resolver
                 );
         }
         // @codeCoverageIgnoreEnd
+    }
+
+    /**
+     * Adds a keyword to the list of Keywords and associates it with a specific Value Object.
+     *
+     * @param string $keyword
+     * @param string $typeClassName
+     *
+     * @return void
+     */
+    public function addKeyword($keyword, $typeClassName)
+    {
+        if (!class_exists($typeClassName)) {
+            throw new \InvalidArgumentException(
+                'The Value Object that needs to be created with a keyword "' . $keyword . '" must be an existing class'
+                . ' but we could not find the class ' . $typeClassName
+            );
+        }
+
+        if (!in_array(Type::class, class_implements($typeClassName))) {
+            throw new \InvalidArgumentException(
+                'The class "' . $typeClassName . '" must implement the interface "phpDocumentor\Reflection\Type"'
+            );
+        }
+
+        $this->keywords[$keyword] = $typeClassName;
     }
 
     /**
@@ -193,11 +219,11 @@ class Resolver
      *
      * @param string $type
      *
-     * @return Fqsen
+     * @return Object_
      */
     private function resolveFqsen($type)
     {
-        return new Fqsen($type);
+        return new Object_(new Fqsen($type));
     }
 
     /**
@@ -207,7 +233,7 @@ class Resolver
      * @param string $type
      * @param Context $context
      *
-     * @return Fqsen
+     * @return Object_
      */
     private function resolvePartialStructuralElementName($type, Context $context)
     {
@@ -222,12 +248,12 @@ class Resolver
                 $namespace .= self::OPERATOR_NAMESPACE;
             }
 
-            return new Fqsen(self::OPERATOR_NAMESPACE . $namespace . $type);
+            return new Object_(new Fqsen(self::OPERATOR_NAMESPACE . $namespace . $type));
         }
 
         $typeParts[0] = $namespaceAliases[$typeParts[0]];
 
-        return new Fqsen(self::OPERATOR_NAMESPACE . implode(self::OPERATOR_NAMESPACE, $typeParts));
+        return new Object_(new Fqsen(self::OPERATOR_NAMESPACE . implode(self::OPERATOR_NAMESPACE, $typeParts)));
     }
 
     /**
