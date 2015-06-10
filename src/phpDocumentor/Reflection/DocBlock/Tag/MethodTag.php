@@ -76,7 +76,7 @@ class MethodTag extends ReturnTag
                 )?
                 # Return type
                 (?:
-                    ([\w\|_\\\\]+)
+                    ([\w\|_\\\\]+(?:\[\])?)
                     \s+
                 )?
                 # Legacy method name (not captured)
