@@ -9,7 +9,7 @@
         }
     ],
     "require": {
-        "php": ">=5.5",
+        "php": ">=5.5.9",
         "phpdocumentor/reflection-common": "~1.0@dev"
     },
     "autoload": {
