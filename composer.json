@@ -3,20 +3,24 @@
     "type":    "library",
     "license": "MIT",
     "authors": [
-        {"name": "Mike van Riel", "email": "mike.vanriel@naenius.com"}
+        {
+            "name": "Mike van Riel",
+            "email": "me@mikevanriel.com"
+        }
     ],
     "require": {
-        "php": ">=5.3.3"
+        "php": ">=5.5",
+        "phpdocumentor/reflection-common": "dev-master@dev"
     },
     "autoload": {
-        "psr-0": {"phpDocumentor": ["src/"]}
+        "psr-4": {"phpDocumentor\\Reflection\\": ["src/"]}
+    },
+    "autoload-dev": {
+        "psr-4": {"phpDocumentor\\Reflection\\": ["tests/unit"]}
     },
     "require-dev": {
-        "phpunit/phpunit": "~4.0"
-    },
-    "suggest": {
-        "erusev/parsedown": "~1.0",
-        "league/commonmark": "*"
+        "phpunit/phpunit": "^4.6",
+        "mockery/mockery": "^0.9.4"
     },
     "extra": {
         "branch-alias": {
