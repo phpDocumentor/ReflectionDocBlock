@@ -13,8 +13,8 @@
 namespace phpDocumentor\Reflection\DocBlock;
 
 use Mockery as m;
-use phpDocumentor\Reflection\DocBlock\Tags\Deprecated;
-use phpDocumentor\Reflection\DocBlock\Tags\Link;
+use phpDocumentor\Reflection\DocBlock\Description\PassthroughFormatter;
+use phpDocumentor\Reflection\DocBlock\Tags\Other;
 
 /**
  * @coversDefaultClass \phpDocumentor\Reflection\DocBlock\Description
@@ -22,88 +22,54 @@ use phpDocumentor\Reflection\DocBlock\Tags\Link;
 class DescriptionTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @param array $examples
-     * @dataProvider provideExampleDescriptions
      * @covers ::__construct
      * @covers ::render
-     * @covers ::parse
-     * @uses         phpDocumentor\Reflection\DocBlock\Description\PassthroughFormatter
-     * @uses         phpDocumentor\Reflection\DocBlock\Tag
-     * @uses         phpDocumentor\Reflection\DocBlock\Tags\Link
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Other
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\BaseTag
+     * @uses \phpDocumentor\Reflection\DocBlock\Description\PassthroughFormatter
      */
-    public function testParsesDescription($example)
+    public function testDescriptionCanRenderUsingABodyWithPlaceholdersAndTags()
     {
-        $object = new Description($example);
+        $body = 'This is a %1$s body.';
+        $expected = 'This is a {@internal significant } body.';
+        $tags = [new Other('internal', new Description('significant '))];
 
-        $this->assertSame($example, $object->render());
+        $fixture = new Description($body, $tags);
+
+        // without formatter (thus the PassthroughFormatter by default)
+        $this->assertSame($expected, $fixture->render());
+
+        // with a custom formatter
+        $formatter = m::mock(PassthroughFormatter::class);
+        $formatter->shouldReceive('format')->with($tags)->andReturn(['{@internal significant }']);
+        $this->assertSame($expected, $fixture->render($formatter));
     }
 
     /**
      * @covers ::__construct
      * @covers ::render
-     * @covers ::parse
-     * @uses phpDocumentor\Reflection\DocBlock\Description\PassthroughFormatter
+     * @covers ::__toString
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Other
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\BaseTag
+     * @uses \phpDocumentor\Reflection\DocBlock\Description\PassthroughFormatter
      */
-    public function testInlineTagEscapingSequence()
+    public function testDescriptionCanBeCastToString()
     {
-        $fixture = 'This is text for a description with literal {{@}link}.';
-        $expected = 'This is text for a description with literal {@link}.';
-        $object = new Description($fixture);
-        $this->assertSame($expected, $object->render());
+        $body = 'This is a %1$s body.';
+        $expected = 'This is a {@internal significant } body.';
+        $tags = [new Other('internal', new Description('significant '))];
+
+        $fixture = new Description($body, $tags);
+
+        $this->assertSame($expected, (string)$fixture);
     }
 
     /**
      * @covers ::__construct
-     * @covers ::render
-     * @covers ::parse
-     * @uses phpDocumentor\Reflection\DocBlock\Tag
-     * @uses phpDocumentor\Reflection\DocBlock\Tags\Version
-     * @uses phpDocumentor\Reflection\DocBlock\Tags\Link
+     * @expectedException \InvalidArgumentException
      */
-    public function testFormatterReceivesContentsAsTokens()
+    public function testBodyTemplateMustBeAString()
     {
-        $fixture = <<<DESCRIPTION
-This is a description with {a} {@link http://phpdoc.org/ link} or {@deprecated inline tag with {@link http://phpdoc.org
-another link} in it}. Here is a solitary } and a { to test the regex. We can also escape at-signs like this
-{@}example.com or {{@}link}.
-DESCRIPTION;
-
-        $expected = [
-            'This is a description with {a} ',
-            Link::create('@link http://phpdoc.org/ link'),
-            ' or ',
-            Deprecated::create("@deprecated inline tag with {@link http://phpdoc.org\nanother link} in it"),
-            ". Here is a solitary } and a { to test the regex. We can also escape at-signs like this\n"
-            . "@example.com or {@link}."
-        ];
-
-        $formatter = m::mock('phpDocumentor\Reflection\DocBlock\Description\Formatter');
-        $formatter->shouldReceive('format')->with($expected)->andReturn($fixture);
-
-        $object = new Description($fixture);
-        $this->assertSame($fixture, $object->render($formatter));
-    }
-
-    /**
-     * Provides a series of example strings that the parser should correctly interpret and return.
-     *
-     * @return string[][]
-     */
-    public function provideExampleDescriptions()
-    {
-        return [
-            ['This is text for a description.'],
-            ['This is text for a {@link http://phpdoc.org/ description} that uses an inline tag.'],
-            ['{@link http://phpdoc.org/ This} is text for a description that starts with an inline tag.'],
-            [
-                'This is text for a description with {@internal inline tag with {@link http://phpdoc.org another '
-                . 'inline tag} in it}.'
-            ],
-            ['This is text for a description containing { that is literal.'],
-            ['This is text for a description containing {@internal inline tag that has { that is literal}.'],
-            ['This is text for a description with {} that is not a tag.'],
-            ['This is text for a description with {@internal inline tag with {} that is not an inline tag}.'],
-            ['This is text for a description with an {@internal inline tag with literal {{@}link{} in it}.']
-        ];
+        new Description([]);
     }
 }
