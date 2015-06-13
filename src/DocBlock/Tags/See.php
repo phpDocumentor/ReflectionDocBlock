@@ -41,9 +41,9 @@ class See extends Tag
     /**
      * {@inheritdoc}
      */
-    public static function create($content, Context $context)
+    public static function create($body, Context $context)
     {
-        $parts = preg_split('/\s+/Su', $content, 2);
+        $parts = preg_split('/\s+/Su', $body, 2);
         $resolver = new Resolver();
 
         return new static(

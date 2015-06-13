@@ -12,6 +12,8 @@
 
 namespace phpDocumentor\Reflection\DocBlock;
 
+use phpDocumentor\Reflection\Types\Context;
+
 final class DescriptionFactory
 {
     /** @var TagFactory */
@@ -33,11 +35,13 @@ final class DescriptionFactory
      * @param string $contents
      * @param Context $context
      *
-     * @return array An array of strings and tag objects, in the order they occur within the description.
+     * @return Description
      */
     public function create($contents, Context $context = null)
     {
-        return new Description($this->parse($this->lex($contents), $context));
+        list($text, $tags) = $this->parse($this->lex($contents), $context);
+
+        return new Description($text, $tags);
     }
 
     /**
@@ -93,8 +97,11 @@ final class DescriptionFactory
     private function parse($tokens, Context $context)
     {
         $count = count($tokens);
+        $tagCount = 0;
+        $tags = [];
         for ($i = 1; $i < $count; $i += 2) {
-            $tokens[$i] = $this->tagFactory->create($tokens[$i], $context);
+            $tokens[$i] = ++$tagCount;
+            $tags[] = $this->tagFactory->create($tokens[$i], $context);
         }
 
         //In order to allow "literal" inline tags, the otherwise invalid
@@ -104,7 +111,7 @@ final class DescriptionFactory
             $tokens[$i] = str_replace(['{@}', '{}'], ['@', '}'], $tokens[$i]);
         }
 
-        return $tokens;
+        return [implode('', $tokens), $tags];
     }
 
 }

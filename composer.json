@@ -10,7 +10,8 @@
     ],
     "require": {
         "php": ">=5.5",
-        "phpdocumentor/reflection-common": "dev-master@dev"
+        "phpdocumentor/reflection-common": "^0.1",
+        "phpdocumentor/type-resolver": "^1.0@dev"
     },
     "autoload": {
         "psr-4": {"phpDocumentor\\Reflection\\": ["src/"]}
