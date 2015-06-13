@@ -13,12 +13,11 @@
 namespace phpDocumentor\Reflection\DocBlock\Tags;
 
 use phpDocumentor\Reflection\DocBlock\Description;
-use phpDocumentor\Reflection\DocBlock\Tag;
 
 /**
  * Reflection class for an {@}author tag in a Docblock.
  */
-final class Author extends Tag
+final class Author extends BaseTag
 {
     /** @var string register that this is the author tag. */
     protected $name = 'author';
@@ -44,7 +43,7 @@ final class Author extends Tag
             throw new \InvalidArgumentException('The author tag does not have a valid e-mail address');
         }
 
-        $this->authorName = $authorName;
+        $this->authorName  = $authorName;
         $this->authorEmail = $authorEmail;
     }
 
@@ -81,9 +80,9 @@ final class Author extends Tag
     /**
      * {@inheritdoc}
      */
-    public static function create($content)
+    public static function create($body)
     {
-        $splitTagContent = preg_match('/^([^\<]*)(?:\<([^\>]*)\>)?$/u', $content, $matches);
+        $splitTagContent = preg_match('/^([^\<]*)(?:\<([^\>]*)\>)?$/u', $body, $matches);
         if (!$splitTagContent) {
             return null;
         }

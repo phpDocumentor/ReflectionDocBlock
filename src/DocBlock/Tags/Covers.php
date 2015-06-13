@@ -12,20 +12,17 @@
 
 namespace phpDocumentor\Reflection\DocBlock\Tags;
 
-use phpDocumentor\Reflection\DocBlock\Tag;
+use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
 use phpDocumentor\Reflection\Fqsen;
 use phpDocumentor\Reflection\DocBlock\Description;
 use phpDocumentor\Reflection\DocBlock\Context;
-use DocBlock\Types\Resolver;
+use phpDocumentor\Reflection\FqsenResolver;
+use phpDocumentor\Reflection\TypeResolver;
 
 /**
  * Reflection class for a @covers tag in a Docblock.
- *
- * @author  Mike van Riel <mike.vanriel@naenius.com>
- * @license http://www.opensource.org/licenses/mit-license.php MIT
- * @link    http://phpdoc.org
  */
-class Covers extends Tag
+class Covers extends BaseTag
 {
     /** @var Fqsen */
     protected $refers = null;
@@ -45,14 +42,18 @@ class Covers extends Tag
     /**
      * {@inheritdoc}
      */
-    public static function create($content, Context $context)
+    public static function create(
+        $body,
+        DescriptionFactory $descriptionFactory = null,
+        FqsenResolver $resolver = null,
+        Context $context = null
+    )
     {
-        $parts = preg_split('/\s+/Su', $content, 2);
-        $resolver = new Resolver();
+        $parts = preg_split('/\s+/Su', $body, 2);
 
         return new static(
             $resolver->resolve($parts[0], $context),
-            new Description(isset($parts[1]) ? $parts[1] : '', $context)
+            $descriptionFactory->create(isset($parts[1]) ? $parts[1] : '', $context)
         );
     }
 

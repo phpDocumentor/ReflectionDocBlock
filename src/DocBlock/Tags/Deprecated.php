@@ -14,12 +14,13 @@ namespace phpDocumentor\Reflection\DocBlock\Tags;
 
 use phpDocumentor\Reflection\DocBlock\Context;
 use phpDocumentor\Reflection\DocBlock\Description;
+use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
 use phpDocumentor\Reflection\DocBlock\Tag;
 
 /**
  * Reflection class for a {@}deprecated tag in a Docblock.
  */
-final class Deprecated extends Tag
+final class Deprecated extends BaseTag
 {
     /**
      * PCRE regular expression matching a version vector.
@@ -49,16 +50,16 @@ final class Deprecated extends Tag
     /**
      * {@inheritdoc}
      */
-    public static function create($content, Context $context = null)
+    public static function create($body, DescriptionFactory $descriptionFactory = null, Context $context = null)
     {
         $matches = [];
-        if (!preg_match('/^(' . self::REGEX_VECTOR . ')\s*(.+)?$/sux', $content, $matches)) {
+        if (!preg_match('/^(' . self::REGEX_VECTOR . ')\s*(.+)?$/sux', $body, $matches)) {
             return null;
         }
 
         return new static(
             $matches[1],
-            new Description(isset($matches[2]) ? $matches[2] : '', $context)
+            $descriptionFactory->create(isset($matches[2]) ? $matches[2] : '', $context)
         );
     }
 

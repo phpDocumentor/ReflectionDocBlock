@@ -13,8 +13,7 @@
 namespace phpDocumentor\Reflection;
 
 use phpDocumentor\Reflection\DocBlock\Tag;
-use phpDocumentor\Reflection\DocBlock\Context;
-use phpDocumentor\Reflection\DocBlock\Location;
+use phpDocumentor\Reflection\Types\Context;
 
 final class DocBlock
 {
@@ -40,12 +39,6 @@ final class DocBlock
     private $isTemplateEnd = false;
 
     /**
-     * Parses the given docblock and populates the member fields.
-     *
-     * The constructor may also receive namespace information such as the
-     * current namespace and aliases. This information is used by some tags
-     * (e.g. return, param, etc.) to turn a relative Type into a FQCN.
-     *
      * @param string $summary
      * @param DocBlock\Description $description
      * @param DocBlock\Tag[] $tags
@@ -75,6 +68,42 @@ final class DocBlock
 
         $this->isTemplateEnd = $isTemplateEnd;
         $this->isTemplateStart = $isTemplateStart;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSummary()
+    {
+        return $this->summary;
+    }
+
+    /**
+     * @return DocBlock\Description
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Returns the current context.
+     *
+     * @return Context
+     */
+    public function getContext()
+    {
+        return $this->context;
+    }
+
+    /**
+     * Returns the current location.
+     *
+     * @return Location
+     */
+    public function getLocation()
+    {
+        return $this->location;
     }
 
     /**
@@ -113,54 +142,6 @@ final class DocBlock
     public function isTemplateEnd()
     {
         return $this->isTemplateEnd;
-    }
-
-    /**
-     * Returns the current context.
-     *
-     * @return Context
-     */
-    public function getContext()
-    {
-        return $this->context;
-    }
-
-    /**
-     * Returns the current location.
-     *
-     * @return Location
-     */
-    public function getLocation()
-    {
-        return $this->location;
-    }
-
-    /**
-     * @return string
-     */
-    public function getSummary()
-    {
-        return $this->summary;
-    }
-
-    /**
-     * @return DocBlock\Description
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    /**
-     * Adds a tag to this DocBlock.
-     *
-     * @param Tag $tag The tag to add.
-     *
-     * @return void
-     */
-    public function addTag(Tag $tag)
-    {
-        $this->tags[] = $tag;
     }
 
     /**
@@ -214,5 +195,17 @@ final class DocBlock
         }
 
         return false;
+    }
+
+    /**
+     * Adds a tag to this DocBlock.
+     *
+     * @param Tag $tag The tag to add.
+     *
+     * @return void
+     */
+    private function addTag(Tag $tag)
+    {
+        $this->tags[] = $tag;
     }
 }
