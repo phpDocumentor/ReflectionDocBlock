@@ -117,7 +117,7 @@ class DocBlockTest extends \PHPUnit_Framework_TestCase
 
         $tag1->shouldReceive('getName')->andReturn('abc');
         $tag2->shouldReceive('getName')->andReturn('abcd');
-        $tag3->shouldReceive('getName')->never();
+        $tag3->shouldReceive('getName')->andReturn('ab');
 
         $fixture = new DocBlock('', null, $tags);
 
@@ -152,9 +152,9 @@ class DocBlockTest extends \PHPUnit_Framework_TestCase
         $tag3 = m::mock(DocBlock\Tag::class);
         $tags = [$tag1, $tag2, $tag3];
 
-        $tag1->shouldReceive('getName')->andReturn('abc');
-        $tag2->shouldReceive('getName')->andReturn('abcd');
-        $tag3->shouldReceive('getName')->never();
+        $tag1->shouldReceive('getName')->twice()->andReturn('abc');
+        $tag2->shouldReceive('getName')->twice()->andReturn('abcd');
+        $tag3->shouldReceive('getName')->once();
 
         $fixture = new DocBlock('', null, $tags);
 
