@@ -14,6 +14,7 @@ namespace phpDocumentor\Reflection;
 
 use phpDocumentor\Reflection\DocBlock\Tag;
 use phpDocumentor\Reflection\Types\Context;
+use Webmozart\Assert\Assert;
 
 final class DocBlock
 {
@@ -57,6 +58,10 @@ final class DocBlock
         $isTemplateEnd = false
     )
     {
+        Assert::string($summary);
+        Assert::boolean($isTemplateStart);
+        Assert::boolean($isTemplateEnd);
+
         $this->summary = $summary;
         $this->description = $description ?: new DocBlock\Description('');
         foreach ($tags as $tag) {
@@ -164,6 +169,8 @@ final class DocBlock
      */
     public function getTagsByName($name)
     {
+        Assert::string($name);
+
         $result = array();
 
         /** @var Tag $tag */
@@ -187,6 +194,8 @@ final class DocBlock
      */
     public function hasTag($name)
     {
+        Assert::string($name);
+
         /** @var Tag $tag */
         foreach ($this->getTags() as $tag) {
             if ($tag->getName() == $name) {
