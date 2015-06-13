@@ -15,20 +15,24 @@ namespace phpDocumentor\Reflection\DocBlock;
 use phpDocumentor\Reflection\DocBlock\Description\Formatter;
 use phpDocumentor\Reflection\DocBlock\Description\PassthroughFormatter;
 
-
 class Description
 {
-    /** @var Tag[]|string[] The contents, as an array of strings and Tag objects */
-    private $tokens;
+    /** @var string */
+    private $body;
+
+    /** @var Tag[] */
+    private $tags;
 
     /**
      * Initializes a this object with a series of tokens of which a description consists.
      *
-     * @param Tag[]|string[] $tokens
+     * @param string $body
+     * @param Tag[] $tags
      */
-    public function __construct(array $tokens)
+    public function __construct($body, array $tags = [])
     {
-        $this->tokens = $tokens;
+        $this->body = $body;
+        $this->tags = $tags;
     }
 
     /**
@@ -44,7 +48,6 @@ class Description
             $formatter = new PassthroughFormatter();
         }
 
-        return $formatter->format($this->tokens);
+        return vsprintf($this->body, $formatter->format($this->tags));
     }
-
 }

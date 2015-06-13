@@ -12,42 +12,35 @@
 
 namespace phpDocumentor\Reflection\DocBlock\Tags;
 
-use phpDocumentor\Reflection\DocBlock\Tag;
+use phpDocumentor\Reflection\DocBlock\Description;
+use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
+use phpDocumentor\Reflection\Types\Context;
 
 /**
  * Reflection class for a @link tag in a Docblock.
  */
-class Link extends Tag
+final class Link extends BaseTag
 {
     /** @var string */
-    protected $link = '';
+    private $link = '';
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getContent()
+    public function __construct($link, Description $description)
     {
-        if (null === $this->description) {
-            $this->description = "{$this->link} {$this->description}";
-        }
-
-        return $this->description;
+        $this->link = $link;
+        $this->description = $description;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function setContent($content)
+    public static function create($body, DescriptionFactory $descriptionFactory = null, Context $context = null)
     {
-        parent::setContent($content);
-        $parts = preg_split('/\s+/Su', $this->description, 2);
+        $parts = preg_split('/\s+/Su', $body, 2);
 
-        $this->link = $parts[0];
+        $link = $parts[0];
+        $description = $descriptionFactory->create(isset($parts[1]) ? $parts[1] : '', $context);
 
-        $this->setDescription(isset($parts[1]) ? $parts[1] : $parts[0]);
-
-        $this->description = $content;
-        return $this;
+        return new static($link, $description);
     }
 
     /**
@@ -60,18 +53,8 @@ class Link extends Tag
         return $this->link;
     }
 
-    /**
-    * Sets the link
-    *
-    * @param string $link The link
-    *
-    * @return $this
-    */
-    public function setLink($link)
+    public function __toString()
     {
-        $this->link = $link;
-
-        $this->description = null;
-        return $this;
+        return $this->link . ' ' . $this->description;
     }
 }

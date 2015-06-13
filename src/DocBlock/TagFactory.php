@@ -12,7 +12,8 @@
 
 namespace phpDocumentor\Reflection\DocBlock;
 
-use phpDocumentor\Reflection\FqsenFactory;
+use phpDocumentor\Reflection\FqsenResolver;
+use phpDocumentor\Reflection\Types\Context;
 
 final class TagFactory
 {
@@ -44,12 +45,26 @@ final class TagFactory
         'version' => '\phpDocumentor\Reflection\DocBlock\Tags\Version'
     );
 
-    /** @var FqsenFactory */
-    private $fqsenFactory;
+    /** @var FqsenResolver */
+    private $fqsenResolver;
 
-    public function __construct(FqsenFactory $fqsenFactory)
+    /** @var mixed[] */
+    private $serviceLocator = [];
+
+    public function __construct(FqsenResolver $fqsenResolver)
     {
-        $this->fqsenFactory = $fqsenFactory;
+        $this->fqsenResolver = $fqsenResolver;
+        $this->addService($fqsenResolver);
+    }
+
+    public function addParameter($name, $value)
+    {
+        $this->serviceLocator[$name] = $value;
+    }
+
+    public function addService($service)
+    {
+        $this->serviceLocator[get_class($service)] = $service;
     }
 
     /**
@@ -67,19 +82,47 @@ final class TagFactory
         if (!$context) {
             $context = new Context('');
         }
-        list($tagName, $tagDescription) = $this->extractTagParts($tagLine);
+        list($tagName, $tagBody) = $this->extractTagParts($tagLine);
 
         $handler = Tag::class;
         if (isset($this->tagHandlerMappings[$tagName])) {
             $handler = $this->tagHandlerMappings[$tagName];
         } elseif ($this->isAnnotation($tagName)) {
-            $tagName = (string)$this->fqsenFactory->create($tagName, $context);
+            $tagName = (string)$this->fqsenResolver->resolve($tagName, $context);
             if (isset($this->tagHandlerMappings[$tagName])) {
                 $handler = $this->tagHandlerMappings[$tagName];
             }
         }
 
-        return $handler::create($tagName, $tagDescription);
+        $parameters = (new \ReflectionMethod($handler, 'create'))->getParameters();
+
+        $wiring = array_merge(
+            $this->serviceLocator,
+            [
+                'name' => $tagName,
+                'body' => $tagBody,
+                Context::class => $context
+            ]
+        );
+
+        $arguments = [];
+        foreach ($parameters as $index => $parameter) {
+            $typeHint = $parameter->getClass() ? $parameter->getClass()->getName() : null;
+            if (isset($wiring[$typeHint])) {
+                $arguments[] = $wiring[$typeHint];
+                continue;
+            }
+
+            $parameterName = $parameter->getName();
+            if (isset($wiring[$parameterName])) {
+                $arguments[] = $wiring[$parameterName];
+                continue;
+            }
+
+            $arguments[] = null;
+        }
+
+        return call_user_func_array([$handler, 'create'], $arguments);
     }
 
     /**
@@ -126,11 +169,11 @@ final class TagFactory
             );
         }
 
-        if (count($matches) == 1) {
+        if (count($matches) < 3) {
             $matches[] = '';
         }
 
-        return $matches;
+        return array_slice($matches, 1);
     }
 
     private function isAnnotation($tag)

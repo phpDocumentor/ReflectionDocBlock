@@ -47,22 +47,28 @@ final class DocBlockFactory implements DocBlockFactoryInterface
      */
     public static function createInstance(array $additionalTags = [])
     {
-        $tagFactory = new TagFactory(new FqsenFactory());
+        $fqsenResolver = new FqsenResolver();
+        $tagFactory = new TagFactory($fqsenResolver);
+        $descriptionFactory = new DescriptionFactory($tagFactory);
+
+        $tagFactory->addService($descriptionFactory);
+        $tagFactory->addService(new TypeResolver($fqsenResolver));
+
         foreach ($additionalTags as $tagName => $tagClassName) {
             $tagFactory->registerTagHandler($tagName, $tagClassName);
         }
 
-        return new self(new DescriptionFactory($tagFactory), $tagFactory);
+        return new self($descriptionFactory, $tagFactory);
     }
 
     /**
      * @param $docblock
-     * @param DocBlock\Context $context
-     * @param DocBlock\Location $location
+     * @param Types\Context $context
+     * @param Location $location
      *
      * @return DocBlock
      */
-    public function create($docblock, DocBlock\Context $context = null, DocBlock\Location $location = null)
+    public function create($docblock, Types\Context $context = null, Location $location = null)
     {
         if (is_object($docblock)) {
             if (!method_exists($docblock, 'getDocComment')) {

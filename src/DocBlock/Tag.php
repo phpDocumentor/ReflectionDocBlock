@@ -12,82 +12,15 @@
 
 namespace phpDocumentor\Reflection\DocBlock;
 
-use phpDocumentor\Reflection\DocBlock;
+use phpDocumentor\Reflection\DocBlock\Description\Formatter;
 
-/**
- * Parses a tag definition for a DocBlock.
- */
-class Tag
+interface Tag
 {
-    /** @var string Name of the tag */
-    protected $name = '';
+    public function getName();
 
-    /** @var Description|null Description of the tag. */
-    protected $description;
+    public static function create($body);
 
-    /**
-     * Parses a tag and populates the member variables.
-     *
-     * We explicitly do not type-hint the $description so that classes inheriting this class can override the
-     * constructor without running into PHP notices.
-     *
-     * @param string $name Name of the tag.
-     * @param Description $description The contents of the given tag.
-     */
-    public function __construct($name, $description)
-    {
-        $this->validateTagName($name);
-        if (!$description instanceof Description) {
-            throw new \InvalidArgumentException('The description should be an object of type Description');
-        }
+    public function render(Formatter $formatter = null);
 
-        $this->name = $name;
-        $this->description = $description;
-    }
-
-    /**
-     * Gets the name of this tag.
-     *
-     * @return string The name of this tag.
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    public function render(DocBlock\Description\Formatter $formatter = null)
-    {
-        if (!$formatter) {
-            $formatter = new DocBlock\Description\PassthroughFormatter();
-        }
-
-        return $formatter->format([$this]);
-    }
-
-    /**
-     * Returns the tag as a serialized string
-     *
-     * @return string
-     */
-    public function __toString()
-    {
-        return "@{$this->getName()} {$this->description->render()}";
-    }
-
-    /**
-     * Validates if the tag name matches the expected format, otherwise throws an exception.
-     *
-     * @param string $name
-     *
-     * @return void
-     */
-    private function validateTagName($name)
-    {
-        if (!preg_match('/^' . TagFactory::REGEX_TAGNAME . '$/u', $name)) {
-            throw new \InvalidArgumentException(
-                'The tag name "' . $name . '" is not wellformed. Tags may only consist of letters, underscores, '
-                . 'hyphens and backslashes.'
-            );
-        }
-    }
+    public function __toString();
 }
