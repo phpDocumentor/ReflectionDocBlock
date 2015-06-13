@@ -11,7 +11,8 @@
     "require": {
         "php": ">=5.5",
         "phpdocumentor/reflection-common": "^0.1",
-        "phpdocumentor/type-resolver": "^1.0@dev"
+        "phpdocumentor/type-resolver": "^0.1.1",
+        "webmozart/assert": "^1.0"
     },
     "autoload": {
         "psr-4": {"phpDocumentor\\Reflection\\": ["src/"]}
@@ -20,8 +21,8 @@
         "psr-4": {"phpDocumentor\\Reflection\\": ["tests/unit"]}
     },
     "require-dev": {
-        "phpunit/phpunit": "^4.6",
-        "mockery/mockery": "^0.9.4"
+        "mockery/mockery": "^0.9.4",
+        "phpunit/phpunit": "4.4"
     },
     "extra": {
         "branch-alias": {
