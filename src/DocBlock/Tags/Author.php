@@ -12,7 +12,7 @@
 
 namespace phpDocumentor\Reflection\DocBlock\Tags;
 
-use phpDocumentor\Reflection\DocBlock\Description;
+use Webmozart\Assert\Assert;
 
 /**
  * Reflection class for an {@}author tag in a Docblock.
@@ -36,10 +36,9 @@ final class Author extends BaseTag
      */
     public function __construct($authorName, $authorEmail)
     {
-        if (!is_string($authorName)) {
-            throw new \InvalidArgumentException('The author tag does not have a valid name');
-        }
-        if (!is_string($authorEmail) || ($authorEmail && !filter_var($authorEmail, FILTER_VALIDATE_EMAIL))) {
+        Assert::string($authorName);
+        Assert::string($authorEmail);
+        if ($authorEmail && !filter_var($authorEmail, FILTER_VALIDATE_EMAIL)) {
             throw new \InvalidArgumentException('The author tag does not have a valid e-mail address');
         }
 
@@ -78,10 +77,16 @@ final class Author extends BaseTag
     }
 
     /**
-     * {@inheritdoc}
+     * Attempts to create a new Author object based on †he tag body.
+     *
+     * @param string $body
+     *
+     * @return static
      */
     public static function create($body)
     {
+        Assert::string($body);
+
         $splitTagContent = preg_match('/^([^\<]*)(?:\<([^\>]*)\>)?$/u', $body, $matches);
         if (!$splitTagContent) {
             return null;
