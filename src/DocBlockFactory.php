@@ -14,6 +14,7 @@ namespace phpDocumentor\Reflection;
 
 use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
 use phpDocumentor\Reflection\DocBlock\TagFactory;
+use phpDocumentor\Reflection\Types\Context;
 
 final class DocBlockFactory implements DocBlockFactoryInterface
 {
@@ -80,12 +81,16 @@ final class DocBlockFactory implements DocBlockFactoryInterface
             $docblock = $docblock->getDocComment();
         }
 
+        if ($context === null) {
+            $context = new Context('');
+        }
+
         $parts = $this->splitDocBlock($this->stripDocComment($docblock));
         list($templateMarker, $summary, $description, $tags) = $parts;
 
         return new DocBlock(
             $summary,
-            new DocBlock\Description($description),
+            $this->descriptionFactory->create($description, $context),
             $this->parseTagBlock($tags),
             $context,
             $location,

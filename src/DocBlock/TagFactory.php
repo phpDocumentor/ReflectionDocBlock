@@ -12,6 +12,7 @@
 
 namespace phpDocumentor\Reflection\DocBlock;
 
+use phpDocumentor\Reflection\DocBlock\Tags\Other;
 use phpDocumentor\Reflection\FqsenResolver;
 use phpDocumentor\Reflection\Types\Context;
 
@@ -84,7 +85,7 @@ final class TagFactory
         }
         list($tagName, $tagBody) = $this->extractTagParts($tagLine);
 
-        $handler = Tag::class;
+        $handler = Other::class;
         if (isset($this->tagHandlerMappings[$tagName])) {
             $handler = $this->tagHandlerMappings[$tagName];
         } elseif ($this->isAnnotation($tagName)) {

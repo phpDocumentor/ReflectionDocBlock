@@ -100,8 +100,8 @@ class DescriptionFactory
         $tagCount = 0;
         $tags = [];
         for ($i = 1; $i < $count; $i += 2) {
-            $tokens[$i] = '%' . ++$tagCount . '$s';
             $tags[] = $this->tagFactory->create($tokens[$i], $context);
+            $tokens[$i] = '%' . ++$tagCount . '$s';
         }
 
         //In order to allow "literal" inline tags, the otherwise invalid
