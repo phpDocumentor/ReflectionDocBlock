@@ -16,6 +16,8 @@ use phpDocumentor\Reflection\DocBlock\Description\Formatter;
 
 interface Tag
 {
+    public function getName();
+
     public static function create($body);
 
     public function render(Formatter $formatter = null);
