@@ -13,7 +13,7 @@
 namespace phpDocumentor\Reflection\DocBlock;
 
 use Mockery as m;
-use phpDocumentor\Reflection\DocBlock\Description\PassthroughFormatter;
+use phpDocumentor\Reflection\DocBlock\Tags\Formatter\PassthroughFormatter;
 use phpDocumentor\Reflection\DocBlock\Tags\Other;
 
 /**
@@ -26,7 +26,7 @@ class DescriptionTest extends \PHPUnit_Framework_TestCase
      * @covers ::render
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\Other
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\BaseTag
-     * @uses \phpDocumentor\Reflection\DocBlock\Description\PassthroughFormatter
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Formatter\PassthroughFormatter
      */
     public function testDescriptionCanRenderUsingABodyWithPlaceholdersAndTags()
     {
@@ -41,7 +41,7 @@ class DescriptionTest extends \PHPUnit_Framework_TestCase
 
         // with a custom formatter
         $formatter = m::mock(PassthroughFormatter::class);
-        $formatter->shouldReceive('format')->with($tags)->andReturn(['{@internal significant }']);
+        $formatter->shouldReceive('format')->with($tags[0])->andReturn('@internal significant ');
         $this->assertSame($expected, $fixture->render($formatter));
     }
 
@@ -51,7 +51,7 @@ class DescriptionTest extends \PHPUnit_Framework_TestCase
      * @covers ::__toString
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\Other
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\BaseTag
-     * @uses \phpDocumentor\Reflection\DocBlock\Description\PassthroughFormatter
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Formatter\PassthroughFormatter
      */
     public function testDescriptionCanBeCastToString()
     {

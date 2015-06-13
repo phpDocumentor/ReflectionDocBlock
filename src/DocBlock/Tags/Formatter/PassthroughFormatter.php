@@ -10,26 +10,22 @@
  * @link      http://phpdoc.org
  */
 
-namespace phpDocumentor\Reflection\DocBlock\Description;
+namespace phpDocumentor\Reflection\DocBlock\Tags\Formatter;
 
 use phpDocumentor\Reflection\DocBlock\Tag;
+use phpDocumentor\Reflection\DocBlock\Tags\Formatter;
 
 class PassthroughFormatter implements Formatter
 {
     /**
-     * Formats the given series of tokens so to form a readable string and return that.
+     * Formats the given tag to return a simple plain text version.
      *
-     * @param string[]|Tag[] $tokens
+     * @param Tag $tag
      *
      * @return string
      */
-    public function format(array $tokens)
+    public function format(Tag $tag)
     {
-        $result = '';
-        foreach ($tokens as $token) {
-            $result .= $token instanceof Tag ? '{' . (string)$token . '}' : $token;
-        }
-
-        return $result;
+        return (string)$tag;
     }
 }

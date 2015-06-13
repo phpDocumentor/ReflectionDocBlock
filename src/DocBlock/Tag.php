@@ -12,7 +12,7 @@
 
 namespace phpDocumentor\Reflection\DocBlock;
 
-use phpDocumentor\Reflection\DocBlock\Description\Formatter;
+use phpDocumentor\Reflection\DocBlock\Tags\Formatter;
 
 interface Tag
 {
