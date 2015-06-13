@@ -14,7 +14,7 @@ namespace phpDocumentor\Reflection\DocBlock;
 
 use phpDocumentor\Reflection\Types\Context;
 
-final class DescriptionFactory
+class DescriptionFactory
 {
     /** @var TagFactory */
     private $tagFactory;
@@ -100,7 +100,7 @@ final class DescriptionFactory
         $tagCount = 0;
         $tags = [];
         for ($i = 1; $i < $count; $i += 2) {
-            $tokens[$i] = ++$tagCount;
+            $tokens[$i] = '%' . ++$tagCount . '$s';
             $tags[] = $this->tagFactory->create($tokens[$i], $context);
         }
 
