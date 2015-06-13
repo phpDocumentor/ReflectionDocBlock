@@ -14,10 +14,10 @@ interface DocBlockFactoryInterface
 
     /**
      * @param string $docblock
-     * @param DocBlock\Context $context
-     * @param DocBlock\Location $location
+     * @param Types\Context $context
+     * @param Location $location
      *
      * @return DocBlock
      */
-    public function create($docblock, DocBlock\Context $context = null, DocBlock\Location $location = null);
+    public function create($docblock, Types\Context $context = null, Location $location = null);
 }

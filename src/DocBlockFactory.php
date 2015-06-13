@@ -63,12 +63,12 @@ final class DocBlockFactory implements DocBlockFactoryInterface
 
     /**
      * @param $docblock
-     * @param DocBlock\Context $context
-     * @param DocBlock\Location $location
+     * @param Types\Context $context
+     * @param Location $location
      *
      * @return DocBlock
      */
-    public function create($docblock, DocBlock\Context $context = null, DocBlock\Location $location = null)
+    public function create($docblock, Types\Context $context = null, Location $location = null)
     {
         if (is_object($docblock)) {
             if (!method_exists($docblock, 'getDocComment')) {
