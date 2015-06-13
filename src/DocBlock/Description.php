@@ -12,8 +12,8 @@
 
 namespace phpDocumentor\Reflection\DocBlock;
 
-use phpDocumentor\Reflection\DocBlock\Description\Formatter;
-use phpDocumentor\Reflection\DocBlock\Description\PassthroughFormatter;
+use phpDocumentor\Reflection\DocBlock\Tags\Formatter;
+use phpDocumentor\Reflection\DocBlock\Tags\Formatter\PassthroughFormatter;
 use Webmozart\Assert\Assert;
 
 /**
@@ -84,7 +84,11 @@ class Description
             $formatter = new PassthroughFormatter();
         }
 
-        return vsprintf($this->bodyTemplate, $formatter->format($this->tags));
+        $tags = [];
+        foreach ($this->tags as $tag) {
+            $tags[] = '{' . $formatter->format($tag) . '}';
+        }
+        return vsprintf($this->bodyTemplate, $tags);
     }
 
     /**

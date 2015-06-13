@@ -25,7 +25,7 @@ class SerializerTest extends \PHPUnit_Framework_TestCase
      * @covers ::__construct
      * @covers ::getDocComment
      * @uses phpDocumentor\Reflection\DocBlock\Description
-     * @uses phpDocumentor\Reflection\DocBlock\Description\PassthroughFormatter
+     * @uses phpDocumentor\Reflection\DocBlock\Tags\Formatter\PassthroughFormatter
      * @uses phpDocumentor\Reflection\DocBlock
      * @uses phpDocumentor\Reflection\DocBlock\Tags\BaseTag
      * @uses phpDocumentor\Reflection\DocBlock\Tags\Other
@@ -59,7 +59,7 @@ DOCCOMMENT;
      * @covers ::__construct
      * @covers ::getDocComment
      * @uses phpDocumentor\Reflection\DocBlock\Description
-     * @uses phpDocumentor\Reflection\DocBlock\Description\PassthroughFormatter
+     * @uses phpDocumentor\Reflection\DocBlock\Tags\Formatter\PassthroughFormatter
      * @uses phpDocumentor\Reflection\DocBlock
      * @uses phpDocumentor\Reflection\DocBlock\Tags\BaseTag
      * @uses phpDocumentor\Reflection\DocBlock\Tags\Other
@@ -93,7 +93,7 @@ DOCCOMMENT;
      * @covers ::__construct
      * @covers ::getDocComment
      * @uses phpDocumentor\Reflection\DocBlock\Description
-     * @uses phpDocumentor\Reflection\DocBlock\Description\PassthroughFormatter
+     * @uses phpDocumentor\Reflection\DocBlock\Tags\Formatter\PassthroughFormatter
      * @uses phpDocumentor\Reflection\DocBlock
      * @uses phpDocumentor\Reflection\DocBlock\Tags\BaseTag
      * @uses phpDocumentor\Reflection\DocBlock\Tags\Other
@@ -127,7 +127,7 @@ DOCCOMMENT;
      * @covers ::__construct
      * @covers ::getDocComment
      * @uses phpDocumentor\Reflection\DocBlock\Description
-     * @uses phpDocumentor\Reflection\DocBlock\Description\PassthroughFormatter
+     * @uses phpDocumentor\Reflection\DocBlock\Tags\Formatter\PassthroughFormatter
      * @uses phpDocumentor\Reflection\DocBlock
      * @uses phpDocumentor\Reflection\DocBlock\Tags\BaseTag
      * @uses phpDocumentor\Reflection\DocBlock\Tags\Other

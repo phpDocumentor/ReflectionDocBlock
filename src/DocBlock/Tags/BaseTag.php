@@ -44,12 +44,12 @@ abstract class BaseTag implements DocBlock\Tag
         return $this->description;
     }
 
-    public function render(DocBlock\Description\Formatter $formatter = null)
+    public function render(Formatter $formatter = null)
     {
-        if (!$formatter) {
-            $formatter = new DocBlock\Description\PassthroughFormatter();
+        if ($formatter === null) {
+            $formatter = new Formatter\PassthroughFormatter();
         }
 
-        return $formatter->format([$this]);
+        return $formatter->format($this);
     }
 }
