@@ -1,28 +1,34 @@
 <?php
 /**
- * phpDocumentor
+ * This file is part of phpDocumentor.
  *
- * PHP Version 5.3
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  *
- * @author    Mike van Riel <mike.vanriel@naenius.com>
- * @copyright 2010-2011 Mike van Riel / Naenius (http://www.naenius.com)
+ * @copyright 2010-2015 Mike van Riel<mike@phpdoc.org>
  * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      http://phpdoc.org
  */
 
 namespace phpDocumentor\Reflection\DocBlock\Tags;
 
+use phpDocumentor\Reflection\DocBlock\Description;
+use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
 use phpDocumentor\Reflection\DocBlock\Tag;
+use phpDocumentor\Reflection\Type;
+use phpDocumentor\Reflection\TypeResolver;
+use phpDocumentor\Reflection\Types\Context;
 
 /**
  * Reflection class for a @param tag in a Docblock.
- *
- * @author  Mike van Riel <mike.vanriel@naenius.com>
- * @license http://www.opensource.org/licenses/mit-license.php MIT
- * @link    http://phpdoc.org
  */
-class Param extends Return_
+class Param extends BaseTag
 {
+    protected $name = 'param';
+
+    /** @var Type */
+    private $type;
+
     /** @var string */
     protected $variableName = '';
 
@@ -30,56 +36,58 @@ class Param extends Return_
     protected $isVariadic = false;
 
     /**
-     * {@inheritdoc}
+     * @param string $variableName
+     * @param Type $type
+     * @param bool $isVariadic
+     * @param Description $description
      */
-    public function getContent()
+    public function __construct($variableName, Type $type = null, $isVariadic = false, Description $description = null)
     {
-        if (null === $this->description) {
-            $this->description
-                = "{$this->type} {$this->variableName} {$this->description}";
-        }
-        return $this->description;
+        $this->variableName = $variableName;
+        $this->type = $type;
+        $this->isVariadic = $isVariadic;
+        $this->description = $description;
     }
+
     /**
      * {@inheritdoc}
      */
-    public function setContent($content)
+    public static function create(
+        $body,
+        TypeResolver $typeResolver = null,
+        DescriptionFactory $descriptionFactory = null,
+        Context $context = null
+    )
     {
-        Tag::setContent($content);
-        $parts = preg_split(
-            '/(\s+)/Su',
-            $this->description,
-            3,
-            PREG_SPLIT_DELIM_CAPTURE
-        );
+        $parts = preg_split('/(\s+)/Su', $body, 3, PREG_SPLIT_DELIM_CAPTURE);
+        $type = null;
+        $variableName = '';
+        $isVariadic = false;
 
         // if the first item that is encountered is not a variable; it is a type
-        if (isset($parts[0])
-            && (strlen($parts[0]) > 0)
-            && ($parts[0][0] !== '$')
-        ) {
-            $this->type = array_shift($parts);
+        if (isset($parts[0]) && (strlen($parts[0]) > 0) && ($parts[0][0] !== '$')) {
+            $type = $typeResolver->resolve(array_shift($parts), $context);
             array_shift($parts);
         }
 
         // if the next item starts with a $ or ...$ it must be the variable name
-        if (isset($parts[0])
-            && (strlen($parts[0]) > 0)
-            && ($parts[0][0] == '$' || substr($parts[0], 0, 4) === '...$')
-        ) {
-            $this->variableName = array_shift($parts);
+        if (isset($parts[0]) && (strlen($parts[0]) > 0) && ($parts[0][0] == '$' || substr($parts[0], 0, 4) === '...$')) {
+            $variableName = array_shift($parts);
             array_shift($parts);
 
-            if (substr($this->variableName, 0, 3) === '...') {
-                $this->isVariadic = true;
-                $this->variableName = substr($this->variableName, 3);
+            if (substr($variableName, 0, 3) === '...') {
+                $isVariadic = true;
+                $variableName = substr($variableName, 3);
+            }
+
+            if (substr($variableName, 0, 1) === '$') {
+                $variableName = substr($variableName, 1);
             }
         }
 
-        $this->setDescription(implode('', $parts));
+        $description = $descriptionFactory->create(implode('', $parts), $context);
 
-        $this->description = $content;
-        return $this;
+        return new static($variableName, $type, $isVariadic, $description);
     }
 
     /**
@@ -93,21 +101,6 @@ class Param extends Return_
     }
 
     /**
-     * Sets the variable's name.
-     *
-     * @param string $name The new name for this variable.
-     *
-     * @return $this
-     */
-    public function setVariableName($name)
-    {
-        $this->variableName = $name;
-
-        $this->description = null;
-        return $this;
-    }
-
-    /**
      * Returns whether this tag is variadic.
      *
      * @return boolean
@@ -115,5 +108,11 @@ class Param extends Return_
     public function isVariadic()
     {
         return $this->isVariadic;
+    }
+
+    public function __toString()
+    {
+        return $this->type . ' ' . ($this->isVariadic() ? '...' : '') . '$' . $this->variableName . ' '
+        . $this->description;
     }
 }

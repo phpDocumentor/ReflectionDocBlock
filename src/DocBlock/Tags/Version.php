@@ -47,10 +47,10 @@ class Version extends Tag
     /**
      * {@inheritdoc}
      */
-    public static function create($content, Context $context = null)
+    public static function create($body, Context $context = null)
     {
         $matches = [];
-        if (!preg_match('/^(' . self::REGEX_VECTOR . ')\s*(.+)?$/sux', $content, $matches)) {
+        if (!preg_match('/^(' . self::REGEX_VECTOR . ')\s*(.+)?$/sux', $body, $matches)) {
             return null;
         }
 

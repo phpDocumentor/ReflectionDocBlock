@@ -12,84 +12,59 @@
 
 namespace phpDocumentor\Reflection\DocBlock\Tags;
 
-use phpDocumentor\Reflection\DocBlock\Tag;
+use phpDocumentor\Reflection\DocBlock\Description;
+use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
 use phpDocumentor\Reflection\DocBlock\Type\Collection;
+use phpDocumentor\Reflection\Type;
+use phpDocumentor\Reflection\TypeResolver;
+use phpDocumentor\Reflection\Types\Context;
 
 /**
  * Reflection class for a @return tag in a Docblock.
  */
-class Return_ extends Tag
+final class Return_ extends BaseTag
 {
-    /** @var string The raw type component. */
-    protected $type = '';
+    protected $name = 'return';
 
-    /** @var Collection The parsed type component. */
-    protected $types = null;
+    /** @var Type */
+    private $type;
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getContent()
+    public function __construct(Type $type, Description $description = null)
     {
-        if (null === $this->description) {
-            $this->description = "{$this->type} {$this->description}";
-        }
-
-        return $this->description;
+        $this->description = $description;
+        $this->type = $type;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function setContent($content)
+    public static function create(
+        $body,
+        TypeResolver $typeResolver = null,
+        DescriptionFactory $descriptionFactory = null,
+        Context $context = null
+    )
     {
-        parent::setContent($content);
+        $parts = preg_split('/\s+/Su', $body, 2);
 
-        $parts = preg_split('/\s+/Su', $this->description, 2);
+        $type = $typeResolver->resolve(isset($parts[0]) ? $parts[0] : '', $context);
+        $description = $descriptionFactory->create(isset($parts[1]) ? $parts[1] : '');
 
-        // any output is considered a type
-        $this->type = $parts[0];
-        $this->types = null;
-
-        $this->setDescription(isset($parts[1]) ? $parts[1] : '');
-
-        $this->description = $content;
-        return $this;
+        return new static($type, $description);
     }
 
-    /**
-     * Returns the unique types of the variable.
-     *
-     * @return string[]
-     */
-    public function getTypes()
+    public function __toString()
     {
-        return $this->getTypesCollection()->getArrayCopy();
+        return $this->type . ' ' . $this->description;
     }
 
     /**
      * Returns the type section of the variable.
      *
-     * @return string
+     * @return Type
      */
     public function getType()
     {
-        return (string) $this->getTypesCollection();
-    }
-
-    /**
-     * Returns the type collection.
-     *
-     * @return void
-     */
-    protected function getTypesCollection()
-    {
-        if (null === $this->types) {
-            $this->types = new Collection(
-                array($this->type),
-                $this->docblock ? $this->docblock->getContext() : null
-            );
-        }
-        return $this->types;
+        return $this->type;
     }
 }
