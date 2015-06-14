@@ -1,11 +1,11 @@
 <?php
 /**
- * phpDocumentor
+ * This file is part of phpDocumentor.
  *
- * PHP Version 5.3
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  *
- * @author    Mike van Riel <mike.vanriel@naenius.com>
- * @copyright 2010-2011 Mike van Riel / Naenius (http://www.naenius.com)
+ * @copyright 2010-2015 Mike van Riel<mike@phpdoc.org>
  * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      http://phpdoc.org
  */
@@ -15,17 +15,19 @@ namespace phpDocumentor\Reflection\DocBlock\Tags;
 use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
 use phpDocumentor\Reflection\Fqsen;
 use phpDocumentor\Reflection\DocBlock\Description;
-use phpDocumentor\Reflection\DocBlock\Context;
+use phpDocumentor\Reflection\Types\Context;
 use phpDocumentor\Reflection\FqsenResolver;
-use phpDocumentor\Reflection\TypeResolver;
+use Webmozart\Assert\Assert;
 
 /**
  * Reflection class for a @covers tag in a Docblock.
  */
-class Covers extends BaseTag
+final class Covers extends BaseTag
 {
+    protected $name = 'covers';
+
     /** @var Fqsen */
-    protected $refers = null;
+    private $refers = null;
 
     /**
      * Initializes this tag.
@@ -33,7 +35,7 @@ class Covers extends BaseTag
      * @param Fqsen $refers
      * @param Description $description
      */
-    public function __construct(Fqsen $refers, Description $description)
+    public function __construct(Fqsen $refers, Description $description = null)
     {
         $this->refers = $refers;
         $this->description = $description;
@@ -49,6 +51,9 @@ class Covers extends BaseTag
         Context $context = null
     )
     {
+        Assert::string($body);
+        Assert::notEmpty($body);
+
         $parts = preg_split('/\s+/Su', $body, 2);
 
         return new static(
