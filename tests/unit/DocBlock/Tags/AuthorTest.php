@@ -13,8 +13,6 @@
 namespace phpDocumentor\Reflection\DocBlock\Tags;
 
 use Mockery as m;
-use phpDocumentor\Reflection\DocBlock\Description;
-use phpDocumentor\Reflection\DocBlock\Tags\Other;
 
 /**
  * @coversDefaultClass \phpDocumentor\Reflection\DocBlock\Tags\Author
@@ -22,6 +20,44 @@ use phpDocumentor\Reflection\DocBlock\Tags\Other;
  */
 class AuthorTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Author::__construct
+     * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getName
+     */
+    public function testIfCorrectTagNameIsReturned()
+    {
+        $fixture = new Author('Mike van Riel', 'mike@phpdoc.org');
+
+        $this->assertSame('author', $fixture->getName());
+    }
+
+    /**
+     * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Author::__construct
+     * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Author::__toString
+     * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Formatter\PassthroughFormatter
+     * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::render
+     */
+    public function testIfTagCanBeRenderedUsingDefaultFormatter()
+    {
+        $fixture = new Author('Mike van Riel', 'mike@phpdoc.org');
+
+        $this->assertSame('Mike van Riel<mike@phpdoc.org>', $fixture->render());
+    }
+
+    /**
+     * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Author::__construct
+     * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::render
+     */
+    public function testIfTagCanBeRenderedUsingSpecificFormatter()
+    {
+        $fixture = new Author('Mike van Riel', 'mike@phpdoc.org');
+
+        $formatter = m::mock(Formatter::class);
+        $formatter->shouldReceive('format')->with($fixture)->andReturn('Rendered output');
+
+        $this->assertSame('Rendered output', $fixture->render($formatter));
+    }
+
     /**
      * @covers ::__construct
      * @covers ::getAuthorName

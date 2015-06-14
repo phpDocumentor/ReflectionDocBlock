@@ -13,12 +13,6 @@
 namespace phpDocumentor\Reflection\DocBlock;
 
 use Mockery as m;
-use phpDocumentor\Reflection\DocBlock\Description\PassthroughFormatter;
-use phpDocumentor\Reflection\DocBlock\Tags\Deprecated;
-use phpDocumentor\Reflection\DocBlock\Tags\Link;
-use phpDocumentor\Reflection\DocBlock\Tags\Other;
-use phpDocumentor\Reflection\Types\Context;
-
 /**
  * @coversDefaultClass \phpDocumentor\Reflection\DocBlock\DescriptionFactory
  */
