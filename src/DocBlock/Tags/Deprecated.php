@@ -12,16 +12,18 @@
 
 namespace phpDocumentor\Reflection\DocBlock\Tags;
 
-use phpDocumentor\Reflection\DocBlock\Context;
+use phpDocumentor\Reflection\Types\Context;
 use phpDocumentor\Reflection\DocBlock\Description;
 use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
-use phpDocumentor\Reflection\DocBlock\Tag;
+use Webmozart\Assert\Assert;
 
 /**
  * Reflection class for a {@}deprecated tag in a Docblock.
  */
 final class Deprecated extends BaseTag
 {
+    protected $name = 'deprecated';
+
     /**
      * PCRE regular expression matching a version vector.
      * Assumes the "x" modifier.
@@ -41,17 +43,24 @@ final class Deprecated extends BaseTag
     /** @var string The version vector. */
     private $version = '';
 
-    public function __construct($version, Description $description = null)
+    public function __construct($version = null, Description $description = null)
     {
+        Assert::nullOrStringNotEmpty($version);
+
         $this->version = $version;
         $this->description = $description;
     }
 
     /**
-     * {@inheritdoc}
+     * @return static
      */
     public static function create($body, DescriptionFactory $descriptionFactory = null, Context $context = null)
     {
+        Assert::nullOrString($body);
+        if (empty($body)) {
+            return new static();
+        }
+
         $matches = [];
         if (!preg_match('/^(' . self::REGEX_VECTOR . ')\s*(.+)?$/sux', $body, $matches)) {
             return null;
@@ -80,6 +89,6 @@ final class Deprecated extends BaseTag
      */
     public function __toString()
     {
-        return $this->version . ' ' . $this->description->render();
+        return $this->version . ($this->description ? ' ' . $this->description->render() : '');
     }
 }

@@ -79,6 +79,6 @@ final class Covers extends BaseTag
      */
     public function __toString()
     {
-        return $this->refers . ' ' . $this->description->render();
+        return $this->refers . ($this->description ? ' ' . $this->description->render() : '');
     }
 }
