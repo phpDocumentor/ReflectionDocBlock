@@ -15,17 +15,28 @@ namespace phpDocumentor\Reflection\DocBlock\Tags;
 use phpDocumentor\Reflection\DocBlock\Description;
 use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
 use phpDocumentor\Reflection\Types\Context;
+use Webmozart\Assert\Assert;
 
 /**
  * Reflection class for a @link tag in a Docblock.
  */
 final class Link extends BaseTag
 {
+    protected $name = 'link';
+
     /** @var string */
     private $link = '';
 
-    public function __construct($link, Description $description)
+    /**
+     * Initializes a link to a URL.
+     *
+     * @param string      $link
+     * @param Description $description
+     */
+    public function __construct($link, Description $description = null)
     {
+        Assert::string($link);
+
         $this->link = $link;
         $this->description = $description;
     }
@@ -35,10 +46,12 @@ final class Link extends BaseTag
      */
     public static function create($body, DescriptionFactory $descriptionFactory = null, Context $context = null)
     {
+        Assert::string($body);
+
         $parts = preg_split('/\s+/Su', $body, 2);
 
         $link = $parts[0];
-        $description = $descriptionFactory->create(isset($parts[1]) ? $parts[1] : '', $context);
+        $description = isset($parts[1]) ? $descriptionFactory->create($parts[1], $context) : null;
 
         return new static($link, $description);
     }
@@ -53,8 +66,13 @@ final class Link extends BaseTag
         return $this->link;
     }
 
+    /**
+     * Returns a string representation for this tag.
+     *
+     * @return string
+     */
     public function __toString()
     {
-        return $this->link . ' ' . $this->description;
+        return $this->link . ($this->description ? ' ' . $this->description->render() : '');
     }
 }
