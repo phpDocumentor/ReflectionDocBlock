@@ -14,7 +14,7 @@ namespace phpDocumentor\Reflection\DocBlock;
 
 use Mockery as m;
 use phpDocumentor\Reflection\DocBlock\Tags\Formatter\PassthroughFormatter;
-use phpDocumentor\Reflection\DocBlock\Tags\Other;
+use phpDocumentor\Reflection\DocBlock\Tags\Generic;
 
 /**
  * @coversDefaultClass \phpDocumentor\Reflection\DocBlock\Description
@@ -32,7 +32,7 @@ class DescriptionTest extends \PHPUnit_Framework_TestCase
     {
         $body = 'This is a %1$s body.';
         $expected = 'This is a {@internal significant } body.';
-        $tags = [new Other('internal', new Description('significant '))];
+        $tags = [new Generic('internal', new Description('significant '))];
 
         $fixture = new Description($body, $tags);
 
@@ -57,7 +57,7 @@ class DescriptionTest extends \PHPUnit_Framework_TestCase
     {
         $body = 'This is a %1$s body.';
         $expected = 'This is a {@internal significant } body.';
-        $tags = [new Other('internal', new Description('significant '))];
+        $tags = [new Generic('internal', new Description('significant '))];
 
         $fixture = new Description($body, $tags);
 
