@@ -12,16 +12,16 @@
 
 namespace phpDocumentor\Reflection\DocBlock\Tags;
 
-use Doctrine\Instantiator\Exception\InvalidArgumentException;
 use phpDocumentor\Reflection\DocBlock\Description;
 use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
 use phpDocumentor\Reflection\DocBlock\TagFactory;
 use phpDocumentor\Reflection\Types\Context;
+use Webmozart\Assert\Assert;
 
 /**
  * Parses a tag definition for a DocBlock.
  */
-class Other extends BaseTag
+class Generic extends BaseTag
 {
     /**
      * Parses a tag and populates the member variables.
@@ -37,14 +37,26 @@ class Other extends BaseTag
         $this->description = $description;
     }
 
+    /**
+     * Creates a new tag that represents any unknown tag type.
+     *
+     * @param string             $body
+     * @param string             $name
+     * @param DescriptionFactory $descriptionFactory
+     * @param Context            $context
+     *
+     * @return static
+     */
     public static function create(
         $body,
         $name = '',
         DescriptionFactory $descriptionFactory = null,
         Context $context = null
-    )
-    {
-        $description = $descriptionFactory ? $descriptionFactory->create($body, $context) : null;
+    ) {
+        Assert::string($body);
+        Assert::stringNotEmpty($name);
+
+        $description = $descriptionFactory && $body ? $descriptionFactory->create($body, $context) : null;
 
         return new static($name, $description);
     }
@@ -56,7 +68,7 @@ class Other extends BaseTag
      */
     public function __toString()
     {
-        return "@{$this->getName()} {$this->description->render()}";
+        return $this->getName() . ($this->description ? ' ' . $this->description->render() : '');
     }
 
     /**

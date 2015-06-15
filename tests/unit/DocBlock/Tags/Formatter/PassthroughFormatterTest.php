@@ -14,7 +14,7 @@ namespace phpDocumentor\Reflection\DocBlock\Tags\Formatter;
 
 use Mockery as m;
 use phpDocumentor\Reflection\DocBlock\Description;
-use phpDocumentor\Reflection\DocBlock\Tags\Other;
+use phpDocumentor\Reflection\DocBlock\Tags\Generic;
 
 /**
  * @coversDefaultClass \phpDocumentor\Reflection\DocBlock\Tags\Formatter\PassthroughFormatter
@@ -35,7 +35,7 @@ class PassthroughFormatterTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame(
             $expected,
-            $fixture->format(new Other('unknown-tag', new Description('This is a description')))
+            $fixture->format(new Generic('unknown-tag', new Description('This is a description')))
         );
     }
 }
