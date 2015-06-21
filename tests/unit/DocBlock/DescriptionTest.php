@@ -24,7 +24,7 @@ class DescriptionTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers ::__construct
      * @covers ::render
-     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Other
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Generic
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\BaseTag
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\Formatter\PassthroughFormatter
      */
@@ -49,7 +49,7 @@ class DescriptionTest extends \PHPUnit_Framework_TestCase
      * @covers ::__construct
      * @covers ::render
      * @covers ::__toString
-     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Other
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Generic
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\BaseTag
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\Formatter\PassthroughFormatter
      */

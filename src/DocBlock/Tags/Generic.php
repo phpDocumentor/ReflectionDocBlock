@@ -68,7 +68,7 @@ class Generic extends BaseTag
      */
     public function __toString()
     {
-        return $this->getName() . ($this->description ? ' ' . $this->description->render() : '');
+        return '@' . $this->getName() . ($this->description ? ' ' . $this->description->render() : '');
     }
 
     /**
