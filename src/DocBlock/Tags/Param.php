@@ -14,16 +14,17 @@ namespace phpDocumentor\Reflection\DocBlock\Tags;
 
 use phpDocumentor\Reflection\DocBlock\Description;
 use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
-use phpDocumentor\Reflection\DocBlock\Tag;
 use phpDocumentor\Reflection\Type;
 use phpDocumentor\Reflection\TypeResolver;
 use phpDocumentor\Reflection\Types\Context;
+use Webmozart\Assert\Assert;
 
 /**
- * Reflection class for a @param tag in a Docblock.
+ * Reflection class for the {@}param tag in a Docblock.
  */
 class Param extends BaseTag
 {
+    /** @var string */
     protected $name = 'param';
 
     /** @var Type */
@@ -43,6 +44,9 @@ class Param extends BaseTag
      */
     public function __construct($variableName, Type $type = null, $isVariadic = false, Description $description = null)
     {
+        Assert::string($variableName);
+        Assert::boolean($isVariadic);
+
         $this->variableName = $variableName;
         $this->type = $type;
         $this->isVariadic = $isVariadic;
@@ -59,6 +63,9 @@ class Param extends BaseTag
         Context $context = null
     )
     {
+        Assert::stringNotEmpty($body);
+        Assert::allNotNull([$typeResolver, $descriptionFactory]);
+
         $parts = preg_split('/(\s+)/Su', $body, 3, PREG_SPLIT_DELIM_CAPTURE);
         $type = null;
         $variableName = '';
@@ -101,6 +108,16 @@ class Param extends BaseTag
     }
 
     /**
+     * Returns the variable's type or null if unknown.
+     *
+     * @return Type|null
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
      * Returns whether this tag is variadic.
      *
      * @return boolean
@@ -110,9 +127,16 @@ class Param extends BaseTag
         return $this->isVariadic;
     }
 
+    /**
+     * Returns a string representation for this tag.
+     *
+     * @return string
+     */
     public function __toString()
     {
-        return $this->type . ' ' . ($this->isVariadic() ? '...' : '') . '$' . $this->variableName . ' '
-        . $this->description;
+        return ($this->type ? $this->type . ' ' : '')
+        . ($this->isVariadic() ? '...' : '')
+        . '$' . $this->variableName
+        . ($this->description ? ' ' . $this->description : '');
     }
 }
