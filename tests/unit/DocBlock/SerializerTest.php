@@ -28,7 +28,7 @@ class SerializerTest extends \PHPUnit_Framework_TestCase
      * @uses phpDocumentor\Reflection\DocBlock\Tags\Formatter\PassthroughFormatter
      * @uses phpDocumentor\Reflection\DocBlock
      * @uses phpDocumentor\Reflection\DocBlock\Tags\BaseTag
-     * @uses phpDocumentor\Reflection\DocBlock\Tags\Other
+     * @uses phpDocumentor\Reflection\DocBlock\Tags\Generic
      */
     public function testReconstructsADocCommentFromADocBlock()
     {
@@ -62,7 +62,7 @@ DOCCOMMENT;
      * @uses phpDocumentor\Reflection\DocBlock\Tags\Formatter\PassthroughFormatter
      * @uses phpDocumentor\Reflection\DocBlock
      * @uses phpDocumentor\Reflection\DocBlock\Tags\BaseTag
-     * @uses phpDocumentor\Reflection\DocBlock\Tags\Other
+     * @uses phpDocumentor\Reflection\DocBlock\Tags\Generic
      */
     public function testAddPrefixToDocBlock()
     {
@@ -96,7 +96,7 @@ DOCCOMMENT;
      * @uses phpDocumentor\Reflection\DocBlock\Tags\Formatter\PassthroughFormatter
      * @uses phpDocumentor\Reflection\DocBlock
      * @uses phpDocumentor\Reflection\DocBlock\Tags\BaseTag
-     * @uses phpDocumentor\Reflection\DocBlock\Tags\Other
+     * @uses phpDocumentor\Reflection\DocBlock\Tags\Generic
      */
     public function testAddPrefixToDocBlockExceptFirstLine()
     {
@@ -130,7 +130,7 @@ DOCCOMMENT;
      * @uses phpDocumentor\Reflection\DocBlock\Tags\Formatter\PassthroughFormatter
      * @uses phpDocumentor\Reflection\DocBlock
      * @uses phpDocumentor\Reflection\DocBlock\Tags\BaseTag
-     * @uses phpDocumentor\Reflection\DocBlock\Tags\Other
+     * @uses phpDocumentor\Reflection\DocBlock\Tags\Generic
      */
     public function testWordwrapsAroundTheGivenAmountOfCharacters()
     {

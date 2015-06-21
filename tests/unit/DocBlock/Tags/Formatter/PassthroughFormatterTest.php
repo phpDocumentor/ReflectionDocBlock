@@ -25,7 +25,7 @@ class PassthroughFormatterTest extends \PHPUnit_Framework_TestCase
      * @covers ::format
      * @uses \phpDocumentor\Reflection\DocBlock\Description
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\BaseTag
-     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Other
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Generic
      */
     public function testFormatterCallsToStringAndReturnsAStandardRepresentation()
     {
