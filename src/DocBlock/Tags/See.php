@@ -12,17 +12,20 @@
 
 namespace phpDocumentor\Reflection\DocBlock\Tags;
 
-use DocBlock\Types\Resolver;
+use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
 use phpDocumentor\Reflection\Fqsen;
-use phpDocumentor\Reflection\DocBlock\Context;
+use phpDocumentor\Reflection\FqsenResolver;
+use phpDocumentor\Reflection\Types\Context;
 use phpDocumentor\Reflection\DocBlock\Description;
-use phpDocumentor\Reflection\DocBlock\Tag;
+use Webmozart\Assert\Assert;
 
 /**
  * Reflection class for an {@}see tag in a Docblock.
  */
-class See extends Tag
+class See extends BaseTag
 {
+    protected $name = 'see';
+
     /** @var Fqsen */
     protected $refers = null;
 
@@ -32,7 +35,7 @@ class See extends Tag
      * @param Fqsen $refers
      * @param Description $description
      */
-    public function __construct(Fqsen $refers, Description $description)
+    public function __construct(Fqsen $refers, Description $description = null)
     {
         $this->refers = $refers;
         $this->description = $description;
@@ -41,14 +44,20 @@ class See extends Tag
     /**
      * {@inheritdoc}
      */
-    public static function create($body, Context $context)
-    {
+    public static function create(
+        $body,
+        FqsenResolver $resolver = null,
+        DescriptionFactory $descriptionFactory = null,
+        Context $context = null
+    ) {
+        Assert::string($body);
+        Assert::allNotNull([$resolver, $descriptionFactory]);
+
         $parts = preg_split('/\s+/Su', $body, 2);
-        $resolver = new Resolver();
 
         return new static(
             $resolver->resolve($parts[0], $context),
-            new Description(isset($parts[1]) ? $parts[1] : '', $context)
+            $descriptionFactory->create(isset($parts[1]) ? $parts[1] : '', $context)
         );
     }
 

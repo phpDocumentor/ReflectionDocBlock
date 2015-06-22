@@ -15,50 +15,50 @@ namespace phpDocumentor\Reflection\DocBlock\Tags;
 use Mockery as m;
 use phpDocumentor\Reflection\DocBlock\Description;
 use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
-use phpDocumentor\Reflection\TypeResolver;
+use phpDocumentor\Reflection\Fqsen;
+use phpDocumentor\Reflection\FqsenResolver;
 use phpDocumentor\Reflection\Types\Context;
-use phpDocumentor\Reflection\Types\String_;
 
 /**
- * @coversDefaultClass \phpDocumentor\Reflection\DocBlock\Tags\Return_
+ * @coversDefaultClass \phpDocumentor\Reflection\DocBlock\Tags\See
  * @covers ::<private>
  */
-class ReturnTest extends \PHPUnit_Framework_TestCase
+class SeeTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Return_::__construct
+     * @uses   \phpDocumentor\Reflection\DocBlock\Tags\See::__construct
      * @uses   \phpDocumentor\Reflection\DocBlock\Description
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getName
      */
     public function testIfCorrectTagNameIsReturned()
     {
-        $fixture = new Return_(new String_(), new Description('Description'));
+        $fixture = new See(new Fqsen('\DateTime'), new Description('Description'));
 
-        $this->assertSame('return', $fixture->getName());
+        $this->assertSame('see', $fixture->getName());
     }
 
     /**
-     * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Return_::__construct
-     * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Return_::__toString
+     * @uses   \phpDocumentor\Reflection\DocBlock\Tags\See::__construct
+     * @uses   \phpDocumentor\Reflection\DocBlock\Tags\See::__toString
      * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Formatter\PassthroughFormatter
      * @uses   \phpDocumentor\Reflection\DocBlock\Description
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::render
      */
     public function testIfTagCanBeRenderedUsingDefaultFormatter()
     {
-        $fixture = new Return_(new String_(), new Description('Description'));
+        $fixture = new See(new Fqsen('\DateTime'), new Description('Description'));
 
-        $this->assertSame('string Description', $fixture->render());
+        $this->assertSame('\DateTime Description', $fixture->render());
     }
 
     /**
-     * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Return_::__construct
+     * @uses   \phpDocumentor\Reflection\DocBlock\Tags\See::__construct
      * @uses   \phpDocumentor\Reflection\DocBlock\Description
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::render
      */
     public function testIfTagCanBeRenderedUsingSpecificFormatter()
     {
-        $fixture = new Return_(new String_(), new Description('Description'));
+        $fixture = new See(new Fqsen('\DateTime'), new Description('Description'));
 
         $formatter = m::mock(Formatter::class);
         $formatter->shouldReceive('format')->with($fixture)->andReturn('Rendered output');
@@ -68,15 +68,15 @@ class ReturnTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers ::__construct
-     * @covers ::getType
+     * @covers ::getReference
      */
-    public function testHasType()
+    public function testHasReferenceToFqsen()
     {
-        $expected = new String_();
+        $expected = new Fqsen('\DateTime');
 
-        $fixture = new Return_($expected);
+        $fixture = new See($expected);
 
-        $this->assertSame($expected, $fixture->getType());
+        $this->assertSame($expected, $fixture->getReference());
     }
 
     /**
@@ -88,7 +88,7 @@ class ReturnTest extends \PHPUnit_Framework_TestCase
     {
         $expected = new Description('Description');
 
-        $fixture = new Return_(new String_(), $expected);
+        $fixture = new See(new Fqsen('\DateTime'), $expected);
 
         $this->assertSame($expected, $fixture->getDescription());
     }
@@ -100,34 +100,37 @@ class ReturnTest extends \PHPUnit_Framework_TestCase
      */
     public function testStringRepresentationIsReturned()
     {
-        $fixture = new Return_(new String_(), new Description('Description'));
+        $fixture = new See(new Fqsen('\DateTime'), new Description('Description'));
 
-        $this->assertSame('string Description', (string)$fixture);
+        $this->assertSame('\DateTime Description', (string)$fixture);
     }
 
     /**
      * @covers ::create
-     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Return_::<public>
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\See::<public>
      * @uses \phpDocumentor\Reflection\DocBlock\DescriptionFactory
-     * @uses \phpDocumentor\Reflection\TypeResolver
+     * @uses \phpDocumentor\Reflection\FqsenResolver
      * @uses \phpDocumentor\Reflection\DocBlock\Description
-     * @uses \phpDocumentor\Reflection\Types\String_
+     * @uses \phpDocumentor\Reflection\Fqsen
      * @uses \phpDocumentor\Reflection\Types\Context
      */
     public function testFactoryMethod()
     {
         $descriptionFactory = m::mock(DescriptionFactory::class);
-        $resolver = new TypeResolver();
+        $resolver = m::mock(FqsenResolver::class);
         $context = new Context('');
 
-        $type = new String_();
+        $fqsen = new Fqsen('\DateTime');
         $description = new Description('My Description');
-        $descriptionFactory->shouldReceive('create')->with('My Description', $context)->andReturn($description);
 
-        $fixture = Return_::create('string My Description', $resolver, $descriptionFactory, $context);
+        $descriptionFactory
+            ->shouldReceive('create')->with('My Description', $context)->andReturn($description);
+        $resolver->shouldReceive('resolve')->with('DateTime', $context)->andReturn($fqsen);
 
-        $this->assertSame('string My Description', (string)$fixture);
-        $this->assertEquals($type, $fixture->getType());
+        $fixture = See::create('DateTime My Description', $resolver, $descriptionFactory, $context);
+
+        $this->assertSame('\DateTime My Description', (string)$fixture);
+        $this->assertSame($fqsen, $fixture->getReference());
         $this->assertSame($description, $fixture->getDescription());
     }
 
@@ -137,7 +140,7 @@ class ReturnTest extends \PHPUnit_Framework_TestCase
      */
     public function testFactoryMethodFailsIfBodyIsNotString()
     {
-        $this->assertNull(Return_::create([]));
+        $this->assertNull(See::create([]));
     }
 
     /**
@@ -146,7 +149,7 @@ class ReturnTest extends \PHPUnit_Framework_TestCase
      */
     public function testFactoryMethodFailsIfBodyIsNotEmpty()
     {
-        $this->assertNull(Return_::create(''));
+        $this->assertNull(See::create(''));
     }
 
     /**
@@ -155,7 +158,7 @@ class ReturnTest extends \PHPUnit_Framework_TestCase
      */
     public function testFactoryMethodFailsIfResolverIsNull()
     {
-        Return_::create('body');
+        See::create('body');
     }
 
     /**
@@ -164,6 +167,6 @@ class ReturnTest extends \PHPUnit_Framework_TestCase
      */
     public function testFactoryMethodFailsIfDescriptionFactoryIsNull()
     {
-        Return_::create('body', new TypeResolver());
+        See::create('body', new FqsenResolver());
     }
 }
