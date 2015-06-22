@@ -47,13 +47,12 @@ final class Link extends BaseTag
     public static function create($body, DescriptionFactory $descriptionFactory = null, Context $context = null)
     {
         Assert::string($body);
+        Assert::notNull($descriptionFactory);
 
         $parts = preg_split('/\s+/Su', $body, 2);
-
-        $link = $parts[0];
         $description = isset($parts[1]) ? $descriptionFactory->create($parts[1], $context) : null;
 
-        return new static($link, $description);
+        return new static($parts[0], $description);
     }
 
     /**
