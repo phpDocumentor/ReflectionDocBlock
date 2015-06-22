@@ -22,7 +22,7 @@ use Webmozart\Assert\Assert;
 /**
  * Reflection class for the {@}param tag in a Docblock.
  */
-class Param extends BaseTag
+final class Param extends BaseTag
 {
     /** @var string */
     protected $name = 'param';
@@ -31,10 +31,10 @@ class Param extends BaseTag
     private $type;
 
     /** @var string */
-    protected $variableName = '';
+    private $variableName = '';
 
     /** @var bool determines whether this is a variadic argument */
-    protected $isVariadic = false;
+    private $isVariadic = false;
 
     /**
      * @param string $variableName

@@ -1,80 +1,68 @@
 <?php
 /**
- * phpDocumentor
+ * This file is part of phpDocumentor.
  *
- * PHP Version 5.3
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  *
- * @author    Vasil Rangelov <boen.robot@gmail.com>
- * @copyright 2010-2011 Mike van Riel / Naenius (http://www.naenius.com)
+ * @copyright 2010-2015 Mike van Riel<mike@phpdoc.org>
  * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      http://phpdoc.org
  */
 
 namespace phpDocumentor\Reflection\DocBlock\Tags;
 
-use phpDocumentor\Reflection\DocBlock\Tag;
+use phpDocumentor\Reflection\DocBlock\Description;
+use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
+use phpDocumentor\Reflection\Types\Context;
+use Webmozart\Assert\Assert;
 
 /**
- * Reflection class for a @source tag in a Docblock.
+ * Reflection class for a {@}source tag in a Docblock.
  */
-class Source extends Tag
+final class Source extends BaseTag
 {
-    /**
-     * @var int The starting line, relative to the structural element's
-     *     location.
-     */
-    protected $startingLine = 1;
+    /** @var string */
+    protected $name = 'source';
 
-    /**
-     * @var int|null The number of lines, relative to the starting line. NULL
-     *     means "to the end".
-     */
-    protected $lineCount = null;
+    /** @var int The starting line, relative to the structural element's location. */
+    private $startingLine = 1;
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getContent()
+    /** @var int|null The number of lines, relative to the starting line. NULL means "to the end". */
+    private $lineCount = null;
+
+    public function __construct($startingLine, $lineCount = null, Description $description = null)
     {
-        if (null === $this->description) {
-            $this->description
-                = "{$this->startingLine} {$this->lineCount} {$this->description}";
-        }
+        Assert::integerish($startingLine);
+        Assert::nullOrIntegerish($lineCount);
 
-        return $this->description;
+        $this->startingLine = (int)$startingLine;
+        $this->lineCount    = $lineCount !== null ? (int)$lineCount : null;
+        $this->description  = $description;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function setContent($content)
+    public static function create($body, DescriptionFactory $descriptionFactory = null, Context $context = null)
     {
-        parent::setContent($content);
-        if (preg_match(
-            '/^
-                # Starting line
-                ([1-9]\d*)
-                \s*
-                # Number of lines
-                (?:
-                    ((?1))
-                    \s+
-                )?
-                # Description
-                (.*)
-            $/sux',
-            $this->description,
-            $matches
-        )) {
-            $this->startingLine = (int)$matches[1];
-            if (isset($matches[2]) && '' !== $matches[2]) {
-                $this->lineCount = (int)$matches[2];
+        Assert::stringNotEmpty($body);
+        Assert::notNull($descriptionFactory);
+
+        $startingLine = 1;
+        $lineCount    = null;
+        $description  = null;
+
+        // Starting line / Number of lines / Description
+        if (preg_match('/^([1-9]\d*)\s*(?:((?1))\s+)?(.*)$/sux', $body, $matches)) {
+            $startingLine = (int)$matches[1];
+            if (isset($matches[2]) && $matches[2] !== '') {
+                $lineCount = (int)$matches[2];
             }
-            $this->setDescription($matches[3]);
-            $this->description = $content;
+            $description = $matches[3];
         }
 
-        return $this;
+        return new static($startingLine, $lineCount, $descriptionFactory->create($description, $context));
     }
 
     /**
@@ -89,22 +77,6 @@ class Source extends Tag
     }
 
     /**
-     * Sets the starting line.
-     *
-     * @param int $startingLine The new starting line, relative to the
-     *     structural element's location.
-     *
-     * @return $this
-     */
-    public function setStartingLine($startingLine)
-    {
-        $this->startingLine = $startingLine;
-
-        $this->description = null;
-        return $this;
-    }
-
-    /**
      * Returns the number of lines.
      *
      * @return int|null The number of lines, relative to the starting line. NULL
@@ -115,19 +87,10 @@ class Source extends Tag
         return $this->lineCount;
     }
 
-    /**
-     * Sets the number of lines.
-     *
-     * @param int|null $lineCount The new number of lines, relative to the
-     *     starting line. NULL means "to the end".
-     *
-     * @return $this
-     */
-    public function setLineCount($lineCount)
+    public function __toString()
     {
-        $this->lineCount = $lineCount;
-
-        $this->description = null;
-        return $this;
+        return $this->startingLine
+        . ($this->lineCount !== null ? ' ' . $this->lineCount : '')
+        . ($this->description ? ' ' . $this->description->render() : '');
     }
 }
