@@ -12,13 +12,18 @@
 
 namespace phpDocumentor\Reflection\DocBlock\Tags;
 
-use phpDocumentor\Reflection\DocBlock\Tag;
+use phpDocumentor\Reflection\Types\Context;
+use phpDocumentor\Reflection\DocBlock\Description;
+use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
+use Webmozart\Assert\Assert;
 
 /**
- * Reflection class for a @version tag in a Docblock.
+ * Reflection class for a {@}version tag in a Docblock.
  */
-class Version extends Tag
+class Version extends BaseTag
 {
+    protected $name = 'version';
+
     /**
      * PCRE regular expression matching a version vector.
      * Assumes the "x" modifier.
@@ -38,17 +43,24 @@ class Version extends Tag
     /** @var string The version vector. */
     private $version = '';
 
-    public function __construct($version, Description $description = null)
+    public function __construct($version = null, Description $description = null)
     {
+        Assert::nullOrStringNotEmpty($version);
+
         $this->version = $version;
         $this->description = $description;
     }
 
     /**
-     * {@inheritdoc}
+     * @return static
      */
-    public static function create($body, Context $context = null)
+    public static function create($body, DescriptionFactory $descriptionFactory = null, Context $context = null)
     {
+        Assert::nullOrString($body);
+        if (empty($body)) {
+            return new static();
+        }
+
         $matches = [];
         if (!preg_match('/^(' . self::REGEX_VECTOR . ')\s*(.+)?$/sux', $body, $matches)) {
             return null;
@@ -56,7 +68,7 @@ class Version extends Tag
 
         return new static(
             $matches[1],
-            new Description(isset($matches[2]) ? $matches[2] : '', $context)
+            $descriptionFactory->create(isset($matches[2]) ? $matches[2] : '', $context)
         );
     }
 
@@ -77,6 +89,6 @@ class Version extends Tag
      */
     public function __toString()
     {
-        return $this->version . ' ' . $this->description->render();
+        return $this->version . ($this->description ? ' ' . $this->description->render() : '');
     }
 }
