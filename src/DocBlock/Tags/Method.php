@@ -1,62 +1,77 @@
 <?php
 /**
- * phpDocumentor
+ * This file is part of phpDocumentor.
  *
- * PHP Version 5.3
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  *
- * @author    Mike van Riel <mike.vanriel@naenius.com>
- * @copyright 2010-2011 Mike van Riel / Naenius (http://www.naenius.com)
+ * @copyright 2010-2015 Mike van Riel<mike@phpdoc.org>
  * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      http://phpdoc.org
  */
 
 namespace phpDocumentor\Reflection\DocBlock\Tags;
 
-use phpDocumentor\Reflection\DocBlock\Tag;
+use phpDocumentor\Reflection\DocBlock\Description;
+use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
+use phpDocumentor\Reflection\Type;
+use phpDocumentor\Reflection\TypeResolver;
+use phpDocumentor\Reflection\Types\Context;
+use phpDocumentor\Reflection\Types\Void;
+use Webmozart\Assert\Assert;
 
 /**
- * Reflection class for a @method in a Docblock.
- *
- * @author  Mike van Riel <mike.vanriel@naenius.com>
- * @license http://www.opensource.org/licenses/mit-license.php MIT
- * @link    http://phpdoc.org
+ * Reflection class for an {@}method in a Docblock.
  */
-class Method extends Return_
+final class Method extends BaseTag
 {
+    protected $name = 'method';
 
     /** @var string */
-    protected $method_name = '';
+    private $methodName = '';
 
-    /** @var string */
-    protected $arguments = '';
+    /** @var string[] */
+    private $arguments = [];
 
     /** @var bool */
-    protected $isStatic = false;
+    private $isStatic = false;
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getContent()
-    {
-        if (null === $this->description) {
-            $this->description = '';
-            if ($this->isStatic) {
-                $this->description .= 'static ';
-            }
-            $this->description .= $this->type .
-                " {$this->method_name}({$this->arguments}) " .
-                $this->description;
+    /** @var Type */
+    private $returnType;
+
+    public function __construct(
+        $methodName,
+        array $arguments = [],
+        Type $returnType = null,
+        $static = false,
+        Description $description = null
+    ) {
+        Assert::stringNotEmpty($methodName);
+        Assert::boolean($static);
+
+        if ($returnType === null) {
+            $returnType = new Void();
         }
 
-        return $this->description;
+        $this->methodName  = $methodName;
+        $this->arguments   = $this->filterArguments($arguments);
+        $this->returnType  = $returnType;
+        $this->isStatic    = $static;
+        $this->description = $description;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function setContent($content)
-    {
-        Tag::setContent($content);
+    public static function create(
+        $body,
+        TypeResolver $typeResolver = null,
+        DescriptionFactory $descriptionFactory = null,
+        Context $context = null
+    ) {
+        Assert::stringNotEmpty($body);
+        Assert::allNotNull([ $typeResolver, $descriptionFactory ]);
+
         // 1. none or more whitespace
         // 2. optionally the keyword "static" followed by whitespace
         // 3. optionally a word with underscores followed by whitespace : as
@@ -66,10 +81,10 @@ class Method extends Return_
         // 5. then a word with underscores, followed by ( and any character
         //    until a ) and whitespace : as method name with signature
         // 6. any remaining text : as description
-        if (preg_match(
+        if (!preg_match(
             '/^
                 # Static keyword
-                # Declates a static method ONLY if type is also present
+                # Declares a static method ONLY if type is also present
                 (?:
                     (static)
                     \s+
@@ -91,47 +106,36 @@ class Method extends Return_
                 # Description
                 (.*)
             $/sux',
-            $this->description,
+            $body,
             $matches
         )) {
-            list(
-                ,
-                $static,
-                $this->type,
-                $this->method_name,
-                $this->arguments,
-                $this->description
-            ) = $matches;
-            if ($static) {
-                if (!$this->type) {
-                    $this->type = 'static';
-                } else {
-                    $this->isStatic = true;
-                }
-            } else {
-                if (!$this->type) {
-                    $this->type = 'void';
-                }
-            }
-            $this->parsedDescription = null;
+            return null;
         }
 
-        return $this;
-    }
+        list(, $static, $returnType, $methodName, $arguments, $description) = $matches;
 
-    /**
-     * Sets the name of this method.
-     *
-     * @param string $method_name The name of the method.
-     *
-     * @return $this
-     */
-    public function setMethodName($method_name)
-    {
-        $this->method_name = $method_name;
+        $static      = $static === 'static';
+        $returnType  = $typeResolver->resolve($returnType, $context);
+        $description = $descriptionFactory->create($description, $context);
 
-        $this->description = null;
-        return $this;
+        $arguments = explode(',', $arguments);
+        foreach($arguments as &$argument) {
+            $argument = explode(' ', trim($argument));
+            if ($argument[0][0] === '$') {
+                $argumentName = substr($argument[0], 1);
+                $argumentType = new Void();
+            } else {
+                $argumentType = $typeResolver->resolve($argument[0], $context);
+                $argumentName = '';
+                if (isset($argument[1])) {
+                    $argumentName = substr($argument[1], 1);
+                }
+            }
+
+            $argument = [ 'name' => $argumentName, 'type' => $argumentType];
+        }
+
+        return new static($methodName, $arguments, $returnType, $static, $description);
     }
 
     /**
@@ -141,51 +145,21 @@ class Method extends Return_
      */
     public function getMethodName()
     {
-        return $this->method_name;
+        return $this->methodName;
     }
 
     /**
-     * Sets the arguments for this method.
-     *
-     * @param string $arguments A comma-separated arguments line.
-     *
-     * @return void
-     */
-    public function setArguments($arguments)
-    {
-        $this->arguments = $arguments;
-
-        $this->description = null;
-        return $this;
-    }
-
-    /**
-     * Returns an array containing each argument as array of type and name.
-     *
-     * Please note that the argument sub-array may only contain 1 element if no
-     * type was specified.
-     *
      * @return string[]
      */
     public function getArguments()
     {
-        if (empty($this->arguments)) {
-            return array();
-        }
-
-        $arguments = explode(',', $this->arguments);
-        foreach ($arguments as $key => $value) {
-            $arguments[$key] = explode(' ', trim($value));
-        }
-
-        return $arguments;
+        return $this->arguments;
     }
 
     /**
      * Checks whether the method tag describes a static method or not.
      *
-     * @return bool TRUE if the method declaration is for a static method, FALSE
-     *     otherwise.
+     * @return bool TRUE if the method declaration is for a static method, FALSE otherwise.
      */
     public function isStatic()
     {
@@ -193,17 +167,44 @@ class Method extends Return_
     }
 
     /**
-     * Sets a new value for whether the method is static or not.
-     *
-     * @param bool $isStatic The new value to set.
-     *
-     * @return $this
+     * @return Type
      */
-    public function setIsStatic($isStatic)
+    public function getReturnType()
     {
-        $this->isStatic = $isStatic;
+        return $this->returnType;
+    }
 
-        $this->description = null;
-        return $this;
+    public function __toString()
+    {
+        $arguments = [];
+        foreach ($this->arguments as $argument) {
+            $arguments[] = $argument['type'] . ' $' . $argument['name'];
+        }
+
+        return ($this->isStatic() ? 'static ' : '')
+            . (string)$this->returnType . ' '
+            . $this->methodName
+            . '(' . implode(', ', $arguments) . ')'
+            . ($this->description ? ' ' . $this->description->render() : '');
+    }
+
+    private function filterArguments($arguments)
+    {
+        foreach ($arguments as &$argument) {
+            if (is_string($argument)) {
+                $argument = [ 'name' => $argument ];
+            }
+            if (! isset($argument['type'])) {
+                $argument['type'] = new Void();
+            }
+            $keys = array_keys($argument);
+            if ($keys !== [ 'name', 'type' ]) {
+                throw new \InvalidArgumentException(
+                    'Arguments can only have the "name" and "type" fields, found: ' . var_export($keys, true)
+                );
+            }
+        }
+
+        return $arguments;
     }
 }
