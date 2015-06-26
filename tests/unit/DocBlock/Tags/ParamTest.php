@@ -44,20 +44,21 @@ class ParamTest extends \PHPUnit_Framework_TestCase
      * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Formatter\PassthroughFormatter
      * @uses   \phpDocumentor\Reflection\DocBlock\Description
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::render
+     * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getName
      */
     public function testIfTagCanBeRenderedUsingDefaultFormatter()
     {
         $fixture = new Param('myParameter', new String_(), true, new Description('Description'));
-        $this->assertSame('string ...$myParameter Description', $fixture->render());
+        $this->assertSame('@param string ...$myParameter Description', $fixture->render());
 
         $fixture = new Param('myParameter', new String_(), false, new Description('Description'));
-        $this->assertSame('string $myParameter Description', $fixture->render());
+        $this->assertSame('@param string $myParameter Description', $fixture->render());
 
         $fixture = new Param('myParameter', null, false, new Description('Description'));
-        $this->assertSame('$myParameter Description', $fixture->render());
+        $this->assertSame('@param $myParameter Description', $fixture->render());
 
         $fixture = new Param('myParameter');
-        $this->assertSame('$myParameter', $fixture->render());
+        $this->assertSame('@param $myParameter', $fixture->render());
     }
 
     /**

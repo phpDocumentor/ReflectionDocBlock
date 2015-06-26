@@ -43,17 +43,18 @@ class PropertyWriteTest extends \PHPUnit_Framework_TestCase
      * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Formatter\PassthroughFormatter
      * @uses   \phpDocumentor\Reflection\DocBlock\Description
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::render
+     * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getName
      */
     public function testIfTagCanBeRenderedUsingDefaultFormatter()
     {
         $fixture = new PropertyWrite('myProperty', new String_(), new Description('Description'));
-        $this->assertSame('string $myProperty Description', $fixture->render());
+        $this->assertSame('@property-write string $myProperty Description', $fixture->render());
 
         $fixture = new PropertyWrite('myProperty', null, new Description('Description'));
-        $this->assertSame('$myProperty Description', $fixture->render());
+        $this->assertSame('@property-write $myProperty Description', $fixture->render());
 
         $fixture = new PropertyWrite('myProperty');
-        $this->assertSame('$myProperty', $fixture->render());
+        $this->assertSame('@property-write $myProperty', $fixture->render());
     }
 
     /**

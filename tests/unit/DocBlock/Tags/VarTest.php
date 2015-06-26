@@ -43,17 +43,18 @@ class VarTest extends \PHPUnit_Framework_TestCase
      * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Formatter\PassthroughFormatter
      * @uses   \phpDocumentor\Reflection\DocBlock\Description
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::render
+     * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getName
      */
     public function testIfTagCanBeRenderedUsingDefaultFormatter()
     {
         $fixture = new Var_('myVariable', new String_(), new Description('Description'));
-        $this->assertSame('string $myVariable Description', $fixture->render());
+        $this->assertSame('@var string $myVariable Description', $fixture->render());
 
         $fixture = new Var_('myVariable', null, new Description('Description'));
-        $this->assertSame('$myVariable Description', $fixture->render());
+        $this->assertSame('@var $myVariable Description', $fixture->render());
 
         $fixture = new Var_('myVariable');
-        $this->assertSame('$myVariable', $fixture->render());
+        $this->assertSame('@var $myVariable', $fixture->render());
     }
 
     /**

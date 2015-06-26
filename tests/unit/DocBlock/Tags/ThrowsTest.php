@@ -43,12 +43,13 @@ class ThrowsTest extends \PHPUnit_Framework_TestCase
      * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Formatter\PassthroughFormatter
      * @uses   \phpDocumentor\Reflection\DocBlock\Description
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::render
+     * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getName
      */
     public function testIfTagCanBeRenderedUsingDefaultFormatter()
     {
         $fixture = new Throws(new String_(), new Description('Description'));
 
-        $this->assertSame('string Description', $fixture->render());
+        $this->assertSame('@throws string Description', $fixture->render());
     }
 
     /**

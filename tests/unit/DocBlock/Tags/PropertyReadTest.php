@@ -43,17 +43,18 @@ class PropertyReadTest extends \PHPUnit_Framework_TestCase
      * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Formatter\PassthroughFormatter
      * @uses   \phpDocumentor\Reflection\DocBlock\Description
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::render
+     * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getName
      */
     public function testIfTagCanBeRenderedUsingDefaultFormatter()
     {
         $fixture = new PropertyRead('myProperty', new String_(), new Description('Description'));
-        $this->assertSame('string $myProperty Description', $fixture->render());
+        $this->assertSame('@property-read string $myProperty Description', $fixture->render());
 
         $fixture = new PropertyRead('myProperty', null, new Description('Description'));
-        $this->assertSame('$myProperty Description', $fixture->render());
+        $this->assertSame('@property-read $myProperty Description', $fixture->render());
 
         $fixture = new PropertyRead('myProperty');
-        $this->assertSame('$myProperty', $fixture->render());
+        $this->assertSame('@property-read $myProperty', $fixture->render());
     }
 
     /**

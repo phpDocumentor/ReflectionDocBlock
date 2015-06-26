@@ -36,12 +36,13 @@ class AuthorTest extends \PHPUnit_Framework_TestCase
      * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Author::__toString
      * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Formatter\PassthroughFormatter
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::render
+     * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getName
      */
     public function testIfTagCanBeRenderedUsingDefaultFormatter()
     {
         $fixture = new Author('Mike van Riel', 'mike@phpdoc.org');
 
-        $this->assertSame('Mike van Riel<mike@phpdoc.org>', $fixture->render());
+        $this->assertSame('@author Mike van Riel<mike@phpdoc.org>', $fixture->render());
     }
 
     /**

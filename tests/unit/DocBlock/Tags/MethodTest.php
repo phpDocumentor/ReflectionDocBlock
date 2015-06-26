@@ -47,6 +47,7 @@ class MethodTest extends \PHPUnit_Framework_TestCase
      * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Formatter\PassthroughFormatter
      * @uses   \phpDocumentor\Reflection\DocBlock\Description
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::render
+     * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getName
      */
     public function testIfTagCanBeRenderedUsingDefaultFormatter()
     {
@@ -57,7 +58,7 @@ class MethodTest extends \PHPUnit_Framework_TestCase
         $fixture = new Method('myMethod', $arguments, new Void(), true, new Description('My Description'));
 
         $this->assertSame(
-            'static void myMethod(string $argument1, object $argument2) My Description',
+            '@method static void myMethod(string $argument1, object $argument2) My Description',
             $fixture->render()
         );
     }

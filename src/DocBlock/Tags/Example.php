@@ -1,11 +1,11 @@
 <?php
 /**
- * phpDocumentor
+ * This file is part of phpDocumentor.
  *
- * PHP Version 5.3
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  *
- * @author    Vasil Rangelov <boen.robot@gmail.com>
- * @copyright 2010-2011 Mike van Riel / Naenius (http://www.naenius.com)
+ * @copyright 2010-2015 Mike van Riel<mike@phpdoc.org>
  * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      http://phpdoc.org
  */
@@ -15,25 +15,20 @@ namespace phpDocumentor\Reflection\DocBlock\Tags;
 use phpDocumentor\Reflection\DocBlock\Tag;
 
 /**
- * Reflection class for a @example tag in a Docblock.
- *
- * @author  Vasil Rangelov <boen.robot@gmail.com>
- * @license http://www.opensource.org/licenses/mit-license.php MIT
- * @link    http://phpdoc.org
+ * Reflection class for a {@}example tag in a Docblock.
  */
-class Example extends Source
+final class Example extends BaseTag
 {
     /**
-     * @var string Path to a file to use as an example.
-     *     May also be an absolute URI.
+     * @var string Path to a file to use as an example. May also be an absolute URI.
      */
-    protected $filePath = '';
+    private $filePath = '';
 
     /**
-     * @var bool Whether the file path component represents an URI.
-     *     This determines how the file portion appears at {@link getContent()}.
+     * @var bool Whether the file path component represents an URI. This determines how the file portion
+     *     appears at {@link getContent()}.
      */
-    protected $isURI = false;
+    private $isURI = false;
 
     /**
      * {@inheritdoc}
@@ -57,40 +52,35 @@ class Example extends Source
     /**
      * {@inheritdoc}
      */
-    public function setContent($content)
+    public static function create($body)
     {
-        Tag::setContent($content);
-        if (preg_match(
-            '/^
-                # File component
-                (?:
-                    # File path in quotes
-                    \"([^\"]+)\"
-                    |
-                    # File URI
-                    (\S+)
-                )
-                # Remaining content (parsed by SourceTag)
-                (?:\s+(.*))?
-            $/sux',
-            $this->description,
-            $matches
-        )) {
-            if ('' !== $matches[1]) {
-                $this->setFilePath($matches[1]);
-            } else {
-                $this->setFileURI($matches[2]);
-            }
-
-            if (isset($matches[3])) {
-                parent::setContent($matches[3]);
-            } else {
-                $this->setDescription('');
-            }
-            $this->description = $content;
+        // File component: File path in quotes or File URI / Source information
+        if (! preg_match('/^(?:\"([^\"]+)\"|(\S+))(?:\s+(.*))?$/sux', $body, $matches)) {
+            return null;
         }
 
-        return $this;
+        $filePath = null;
+        $fileUri  = null;
+        if ('' !== $matches[1]) {
+            $filePath = $matches[1];
+        } else {
+            $fileUri = $matches[2];
+        }
+
+        $startingLine = 1;
+        $lineCount    = null;
+        $description  = null;
+
+        // Starting line / Number of lines / Description
+        if (preg_match('/^([1-9]\d*)\s*(?:((?1))\s+)?(.*)$/sux', $matches[3], $matches)) {
+            $startingLine = (int)$matches[1];
+            if (isset($matches[2]) && $matches[2] !== '') {
+                $lineCount = (int)$matches[2];
+            }
+            $description = $matches[3];
+        }
+
+        return new static($filePath, $fileUri, $startingLine, $lineCount, $description);
     }
 
     /**

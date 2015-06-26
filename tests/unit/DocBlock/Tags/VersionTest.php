@@ -41,12 +41,13 @@ class VersionTest extends \PHPUnit_Framework_TestCase
      * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Formatter\PassthroughFormatter
      * @uses   \phpDocumentor\Reflection\DocBlock\Description
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::render
+     * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getName
      */
     public function testIfTagCanBeRenderedUsingDefaultFormatter()
     {
         $fixture = new Version('1.0', new Description('Description'));
 
-        $this->assertSame('1.0 Description', $fixture->render());
+        $this->assertSame('@version 1.0 Description', $fixture->render());
     }
 
     /**

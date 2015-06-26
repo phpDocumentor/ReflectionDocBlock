@@ -43,17 +43,18 @@ class SourceTest extends \PHPUnit_Framework_TestCase
      * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Formatter\PassthroughFormatter
      * @uses   \phpDocumentor\Reflection\DocBlock\Description
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::render
+     * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getName
      */
     public function testIfTagCanBeRenderedUsingDefaultFormatter()
     {
         $fixture = new Source(1, 10, new Description('Description'));
-        $this->assertSame('1 10 Description', $fixture->render());
+        $this->assertSame('@source 1 10 Description', $fixture->render());
 
         $fixture = new Source(1, null, new Description('Description'));
-        $this->assertSame('1 Description', $fixture->render());
+        $this->assertSame('@source 1 Description', $fixture->render());
 
         $fixture = new Source(1);
-        $this->assertSame('1', $fixture->render());
+        $this->assertSame('@source 1', $fixture->render());
     }
 
     /**

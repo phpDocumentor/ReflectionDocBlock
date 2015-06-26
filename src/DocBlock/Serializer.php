@@ -127,7 +127,8 @@ class Serializer
     private function addTagBlock(DocBlock $docblock, $wrapLength, $indent, $comment)
     {
         foreach ($docblock->getTags() as $tag) {
-            $tagText = (string)$tag;
+            $formatter = new DocBlock\Tags\Formatter\PassthroughFormatter();
+            $tagText   = $formatter->format($tag);
             if ($wrapLength !== null) {
                 $tagText = wordwrap($tagText, $wrapLength);
             }

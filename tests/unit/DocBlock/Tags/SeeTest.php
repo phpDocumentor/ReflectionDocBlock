@@ -43,12 +43,13 @@ class SeeTest extends \PHPUnit_Framework_TestCase
      * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Formatter\PassthroughFormatter
      * @uses   \phpDocumentor\Reflection\DocBlock\Description
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::render
+     * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getName
      */
     public function testIfTagCanBeRenderedUsingDefaultFormatter()
     {
         $fixture = new See(new Fqsen('\DateTime'), new Description('Description'));
 
-        $this->assertSame('\DateTime Description', $fixture->render());
+        $this->assertSame('@see \DateTime Description', $fixture->render());
     }
 
     /**

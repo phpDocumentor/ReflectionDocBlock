@@ -26,6 +26,6 @@ class PassthroughFormatter implements Formatter
      */
     public function format(Tag $tag)
     {
-        return (string)$tag;
+        return '@' . $tag->getName() . ' ' . (string)$tag;
     }
 }

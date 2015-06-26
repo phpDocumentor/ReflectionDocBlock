@@ -89,7 +89,7 @@ class GenericTest extends \PHPUnit_Framework_TestCase
     {
         $fixture = new Generic('generic', new Description('Description'));
 
-        $this->assertSame('@generic Description', (string)$fixture);
+        $this->assertSame('Description', (string)$fixture);
     }
 
     /**
@@ -111,7 +111,7 @@ class GenericTest extends \PHPUnit_Framework_TestCase
 
         $fixture = Generic::create('My Description', 'generic', $descriptionFactory, $context);
 
-        $this->assertSame('@generic My Description', (string)$fixture);
+        $this->assertSame('My Description', (string)$fixture);
         $this->assertSame($generics, $fixture->getName());
         $this->assertSame($description, $fixture->getDescription());
     }
