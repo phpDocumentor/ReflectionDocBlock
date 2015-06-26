@@ -10,8 +10,8 @@
     ],
     "require": {
         "php": ">=5.5",
-        "phpdocumentor/reflection-common": "^0.1",
-        "phpdocumentor/type-resolver": "^0.1.1",
+        "phpdocumentor/reflection-common": "^1.0@dev",
+        "phpdocumentor/type-resolver": "^0.1.2",
         "webmozart/assert": "^1.0"
     },
     "autoload": {

@@ -4,21 +4,24 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "da8060231f14649de9e35951050aa3be",
+    "hash": "5bd1e5e2446fe58d15c5ad5418aeedae",
     "packages": [
         {
             "name": "phpdocumentor/reflection-common",
-            "version": "0.1",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/ReflectionCommon.git",
-                "reference": "f10c8a4e2afd1b106550b0a5b0e8db81742377f1"
+                "reference": "9969bd1c9661a73fdab104df7dbf132639d5c4d8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/ReflectionCommon/zipball/f10c8a4e2afd1b106550b0a5b0e8db81742377f1",
-                "reference": "f10c8a4e2afd1b106550b0a5b0e8db81742377f1",
+                "url": "https://api.github.com/repos/phpDocumentor/ReflectionCommon/zipball/9969bd1c9661a73fdab104df7dbf132639d5c4d8",
+                "reference": "9969bd1c9661a73fdab104df7dbf132639d5c4d8",
                 "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5"
             },
             "require-dev": {
                 "phpunit/phpunit": "^4.6"
@@ -55,25 +58,25 @@
                 "reflection",
                 "static analysis"
             ],
-            "time": "2015-06-12 17:27:38"
+            "time": "2015-06-12 22:21:38"
         },
         {
             "name": "phpdocumentor/type-resolver",
-            "version": "0.1.1",
+            "version": "0.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/TypeResolver.git",
-                "reference": "2ac0adaea9697334b85b1622ce930014e6b02a11"
+                "reference": "f49ac4864bf790ab72625b7183452ec41f3b675b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/2ac0adaea9697334b85b1622ce930014e6b02a11",
-                "reference": "2ac0adaea9697334b85b1622ce930014e6b02a11",
+                "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/f49ac4864bf790ab72625b7183452ec41f3b675b",
+                "reference": "f49ac4864bf790ab72625b7183452ec41f3b675b",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.5",
-                "phpdocumentor/reflection-common": "^0.1"
+                "phpdocumentor/reflection-common": "^1.0@dev"
             },
             "require-dev": {
                 "mockery/mockery": "^0.9.4",
@@ -102,7 +105,7 @@
                     "email": "me@mikevanriel.com"
                 }
             ],
-            "time": "2015-06-12 22:00:00"
+            "time": "2015-06-26 10:07:09"
         },
         {
             "name": "webmozart/assert",
@@ -1104,7 +1107,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "phpdocumentor/reflection-common": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
