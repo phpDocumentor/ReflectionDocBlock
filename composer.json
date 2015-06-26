@@ -22,7 +22,7 @@
     },
     "require-dev": {
         "mockery/mockery": "^0.9.4",
-        "phpunit/phpunit": "4.4"
+        "phpunit/phpunit": "^4.4"
     },
     "extra": {
         "branch-alias": {

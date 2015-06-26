@@ -13,8 +13,10 @@
 namespace phpDocumentor\Reflection;
 
 use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
+use phpDocumentor\Reflection\DocBlock\StandardTagFactory;
 use phpDocumentor\Reflection\DocBlock\TagFactory;
 use phpDocumentor\Reflection\Types\Context;
+use Webmozart\Assert\Assert;
 
 final class DocBlockFactory implements DocBlockFactoryInterface
 {
@@ -27,13 +29,10 @@ final class DocBlockFactory implements DocBlockFactoryInterface
     /**
      * Initializes this factory with the required subcontractors.
      *
-     * @param DocBlock\DescriptionFactory $descriptionFactory
-     * @param DocBlock\TagFactory $tagFactory
+     * @param DescriptionFactory $descriptionFactory
+     * @param TagFactory         $tagFactory
      */
-    public function __construct(
-        DocBlock\DescriptionFactory $descriptionFactory,
-        DocBlock\TagFactory $tagFactory
-    )
+    public function __construct(DescriptionFactory $descriptionFactory, TagFactory $tagFactory)
     {
         $this->descriptionFactory = $descriptionFactory;
         $this->tagFactory = $tagFactory;
@@ -49,7 +48,7 @@ final class DocBlockFactory implements DocBlockFactoryInterface
     public static function createInstance(array $additionalTags = [])
     {
         $fqsenResolver = new FqsenResolver();
-        $tagFactory = new TagFactory($fqsenResolver);
+        $tagFactory = new StandardTagFactory($fqsenResolver);
         $descriptionFactory = new DescriptionFactory($tagFactory);
 
         $tagFactory->addService($descriptionFactory);
@@ -63,9 +62,10 @@ final class DocBlockFactory implements DocBlockFactoryInterface
     }
 
     /**
-     * @param $docblock
+     * @param object|string $docblock A string containing the DocBlock to parse or an object supporting the
+     *                                getDocComment method (such as a ReflectionClass object).
      * @param Types\Context $context
-     * @param Location $location
+     * @param Location      $location
      *
      * @return DocBlock
      */
@@ -73,13 +73,14 @@ final class DocBlockFactory implements DocBlockFactoryInterface
     {
         if (is_object($docblock)) {
             if (!method_exists($docblock, 'getDocComment')) {
-                throw new \InvalidArgumentException(
-                    'Invalid object passed; the given object must support the getDocComment method'
-                );
+                $exceptionMessage = 'Invalid object passed; the given object must support the getDocComment method';
+                throw new \InvalidArgumentException($exceptionMessage);
             }
 
             $docblock = $docblock->getDocComment();
         }
+
+        Assert::stringNotEmpty($docblock);
 
         if ($context === null) {
             $context = new Context('');
@@ -90,7 +91,7 @@ final class DocBlockFactory implements DocBlockFactoryInterface
 
         return new DocBlock(
             $summary,
-            $this->descriptionFactory->create($description, $context),
+            $description ? $this->descriptionFactory->create($description, $context) : null,
             $this->parseTagBlock($tags),
             $context,
             $location,
@@ -108,23 +109,14 @@ final class DocBlockFactory implements DocBlockFactoryInterface
      */
     private function stripDocComment($comment)
     {
-        $comment = trim(
-            preg_replace(
-                '#[ \t]*(?:\/\*\*|\*\/|\*)?[ \t]{0,1}(.*)?#u',
-                '$1',
-                $comment
-            )
-        );
+        $comment = trim(preg_replace('#[ \t]*(?:\/\*\*|\*\/|\*)?[ \t]{0,1}(.*)?#u', '$1', $comment));
 
         // reg ex above is not able to remove */ from a single line docblock
         if (substr($comment, -2) == '*/') {
             $comment = trim(substr($comment, 0, -2));
         }
 
-        // normalize strings
-        $comment = str_replace(array("\r\n", "\r"), "\n", $comment);
-
-        return $comment;
+        return str_replace(array("\r\n", "\r"), "\n", $comment);
     }
 
     /**
@@ -248,6 +240,7 @@ final class DocBlockFactory implements DocBlockFactoryInterface
                 $result[count($result) - 1] .= "\n" . $tag_line;
             }
         }
+
         return $result;
     }
 
@@ -263,7 +256,11 @@ final class DocBlockFactory implements DocBlockFactoryInterface
         }
 
         if ('@' !== $tags[0]) {
+            // @codeCoverageIgnoreStart
+            // Can't simulate this; this only happens if there is an error with the parsing of the DocBlock that
+            // we didn't foresee.
             throw new \LogicException('A tag block started with text instead of an at-sign(@): ' . $tags);
+            // @codeCoverageIgnoreEnd
         }
 
         return $tags;

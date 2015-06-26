@@ -14,7 +14,7 @@ namespace phpDocumentor\Reflection\DocBlock\Tags;
 
 use phpDocumentor\Reflection\DocBlock\Description;
 use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
-use phpDocumentor\Reflection\DocBlock\TagFactory;
+use phpDocumentor\Reflection\DocBlock\StandardTagFactory;
 use phpDocumentor\Reflection\Types\Context;
 use Webmozart\Assert\Assert;
 
@@ -80,7 +80,7 @@ class Generic extends BaseTag
      */
     private function validateTagName($name)
     {
-        if (!preg_match('/^' . TagFactory::REGEX_TAGNAME . '$/u', $name)) {
+        if (! preg_match('/^' . StandardTagFactory::REGEX_TAGNAME . '$/u', $name)) {
             throw new \InvalidArgumentException(
                 'The tag name "' . $name . '" is not wellformed. Tags may only consist of letters, underscores, '
                 . 'hyphens and backslashes.'

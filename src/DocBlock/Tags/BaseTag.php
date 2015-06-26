@@ -14,9 +14,6 @@ namespace phpDocumentor\Reflection\DocBlock\Tags;
 
 use phpDocumentor\Reflection\DocBlock;
 use phpDocumentor\Reflection\DocBlock\Description;
-use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
-use phpDocumentor\Reflection\DocBlock\TagFactory;
-use phpDocumentor\Reflection\Types\Context;
 
 /**
  * Parses a tag definition for a DocBlock.
