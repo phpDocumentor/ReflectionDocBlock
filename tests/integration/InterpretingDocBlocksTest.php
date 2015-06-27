@@ -22,9 +22,6 @@ use phpDocumentor\Reflection\DocBlock\Tags\See;
  */
 class InterpretingDocBlocksTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * @link ../../examples/interpreting-a-simple-docblock.php
-     */
     public function testInterpretingASimpleDocBlock()
     {
         /**

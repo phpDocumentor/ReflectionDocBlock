@@ -53,12 +53,10 @@ class See extends BaseTag
         Assert::string($body);
         Assert::allNotNull([$resolver, $descriptionFactory]);
 
-        $parts = preg_split('/\s+/Su', $body, 2);
+        $parts       = preg_split('/\s+/Su', $body, 2);
+        $description = isset($parts[1]) ? $descriptionFactory->create($parts[1], $context) : null;
 
-        return new static(
-            $resolver->resolve($parts[0], $context),
-            $descriptionFactory->create(isset($parts[1]) ? $parts[1] : '', $context)
-        );
+        return new static($resolver->resolve($parts[0], $context), $description);
     }
 
     /**
@@ -78,6 +76,6 @@ class See extends BaseTag
      */
     public function __toString()
     {
-        return $this->refers . ' ' . $this->description->render();
+        return $this->refers . ($this->description ? ' ' . $this->description->render() : '');
     }
 }
