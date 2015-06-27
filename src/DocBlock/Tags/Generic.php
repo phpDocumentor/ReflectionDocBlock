@@ -55,6 +55,7 @@ class Generic extends BaseTag
     ) {
         Assert::string($body);
         Assert::stringNotEmpty($name);
+        Assert::notNull($descriptionFactory);
 
         $description = $descriptionFactory && $body ? $descriptionFactory->create($body, $context) : null;
 
