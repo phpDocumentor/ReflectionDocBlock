@@ -20,9 +20,9 @@ use phpDocumentor\Reflection\DocBlock\Tags\See;
 /**
  * @coversNothing
  */
-class InterpretingDocBlocksTest extends \PHPUnit_Framework_TestCase
+class ReconstitutingADocBlockTest extends \PHPUnit_Framework_TestCase
 {
-    public function testInterpretingASimpleDocBlock()
+    public function testReconstituteADocBlock()
     {
         /**
          * @var string $docComment

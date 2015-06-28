@@ -121,7 +121,8 @@ This is a multiline
   description that you commonly
   see with tags.
 
-      It does have a code sample
+      It does have a multiline code sample
+      that should align, no matter what
 
   All spaces superfluous spaces on the
   second and later lines should be
@@ -134,7 +135,8 @@ This is a multiline
 description that you commonly
 see with tags.
 
-    It does have a code sample
+    It does have a multiline code sample
+    that should align, no matter what
 
 All spaces superfluous spaces on the
 second and later lines should be
