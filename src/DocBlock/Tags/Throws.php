@@ -22,7 +22,7 @@ use Webmozart\Assert\Assert;
 /**
  * Reflection class for a {@}throws tag in a Docblock.
  */
-final class Throws extends BaseTag
+final class Throws extends BaseTag implements Factory\StaticMethod
 {
     protected $name = 'throws';
 

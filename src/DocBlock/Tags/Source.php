@@ -20,7 +20,7 @@ use Webmozart\Assert\Assert;
 /**
  * Reflection class for a {@}source tag in a Docblock.
  */
-final class Source extends BaseTag
+final class Source extends BaseTag implements Factory\StaticMethod
 {
     /** @var string */
     protected $name = 'source';

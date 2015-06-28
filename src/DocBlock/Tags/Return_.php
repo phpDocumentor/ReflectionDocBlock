@@ -22,7 +22,7 @@ use Webmozart\Assert\Assert;
 /**
  * Reflection class for a {@}return tag in a Docblock.
  */
-final class Return_ extends BaseTag
+final class Return_ extends BaseTag implements Factory\StaticMethod
 {
     protected $name = 'return';
 

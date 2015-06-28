@@ -22,7 +22,7 @@ use Webmozart\Assert\Assert;
 /**
  * Reflection class for the {@}param tag in a Docblock.
  */
-final class Param extends BaseTag
+final class Param extends BaseTag implements Factory\StaticMethod
 {
     /** @var string */
     protected $name = 'param';

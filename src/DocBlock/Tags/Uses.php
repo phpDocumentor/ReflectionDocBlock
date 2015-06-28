@@ -22,7 +22,7 @@ use Webmozart\Assert\Assert;
 /**
  * Reflection class for a {@}uses tag in a Docblock.
  */
-final class Uses extends BaseTag
+final class Uses extends BaseTag implements Factory\StaticMethod
 {
     protected $name = 'uses';
 

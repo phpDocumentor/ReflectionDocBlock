@@ -22,7 +22,7 @@ use Webmozart\Assert\Assert;
 /**
  * Reflection class for an {@}see tag in a Docblock.
  */
-class See extends BaseTag
+class See extends BaseTag implements Factory\StaticMethod
 {
     protected $name = 'see';
 

@@ -20,7 +20,7 @@ use Webmozart\Assert\Assert;
 /**
  * Reflection class for a {@}version tag in a Docblock.
  */
-final class Version extends BaseTag
+final class Version extends BaseTag implements Factory\StaticMethod
 {
     protected $name = 'version';
 

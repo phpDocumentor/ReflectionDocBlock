@@ -12,6 +12,7 @@
 
 namespace phpDocumentor\Reflection\DocBlock;
 
+use phpDocumentor\Reflection\DocBlock\Tags\Factory\StaticMethod;
 use phpDocumentor\Reflection\DocBlock\Tags\Generic;
 use phpDocumentor\Reflection\FqsenResolver;
 use phpDocumentor\Reflection\Types\Context;
@@ -139,7 +140,7 @@ final class StandardTagFactory implements TagFactory
         Assert::stringNotEmpty($tagName);
         Assert::stringNotEmpty($handler);
         Assert::classExists($handler);
-        Assert::implementsInterface($handler, Tag::class);
+        Assert::implementsInterface($handler, StaticMethod::class);
 
         if (strpos($tagName, '\\') && $tagName[0] !== '\\') {
             throw new \InvalidArgumentException(

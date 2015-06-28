@@ -20,7 +20,7 @@ use Webmozart\Assert\Assert;
 /**
  * Reflection class for a {@}since tag in a Docblock.
  */
-final class Since extends BaseTag
+final class Since extends BaseTag implements Factory\StaticMethod
 {
     protected $name = 'since';
 

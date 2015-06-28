@@ -54,11 +54,12 @@ final class DocBlockFactory implements DocBlockFactoryInterface
         $tagFactory->addService($descriptionFactory);
         $tagFactory->addService(new TypeResolver($fqsenResolver));
 
-        foreach ($additionalTags as $tagName => $tagClassName) {
-            $tagFactory->registerTagHandler($tagName, $tagClassName);
+        $docBlockFactory = new self($descriptionFactory, $tagFactory);
+        foreach ($additionalTags as $tagName => $tagHandler) {
+            $docBlockFactory->registerTagHandler($tagName, $tagHandler);
         }
 
-        return new self($descriptionFactory, $tagFactory);
+        return $docBlockFactory;
     }
 
     /**
@@ -98,6 +99,11 @@ final class DocBlockFactory implements DocBlockFactoryInterface
             $templateMarker === '#@+',
             $templateMarker === '#@-'
         );
+    }
+
+    public function registerTagHandler($tagName, $handler)
+    {
+        $this->tagFactory->registerTagHandler($tagName, $handler);
     }
 
     /**

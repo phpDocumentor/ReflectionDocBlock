@@ -23,7 +23,7 @@ use Webmozart\Assert\Assert;
 /**
  * Reflection class for an {@}method in a Docblock.
  */
-final class Method extends BaseTag
+final class Method extends BaseTag implements Factory\StaticMethod
 {
     protected $name = 'method';
 

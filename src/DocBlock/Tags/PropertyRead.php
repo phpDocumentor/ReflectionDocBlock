@@ -22,7 +22,7 @@ use Webmozart\Assert\Assert;
 /**
  * Reflection class for a {@}property-read tag in a Docblock.
  */
-class PropertyRead extends BaseTag
+class PropertyRead extends BaseTag implements Factory\StaticMethod
 {
     /** @var string */
     protected $name = 'property-read';

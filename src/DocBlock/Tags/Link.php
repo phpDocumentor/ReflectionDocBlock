@@ -20,7 +20,7 @@ use Webmozart\Assert\Assert;
 /**
  * Reflection class for a @link tag in a Docblock.
  */
-final class Link extends BaseTag
+final class Link extends BaseTag implements Factory\StaticMethod
 {
     protected $name = 'link';
 
