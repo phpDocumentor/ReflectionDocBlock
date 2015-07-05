@@ -326,9 +326,12 @@ class StandardTagFactoryTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers ::create
      * @uses phpDocumentor\Reflection\DocBlock\StandardTagFactory::__construct
      * @uses phpDocumentor\Reflection\DocBlock\StandardTagFactory::addService
-     * @covers ::create
+     * @uses phpDocumentor\Reflection\Docblock\Description
+     * @uses phpDocumentor\Reflection\Docblock\Tags\Return_
+     * @uses phpDocumentor\Reflection\Docblock\Tags\BaseTag
      */
     public function testReturntagIsMappedCorrectly()
     {
