@@ -17,9 +17,11 @@ use phpDocumentor\Reflection\DocBlock\Tags\Author;
 use phpDocumentor\Reflection\DocBlock\Tags\Formatter;
 use phpDocumentor\Reflection\DocBlock\Tags\Formatter\PassthroughFormatter;
 use phpDocumentor\Reflection\DocBlock\Tags\Generic;
+use phpDocumentor\Reflection\DocBlock\Tags\Return_;
 use phpDocumentor\Reflection\DocBlock\Tags\See;
 use phpDocumentor\Reflection\Fqsen;
 use phpDocumentor\Reflection\FqsenResolver;
+use phpDocumentor\Reflection\TypeResolver;
 use phpDocumentor\Reflection\Types\Context;
 
 /**
@@ -321,5 +323,39 @@ class StandardTagFactoryTest extends \PHPUnit_Framework_TestCase
         $tagFactory = new StandardTagFactory($resolver);
 
         $tagFactory->registerTagHandler('my-tag', 'stdClass');
+    }
+
+    /**
+     * @covers ::create
+     * @uses phpDocumentor\Reflection\DocBlock\StandardTagFactory::__construct
+     * @uses phpDocumentor\Reflection\DocBlock\StandardTagFactory::addService
+     * @uses phpDocumentor\Reflection\Docblock\Description
+     * @uses phpDocumentor\Reflection\Docblock\Tags\Return_
+     * @uses phpDocumentor\Reflection\Docblock\Tags\BaseTag
+     */
+    public function testReturntagIsMappedCorrectly()
+    {
+        $context    = new Context('');
+
+        $descriptionFactory = m::mock(DescriptionFactory::class);
+        $descriptionFactory
+            ->shouldReceive('create')
+            ->once()
+            ->with('', $context)
+            ->andReturn(new Description(''))
+        ;
+
+        $typeResolver = new TypeResolver();
+
+        $tagFactory = new StandardTagFactory(m::mock(FqsenResolver::class));
+        $tagFactory->addService($descriptionFactory, DescriptionFactory::class);
+        $tagFactory->addService($typeResolver, TypeResolver::class);
+
+
+        /** @var Return_ $tag */
+        $tag = $tagFactory->create('@return mixed', $context);
+
+        $this->assertInstanceOf(Return_::class, $tag);
+        $this->assertSame('return', $tag->getName());
     }
 }

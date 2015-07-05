@@ -54,7 +54,7 @@ final class StandardTagFactory implements TagFactory
         'property-read'  => '\phpDocumentor\Reflection\DocBlock\Tags\PropertyRead',
         'property'       => '\phpDocumentor\Reflection\DocBlock\Tags\Property',
         'property-write' => '\phpDocumentor\Reflection\DocBlock\Tags\PropertyWrite',
-        'return'         => '\phpDocumentor\Reflection\DocBlock\Tags\Return',
+        'return'         => '\phpDocumentor\Reflection\DocBlock\Tags\Return_',
         'see'            => '\phpDocumentor\Reflection\DocBlock\Tags\See',
         'since'          => '\phpDocumentor\Reflection\DocBlock\Tags\Since',
         'source'         => '\phpDocumentor\Reflection\DocBlock\Tags\Source',
