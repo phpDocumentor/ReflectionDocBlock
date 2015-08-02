@@ -93,7 +93,7 @@ final class DocBlockFactory implements DocBlockFactoryInterface
         return new DocBlock(
             $summary,
             $description ? $this->descriptionFactory->create($description, $context) : null,
-            $this->parseTagBlock($tags),
+            $this->parseTagBlock($tags, $context),
             $context,
             $location,
             $templateMarker === '#@+',
@@ -213,10 +213,11 @@ final class DocBlockFactory implements DocBlockFactoryInterface
      * Creates the tag objects.
      *
      * @param string $tags Tag block to parse.
+     * @param Context $context Context of the parsed Tag
      *
      * @return DocBlock\Tag[]
      */
-    private function parseTagBlock($tags)
+    private function parseTagBlock($tags, Context $context)
     {
         $tags = $this->filterTagBlock($tags);
         if (!$tags) {
@@ -225,7 +226,7 @@ final class DocBlockFactory implements DocBlockFactoryInterface
 
         $result = $this->splitTagBlockIntoTagLines($tags);
         foreach ($result as $key => $tagLine) {
-            $result[$key] = $this->tagFactory->create(trim($tagLine));
+            $result[$key] = $this->tagFactory->create(trim($tagLine), $context);
         }
 
         return $result;

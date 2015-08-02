@@ -17,6 +17,7 @@ use phpDocumentor\Reflection\DocBlock\Description;
 use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
 use phpDocumentor\Reflection\DocBlock\Tag;
 use phpDocumentor\Reflection\DocBlock\TagFactory;
+use phpDocumentor\Reflection\DocBlock\Tags\Param;
 use phpDocumentor\Reflection\Types\Context;
 
 /**
@@ -166,7 +167,7 @@ TAG;
 
         $tag        = m::mock(Tag::class);
         $tagFactory = m::mock(TagFactory::class);
-        $tagFactory->shouldReceive('create')->with($tagString)->andReturn($tag);
+        $tagFactory->shouldReceive('create')->with($tagString, m::type(Context::class))->andReturn($tag);
 
         $fixture = new DocBlockFactory(new DescriptionFactory($tagFactory), $tagFactory);
 
@@ -233,5 +234,23 @@ DOCBLOCK
                 'This should be a Description.'
             ],
         ];
+    }
+
+    /**
+     * @covers ::__construct
+     * @covers ::create
+     * @uses   phpDocumentor\Reflection\DocBlock\DescriptionFactory
+     * @uses   phpDocumentor\Reflection\DocBlock\Description
+     * @uses   phpDocumentor\Reflection\Types\Context
+     * @uses   phpDocumentor\Reflection\DocBlock\Tags\Param
+     */
+    public function testTagsWithContextNamespace()
+    {
+        $tagFactoryMock =  m::mock(TagFactory::class);
+        $fixture = new DocBlockFactory(m::mock(DescriptionFactory::class), $tagFactoryMock);
+        $context = new Context('MyNamespace');
+
+        $tagFactoryMock->shouldReceive('create')->with(m::any(), $context)->andReturn(new Param('param'));
+        $docblock = $fixture->create('/** @param MyType $param */', $context);
     }
 }
