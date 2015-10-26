@@ -5,6 +5,7 @@
         "This file is @generated automatically"
     ],
     "hash": "5bd1e5e2446fe58d15c5ad5418aeedae",
+    "content-hash": "203e059d6c5443d8c4c336dd25772904",
     "packages": [
         {
             "name": "phpdocumentor/reflection-common",
@@ -16,7 +17,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/ReflectionCommon/zipball/9969bd1c9661a73fdab104df7dbf132639d5c4d8",
+                "url": "https://api.github.com/repos/phpDocumentor/ReflectionCommon/zipball/8dfc66d8a72f6741ed9f5a39227f99f78ae8d9a5",
                 "reference": "9969bd1c9661a73fdab104df7dbf132639d5c4d8",
                 "shasum": ""
             },
@@ -62,16 +63,16 @@
         },
         {
             "name": "phpdocumentor/type-resolver",
-            "version": "0.1.2",
+            "version": "0.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/TypeResolver.git",
-                "reference": "f49ac4864bf790ab72625b7183452ec41f3b675b"
+                "reference": "83e31258fb03b9a27884a83b81501cb4cb297a81"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/f49ac4864bf790ab72625b7183452ec41f3b675b",
-                "reference": "f49ac4864bf790ab72625b7183452ec41f3b675b",
+                "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/83e31258fb03b9a27884a83b81501cb4cb297a81",
+                "reference": "83e31258fb03b9a27884a83b81501cb4cb297a81",
                 "shasum": ""
             },
             "require": {
@@ -105,7 +106,7 @@
                     "email": "me@mikevanriel.com"
                 }
             ],
-            "time": "2015-06-26 10:07:09"
+            "time": "2015-07-18 13:58:32"
         },
         {
             "name": "webmozart/assert",

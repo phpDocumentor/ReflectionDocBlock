@@ -11,7 +11,7 @@
     "require": {
         "php": ">=5.5",
         "phpdocumentor/reflection-common": "^1.0@dev",
-        "phpdocumentor/type-resolver": "^0.1.2",
+        "phpdocumentor/type-resolver": "^0.1.5",
         "webmozart/assert": "^1.0"
     },
     "autoload": {
