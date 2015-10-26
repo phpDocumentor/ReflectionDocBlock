@@ -239,6 +239,7 @@ DOCBLOCK
     /**
      * @covers ::__construct
      * @covers ::create
+     *
      * @uses   phpDocumentor\Reflection\DocBlock\DescriptionFactory
      * @uses   phpDocumentor\Reflection\DocBlock\Description
      * @uses   phpDocumentor\Reflection\Types\Context
@@ -246,11 +247,44 @@ DOCBLOCK
      */
     public function testTagsWithContextNamespace()
     {
-        $tagFactoryMock =  m::mock(TagFactory::class);
+        $tagFactoryMock = m::mock(TagFactory::class);
         $fixture = new DocBlockFactory(m::mock(DescriptionFactory::class), $tagFactoryMock);
         $context = new Context('MyNamespace');
 
         $tagFactoryMock->shouldReceive('create')->with(m::any(), $context)->andReturn(new Param('param'));
         $docblock = $fixture->create('/** @param MyType $param */', $context);
+    }
+
+    /**
+     * @covers ::__construct
+     * @covers ::create
+     *
+     * @uses phpDocumentor\Reflection\DocBlock\DescriptionFactory
+     * @uses phpDocumentor\Reflection\DocBlock\Description
+     */
+    public function testTagsAreFilteredForNullValues()
+    {
+        $tagString = <<<TAG
+@author Mike van Riel <me@mikevanriel.com> This is with
+  multiline description.
+TAG;
+
+        $tagFactory = m::mock(TagFactory::class);
+        $tagFactory->shouldReceive('create')->with($tagString, m::any())->andReturn(null);
+
+        $fixture = new DocBlockFactory(new DescriptionFactory($tagFactory), $tagFactory);
+
+        $given = <<<DOCBLOCK
+/**
+ * This is a summary.
+ *
+ * @author Mike van Riel <me@mikevanriel.com> This is with
+ *   multiline description.
+ */
+DOCBLOCK;
+
+        $docblock = $fixture->create($given, new Context(''));
+
+        $this->assertEquals([], $docblock->getTags());
     }
 }

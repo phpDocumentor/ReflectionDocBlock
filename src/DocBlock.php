@@ -61,6 +61,7 @@ final class DocBlock
         Assert::string($summary);
         Assert::boolean($isTemplateStart);
         Assert::boolean($isTemplateEnd);
+        Assert::allIsInstanceOf($tags, Tag::class);
 
         $this->summary = $summary;
         $this->description = $description ?: new DocBlock\Description('');

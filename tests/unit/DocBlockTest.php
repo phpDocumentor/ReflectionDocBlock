@@ -102,6 +102,24 @@ class DocBlockTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers ::__construct
+     * @covers ::getTags
+     *
+     * @uses \phpDocumentor\Reflection\DocBlock\Description
+     * @uses \phpDocumentor\Reflection\DocBlock\Tag
+     *
+     * @expectedException \InvalidArgumentException
+     */
+    public function testDocBlockAllowsOnlyTags()
+    {
+        $tags = [
+            null
+        ];
+
+        $fixture = new DocBlock('', null, $tags);
+    }
+
+    /**
+     * @covers ::__construct
      * @covers ::getTagsByName
      *
      * @uses \phpDocumentor\Reflection\DocBlock::getTags

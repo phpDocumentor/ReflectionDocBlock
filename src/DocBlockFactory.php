@@ -14,6 +14,7 @@ namespace phpDocumentor\Reflection;
 
 use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
 use phpDocumentor\Reflection\DocBlock\StandardTagFactory;
+use phpDocumentor\Reflection\DocBlock\Tag;
 use phpDocumentor\Reflection\DocBlock\TagFactory;
 use phpDocumentor\Reflection\Types\Context;
 use Webmozart\Assert\Assert;
@@ -93,7 +94,9 @@ final class DocBlockFactory implements DocBlockFactoryInterface
         return new DocBlock(
             $summary,
             $description ? $this->descriptionFactory->create($description, $context) : null,
-            $this->parseTagBlock($tags, $context),
+            array_filter($this->parseTagBlock($tags, $context), function($tag) {
+                return $tag instanceof Tag;
+            }),
             $context,
             $location,
             $templateMarker === '#@+',
