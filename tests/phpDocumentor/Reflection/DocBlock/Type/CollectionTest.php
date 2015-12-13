@@ -124,6 +124,26 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @param string $fixture
+     * @param array  $expected
+     *
+     * @dataProvider provideTypesToExpandWithPropertyOrMethod
+     * @covers phpDocumentor\Reflection\DocBlock\Type\Collection::add
+     *
+     * @return void
+     */
+    public function testAddMethodsAndProperties($fixture, $expected)
+    {
+        $collection = new Collection(
+            array(),
+            new Context(null, array('LinkDescriptor' => '\phpDocumentor\LinkDescriptor'))
+        );
+        $collection->add($fixture);
+
+        $this->assertSame($expected, $collection->getArrayCopy());
+    }
+
+    /**
      * @covers phpDocumentor\Reflection\DocBlock\Type\Collection::add
      * @expectedException InvalidArgumentException
      * 
@@ -177,6 +197,14 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
                 'DocBlock[]|int[]',
                 array($namespace.'DocBlock[]', 'int[]')
             ),
+            array(
+                'LinkDescriptor::setLink()',
+                array($namespace.'LinkDescriptor::setLink()')
+            ),
+            array(
+                'Alias\LinkDescriptor::setLink()',
+                array('\My\Space\Aliasing\LinkDescriptor::setLink()')
+            ),
         );
     }
 
@@ -191,5 +219,35 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
     public function provideTypesToExpandWithoutNamespace($method)
     {
         return $this->provideTypesToExpand($method, '\\');
+    }
+
+    /**
+     * Returns the method and property types and their expected values to test
+     * the retrieval of types.
+     *
+     * @param string $method Name of the method consuming this data provider.
+     *
+     * @return string[]
+     */
+    public function provideTypesToExpandWithPropertyOrMethod($method)
+    {
+        return array(
+            array(
+                'LinkDescriptor::setLink()',
+                array('\phpDocumentor\LinkDescriptor::setLink()')
+            ),
+            array(
+                'phpDocumentor\LinkDescriptor::setLink()',
+                array('\phpDocumentor\LinkDescriptor::setLink()')
+            ),
+            array(
+                'LinkDescriptor::$link',
+                array('\phpDocumentor\LinkDescriptor::$link')
+            ),
+            array(
+                'phpDocumentor\LinkDescriptor::$link',
+                array('\phpDocumentor\LinkDescriptor::$link')
+            ),
+        );
     }
 }
