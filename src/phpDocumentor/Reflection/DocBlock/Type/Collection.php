@@ -161,12 +161,19 @@ class Collection extends \ArrayObject
             $namespace_aliases = $this->context->getNamespaceAliases();
             // if the first segment is not an alias; prepend namespace name and
             // return
-            if (!isset($namespace_aliases[$type_parts[0]])) {
+            if (!isset($namespace_aliases[$type_parts[0]]) &&
+                !isset($namespace_aliases[strstr($type_parts[0], '::', true)])) {
                 $namespace = $this->context->getNamespace();
                 if ('' !== $namespace) {
                     $namespace .= self::OPERATOR_NAMESPACE;
                 }
                 return self::OPERATOR_NAMESPACE . $namespace . $type;
+            }
+
+            if (strpos($type_parts[0], '::')) {
+                $type_parts[] = strstr($type_parts[0], '::');
+                $type_parts[0] = $namespace_aliases[strstr($type_parts[0], '::', true)];
+                return implode('', $type_parts);
             }
 
             $type_parts[0] = $namespace_aliases[$type_parts[0]];
