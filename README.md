@@ -24,34 +24,46 @@ You can install the component in the following ways:
 Usage
 -----
 
-The ReflectionDocBlock component is designed to work in an identical fashion to
-PHP's own Reflection extension (http://php.net/manual/en/book.reflection.php).
+In order to parse the DocBlock one needs a DocBlockFactory that can be
+instantiated using its `createInstance` factory method like this:
 
-Parsing can be initiated by instantiating the
-`\phpDocumentor\Reflection\DocBlock()` class and passing it a string containing
-a DocBlock (including asterisks) or by passing an object supporting the
-`getDocComment()` method.
+```php
+$factory  = \phpDocumentor\Reflection\DocBlockFactory::createInstance();
+```
 
-> *Examples of objects having the `getDocComment()` method are the
-> `ReflectionClass` and the `ReflectionMethod` classes of the PHP
-> Reflection extension*
+Then we can use the `create` method of the factory to interpret the DocBlock. 
+Please note that it is also possible to provide a class that has the 
+`getDocComment()` method, such as an object of type `ReflectionClass`, the
+create method will read that if it exists.
 
-Example:
+```php
+$docComment = <<<DOCCOMMENT
+/**
+ * This is an example of a summary.
+ *
+ * This is a Description. A Summary and Description are separated by either
+ * two subsequent newlines (thus a whiteline in between as can be seen in this
+ * example), or when the Summary ends with a dot (`.`) and some form of
+ * whitespace.
+ */
+DOCCOMMENT;
 
-    $class = new ReflectionClass('MyClass');
-    $phpdoc = new \phpDocumentor\Reflection\DocBlock($class);
+$docblock = $factory->create($docComment);
+```
 
-or
+The `create` method will yield an object of type `\phpDocumentor\Reflection\DocBlock`
+whose methods can be queried as shown in the following example.
 
-    $docblock = <<<DOCBLOCK
-    /**
-     * This is a short description.
-     *
-     * This is a *long* description.
-     *
-     * @return void
-     */
-    DOCBLOCK;
+```php
+// Should contain the summary for this DocBlock
+$summary = $docblock->getSummary();
 
-    $phpdoc = new \phpDocumentor\Reflection\DocBlock($docblock);
+// Contains an object of type \phpDocumentor\Reflection\DocBlock\Description; 
+// you can either cast it to string or use the render method to get a string 
+// representation of the Description.
+$description = $docblock->getDescription();
+```
+
+> For more examples it would be best to review the scripts in the `/examples` 
+> folder.
 
