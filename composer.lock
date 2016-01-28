@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "5bd1e5e2446fe58d15c5ad5418aeedae",
-    "content-hash": "203e059d6c5443d8c4c336dd25772904",
+    "hash": "bb0e430e32d40dd98ae89d0744edf864",
+    "content-hash": "a97035b9599fe2a0c23169d91b7b1936",
     "packages": [
         {
             "name": "phpdocumentor/reflection-common",
@@ -17,7 +17,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/ReflectionCommon/zipball/8dfc66d8a72f6741ed9f5a39227f99f78ae8d9a5",
+                "url": "https://api.github.com/repos/phpDocumentor/ReflectionCommon/zipball/144c307535e82c8fdcaacbcfc1d6d8eeb896687c",
                 "reference": "9969bd1c9661a73fdab104df7dbf132639d5c4d8",
                 "shasum": ""
             },
