@@ -13,7 +13,6 @@
 namespace phpDocumentor\Reflection;
 
 use phpDocumentor\Reflection\DocBlock\Tag;
-use phpDocumentor\Reflection\Types\Context;
 use Webmozart\Assert\Assert;
 
 final class DocBlock
@@ -27,7 +26,7 @@ final class DocBlock
     /** @var Tag[] An array containing all the tags in this docblock; except inline. */
     private $tags = array();
 
-    /** @var Context Information about the context of this DocBlock. */
+    /** @var Types\Context Information about the context of this DocBlock. */
     private $context = null;
 
     /** @var Location Information about the location of this DocBlock. */
@@ -43,7 +42,7 @@ final class DocBlock
      * @param string $summary
      * @param DocBlock\Description $description
      * @param DocBlock\Tag[] $tags
-     * @param Context $context The context in which the DocBlock occurs.
+     * @param Types\Context $context The context in which the DocBlock occurs.
      * @param Location $location The location within the file that this DocBlock occurs in.
      * @param bool $isTemplateStart
      * @param bool $isTemplateEnd
@@ -52,7 +51,7 @@ final class DocBlock
         $summary = '',
         DocBlock\Description $description = null,
         array $tags = [],
-        Context $context = null,
+        Types\Context $context = null,
         Location $location = null,
         $isTemplateStart = false,
         $isTemplateEnd = false
@@ -95,7 +94,7 @@ final class DocBlock
     /**
      * Returns the current context.
      *
-     * @return Context
+     * @return Types\Context
      */
     public function getContext()
     {

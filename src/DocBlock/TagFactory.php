@@ -12,7 +12,7 @@
 
 namespace phpDocumentor\Reflection\DocBlock;
 
-use phpDocumentor\Reflection\Types\Context;
+use phpDocumentor\Reflection\Types\Context as TypeContext;
 
 interface TagFactory
 {
@@ -61,13 +61,13 @@ interface TagFactory
      * Factory method responsible for instantiating the correct sub type.
      *
      * @param string $tagLine The text for this tag, including description.
-     * @param Context $context
+     * @param TypeContext $context
      *
      * @throws \InvalidArgumentException if an invalid tag line was presented.
      *
      * @return Tag A new tag object.
      */
-    public function create($tagLine, Context $context = null);
+    public function create($tagLine, TypeContext $context = null);
 
     /**
      * Registers a handler for tags.

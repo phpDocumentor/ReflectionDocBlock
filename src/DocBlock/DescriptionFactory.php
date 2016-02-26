@@ -12,7 +12,7 @@
 
 namespace phpDocumentor\Reflection\DocBlock;
 
-use phpDocumentor\Reflection\Types\Context;
+use phpDocumentor\Reflection\Types\Context as TypeContext;
 
 /**
  * Creates a new Description object given a body of text.
@@ -50,11 +50,11 @@ class DescriptionFactory
      * Returns the parsed text of this description.
      *
      * @param string $contents
-     * @param Context $context
+     * @param TypeContext $context
      *
      * @return Description
      */
-    public function create($contents, Context $context = null)
+    public function create($contents, TypeContext $context = null)
     {
         list($text, $tags) = $this->parse($this->lex($contents), $context);
 
@@ -112,11 +112,11 @@ class DescriptionFactory
      * Parses the stream of tokens in to a new set of tokens containing Tags.
      *
      * @param string[] $tokens
-     * @param Context $context
+     * @param TypeContext $context
      *
      * @return string[]|Tag[]
      */
-    private function parse($tokens, Context $context)
+    private function parse($tokens, TypeContext $context)
     {
         $count = count($tokens);
         $tagCount = 0;

@@ -16,7 +16,6 @@ use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
 use phpDocumentor\Reflection\DocBlock\StandardTagFactory;
 use phpDocumentor\Reflection\DocBlock\Tag;
 use phpDocumentor\Reflection\DocBlock\TagFactory;
-use phpDocumentor\Reflection\Types\Context;
 use Webmozart\Assert\Assert;
 
 final class DocBlockFactory implements DocBlockFactoryInterface
@@ -85,7 +84,7 @@ final class DocBlockFactory implements DocBlockFactoryInterface
         Assert::stringNotEmpty($docblock);
 
         if ($context === null) {
-            $context = new Context('');
+            $context = new Types\Context('');
         }
 
         $parts = $this->splitDocBlock($this->stripDocComment($docblock));
@@ -216,11 +215,11 @@ final class DocBlockFactory implements DocBlockFactoryInterface
      * Creates the tag objects.
      *
      * @param string $tags Tag block to parse.
-     * @param Context $context Context of the parsed Tag
+     * @param Types\Context $context Context of the parsed Tag
      *
      * @return DocBlock\Tag[]
      */
-    private function parseTagBlock($tags, Context $context)
+    private function parseTagBlock($tags, Types\Context $context)
     {
         $tags = $this->filterTagBlock($tags);
         if (!$tags) {

@@ -14,7 +14,7 @@ namespace phpDocumentor\Reflection\DocBlock\Tags;
 
 use phpDocumentor\Reflection\DocBlock\Description;
 use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
-use phpDocumentor\Reflection\Types\Context;
+use phpDocumentor\Reflection\Types\Context as TypeContext;
 use Webmozart\Assert\Assert;
 
 /**
@@ -44,7 +44,7 @@ final class Link extends BaseTag implements Factory\StaticMethod
     /**
      * {@inheritdoc}
      */
-    public static function create($body, DescriptionFactory $descriptionFactory = null, Context $context = null)
+    public static function create($body, DescriptionFactory $descriptionFactory = null, TypeContext $context = null)
     {
         Assert::string($body);
         Assert::notNull($descriptionFactory);

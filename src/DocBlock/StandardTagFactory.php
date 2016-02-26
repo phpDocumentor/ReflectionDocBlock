@@ -15,7 +15,7 @@ namespace phpDocumentor\Reflection\DocBlock;
 use phpDocumentor\Reflection\DocBlock\Tags\Factory\StaticMethod;
 use phpDocumentor\Reflection\DocBlock\Tags\Generic;
 use phpDocumentor\Reflection\FqsenResolver;
-use phpDocumentor\Reflection\Types\Context;
+use phpDocumentor\Reflection\Types\Context as TypeContext;
 use Webmozart\Assert\Assert;
 
 /**
@@ -105,10 +105,10 @@ final class StandardTagFactory implements TagFactory
     /**
      * {@inheritDoc}
      */
-    public function create($tagLine, Context $context = null)
+    public function create($tagLine, TypeContext $context = null)
     {
         if (! $context) {
-            $context = new Context('');
+            $context = new TypeContext('');
         }
 
         list($tagName, $tagBody) = $this->extractTagParts($tagLine);
@@ -180,11 +180,11 @@ final class StandardTagFactory implements TagFactory
      *
      * @param string  $body
      * @param string  $name
-     * @param Context $context
+     * @param TypeContext $context
      *
      * @return Tag|null
      */
-    private function createTag($body, $name, Context $context)
+    private function createTag($body, $name, TypeContext $context)
     {
         $handlerClassName = $this->findHandlerClassName($name, $context);
         $arguments        = $this->getArgumentsForParametersFromWiring(
@@ -200,11 +200,11 @@ final class StandardTagFactory implements TagFactory
      * Determines the Fully Qualified Class Name of the Factory or Tag (containing a Factory Method `create`).
      *
      * @param string  $tagName
-     * @param Context $context
+     * @param TypeContext $context
      *
      * @return string
      */
-    private function findHandlerClassName($tagName, Context $context)
+    private function findHandlerClassName($tagName, TypeContext $context)
     {
         $handlerClassName = Generic::class;
         if (isset($this->tagHandlerMappings[$tagName])) {
@@ -273,20 +273,20 @@ final class StandardTagFactory implements TagFactory
      * Returns a copy of this class' Service Locator with added dynamic parameters, such as the tag's name, body and
      * Context.
      *
-     * @param Context $context The Context (namespace and aliasses) that may be passed and is used to resolve FQSENs.
-     * @param string  $tagName The name of the tag that may be passed onto the factory method of the Tag class.
-     * @param string  $tagBody The body of the tag that may be passed onto the factory method of the Tag class.
+     * @param TypeContext $context The Context (namespace and aliasses) that may be passed and is used to resolve FQSENs.
+     * @param string      $tagName The name of the tag that may be passed onto the factory method of the Tag class.
+     * @param string      $tagBody The body of the tag that may be passed onto the factory method of the Tag class.
      *
      * @return mixed[]
      */
-    private function getServiceLocatorWithDynamicParameters(Context $context, $tagName, $tagBody)
+    private function getServiceLocatorWithDynamicParameters(TypeContext $context, $tagName, $tagBody)
     {
         $locator = array_merge(
             $this->serviceLocator,
             [
-                'name'         => $tagName,
-                'body'         => $tagBody,
-                Context::class => $context
+                'name'             => $tagName,
+                'body'             => $tagBody,
+                TypeContext::class => $context
             ]
         );
 

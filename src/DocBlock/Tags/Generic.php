@@ -15,7 +15,7 @@ namespace phpDocumentor\Reflection\DocBlock\Tags;
 use phpDocumentor\Reflection\DocBlock\Description;
 use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
 use phpDocumentor\Reflection\DocBlock\StandardTagFactory;
-use phpDocumentor\Reflection\Types\Context;
+use phpDocumentor\Reflection\Types\Context as TypeContext;
 use Webmozart\Assert\Assert;
 
 /**
@@ -43,7 +43,7 @@ class Generic extends BaseTag implements Factory\StaticMethod
      * @param string             $body
      * @param string             $name
      * @param DescriptionFactory $descriptionFactory
-     * @param Context            $context
+     * @param TypeContext        $context
      *
      * @return static
      */
@@ -51,7 +51,7 @@ class Generic extends BaseTag implements Factory\StaticMethod
         $body,
         $name = '',
         DescriptionFactory $descriptionFactory = null,
-        Context $context = null
+        TypeContext $context = null
     ) {
         Assert::string($body);
         Assert::stringNotEmpty($name);

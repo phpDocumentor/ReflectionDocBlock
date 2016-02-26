@@ -16,7 +16,7 @@ use phpDocumentor\Reflection\DocBlock\Description;
 use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
 use phpDocumentor\Reflection\Fqsen;
 use phpDocumentor\Reflection\FqsenResolver;
-use phpDocumentor\Reflection\Types\Context;
+use phpDocumentor\Reflection\Types\Context as TypeContext;
 use Webmozart\Assert\Assert;
 
 /**
@@ -48,7 +48,7 @@ final class Uses extends BaseTag implements Factory\StaticMethod
         $body,
         FqsenResolver $resolver = null,
         DescriptionFactory $descriptionFactory = null,
-        Context $context = null
+        TypeContext $context = null
     ) {
         Assert::string($body);
         Assert::allNotNull([$resolver, $descriptionFactory]);

@@ -12,7 +12,7 @@
 
 namespace phpDocumentor\Reflection\DocBlock\Tags;
 
-use phpDocumentor\Reflection\Types\Context;
+use phpDocumentor\Reflection\Types\Context as TypeContext;
 use phpDocumentor\Reflection\DocBlock\Description;
 use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
 use Webmozart\Assert\Assert;
@@ -54,7 +54,7 @@ final class Since extends BaseTag implements Factory\StaticMethod
     /**
      * @return static
      */
-    public static function create($body, DescriptionFactory $descriptionFactory = null, Context $context = null)
+    public static function create($body, DescriptionFactory $descriptionFactory = null, TypeContext $context = null)
     {
         Assert::nullOrString($body);
         if (empty($body)) {

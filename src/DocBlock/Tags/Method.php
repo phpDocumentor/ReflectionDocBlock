@@ -16,7 +16,7 @@ use phpDocumentor\Reflection\DocBlock\Description;
 use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
 use phpDocumentor\Reflection\Type;
 use phpDocumentor\Reflection\TypeResolver;
-use phpDocumentor\Reflection\Types\Context;
+use phpDocumentor\Reflection\Types\Context as TypeContext;
 use phpDocumentor\Reflection\Types\Void;
 use Webmozart\Assert\Assert;
 
@@ -67,7 +67,7 @@ final class Method extends BaseTag implements Factory\StaticMethod
         $body,
         TypeResolver $typeResolver = null,
         DescriptionFactory $descriptionFactory = null,
-        Context $context = null
+        TypeContext $context = null
     ) {
         Assert::stringNotEmpty($body);
         Assert::allNotNull([ $typeResolver, $descriptionFactory ]);
