@@ -15,10 +15,11 @@ namespace phpDocumentor\Reflection\DocBlock\Tags;
 use Mockery as m;
 use phpDocumentor\Reflection\DocBlock\Description;
 use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
-use phpDocumentor\Reflection\Fqsen;
-use phpDocumentor\Reflection\FqsenResolver;
 use phpDocumentor\Reflection\TypeResolver;
+use phpDocumentor\Reflection\Types\Array_;
+use phpDocumentor\Reflection\Types\Compound;
 use phpDocumentor\Reflection\Types\Context;
+use phpDocumentor\Reflection\Types\Integer;
 use phpDocumentor\Reflection\Types\Object_;
 use phpDocumentor\Reflection\Types\String_;
 use phpDocumentor\Reflection\Types\Void;
@@ -246,6 +247,51 @@ class MethodTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expectedArguments, $fixture->getArguments());
         $this->assertInstanceOf(Void::class, $fixture->getReturnType());
         $this->assertSame($description, $fixture->getDescription());
+    }
+
+    public function collectionReturnTypesProvider()
+    {
+        return [
+            ['int[]',    Array_::class, Integer::class, Compound::class],
+            ['int[][]',  Array_::class, Array_::class,  Compound::class],
+            ['Object[]', Array_::class, Object_::class, Compound::class],
+            ['array[]',  Array_::class, Array_::class,  Compound::class],
+        ];
+    }
+
+    /**
+     * @dataProvider collectionReturnTypesProvider
+     * @covers ::create
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Method::<public>
+     * @uses \phpDocumentor\Reflection\DocBlock\Description
+     * @uses \phpDocumentor\Reflection\DocBlock\DescriptionFactory
+     * @uses \phpDocumentor\Reflection\TypeResolver
+     * @uses \phpDocumentor\Reflection\Types\Array_
+     * @uses \phpDocumentor\Reflection\Types\Compound
+     * @uses \phpDocumentor\Reflection\Types\Integer
+     * @uses \phpDocumentor\Reflection\Types\Object_
+     * @param string $returnType
+     * @param string $expectedType
+     * @param string $expectedValueType
+     * @param string null $expectedKeyType
+     */
+    public function testCollectionReturnTypes(
+        $returnType,
+        $expectedType,
+        $expectedValueType = null,
+        $expectedKeyType = null
+    ) { $resolver           = new TypeResolver();
+        $descriptionFactory = m::mock(DescriptionFactory::class);
+        $descriptionFactory->shouldReceive('create')->with('', null)->andReturn(new Description(''));
+
+        $fixture = Method::create("$returnType myMethod(\$arg)", $resolver, $descriptionFactory);
+        $returnType = $fixture->getReturnType();
+        $this->assertInstanceOf($expectedType, $returnType);
+
+        if ($returnType instanceof Array_) {
+            $this->assertInstanceOf($expectedValueType, $returnType->getValueType());
+            $this->assertInstanceOf($expectedKeyType, $returnType->getKeyType());
+        }
     }
 
     /**
