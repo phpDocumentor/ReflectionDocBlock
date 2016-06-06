@@ -101,7 +101,9 @@ final class Method extends BaseTag implements Factory\StaticMethod
                 # Method name
                 ([\w\|_\\\\]+)
                 # Arguments
-                \(([^\)]*)\)
+                (?:
+                    \(([^\)]*)\)
+                )?
                 \s*
                 # Description
                 (.*)
@@ -118,21 +120,25 @@ final class Method extends BaseTag implements Factory\StaticMethod
         $returnType  = $typeResolver->resolve($returnType, $context);
         $description = $descriptionFactory->create($description, $context);
 
-        $arguments = explode(',', $arguments);
-        foreach($arguments as &$argument) {
-            $argument = explode(' ', trim($argument));
-            if ($argument[0][0] === '$') {
-                $argumentName = substr($argument[0], 1);
-                $argumentType = new Void();
-            } else {
-                $argumentType = $typeResolver->resolve($argument[0], $context);
-                $argumentName = '';
-                if (isset($argument[1])) {
-                    $argumentName = substr($argument[1], 1);
+        if ('' !== $arguments) {
+            $arguments = explode(',', $arguments);
+            foreach($arguments as &$argument) {
+                $argument = explode(' ', trim($argument));
+                if ($argument[0][0] === '$') {
+                    $argumentName = substr($argument[0], 1);
+                    $argumentType = new Void();
+                } else {
+                    $argumentType = $typeResolver->resolve($argument[0], $context);
+                    $argumentName = '';
+                    if (isset($argument[1])) {
+                        $argumentName = substr($argument[1], 1);
+                    }
                 }
-            }
 
-            $argument = [ 'name' => $argumentName, 'type' => $argumentType];
+                $argument = [ 'name' => $argumentName, 'type' => $argumentType];
+            }
+        } else {
+            $arguments = [];
         }
 
         return new static($methodName, $arguments, $returnType, $static, $description);
