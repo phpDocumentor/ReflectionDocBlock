@@ -17,7 +17,7 @@ use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
 use phpDocumentor\Reflection\Type;
 use phpDocumentor\Reflection\TypeResolver;
 use phpDocumentor\Reflection\Types\Context as TypeContext;
-use phpDocumentor\Reflection\Types\Void;
+use phpDocumentor\Reflection\Types\Void_;
 use Webmozart\Assert\Assert;
 
 /**
@@ -50,7 +50,7 @@ final class Method extends BaseTag implements Factory\StaticMethod
         Assert::boolean($static);
 
         if ($returnType === null) {
-            $returnType = new Void();
+            $returnType = new Void_();
         }
 
         $this->methodName  = $methodName;
@@ -130,7 +130,7 @@ final class Method extends BaseTag implements Factory\StaticMethod
                 $argument = explode(' ', trim($argument));
                 if ($argument[0][0] === '$') {
                     $argumentName = substr($argument[0], 1);
-                    $argumentType = new Void();
+                    $argumentType = new Void_();
                 } else {
                     $argumentType = $typeResolver->resolve($argument[0], $context);
                     $argumentName = '';
@@ -205,7 +205,7 @@ final class Method extends BaseTag implements Factory\StaticMethod
                 $argument = [ 'name' => $argument ];
             }
             if (! isset($argument['type'])) {
-                $argument['type'] = new Void();
+                $argument['type'] = new Void_();
             }
             $keys = array_keys($argument);
             if ($keys !== [ 'name', 'type' ]) {

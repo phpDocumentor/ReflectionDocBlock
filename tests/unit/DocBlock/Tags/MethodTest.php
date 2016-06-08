@@ -22,7 +22,7 @@ use phpDocumentor\Reflection\Types\Context;
 use phpDocumentor\Reflection\Types\Integer;
 use phpDocumentor\Reflection\Types\Object_;
 use phpDocumentor\Reflection\Types\String_;
-use phpDocumentor\Reflection\Types\Void;
+use phpDocumentor\Reflection\Types\Void_;
 
 /**
  * @coversDefaultClass \phpDocumentor\Reflection\DocBlock\Tags\Method
@@ -56,7 +56,7 @@ class MethodTest extends \PHPUnit_Framework_TestCase
             ['name' => 'argument1', 'type' => new String_()],
             ['name' => 'argument2', 'type' => new Object_()]
         ];
-        $fixture = new Method('myMethod', $arguments, new Void(), true, new Description('My Description'));
+        $fixture = new Method('myMethod', $arguments, new Void_(), true, new Description('My Description'));
 
         $this->assertSame(
             '@method static void myMethod(string $argument1, object $argument2) My Description',
@@ -115,7 +115,7 @@ class MethodTest extends \PHPUnit_Framework_TestCase
     {
         $arguments = ['argument1'];
         $expected = [
-            [ 'name' => $arguments[0], 'type' => new Void() ]
+            [ 'name' => $arguments[0], 'type' => new Void_() ]
         ];
 
         $fixture = new Method('myMethod', $arguments);
@@ -131,7 +131,7 @@ class MethodTest extends \PHPUnit_Framework_TestCase
     {
         $arguments = [ [ 'name' => 'argument1' ] ];
         $expected = [
-            [ 'name' => $arguments[0]['name'], 'type' => new Void() ]
+            [ 'name' => $arguments[0]['name'], 'type' => new Void_() ]
         ];
 
         $fixture = new Method('myMethod', $arguments);
@@ -160,7 +160,7 @@ class MethodTest extends \PHPUnit_Framework_TestCase
     {
         $fixture = new Method('myMethod', []);
 
-        $this->assertEquals(new Void(), $fixture->getReturnType());
+        $this->assertEquals(new Void_(), $fixture->getReturnType());
     }
 
     /**
@@ -204,7 +204,7 @@ class MethodTest extends \PHPUnit_Framework_TestCase
             ['name' => 'argument1', 'type' => new String_()],
             ['name' => 'argument2', 'type' => new Object_()]
         ];
-        $fixture = new Method('myMethod', $arguments, new Void(), true, new Description('My Description'));
+        $fixture = new Method('myMethod', $arguments, new Void_(), true, new Description('My Description'));
 
         $this->assertSame(
             'static void myMethod(string $argument1, object $argument2) My Description',
@@ -230,7 +230,7 @@ class MethodTest extends \PHPUnit_Framework_TestCase
         $description  = new Description('My Description');
         $expectedArguments = [
             [ 'name' => 'argument1', 'type' => new String_() ],
-            [ 'name' => 'argument2', 'type' => new Void() ]
+            [ 'name' => 'argument2', 'type' => new Void_() ]
         ];
 
         $descriptionFactory->shouldReceive('create')->with('My Description', $context)->andReturn($description);
@@ -245,7 +245,7 @@ class MethodTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('static void myMethod(string $argument1, void $argument2) My Description', (string)$fixture);
         $this->assertSame('myMethod', $fixture->getMethodName());
         $this->assertEquals($expectedArguments, $fixture->getArguments());
-        $this->assertInstanceOf(Void::class, $fixture->getReturnType());
+        $this->assertInstanceOf(Void_::class, $fixture->getReturnType());
         $this->assertSame($description, $fixture->getDescription());
     }
 
@@ -404,7 +404,7 @@ class MethodTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('static void myMethod() My Description', (string)$fixture);
         $this->assertSame('myMethod', $fixture->getMethodName());
         $this->assertEquals([], $fixture->getArguments());
-        $this->assertInstanceOf(Void::class, $fixture->getReturnType());
+        $this->assertInstanceOf(Void_::class, $fixture->getReturnType());
         $this->assertSame($description, $fixture->getDescription());
     }
 }
