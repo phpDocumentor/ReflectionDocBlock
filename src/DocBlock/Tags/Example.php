@@ -135,6 +135,16 @@ final class Example extends BaseTag
     }
 
     /**
+     * Returns a string representation for this tag.
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->filePath . ($this->description ? ' ' . $this->description->render() : '');
+    }
+
+    /**
      * Returns true if the provided URI is relative or contains a complete scheme (and thus is absolute).
      *
      * @param string $uri
