@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "bb0e430e32d40dd98ae89d0744edf864",
-    "content-hash": "a97035b9599fe2a0c23169d91b7b1936",
+    "hash": "9dfabded4193c3fd2ec85874de3b2e3c",
+    "content-hash": "69f6ae6608b8524fa04ddb0264bbf091",
     "packages": [
         {
             "name": "phpdocumentor/reflection-common",
@@ -17,7 +17,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/ReflectionCommon/zipball/144c307535e82c8fdcaacbcfc1d6d8eeb896687c",
+                "url": "https://api.github.com/repos/phpDocumentor/ReflectionCommon/zipball/9969bd1c9661a73fdab104df7dbf132639d5c4d8",
                 "reference": "9969bd1c9661a73fdab104df7dbf132639d5c4d8",
                 "shasum": ""
             },
@@ -63,25 +63,25 @@
         },
         {
             "name": "phpdocumentor/type-resolver",
-            "version": "0.1.5",
+            "version": "0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/TypeResolver.git",
-                "reference": "83e31258fb03b9a27884a83b81501cb4cb297a81"
+                "reference": "b39c7a5b194f9ed7bd0dd345c751007a41862443"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/83e31258fb03b9a27884a83b81501cb4cb297a81",
-                "reference": "83e31258fb03b9a27884a83b81501cb4cb297a81",
+                "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/b39c7a5b194f9ed7bd0dd345c751007a41862443",
+                "reference": "b39c7a5b194f9ed7bd0dd345c751007a41862443",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.5",
-                "phpdocumentor/reflection-common": "^1.0@dev"
+                "phpdocumentor/reflection-common": "^1.0"
             },
             "require-dev": {
                 "mockery/mockery": "^0.9.4",
-                "phpunit/phpunit": "^4.6"
+                "phpunit/phpunit": "^5.2||^4.8.24"
             },
             "type": "library",
             "extra": {
@@ -106,7 +106,7 @@
                     "email": "me@mikevanriel.com"
                 }
             ],
-            "time": "2015-07-18 13:58:32"
+            "time": "2016-06-10 07:14:17"
         },
         {
             "name": "webmozart/assert",
@@ -294,7 +294,7 @@
             ],
             "authors": [
                 {
-                    "name": "Padraic Brady",
+                    "name": "Pádraic Brady",
                     "email": "padraic.brady@gmail.com",
                     "homepage": "http://blog.astrumfutura.com"
                 },
