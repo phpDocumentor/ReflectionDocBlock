@@ -63,7 +63,10 @@ final class Deprecated extends BaseTag implements Factory\StaticMethod
 
         $matches = [];
         if (!preg_match('/^(' . self::REGEX_VECTOR . ')\s*(.+)?$/sux', $body, $matches)) {
-            return null;
+            return new static(
+                null,
+                null !== $descriptionFactory ? $descriptionFactory->create($body, $context) : null
+            );
         }
 
         return new static(
