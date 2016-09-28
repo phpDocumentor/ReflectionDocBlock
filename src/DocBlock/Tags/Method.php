@@ -127,7 +127,7 @@ final class Method extends BaseTag implements Factory\StaticMethod
         if ('' !== $arguments) {
             $arguments = explode(',', $arguments);
             foreach($arguments as &$argument) {
-                $argument = explode(' ', trim($argument));
+                $argument = explode(' ', self::stripRestArg(trim($argument)), 2);
                 if ($argument[0][0] === '$') {
                     $argumentName = substr($argument[0], 1);
                     $argumentType = new Void_();
@@ -135,6 +135,7 @@ final class Method extends BaseTag implements Factory\StaticMethod
                     $argumentType = $typeResolver->resolve($argument[0], $context);
                     $argumentName = '';
                     if (isset($argument[1])) {
+                        $argument[1] = self::stripRestArg($argument[1]);
                         $argumentName = substr($argument[1], 1);
                     }
                 }
@@ -216,5 +217,14 @@ final class Method extends BaseTag implements Factory\StaticMethod
         }
 
         return $arguments;
+    }
+
+    private static function stripRestArg($argument)
+    {
+        if (strpos($argument, '...') === 0) {
+            $argument = trim(substr($argument, 3));
+        }
+
+        return $argument;
     }
 }
