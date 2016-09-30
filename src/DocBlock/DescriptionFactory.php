@@ -129,9 +129,10 @@ class DescriptionFactory
 
         //In order to allow "literal" inline tags, the otherwise invalid
         //sequence "{@}" is changed to "@", and "{}" is changed to "}".
+        //"%" is escaped to "%%" because of vsprintf.
         //See unit tests for examples.
         for ($i = 0; $i < $count; $i += 2) {
-            $tokens[$i] = str_replace(['{@}', '{}'], ['@', '}'], $tokens[$i]);
+            $tokens[$i] = str_replace(['{@}', '{}', '%'], ['@', '}', '%%'], $tokens[$i]);
         }
 
         return [implode('', $tokens), $tags];
