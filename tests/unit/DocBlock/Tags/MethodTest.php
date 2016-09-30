@@ -140,6 +140,33 @@ class MethodTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers ::create
+     */
+    public function testRestArgumentIsParsedAsRegularArg()
+    {
+        $expected = [
+            [ 'name' => 'arg1', 'type' => new Void_() ],
+            [ 'name' => 'rest', 'type' => new Void_() ],
+            [ 'name' => 'rest2', 'type' => new Array_() ],
+        ];
+
+        $descriptionFactory = m::mock(DescriptionFactory::class);
+        $resolver           = new TypeResolver();
+        $context            = new Context('');
+        $description  = new Description('');
+        $descriptionFactory->shouldReceive('create')->with('', $context)->andReturn($description);
+
+        $fixture = Method::create(
+            'void myMethod($arg1, ...$rest, array ... $rest2)',
+            $resolver,
+            $descriptionFactory,
+            $context
+        );
+
+        $this->assertEquals($expected, $fixture->getArguments());
+    }
+
+    /**
      * @covers ::__construct
      * @covers ::getReturnType
      */
