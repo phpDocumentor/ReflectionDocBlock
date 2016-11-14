@@ -56,6 +56,10 @@ class See extends BaseTag implements Factory\StaticMethod
         $parts       = preg_split('/\s+/Su', $body, 2);
         $description = isset($parts[1]) ? $descriptionFactory->create($parts[1], $context) : null;
 
+        if (preg_match('{^https?://}', $parts[0])) {
+            return null;
+        }
+
         return new static($resolver->resolve($parts[0], $context), $description);
     }
 

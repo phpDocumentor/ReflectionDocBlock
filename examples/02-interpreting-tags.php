@@ -8,6 +8,7 @@ $docComment = <<<DOCCOMMENT
  * This is an example of a summary.
  *
  * @see \phpDocumentor\Reflection\DocBlock\StandardTagFactory
+ * @see https://example.org
  */
 DOCCOMMENT;
 
