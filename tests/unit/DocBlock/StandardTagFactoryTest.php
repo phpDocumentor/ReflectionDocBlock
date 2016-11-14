@@ -136,14 +136,10 @@ class StandardTagFactoryTest extends \PHPUnit_Framework_TestCase
      * @uses                     phpDocumentor\Reflection\DocBlock\StandardTagFactory::__construct
      * @uses                     phpDocumentor\Reflection\DocBlock\StandardTagFactory::addService
      * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage The tag "@user/myuser" does not seem to be wellformed, please check it for errors
+     * @expectedExceptionMessage The tag "@user[myuser" does not seem to be wellformed, please check it for errors
      */
     public function testExceptionIsThrownIfProvidedTagIsNotWellformed()
     {
-        $this->markTestIncomplete(
-            'For some reason this test fails; once I have access to a RegEx analyzer I will have to test the regex'
-        )
-        ;
         $tagFactory = new StandardTagFactory(m::mock(FqsenResolver::class));
         $tagFactory->create('@user[myuser');
     }
