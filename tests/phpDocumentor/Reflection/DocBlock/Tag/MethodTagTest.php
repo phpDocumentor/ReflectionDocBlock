@@ -1,7 +1,7 @@
 <?php
 /**
  * phpDocumentor Method Tag Test
- * 
+ *
  * PHP version 5.3
  *
  * @author    Mike van Riel <mike.vanriel@naenius.com>
@@ -33,7 +33,7 @@ class MethodTagTest extends \PHPUnit_Framework_TestCase
      * @param bool   $paramCount      Number of parameters in the signature.
      * @param string $description     The short description mentioned in the
      *     signature.
-     * 
+     *
      * @covers \phpDocumentor\Reflection\DocBlock\Tag\MethodTag
      * @dataProvider getTestSignatures
      *
@@ -140,7 +140,19 @@ class MethodTagTest extends \PHPUnit_Framework_TestCase
             array(
                 'static static foo()',
                 true, 'foo', 'static', true, 0, ''
-            )
+            ),
+            array(
+                'int[] foo()',
+                true, 'foo', 'int[]', false, 0, ''
+            ),
+            array(
+                '$this foo()',
+                true, 'foo', '$this', false, 0, ''
+            ),
+            array(
+                '$this|false foo()',
+                true, 'foo', '$this|false', false, 0, ''
+            ),
         );
     }
 }
