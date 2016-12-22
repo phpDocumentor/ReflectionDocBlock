@@ -22,6 +22,7 @@ use phpDocumentor\Reflection\Types\Context;
 use phpDocumentor\Reflection\Types\Integer;
 use phpDocumentor\Reflection\Types\Object_;
 use phpDocumentor\Reflection\Types\String_;
+use phpDocumentor\Reflection\Types\This;
 use phpDocumentor\Reflection\Types\Void_;
 
 /**
@@ -279,10 +280,12 @@ class MethodTest extends \PHPUnit_Framework_TestCase
     public function collectionReturnTypesProvider()
     {
         return [
-            ['int[]',    Array_::class, Integer::class, Compound::class],
-            ['int[][]',  Array_::class, Array_::class,  Compound::class],
-            ['Object[]', Array_::class, Object_::class, Compound::class],
-            ['array[]',  Array_::class, Array_::class,  Compound::class],
+            ['int[]',       Array_::class,  Integer::class, Compound::class],
+            ['int[][]',     Array_::class,  Array_::class,  Compound::class],
+            ['Object[]',    Array_::class,  Object_::class, Compound::class],
+            ['array[]',     Array_::class,  Array_::class,  Compound::class],
+            ['int[]|false', Compound::class, null,          null],
+            ['$this',       This::class,    null,           null],
         ];
     }
 
