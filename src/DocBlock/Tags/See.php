@@ -73,7 +73,7 @@ class See extends BaseTag implements Factory\StaticMethod
     /**
      * Returns the structural element this tag refers to.
      *
-     * @return Fqsen
+     * @return Fqsen|string
      */
     public function getReference()
     {
