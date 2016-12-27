@@ -50,6 +50,10 @@ class SeeTest extends \PHPUnit_Framework_TestCase
         $fixture = new See(new Fqsen('\DateTime'), new Description('Description'));
 
         $this->assertSame('@see \DateTime Description', $fixture->render());
+
+        $fixture = new See('mailto:example@example.org', new Description('Description'));
+
+        $this->assertSame('@see mailto:example@example.org Description', $fixture->render());
     }
 
     /**
@@ -65,15 +69,28 @@ class SeeTest extends \PHPUnit_Framework_TestCase
         $formatter->shouldReceive('format')->with($fixture)->andReturn('Rendered output');
 
         $this->assertSame('Rendered output', $fixture->render($formatter));
+
+        $fixture = new See('mailto:example@example.org', new Description('Description'));
+
+        $formatter = m::mock(Formatter::class);
+        $formatter->shouldReceive('format')->with($fixture)->andReturn('Rendered output');
+
+        $this->assertSame('Rendered output', $fixture->render($formatter));
     }
 
     /**
      * @covers ::__construct
      * @covers ::getReference
      */
-    public function testHasReferenceToFqsen()
+    public function testHasReferenceToFqsenOrString()
     {
         $expected = new Fqsen('\DateTime');
+
+        $fixture = new See($expected);
+
+        $this->assertSame($expected, $fixture->getReference());
+
+        $expected = 'mailto:example@example.org';
 
         $fixture = new See($expected);
 
@@ -104,6 +121,10 @@ class SeeTest extends \PHPUnit_Framework_TestCase
         $fixture = new See(new Fqsen('\DateTime'), new Description('Description'));
 
         $this->assertSame('\DateTime Description', (string)$fixture);
+
+        $fixture = new See('mailto:example@example.org', new Description('Description'));
+
+        $this->assertSame('mailto:example@example.org Description', (string)$fixture);
     }
 
     /**
@@ -115,7 +136,7 @@ class SeeTest extends \PHPUnit_Framework_TestCase
      * @uses \phpDocumentor\Reflection\Fqsen
      * @uses \phpDocumentor\Reflection\Types\Context
      */
-    public function testFactoryMethod()
+    public function testFactoryMethodWithFqsen()
     {
         $descriptionFactory = m::mock(DescriptionFactory::class);
         $resolver = m::mock(FqsenResolver::class);
@@ -132,6 +153,62 @@ class SeeTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame('\DateTime My Description', (string)$fixture);
         $this->assertSame($fqsen, $fixture->getReference());
+        $this->assertSame($description, $fixture->getDescription());
+    }
+
+    /**
+     * @covers ::create
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\See::<public>
+     * @uses \phpDocumentor\Reflection\DocBlock\DescriptionFactory
+     * @uses \phpDocumentor\Reflection\FqsenResolver
+     * @uses \phpDocumentor\Reflection\DocBlock\Description
+     * @uses \phpDocumentor\Reflection\Fqsen
+     * @uses \phpDocumentor\Reflection\Types\Context
+     */
+    public function testFactoryMethodWithFqsenWithColons()
+    {
+        $descriptionFactory = m::mock(DescriptionFactory::class);
+        $resolver = m::mock(FqsenResolver::class);
+        $context = new Context('');
+
+        $fqsen = new Fqsen('\DateTime::format()');
+        $description = new Description('My Description');
+
+        $descriptionFactory
+            ->shouldReceive('create')->with('My Description', $context)->andReturn($description);
+        $resolver->shouldReceive('resolve')->with('DateTime::format()', $context)->andReturn($fqsen);
+
+        $fixture = See::create('DateTime::format() My Description', $resolver, $descriptionFactory, $context);
+
+        $this->assertSame('\DateTime::format() My Description', (string)$fixture);
+        $this->assertSame($fqsen, $fixture->getReference());
+        $this->assertSame($description, $fixture->getDescription());
+    }
+
+    /**
+     * @covers ::create
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\See::<public>
+     * @uses \phpDocumentor\Reflection\DocBlock\DescriptionFactory
+     * @uses \phpDocumentor\Reflection\FqsenResolver
+     * @uses \phpDocumentor\Reflection\DocBlock\Description
+     * @uses \phpDocumentor\Reflection\Types\Context
+     */
+    public function testFactoryMethodWithUri()
+    {
+        $descriptionFactory = m::mock(DescriptionFactory::class);
+        $resolver = m::mock(FqsenResolver::class);
+        $context = new Context('');
+
+        $uri = 'mailto:example@example.org';
+        $description = new Description('My Description');
+
+        $descriptionFactory
+            ->shouldReceive('create')->with('My Description', $context)->andReturn($description);
+
+        $fixture = See::create('mailto:example@example.org My Description', $resolver, $descriptionFactory, $context);
+
+        $this->assertSame('mailto:example@example.org My Description', (string)$fixture);
+        $this->assertSame($uri, $fixture->getReference());
         $this->assertSame($description, $fixture->getDescription());
     }
 
@@ -169,5 +246,14 @@ class SeeTest extends \PHPUnit_Framework_TestCase
     public function testFactoryMethodFailsIfDescriptionFactoryIsNull()
     {
         See::create('body', new FqsenResolver());
+    }
+
+    /**
+     * @covers ::create
+     * @expectedException \InvalidArgumentException
+     */
+    public function testFactoryMethodFailsIfRefersIsNotFqsenOrString()
+    {
+        $this->assertNull(See::create([]));
     }
 }
