@@ -128,7 +128,7 @@ final class Method extends BaseTag implements Factory\StaticMethod
         $returnType  = $typeResolver->resolve($returnType, $context);
         $description = $descriptionFactory->create($description, $context);
 
-        if ('' !== $arguments) {
+        if (is_string($arguments) && strlen($arguments) > 0) {
             $arguments = explode(',', $arguments);
             foreach($arguments as &$argument) {
                 $argument = explode(' ', self::stripRestArg(trim($argument)), 2);

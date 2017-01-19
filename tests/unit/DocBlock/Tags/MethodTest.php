@@ -277,6 +277,13 @@ class MethodTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($description, $fixture->getDescription());
     }
 
+    /**
+     * @covers ::create
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Method::<public>
+     * @uses \phpDocumentor\Reflection\TypeResolver
+     * @uses \phpDocumentor\Reflection\DocBlock\Description
+     * @uses \phpDocumentor\Reflection\Types\Context
+     */
     public function testReturnTypeThis()
     {
         $descriptionFactory = m::mock(DescriptionFactory::class);
