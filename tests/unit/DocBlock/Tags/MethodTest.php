@@ -22,6 +22,7 @@ use phpDocumentor\Reflection\Types\Context;
 use phpDocumentor\Reflection\Types\Integer;
 use phpDocumentor\Reflection\Types\Object_;
 use phpDocumentor\Reflection\Types\String_;
+use phpDocumentor\Reflection\Types\This;
 use phpDocumentor\Reflection\Types\Void_;
 
 /**
@@ -274,6 +275,29 @@ class MethodTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expectedArguments, $fixture->getArguments());
         $this->assertInstanceOf(Void_::class, $fixture->getReturnType());
         $this->assertSame($description, $fixture->getDescription());
+    }
+
+    public function testReturnTypeThis()
+    {
+        $descriptionFactory = m::mock(DescriptionFactory::class);
+        $resolver           = new TypeResolver();
+        $context            = new Context('');
+
+        $description  = new Description('');
+
+        $descriptionFactory->shouldReceive('create')->with('', $context)->andReturn($description);
+
+        $fixture = Method::create(
+            'static $this myMethod()',
+            $resolver,
+            $descriptionFactory,
+            $context
+        );
+
+        $this->assertTrue($fixture->isStatic());
+        $this->assertSame('static $this myMethod() ', (string)$fixture);
+        $this->assertSame('myMethod', $fixture->getMethodName());
+        $this->assertInstanceOf(This::class, $fixture->getReturnType());
     }
 
     public function collectionReturnTypesProvider()
