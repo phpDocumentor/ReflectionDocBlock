@@ -32,6 +32,9 @@ class Serializer
     /** @var int|null The max length of a line. */
     protected $lineLength = null;
 
+    /** @var DocBlock\Tags\Formatter A custom tag formatter. */
+    protected $tagFormatter = null;
+
     /**
      * Create a Serializer instance.
      *
@@ -39,18 +42,21 @@ class Serializer
      * @param string   $indentString    The string to indent the comment with.
      * @param bool     $indentFirstLine Whether to indent the first line.
      * @param int|null $lineLength The max length of a line or NULL to disable line wrapping.
+     * @param DocBlock\Tags\Formatter $tagFormatter A custom tag formatter, defaults to PassthroughFormatter.
      */
-    public function __construct($indent = 0, $indentString = ' ', $indentFirstLine = true, $lineLength = null)
+    public function __construct($indent = 0, $indentString = ' ', $indentFirstLine = true, $lineLength = null, $tagFormatter = null)
     {
         Assert::integer($indent);
         Assert::string($indentString);
         Assert::boolean($indentFirstLine);
         Assert::nullOrInteger($lineLength);
+        Assert::nullOrIsInstanceOf($tagFormatter, 'phpDocumentor\Reflection\DocBlock\Tags\Formatter');
 
         $this->indent = $indent;
         $this->indentString = $indentString;
         $this->isFirstLineIndented = $indentFirstLine;
         $this->lineLength = $lineLength;
+        $this->tagFormatter = $tagFormatter ?: new DocBlock\Tags\Formatter\PassthroughFormatter();
     }
 
     /**
@@ -128,8 +134,7 @@ class Serializer
     private function addTagBlock(DocBlock $docblock, $wrapLength, $indent, $comment)
     {
         foreach ($docblock->getTags() as $tag) {
-            $formatter = new DocBlock\Tags\Formatter\PassthroughFormatter();
-            $tagText   = $formatter->format($tag);
+            $tagText = $this->tagFormatter->format($tag);
             if ($wrapLength !== null) {
                 $tagText = wordwrap($tagText, $wrapLength);
             }
