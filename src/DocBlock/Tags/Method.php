@@ -92,9 +92,7 @@ final class Method extends BaseTag implements Factory\StaticMethod
                 # Return type
                 (?:
                     (
-                        (?:[\w\|_\\\\]+)
-                        # array notation           
-                        (?:\[\])*
+                        (?:[\w\|_\\\\\$\[\]]+)
                     )?
                     \s+
                 )?
