@@ -42,7 +42,7 @@ class AuthorTest extends \PHPUnit_Framework_TestCase
     {
         $fixture = new Author('Mike van Riel', 'mike@phpdoc.org');
 
-        $this->assertSame('@author Mike van Riel<mike@phpdoc.org>', $fixture->render());
+        $this->assertSame('@author Mike van Riel <mike@phpdoc.org>', $fixture->render());
     }
 
     /**
