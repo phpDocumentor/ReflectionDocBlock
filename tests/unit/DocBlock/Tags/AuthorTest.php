@@ -121,7 +121,7 @@ class AuthorTest extends \PHPUnit_Framework_TestCase
     {
         $fixture = new Author('Mike van Riel', 'mike@phpdoc.org');
 
-        $this->assertSame('Mike van Riel<mike@phpdoc.org>', (string)$fixture);
+        $this->assertSame('Mike van Riel <mike@phpdoc.org>', (string)$fixture);
     }
 
     /**
@@ -132,7 +132,7 @@ class AuthorTest extends \PHPUnit_Framework_TestCase
     {
         $fixture = Author::create('Mike van Riel <mike@phpdoc.org>');
 
-        $this->assertSame('Mike van Riel<mike@phpdoc.org>', (string)$fixture);
+        $this->assertSame('Mike van Riel <mike@phpdoc.org>', (string)$fixture);
         $this->assertSame('Mike van Riel', $fixture->getAuthorName());
         $this->assertSame('mike@phpdoc.org', $fixture->getEmail());
     }
