@@ -125,6 +125,17 @@ class AuthorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers ::__construct
+     * @covers ::__toString
+     */
+    public function testStringRepresentationWithEmtpyEmail()
+    {
+        $fixture = new Author('Mike van Riel', '');
+
+        $this->assertSame('Mike van Riel', (string)$fixture);
+    }
+
+    /**
      * @covers ::create
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\Author::<public>
      */
