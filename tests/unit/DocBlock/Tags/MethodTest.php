@@ -142,6 +142,9 @@ class MethodTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers ::create
+     * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Method::__construct
+     * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Method::getArguments
+     * @uses   \phpDocumentor\Reflection\DocBlock\Description
      */
     public function testRestArgumentIsParsedAsRegularArg()
     {

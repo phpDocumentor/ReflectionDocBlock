@@ -158,6 +158,7 @@ class DeprecatedTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers ::create
+     * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Deprecated::__construct
      */
     public function testFactoryMethodReturnsNullIfBodyDoesNotMatchRegex()
     {

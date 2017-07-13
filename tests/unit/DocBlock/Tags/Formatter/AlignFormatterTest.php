@@ -22,10 +22,11 @@ use phpDocumentor\Reflection\Types\String_;
 /**
  * @coversDefaultClass \phpDocumentor\Reflection\DocBlock\Tags\Formatter\AlignFormatter
  */
-class PassthroughFormatterTest extends \PHPUnit_Framework_TestCase
+class AlignFormatterTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @covers ::format
+     * @covers \phpDocumentor\Reflection\DocBlock\Tags\Formatter\AlignFormatter::__construct
      * @uses \phpDocumentor\Reflection\DocBlock\Description
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\BaseTag
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\Link
