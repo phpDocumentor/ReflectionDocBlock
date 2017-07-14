@@ -38,4 +38,21 @@ class PassthroughFormatterTest extends \PHPUnit_Framework_TestCase
             $fixture->format(new Generic('unknown-tag', new Description('This is a description')))
         );
     }
+
+    /**
+     * @covers ::format
+     * @uses \phpDocumentor\Reflection\DocBlock\Description
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\BaseTag
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Generic
+     */
+    public function testFormatterToStringWitoutDescription()
+    {
+        $expected = '@unknown-tag';
+        $fixture = new PassthroughFormatter();
+
+        $this->assertSame(
+            $expected,
+            $fixture->format(new Generic('unknown-tag'))
+        );
+    }
 }
