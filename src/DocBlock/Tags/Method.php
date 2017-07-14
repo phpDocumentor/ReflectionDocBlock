@@ -125,6 +125,11 @@ final class Method extends BaseTag implements Factory\StaticMethod
         list(, $static, $returnType, $methodName, $arguments, $description) = $matches;
 
         $static      = $static === 'static';
+
+        if ($returnType === '') {
+            $returnType = 'void';
+        }
+
         $returnType  = $typeResolver->resolve($returnType, $context);
         $description = $descriptionFactory->create($description, $context);
 
@@ -196,11 +201,11 @@ final class Method extends BaseTag implements Factory\StaticMethod
             $arguments[] = $argument['type'] . ' $' . $argument['name'];
         }
 
-        return ($this->isStatic() ? 'static ' : '')
+        return trim(($this->isStatic() ? 'static ' : '')
             . (string)$this->returnType . ' '
             . $this->methodName
             . '(' . implode(', ', $arguments) . ')'
-            . ($this->description ? ' ' . $this->description->render() : '');
+            . ($this->description ? ' ' . $this->description->render() : ''));
     }
 
     private function filterArguments($arguments)
