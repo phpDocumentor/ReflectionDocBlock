@@ -305,7 +305,7 @@ class MethodTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertTrue($fixture->isStatic());
-        $this->assertSame('static $this myMethod() ', (string)$fixture);
+        $this->assertSame('static $this myMethod()', (string)$fixture);
         $this->assertSame('myMethod', $fixture->getMethodName());
         $this->assertInstanceOf(This::class, $fixture->getReturnType());
     }
@@ -463,6 +463,30 @@ class MethodTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertSame('static void myMethod() My Description', (string)$fixture);
+        $this->assertSame('myMethod', $fixture->getMethodName());
+        $this->assertEquals([], $fixture->getArguments());
+        $this->assertInstanceOf(Void_::class, $fixture->getReturnType());
+        $this->assertSame($description, $fixture->getDescription());
+    }
+
+    public function testCreateWithoutReturnType()
+    {
+        $descriptionFactory = m::mock(DescriptionFactory::class);
+        $resolver           = new TypeResolver();
+        $context            = new Context('');
+
+        $description  = new Description('');
+
+        $descriptionFactory->shouldReceive('create')->with('', $context)->andReturn($description);
+
+        $fixture = Method::create(
+            'myMethod()',
+            $resolver,
+            $descriptionFactory,
+            $context
+        );
+
+        $this->assertSame('void myMethod()', (string)$fixture);
         $this->assertSame('myMethod', $fixture->getMethodName());
         $this->assertEquals([], $fixture->getArguments());
         $this->assertInstanceOf(Void_::class, $fixture->getReturnType());
