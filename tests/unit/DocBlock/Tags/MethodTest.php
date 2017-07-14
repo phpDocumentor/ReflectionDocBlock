@@ -15,6 +15,7 @@ namespace phpDocumentor\Reflection\DocBlock\Tags;
 use Mockery as m;
 use phpDocumentor\Reflection\DocBlock\Description;
 use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
+use phpDocumentor\Reflection\Fqsen;
 use phpDocumentor\Reflection\TypeResolver;
 use phpDocumentor\Reflection\Types\Array_;
 use phpDocumentor\Reflection\Types\Compound;
@@ -469,6 +470,16 @@ class MethodTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($description, $fixture->getDescription());
     }
 
+    /**
+     * @covers ::create
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Method::<public>
+     * @uses \phpDocumentor\Reflection\DocBlock\DescriptionFactory
+     * @uses \phpDocumentor\Reflection\TypeResolver
+     * @uses \phpDocumentor\Reflection\DocBlock\Description
+     * @uses \phpDocumentor\Reflection\Fqsen
+     * @uses \phpDocumentor\Reflection\Types\Context
+     * @uses \phpDocumentor\Reflection\Types\Void_
+     */
     public function testCreateWithoutReturnType()
     {
         $descriptionFactory = m::mock(DescriptionFactory::class);
@@ -491,5 +502,45 @@ class MethodTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals([], $fixture->getArguments());
         $this->assertInstanceOf(Void_::class, $fixture->getReturnType());
         $this->assertSame($description, $fixture->getDescription());
+    }
+
+    /**
+     * @covers ::create
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Method::<public>
+     * @uses \phpDocumentor\Reflection\DocBlock\DescriptionFactory
+     * @uses \phpDocumentor\Reflection\TypeResolver
+     * @uses \phpDocumentor\Reflection\DocBlock\Description
+     * @uses \phpDocumentor\Reflection\Fqsen
+     * @uses \phpDocumentor\Reflection\Types\Context
+     * @uses \phpDocumentor\Reflection\Types\Array_
+     * @uses \phpDocumentor\Reflection\Types\Compound
+     * @uses \phpDocumentor\Reflection\Types\Integer
+     * @uses \phpDocumentor\Reflection\Types\Object_
+     */
+    public function testCreateWithMixedReturnTypes()
+    {
+        $descriptionFactory = m::mock(DescriptionFactory::class);
+        $resolver           = new TypeResolver();
+        $context            = new Context('');
+
+        $descriptionFactory->shouldReceive('create')->andReturn(new Description(''));
+
+        $fixture = Method::create(
+            'MyClass[]|int[] myMethod()',
+            $resolver,
+            $descriptionFactory,
+            $context
+        );
+
+        $this->assertSame('\MyClass[]|int[] myMethod()', (string)$fixture);
+        $this->assertSame('myMethod', $fixture->getMethodName());
+        $this->assertEquals([], $fixture->getArguments());
+
+        $this->assertEquals(
+            new Compound([
+                new Array_(new Object_(new Fqsen('\MyClass'))),
+                new Array_(new Integer()),
+            ])
+            , $fixture->getReturnType());
     }
 }
