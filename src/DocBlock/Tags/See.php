@@ -26,17 +26,23 @@ class See extends BaseTag implements Factory\StaticMethod
 {
     protected $name = 'see';
 
-    /** @var Fqsen */
+    /** @var Fqsen|string */
     protected $refers = null;
 
     /**
      * Initializes this tag.
      *
-     * @param Fqsen $refers
+     * @param Fqsen|string $refers
      * @param Description $description
      */
-    public function __construct(Fqsen $refers, Description $description = null)
+    public function __construct($refers, Description $description = null)
     {
+        try {
+            Assert::isInstanceOf($refers, '\phpDocumentor\Reflection\Fqsen');
+        } catch (\InvalidArgumentException $e) {
+            Assert::string($refers);
+        }
+
         $this->refers = $refers;
         $this->description = $description;
     }
@@ -56,13 +62,18 @@ class See extends BaseTag implements Factory\StaticMethod
         $parts       = preg_split('/\s+/Su', $body, 2);
         $description = isset($parts[1]) ? $descriptionFactory->create($parts[1], $context) : null;
 
+        // https://tools.ietf.org/html/rfc2396#section-3
+        if (preg_match('/\w:\w/i', $parts[0])) {
+            return new static($parts[0], $description);
+        }
+
         return new static($resolver->resolve($parts[0], $context), $description);
     }
 
     /**
      * Returns the structural element this tag refers to.
      *
-     * @return Fqsen
+     * @return Fqsen|string
      */
     public function getReference()
     {
