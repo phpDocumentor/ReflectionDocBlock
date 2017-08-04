@@ -3,13 +3,11 @@ dist: trusty
 php:
   - 7.0
   - 7.1
-  - hhvm
   - nightly
 
 matrix:
   allow_failures:
     - php:
-        - hhvm
         - nightly
 
 cache:
