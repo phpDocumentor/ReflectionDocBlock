@@ -113,7 +113,7 @@ final class StandardTagFactory implements TagFactory
 
         list($tagName, $tagBody) = $this->extractTagParts($tagLine);
 
-        if ($tagBody[0] === '[') {
+        if ($tagBody !== '' && $tagBody[0] === '[') {
             throw new \InvalidArgumentException(
                 'The tag "' . $tagLine . '" does not seem to be wellformed, please check it for errors'
             );
