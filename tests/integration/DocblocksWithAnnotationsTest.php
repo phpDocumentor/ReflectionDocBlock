@@ -23,6 +23,7 @@ final class DocblocksWithAnnotationsTest extends \PHPUnit_Framework_TestCase
             /**
      * @var \DateTime[]
      * @Groups({"a", "b"})
+     * @ORM\Entity
      */
 DOCCOMMENT;
 
@@ -30,6 +31,6 @@ DOCCOMMENT;
         $factory  = DocBlockFactory::createInstance();
         $docblock = $factory->create($docComment);
 
-        $this->assertCount(2, $docblock->getTags());
+        $this->assertCount(3, $docblock->getTags());
     }
 }
