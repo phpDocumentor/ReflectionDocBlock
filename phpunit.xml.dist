@@ -24,6 +24,16 @@
       <directory>./vendor/</directory>
     </blacklist>
   </filter>
+  <logging>
+    <log type="coverage-html"
+         title="phpDocumentor Reflection DocBlock"
+         target="build/coverage"
+         charset="UTF-8"
+         yui="true"
+         highlight="false"
+         lowUpperBound="35"
+         highLowerBound="70"/>
+  </logging>
   <listeners>
     <listener
             class="Mockery\Adapter\Phpunit\TestListener"
