@@ -86,9 +86,11 @@ class StandardTagFactoryTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers ::__construct
      * @covers ::create
-     * @uses phpDocumentor\Reflection\DocBlock\StandardTagFactory::addService
-     * @uses phpDocumentor\Reflection\DocBlock\Tags\See
-     * @uses phpDocumentor\Reflection\DocBlock\Tags\BaseTag
+     * @uses \phpDocumentor\Reflection\DocBlock\StandardTagFactory::addService
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\See
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\BaseTag
+     * @uses \phpDocumentor\Reflection\Fqsen
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Reference\Fqsen
      */
     public function testAnEmptyContextIsCreatedIfNoneIsProvided()
     {

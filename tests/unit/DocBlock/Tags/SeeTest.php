@@ -30,6 +30,8 @@ class SeeTest extends \PHPUnit_Framework_TestCase
     /**
      * @uses   \phpDocumentor\Reflection\DocBlock\Tags\See::__construct
      * @uses   \phpDocumentor\Reflection\DocBlock\Description
+     * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Reference\Fqsen
+     * @uses   \phpDocumentor\Reflection\Fqsen
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getName
      */
     public function testIfCorrectTagNameIsReturned()
@@ -44,6 +46,7 @@ class SeeTest extends \PHPUnit_Framework_TestCase
      * @uses   \phpDocumentor\Reflection\DocBlock\Tags\See::__toString
      * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Formatter\PassthroughFormatter
      * @uses   \phpDocumentor\Reflection\DocBlock\Description
+     * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Reference\Fqsen
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::render
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getName
      */
@@ -57,6 +60,8 @@ class SeeTest extends \PHPUnit_Framework_TestCase
     /**
      * @uses   \phpDocumentor\Reflection\DocBlock\Tags\See::__construct
      * @uses   \phpDocumentor\Reflection\DocBlock\Description
+     * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Reference\Fqsen
+     * @uses   \phpDocumentor\Reflection\Fqsen
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::render
      */
     public function testIfTagCanBeRenderedUsingSpecificFormatter()
@@ -70,6 +75,8 @@ class SeeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Reference\Fqsen
+     * @uses   \phpDocumentor\Reflection\Fqsen
      * @covers ::__construct
      * @covers ::getReference
      */
@@ -86,6 +93,8 @@ class SeeTest extends \PHPUnit_Framework_TestCase
      * @covers ::__construct
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getDescription
      * @uses   \phpDocumentor\Reflection\DocBlock\Description
+     * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Reference\Fqsen
+     * @uses   \phpDocumentor\Reflection\Fqsen
      */
     public function testHasDescription()
     {
@@ -100,6 +109,8 @@ class SeeTest extends \PHPUnit_Framework_TestCase
      * @covers ::__construct
      * @covers ::__toString
      * @uses   \phpDocumentor\Reflection\DocBlock\Description
+     * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Reference\Fqsen
+     * @uses   \phpDocumentor\Reflection\Fqsen
      */
     public function testStringRepresentationIsReturned()
     {
@@ -114,6 +125,7 @@ class SeeTest extends \PHPUnit_Framework_TestCase
      * @uses \phpDocumentor\Reflection\DocBlock\DescriptionFactory
      * @uses \phpDocumentor\Reflection\FqsenResolver
      * @uses \phpDocumentor\Reflection\DocBlock\Description
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Reference\Fqsen
      * @uses \phpDocumentor\Reflection\Fqsen
      * @uses \phpDocumentor\Reflection\Types\Context
      */
