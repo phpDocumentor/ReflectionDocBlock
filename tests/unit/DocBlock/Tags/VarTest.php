@@ -39,6 +39,17 @@ class VarTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Var_::__construct
+     * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::render
+     */
+    public function testIfVariableNameIsOmmitedIfEmpty()
+    {
+        $fixture = new Var_('', null, null);
+
+        $this->assertSame('@var', $fixture->render());
+    }
+
+    /**
+     * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Var_::__construct
      * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Var_::__toString
      * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Formatter\PassthroughFormatter
      * @uses   \phpDocumentor\Reflection\DocBlock\Description
