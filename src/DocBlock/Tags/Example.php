@@ -51,6 +51,7 @@ final class Example extends BaseTag
         $this->filePath = $filePath;
         $this->startingLine = $startingLine;
         $this->lineCount = $lineCount;
+        $this->name = 'example';
         if ($description !== null) {
             $this->description = trim($description);
         }
