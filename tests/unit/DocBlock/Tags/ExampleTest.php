@@ -20,6 +20,7 @@ class ExampleTest extends \PHPUnit_Framework_TestCase
         $tag = Example::create('"example1.php"');
         $this->assertEquals('"example1.php"', $tag->getContent());
         $this->assertEquals('', $tag->getDescription());
+        $this->assertEquals('example', $tag->getName());
     }
 
     /**
