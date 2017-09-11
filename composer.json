@@ -11,7 +11,7 @@
     ],
     "require": {
         "php": "^7.0",
-        "phpdocumentor/reflection-common": "^1.0@dev",
+        "phpdocumentor/reflection-common": "^1.0.0",
         "phpdocumentor/type-resolver": "^0.4.0",
         "webmozart/assert": "^1.0"
     },
