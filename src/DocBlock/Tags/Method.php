@@ -218,6 +218,7 @@ final class Method extends BaseTag implements Factory\StaticMethod
                 $argument['type'] = new Void_();
             }
             $keys = array_keys($argument);
+            sort($keys);
             if ($keys !== [ 'name', 'type' ]) {
                 throw new \InvalidArgumentException(
                     'Arguments can only have the "name" and "type" fields, found: ' . var_export($keys, true)
