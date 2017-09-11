@@ -65,6 +65,58 @@ class DescriptionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers ::getTags
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Generic
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\BaseTag
+     */
+    public function testDescriptionTagsGetter()
+    {
+        $body = '@JoinTable(name="table", joinColumns=%1$s, inverseJoinColumns=%2$s)';
+
+        $tag1 = new Generic('JoinColumn', new Description('(name="column_id", referencedColumnName="id")'));
+        $tag2 = new Generic('JoinColumn', new Description('(name="column_id_2", referencedColumnName="id")'));
+
+        $tags = [
+            $tag1,
+            $tag2,
+        ];
+
+        $fixture = new Description($body, $tags);
+
+        $this->assertEquals(2, count($fixture->getTags()));
+
+        $actualTags = $fixture->getTags();
+        $this->assertSame($tags, $actualTags);
+        $this->assertSame($tag1, $actualTags[0]);
+        $this->assertSame($tag2, $actualTags[1]);
+    }
+
+    /**
+     * @covers ::__construct
+     * @covers ::render
+     * @covers ::__toString
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Generic
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\BaseTag
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Formatter\PassthroughFormatter
+     */
+    public function testDescriptionMultipleTagsCanBeCastToString()
+    {
+        $body = '@JoinTable(name="table", joinColumns=%1$s, inverseJoinColumns=%2$s)';
+
+        $tag1 = new Generic('JoinColumn', new Description('(name="column_id", referencedColumnName="id")'));
+        $tag2 = new Generic('JoinColumn', new Description('(name="column_id_2", referencedColumnName="id")'));
+
+        $tags = [
+            $tag1,
+            $tag2,
+        ];
+
+        $fixture = new Description($body, $tags);
+        $expected = '@JoinTable(name="table", joinColumns={@JoinColumn (name="column_id", referencedColumnName="id")}, inverseJoinColumns={@JoinColumn (name="column_id_2", referencedColumnName="id")})';
+        $this->assertSame($expected, (string)$fixture);
+    }
+
+    /**
      * @covers ::__construct
      * @expectedException \InvalidArgumentException
      */
