@@ -217,4 +217,21 @@ final class DocBlock
     {
         $this->tags[] = $tag;
     }
+    
+    /**
+     * Remove a tag from this DocBlock.
+     *
+     * @param Tag $tag The tag to remove.
+     *
+     * @return void
+     */
+    public function removeTag(Tag $tagToRemove)
+    {
+        foreach ($this->tags as $key => $tag) {
+            if ($tag === $tagToRemove) {
+                unset($this->tags[$key]);
+                break;
+            }
+        }
+    }
 }
