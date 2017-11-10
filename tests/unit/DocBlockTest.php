@@ -13,6 +13,8 @@
 namespace phpDocumentor\Reflection;
 
 use Mockery as m;
+use phpDocumentor\Reflection\DocBlock\Tags\Deprecated;
+use phpDocumentor\Reflection\DocBlock\Tags\See;
 use phpDocumentor\Reflection\Types\Context;
 
 /**
@@ -248,5 +250,25 @@ class DocBlockTest extends \PHPUnit_Framework_TestCase
         $fixture = new DocBlock('', null, [], null, null, false, true);
 
         $this->assertTrue($fixture->isTemplateEnd());
+    }
+
+
+    /**
+     * @covers ::__construct
+     * @covers ::removeTag
+     *
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Deprecated
+     */
+    public function testRemoveTag()
+    {
+        $someTag = new Deprecated();
+
+        $fixture = new DocBlock('', null, [$someTag]);
+
+        $this->assertCount(1, $fixture->getTags());
+
+        $fixture->removeTag($someTag);
+
+        $this->assertCount(0, $fixture->getTags());
     }
 }
