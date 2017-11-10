@@ -207,18 +207,6 @@ final class DocBlock
     }
 
     /**
-     * Adds a tag to this DocBlock.
-     *
-     * @param Tag $tag The tag to add.
-     *
-     * @return void
-     */
-    private function addTag(Tag $tag)
-    {
-        $this->tags[] = $tag;
-    }
-    
-    /**
      * Remove a tag from this DocBlock.
      *
      * @param Tag $tag The tag to remove.
@@ -233,5 +221,17 @@ final class DocBlock
                 break;
             }
         }
+    }
+
+    /**
+     * Adds a tag to this DocBlock.
+     *
+     * @param Tag $tag The tag to add.
+     *
+     * @return void
+     */
+    private function addTag(Tag $tag)
+    {
+        $this->tags[] = $tag;
     }
 }
