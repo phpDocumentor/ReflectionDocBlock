@@ -262,8 +262,13 @@ class DocBlockTest extends \PHPUnit_Framework_TestCase
     public function testRemoveTag()
     {
         $someTag = new Deprecated();
+        $anotherTag = new Deprecated();
 
         $fixture = new DocBlock('', null, [$someTag]);
+
+        $this->assertCount(1, $fixture->getTags());
+
+        $fixture->removeTag($anotherTag);
 
         $this->assertCount(1, $fixture->getTags());
 
