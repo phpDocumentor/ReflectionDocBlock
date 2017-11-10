@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-        "php": "^7.0",
+        "php": ">=5.6",
         "phpdocumentor/reflection-common": "^1.0.0",
         "phpdocumentor/type-resolver": "^0.4.0",
         "webmozart/assert": "^1.0"
