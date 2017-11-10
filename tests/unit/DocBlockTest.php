@@ -14,7 +14,6 @@ namespace phpDocumentor\Reflection;
 
 use Mockery as m;
 use phpDocumentor\Reflection\DocBlock\Tags\Deprecated;
-use phpDocumentor\Reflection\DocBlock\Tags\See;
 use phpDocumentor\Reflection\Types\Context;
 
 /**
@@ -251,7 +250,6 @@ class DocBlockTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($fixture->isTemplateEnd());
     }
-
 
     /**
      * @covers ::__construct
