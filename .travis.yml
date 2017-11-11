@@ -11,9 +11,13 @@ cache:
 
 install:
   - composer install --no-interaction
+  # coding style
+  - composer create-project symplify/easy-coding-standard temp/ecs
 
 script:
   - vendor/bin/phpunit --coverage-clover=coverage.clover -v
+  # coding style
+  - temp/ecs/bin/ecs check src
 
 after_script:
   - wget https://scrutinizer-ci.com/ocular.phar
