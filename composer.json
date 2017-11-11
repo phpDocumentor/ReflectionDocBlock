@@ -22,7 +22,7 @@
         "psr-4": {"phpDocumentor\\Reflection\\": ["tests/unit"]}
     },
     "require-dev": {
-        "mockery/mockery": "^0.9.4",
-        "phpunit/phpunit": "^4.4"
+        "mockery/mockery": "^1.0",
+        "phpunit/phpunit": "^6.4"
     }
 }
