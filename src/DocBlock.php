@@ -174,7 +174,7 @@ final class DocBlock
 
         /** @var Tag $tag */
         foreach ($this->getTags() as $tag) {
-            if ($tag->getName() != $name) {
+            if ($tag->getName() !== $name) {
                 continue;
             }
 
@@ -197,7 +197,7 @@ final class DocBlock
 
         /** @var Tag $tag */
         foreach ($this->getTags() as $tag) {
-            if ($tag->getName() == $name) {
+            if ($tag->getName() === $name) {
                 return true;
             }
         }

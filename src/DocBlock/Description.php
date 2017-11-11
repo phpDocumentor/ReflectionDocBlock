@@ -69,7 +69,7 @@ class Description
         $this->bodyTemplate = $bodyTemplate;
         $this->tags = $tags;
     }
-    
+
     /**
      * Returns the tags for this DocBlock.
      *
