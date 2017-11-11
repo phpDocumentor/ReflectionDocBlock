@@ -27,7 +27,6 @@ final class DocblocksWithAnnotationsTest extends \PHPUnit_Framework_TestCase
      */
 DOCCOMMENT;
 
-
         $factory  = DocBlockFactory::createInstance();
         $docblock = $factory->create($docComment);
 

@@ -343,7 +343,6 @@ class StandardTagFactoryTest extends \PHPUnit_Framework_TestCase
         $tagFactory->addService($descriptionFactory, DescriptionFactory::class);
         $tagFactory->addService($typeResolver, TypeResolver::class);
 
-
         /** @var Return_ $tag */
         $tag = $tagFactory->create('@return mixed', $context);
 
