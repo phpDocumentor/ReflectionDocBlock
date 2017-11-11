@@ -12,11 +12,11 @@
 
 namespace phpDocumentor\Reflection\DocBlock\Tags;
 
+use phpDocumentor\Reflection\DocBlock\Description;
 use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
 use phpDocumentor\Reflection\Fqsen;
-use phpDocumentor\Reflection\DocBlock\Description;
-use phpDocumentor\Reflection\Types\Context as TypeContext;
 use phpDocumentor\Reflection\FqsenResolver;
+use phpDocumentor\Reflection\Types\Context as TypeContext;
 use Webmozart\Assert\Assert;
 
 /**

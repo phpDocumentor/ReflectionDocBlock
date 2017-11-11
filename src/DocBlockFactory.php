@@ -124,7 +124,7 @@ final class DocBlockFactory implements DocBlockFactoryInterface
             $comment = trim(substr($comment, 0, -2));
         }
 
-        return str_replace(array("\r\n", "\r"), "\n", $comment);
+        return str_replace(["\r\n", "\r"], "\n", $comment);
     }
 
     /**
@@ -143,7 +143,7 @@ final class DocBlockFactory implements DocBlockFactoryInterface
         // method does not split tags so we return this verbatim as the fourth result (tags). This saves us the
         // performance impact of running a regular expression
         if (strpos($comment, '@') === 0) {
-            return array('', '', '', $comment);
+            return ['', '', '', $comment];
         }
 
         // clears all extra horizontal whitespace from the line endings to prevent parsing issues
@@ -241,7 +241,7 @@ final class DocBlockFactory implements DocBlockFactoryInterface
      */
     private function splitTagBlockIntoTagLines($tags)
     {
-        $result = array();
+        $result = [];
         foreach (explode("\n", $tags) as $tag_line) {
             if (isset($tag_line[0]) && ($tag_line[0] === '@')) {
                 $result[] = $tag_line;
