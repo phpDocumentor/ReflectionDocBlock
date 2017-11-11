@@ -5,6 +5,11 @@ php:
   - 7.1
   - 7.2
 
+matrix:
+  include:
+    - php: 7.1
+      env: STATIC_ANALYSIS=true
+
 cache:
   directories:
     - $HOME/.composer/cache
@@ -12,12 +17,12 @@ cache:
 install:
   - composer install --no-interaction
   # coding style
-  - composer create-project symplify/easy-coding-standard temp/ecs
+  - if [[ $STATIC_ANALYSIS != "" ]]; then composer create-project symplify/easy-coding-standard temp/ecs; fi
 
 script:
   - vendor/bin/phpunit --coverage-clover=coverage.clover -v
   # coding style
-  - temp/ecs/bin/ecs check src tests
+  - if [[ $STATIC_ANALYSIS != "" ]]; then temp/ecs/bin/ecs check src tests; fi
 
 after_script:
   - wget https://scrutinizer-ci.com/ocular.phar
