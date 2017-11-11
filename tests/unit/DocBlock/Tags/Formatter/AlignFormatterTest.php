@@ -36,18 +36,18 @@ class AlignFormatterTest extends \PHPUnit_Framework_TestCase
      */
     public function testFormatterCallsToStringAndReturnsAStandardRepresentation()
     {
-        $tags = array(
+        $tags = [
             new Param('foobar', new String_()),
             new Version('1.2.0'),
             new Link('http://www.example.com', new Description('Examples'))
-        );
+        ];
         $fixture = new AlignFormatter($tags);
 
-        $expected = array(
+        $expected = [
             '@param   string $foobar',
             '@version 1.2.0',
             '@link    http://www.example.com Examples'
-        );
+        ];
 
         foreach ($tags as $key => $tag) {
             $this->assertSame(

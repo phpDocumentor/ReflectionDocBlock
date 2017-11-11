@@ -15,9 +15,7 @@ namespace phpDocumentor\Reflection\DocBlock\Tags;
 use Mockery as m;
 use phpDocumentor\Reflection\DocBlock\Description;
 use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
-use phpDocumentor\Reflection\TypeResolver;
 use phpDocumentor\Reflection\Types\Context;
-use phpDocumentor\Reflection\Types\String_;
 
 /**
  * @coversDefaultClass \phpDocumentor\Reflection\DocBlock\Tags\Source
