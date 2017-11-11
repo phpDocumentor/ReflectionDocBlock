@@ -18,12 +18,13 @@ use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
 use phpDocumentor\Reflection\Fqsen;
 use phpDocumentor\Reflection\FqsenResolver;
 use phpDocumentor\Reflection\Types\Context;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @coversDefaultClass \phpDocumentor\Reflection\DocBlock\Tags\Uses
  * @covers ::<private>
  */
-class UsesTest extends \PHPUnit_Framework_TestCase
+class UsesTest extends TestCase
 {
     /**
      * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Uses::__construct

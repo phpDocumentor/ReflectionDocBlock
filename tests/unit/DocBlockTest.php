@@ -15,13 +15,14 @@ namespace phpDocumentor\Reflection;
 use Mockery as m;
 use phpDocumentor\Reflection\DocBlock\Tags\Deprecated;
 use phpDocumentor\Reflection\Types\Context;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @coversDefaultClass phpDocumentor\Reflection\DocBlock
  * @covers ::<private>
  * @uses \Webmozart\Assert\Assert
  */
-class DocBlockTest extends \PHPUnit_Framework_TestCase
+class DocBlockTest extends TestCase
 {
     /**
      * @covers ::__construct

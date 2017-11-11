@@ -13,12 +13,13 @@
 namespace phpDocumentor\Reflection\DocBlock;
 
 use phpDocumentor\Reflection\DocBlock;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @coversDefaultClass \phpDocumentor\Reflection\DocBlock\Serializer
  * @covers ::<private>
  */
-class SerializerTest extends \PHPUnit_Framework_TestCase
+class SerializerTest extends TestCase
 {
     /**
      * @covers ::__construct

@@ -19,6 +19,7 @@ use phpDocumentor\Reflection\DocBlock\Tag;
 use phpDocumentor\Reflection\DocBlock\TagFactory;
 use phpDocumentor\Reflection\DocBlock\Tags\Param;
 use phpDocumentor\Reflection\Types\Context;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @coversDefaultClass phpDocumentor\Reflection\DocBlockFactory
@@ -26,7 +27,7 @@ use phpDocumentor\Reflection\Types\Context;
  * @uses               \Webmozart\Assert\Assert
  * @uses               phpDocumentor\Reflection\DocBlock
  */
-class DocBlockFactoryTest extends \PHPUnit_Framework_TestCase
+class DocBlockFactoryTest extends TestCase
 {
     /**
      * @covers ::__construct

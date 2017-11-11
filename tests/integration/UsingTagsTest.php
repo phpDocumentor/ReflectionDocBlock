@@ -14,11 +14,13 @@ namespace phpDocumentor\Reflection;
 
 use phpDocumentor\Reflection\DocBlock\Description;
 use phpDocumentor\Reflection\DocBlock\Tag;
+use phpDocumentor\Reflection\DocBlock\Tags\See;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @coversNothing
  */
-class UsingTagsTest extends \PHPUnit_Framework_TestCase
+class UsingTagsTest extends TestCase
 {
     public function testAddingYourOwnTagUsingAStaticMethodAsFactory()
     {

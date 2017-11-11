@@ -18,12 +18,13 @@ use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
 use phpDocumentor\Reflection\TypeResolver;
 use phpDocumentor\Reflection\Types\Context;
 use phpDocumentor\Reflection\Types\String_;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @coversDefaultClass \phpDocumentor\Reflection\DocBlock\Tags\Return_
  * @covers ::<private>
  */
-class ReturnTest extends \PHPUnit_Framework_TestCase
+class ReturnTest extends TestCase
 {
     /**
      * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Return_::__construct
