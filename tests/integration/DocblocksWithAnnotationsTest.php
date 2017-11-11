@@ -12,10 +12,12 @@
 
 namespace phpDocumentor\Reflection;
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * @coversNothing
  */
-final class DocblocksWithAnnotationsTest extends \PHPUnit_Framework_TestCase
+final class DocblocksWithAnnotationsTest extends TestCase
 {
     public function testDocblockWithAnnotations()
     {

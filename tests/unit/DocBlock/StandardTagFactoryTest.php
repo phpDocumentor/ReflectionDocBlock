@@ -23,12 +23,13 @@ use phpDocumentor\Reflection\Fqsen;
 use phpDocumentor\Reflection\FqsenResolver;
 use phpDocumentor\Reflection\TypeResolver;
 use phpDocumentor\Reflection\Types\Context;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @coversDefaultClass phpDocumentor\Reflection\DocBlock\StandardTagFactory
  * @covers ::<private>
  */
-class StandardTagFactoryTest extends \PHPUnit_Framework_TestCase
+class StandardTagFactoryTest extends TestCase
 {
     /**
      * @covers ::__construct

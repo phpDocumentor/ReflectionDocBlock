@@ -3,12 +3,13 @@
 namespace phpDocumentor\Reflection\DocBlock;
 
 use phpDocumentor\Reflection\DocBlock\Tags\Example;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @coversDefaultClass phpDocumentor\Reflection\DocBlock\ExampleFinder
  * @covers ::<private>
  */
-class ExampleFinderTest extends \PHPUnit_Framework_TestCase
+class ExampleFinderTest extends TestCase
 {
     /** @var ExampleFinder */
     private $fixture;

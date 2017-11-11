@@ -20,12 +20,13 @@ use phpDocumentor\Reflection\DocBlock\Tags\Reference\Url as UrlRef;
 use phpDocumentor\Reflection\Fqsen;
 use phpDocumentor\Reflection\FqsenResolver;
 use phpDocumentor\Reflection\Types\Context;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @coversDefaultClass \phpDocumentor\Reflection\DocBlock\Tags\See
  * @covers ::<private>
  */
-class SeeTest extends \PHPUnit_Framework_TestCase
+class SeeTest extends TestCase
 {
     /**
      * @uses   \phpDocumentor\Reflection\DocBlock\Tags\See::__construct

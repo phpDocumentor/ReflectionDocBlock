@@ -16,12 +16,14 @@ use Mockery as m;
 use phpDocumentor\Reflection\DocBlock\Description;
 use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
 use phpDocumentor\Reflection\Types\Context;
+use phpDocumentor\Reflection\Types\String_;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @coversDefaultClass \phpDocumentor\Reflection\DocBlock\Tags\Source
  * @covers ::<private>
  */
-class SourceTest extends \PHPUnit_Framework_TestCase
+class SourceTest extends TestCase
 {
     /**
      * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Source::__construct

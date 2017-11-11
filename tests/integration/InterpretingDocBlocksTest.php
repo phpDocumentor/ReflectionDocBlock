@@ -16,11 +16,12 @@ use phpDocumentor\Reflection\DocBlock\Description;
 use phpDocumentor\Reflection\DocBlock\StandardTagFactory;
 use phpDocumentor\Reflection\DocBlock\Tag;
 use phpDocumentor\Reflection\DocBlock\Tags\See;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @coversNothing
  */
-class InterpretingDocBlocksTest extends \PHPUnit_Framework_TestCase
+class InterpretingDocBlocksTest extends TestCase
 {
     public function testInterpretingASimpleDocBlock()
     {

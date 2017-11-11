@@ -14,11 +14,12 @@ namespace phpDocumentor\Reflection\DocBlock\Tags\Formatter;
 
 use phpDocumentor\Reflection\DocBlock\Description;
 use phpDocumentor\Reflection\DocBlock\Tags\Generic;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @coversDefaultClass \phpDocumentor\Reflection\DocBlock\Tags\Formatter\PassthroughFormatter
  */
-class PassthroughFormatterTest extends \PHPUnit_Framework_TestCase
+class PassthroughFormatterTest extends TestCase
 {
     /**
      * @covers ::format

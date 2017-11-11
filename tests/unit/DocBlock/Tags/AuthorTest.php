@@ -9,17 +9,18 @@
  * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      http://phpdoc.org
  */
-
 namespace phpDocumentor\Reflection\DocBlock\Tags;
 
 use Mockery as m;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @coversDefaultClass \phpDocumentor\Reflection\DocBlock\Tags\Author
  * @covers ::<private>
  */
-class AuthorTest extends \PHPUnit_Framework_TestCase
+class AuthorTest extends TestCase
 {
+
     /**
      * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Author::__construct
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getName
@@ -121,7 +122,7 @@ class AuthorTest extends \PHPUnit_Framework_TestCase
     {
         $fixture = new Author('Mike van Riel', 'mike@phpdoc.org');
 
-        $this->assertSame('Mike van Riel <mike@phpdoc.org>', (string)$fixture);
+        $this->assertSame('Mike van Riel <mike@phpdoc.org>', (string) $fixture);
     }
 
     /**
@@ -132,7 +133,7 @@ class AuthorTest extends \PHPUnit_Framework_TestCase
     {
         $fixture = new Author('Mike van Riel', '');
 
-        $this->assertSame('Mike van Riel', (string)$fixture);
+        $this->assertSame('Mike van Riel', (string) $fixture);
     }
 
     /**
@@ -143,7 +144,7 @@ class AuthorTest extends \PHPUnit_Framework_TestCase
     {
         $fixture = Author::create('Mike van Riel <mike@phpdoc.org>');
 
-        $this->assertSame('Mike van Riel <mike@phpdoc.org>', (string)$fixture);
+        $this->assertSame('Mike van Riel <mike@phpdoc.org>', (string) $fixture);
         $this->assertSame('Mike van Riel', $fixture->getAuthorName());
         $this->assertSame('mike@phpdoc.org', $fixture->getEmail());
     }
@@ -156,4 +157,5 @@ class AuthorTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertNull(Author::create('dfgr<'));
     }
+
 }

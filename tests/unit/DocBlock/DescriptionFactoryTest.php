@@ -15,12 +15,13 @@ namespace phpDocumentor\Reflection\DocBlock;
 use Mockery as m;
 use phpDocumentor\Reflection\DocBlock\Tags\Link;
 use phpDocumentor\Reflection\Types\Context;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @coversDefaultClass \phpDocumentor\Reflection\DocBlock\DescriptionFactory
  * @covers ::<private>
  */
-class DescriptionFactoryTest extends \PHPUnit_Framework_TestCase
+class DescriptionFactoryTest extends TestCase
 {
     /**
      * @covers ::__construct

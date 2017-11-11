@@ -18,12 +18,13 @@ use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
 use phpDocumentor\Reflection\TypeResolver;
 use phpDocumentor\Reflection\Types\Context;
 use phpDocumentor\Reflection\Types\String_;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @coversDefaultClass \phpDocumentor\Reflection\DocBlock\Tags\Throws
  * @covers ::<private>
  */
-class ThrowsTest extends \PHPUnit_Framework_TestCase
+class ThrowsTest extends TestCase
 {
     /**
      * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Throws::__construct

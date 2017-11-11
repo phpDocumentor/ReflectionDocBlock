@@ -18,11 +18,12 @@ use phpDocumentor\Reflection\DocBlock\Tags\Link;
 use phpDocumentor\Reflection\DocBlock\Tags\Param;
 use phpDocumentor\Reflection\DocBlock\Tags\Version;
 use phpDocumentor\Reflection\Types\String_;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @coversDefaultClass \phpDocumentor\Reflection\DocBlock\Tags\Formatter\AlignFormatter
  */
-class AlignFormatterTest extends \PHPUnit_Framework_TestCase
+class AlignFormatterTest extends TestCase
 {
     /**
      * @covers ::format

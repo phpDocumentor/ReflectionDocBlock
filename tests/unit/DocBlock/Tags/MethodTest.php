@@ -25,12 +25,13 @@ use phpDocumentor\Reflection\Types\Object_;
 use phpDocumentor\Reflection\Types\String_;
 use phpDocumentor\Reflection\Types\This;
 use phpDocumentor\Reflection\Types\Void_;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @coversDefaultClass \phpDocumentor\Reflection\DocBlock\Tags\Method
  * @covers ::<private>
  */
-class MethodTest extends \PHPUnit_Framework_TestCase
+class MethodTest extends TestCase
 {
     /**
      * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Method::__construct

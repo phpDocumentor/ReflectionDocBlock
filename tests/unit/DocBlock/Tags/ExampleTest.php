@@ -3,11 +3,12 @@
 namespace DocBlock\Tags;
 
 use phpDocumentor\Reflection\DocBlock\Tags\Example;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @coversDefaultClass \phpDocumentor\Reflection\DocBlock\Tags\Example
  */
-class ExampleTest extends \PHPUnit_Framework_TestCase
+class ExampleTest extends TestCase
 {
     /**
      * @covers ::create
