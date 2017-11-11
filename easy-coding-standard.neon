@@ -1,5 +1,6 @@
 includes:
     - temp/ecs/config/clean-code.neon
+    - temp/ecs/config/psr2-checkers.neon
 
 parameters:
     skip:

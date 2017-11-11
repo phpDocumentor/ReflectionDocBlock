@@ -93,7 +93,7 @@ final class DocBlockFactory implements DocBlockFactoryInterface
         return new DocBlock(
             $summary,
             $description ? $this->descriptionFactory->create($description, $context) : null,
-            array_filter($this->parseTagBlock($tags, $context), function($tag) {
+            array_filter($this->parseTagBlock($tags, $context), function ($tag) {
                 return $tag instanceof Tag;
             }),
             $context,

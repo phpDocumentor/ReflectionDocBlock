@@ -196,8 +196,7 @@ final class StandardTagFactory implements TagFactory
         $arguments        = $this->getArgumentsForParametersFromWiring(
             $this->fetchParametersForHandlerFactoryMethod($handlerClassName),
             $this->getServiceLocatorWithDynamicParameters($context, $name, $body)
-        )
-        ;
+        );
 
         return call_user_func_array([$handlerClassName, 'create'], $arguments);
     }

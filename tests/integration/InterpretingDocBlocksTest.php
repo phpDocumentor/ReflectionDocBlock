@@ -78,7 +78,8 @@ DESCRIPTION;
          */
 
         include(__DIR__ . '/../../examples/playing-with-descriptions/02-escaping.php');
-        $this->assertSame(<<<'DESCRIPTION'
+        $this->assertSame(
+            <<<'DESCRIPTION'
 You can escape the @-sign by surrounding it with braces, for example: @. And escape a closing brace within an
 inline tag by adding an opening brace in front of it like this: }.
 
@@ -91,7 +92,6 @@ Do note that an {@internal inline tag that has an opening brace ({) does not bre
 DESCRIPTION
             ,
             $foundDescription
-        )
-        ;
+        );
     }
 }

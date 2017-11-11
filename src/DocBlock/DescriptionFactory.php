@@ -188,5 +188,4 @@ class DescriptionFactory
 
         return implode("\n", $lines);
     }
-
 }
