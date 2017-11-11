@@ -1,2 +1,7 @@
 includes:
     - temp/ecs/config/clean-code.neon
+
+parameters:
+    skip:
+        SlevomatCodingStandard\Sniffs\Classes\UnusedPrivateElementsSniff:
+            - src/DocBlock/StandardTagFactory.php
