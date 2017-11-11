@@ -24,7 +24,7 @@ final class DocBlock
     private $description = null;
 
     /** @var Tag[] An array containing all the tags in this docblock; except inline. */
-    private $tags = array();
+    private $tags = [];
 
     /** @var Types\Context Information about the context of this DocBlock. */
     private $context = null;
@@ -171,7 +171,7 @@ final class DocBlock
     {
         Assert::string($name);
 
-        $result = array();
+        $result = [];
 
         /** @var Tag $tag */
         foreach ($this->getTags() as $tag) {
