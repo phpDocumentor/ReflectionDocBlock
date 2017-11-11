@@ -13,9 +13,7 @@
 namespace phpDocumentor\Reflection;
 
 use phpDocumentor\Reflection\DocBlock\Description;
-use phpDocumentor\Reflection\DocBlock\StandardTagFactory;
 use phpDocumentor\Reflection\DocBlock\Tag;
-use phpDocumentor\Reflection\DocBlock\Tags\See;
 
 /**
  * @coversNothing

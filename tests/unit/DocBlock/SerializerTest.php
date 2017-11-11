@@ -12,7 +12,6 @@
 
 namespace phpDocumentor\Reflection\DocBlock;
 
-use Mockery as m;
 use phpDocumentor\Reflection\DocBlock;
 
 /**

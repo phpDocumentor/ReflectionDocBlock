@@ -12,7 +12,6 @@
 
 namespace phpDocumentor\Reflection\DocBlock\Tags\Formatter;
 
-use Mockery as m;
 use phpDocumentor\Reflection\DocBlock\Description;
 use phpDocumentor\Reflection\DocBlock\Tags\Generic;
 
