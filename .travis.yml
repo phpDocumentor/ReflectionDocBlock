@@ -17,7 +17,7 @@ install:
 script:
   - vendor/bin/phpunit --coverage-clover=coverage.clover -v
   # coding style
-  - temp/ecs/bin/ecs check src
+  - temp/ecs/bin/ecs check src tests
 
 after_script:
   - wget https://scrutinizer-ci.com/ocular.phar
