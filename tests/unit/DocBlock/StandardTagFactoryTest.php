@@ -50,8 +50,7 @@ class StandardTagFactoryTest extends \PHPUnit_Framework_TestCase
             ->shouldReceive('create')
             ->once()
             ->with($expectedDescriptionText, $context)
-            ->andReturn($expectedDescription)
-        ;
+            ->andReturn($expectedDescription);
 
         $tagFactory = new StandardTagFactory(m::mock(FqsenResolver::class));
         $tagFactory->addService($descriptionFactory, DescriptionFactory::class);
@@ -99,8 +98,7 @@ class StandardTagFactoryTest extends \PHPUnit_Framework_TestCase
             ->shouldReceive('resolve')
             ->with('Tag', m::type(Context::class))
             ->andReturn(new Fqsen($fqsen))
-            ->getMock()
-        ;
+            ->getMock();
         $descriptionFactory = m::mock(DescriptionFactory::class);
         $descriptionFactory->shouldIgnoreMissing();
 
@@ -161,8 +159,7 @@ class StandardTagFactoryTest extends \PHPUnit_Framework_TestCase
             [FqsenResolver::class => $resolver, 'myParam' => 'myValue'],
             'serviceLocator',
             $tagFactory
-        )
-        ;
+        );
     }
 
     /**
@@ -181,8 +178,7 @@ class StandardTagFactoryTest extends \PHPUnit_Framework_TestCase
             [FqsenResolver::class => $resolver, PassthroughFormatter::class => $service],
             'serviceLocator',
             $tagFactory
-        )
-        ;
+        );
     }
 
     /**
@@ -202,8 +198,7 @@ class StandardTagFactoryTest extends \PHPUnit_Framework_TestCase
             [FqsenResolver::class => $resolver, $interfaceName => $service],
             'serviceLocator',
             $tagFactory
-        )
-        ;
+        );
     }
 
     /**
@@ -340,8 +335,7 @@ class StandardTagFactoryTest extends \PHPUnit_Framework_TestCase
             ->shouldReceive('create')
             ->once()
             ->with('', $context)
-            ->andReturn(new Description(''))
-        ;
+            ->andReturn(new Description(''));
 
         $typeResolver = new TypeResolver();
 

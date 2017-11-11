@@ -73,8 +73,7 @@ class DescriptionFactoryTest extends \PHPUnit_Framework_TestCase
         $tagFactory->shouldReceive('create')
             ->once()
             ->with('@link http://phpdoc.org/ description', $context)
-            ->andReturn(new Link('http://phpdoc.org/', new Description('description')))
-        ;
+            ->andReturn(new Link('http://phpdoc.org/', new Description('description')));
 
         $factory     = new DescriptionFactory($tagFactory);
         $description = $factory->create($contents, $context);
@@ -99,8 +98,7 @@ class DescriptionFactoryTest extends \PHPUnit_Framework_TestCase
         $tagFactory->shouldReceive('create')
             ->once()
             ->with('@link http://phpdoc.org/ This', $context)
-            ->andReturn(new Link('http://phpdoc.org/', new Description('This')))
-        ;
+            ->andReturn(new Link('http://phpdoc.org/', new Description('This')));
 
         $factory     = new DescriptionFactory($tagFactory);
         $description = $factory->create($contents, $context);

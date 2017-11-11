@@ -342,7 +342,8 @@ class MethodTest extends \PHPUnit_Framework_TestCase
         $expectedType,
         $expectedValueType = null,
         $expectedKeyType = null
-    ) { $resolver           = new TypeResolver();
+    ) {
+        $resolver           = new TypeResolver();
         $descriptionFactory = m::mock(DescriptionFactory::class);
         $descriptionFactory->shouldReceive('create')->with('', null)->andReturn(new Description(''));
 
@@ -540,7 +541,8 @@ class MethodTest extends \PHPUnit_Framework_TestCase
             new Compound([
                 new Array_(new Object_(new Fqsen('\MyClass'))),
                 new Array_(new Integer()),
-            ])
-            , $fixture->getReturnType());
+            ]),
+            $fixture->getReturnType()
+        );
     }
 }

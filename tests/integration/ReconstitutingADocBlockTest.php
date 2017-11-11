@@ -12,7 +12,6 @@
 
 namespace phpDocumentor\Reflection;
 
-
 /**
  * @coversNothing
  */

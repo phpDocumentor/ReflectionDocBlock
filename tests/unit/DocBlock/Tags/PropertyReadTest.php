@@ -140,8 +140,12 @@ class PropertyReadTest extends \PHPUnit_Framework_TestCase
         $description = new Description('My Description');
         $descriptionFactory->shouldReceive('create')->with('My Description', $context)->andReturn($description);
 
-        $fixture = PropertyRead::create('string $myProperty My Description', $typeResolver, $descriptionFactory,
-            $context);
+        $fixture = PropertyRead::create(
+            'string $myProperty My Description',
+            $typeResolver,
+            $descriptionFactory,
+            $context
+        );
 
         $this->assertSame('string $myProperty My Description', (string)$fixture);
         $this->assertSame('myProperty', $fixture->getVariableName());

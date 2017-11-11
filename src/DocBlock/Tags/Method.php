@@ -135,7 +135,7 @@ final class Method extends BaseTag implements Factory\StaticMethod
 
         if (is_string($arguments) && strlen($arguments) > 0) {
             $arguments = explode(',', $arguments);
-            foreach($arguments as &$argument) {
+            foreach ($arguments as &$argument) {
                 $argument = explode(' ', self::stripRestArg(trim($argument)), 2);
                 if ($argument[0][0] === '$') {
                     $argumentName = substr($argument[0], 1);
@@ -214,9 +214,11 @@ final class Method extends BaseTag implements Factory\StaticMethod
             if (is_string($argument)) {
                 $argument = [ 'name' => $argument ];
             }
+
             if (! isset($argument['type'])) {
                 $argument['type'] = new Void_();
             }
+
             $keys = array_keys($argument);
             sort($keys);
             if ($keys !== [ 'name', 'type' ]) {
