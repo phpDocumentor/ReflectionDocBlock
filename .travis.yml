@@ -1,22 +1,15 @@
 language: php
 
-dist: trusty
-
 php:
   - 7.0
   - 7.1
-  - nightly
-
-matrix:
-  allow_failures:
-    - php:
-        - nightly
+  - 7.2
 
 cache:
   directories:
     - $HOME/.composer/cache
 
-before_script:
+install:
   - composer install --no-interaction
 
 script:
