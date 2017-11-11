@@ -6,3 +6,6 @@ parameters:
     skip:
         SlevomatCodingStandard\Sniffs\Classes\UnusedPrivateElementsSniff:
             - src/DocBlock/StandardTagFactory.php
+        PHP_CodeSniffer\Standards\Squiz\Sniffs\Classes\ValidClassNameSniff:
+            - src/DocBlock/Tags/Return_.php
+            - src/DocBlock/Tags/Var_.php
