@@ -2,6 +2,7 @@
 
 namespace DocBlock\Tags;
 
+use Mockery as m;
 use phpDocumentor\Reflection\DocBlock\Tags\Example;
 use PHPUnit\Framework\TestCase;
 
@@ -10,6 +11,15 @@ use PHPUnit\Framework\TestCase;
  */
 class ExampleTest extends TestCase
 {
+
+    /**
+     * Call Mockery::close after each test.
+     */
+    public function tearDown()
+    {
+        m::close();
+    }
+
     /**
      * @covers ::create
      * @covers ::__construct

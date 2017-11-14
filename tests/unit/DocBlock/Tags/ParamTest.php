@@ -27,6 +27,14 @@ use PHPUnit\Framework\TestCase;
 class ParamTest extends TestCase
 {
     /**
+     * Call Mockery::close after each test.
+     */
+    public function tearDown()
+    {
+        m::close();
+    }
+
+    /**
      * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Param::__construct
      * @uses   \phpDocumentor\Reflection\DocBlock\Description
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getName

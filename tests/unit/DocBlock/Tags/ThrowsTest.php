@@ -27,6 +27,14 @@ use PHPUnit\Framework\TestCase;
 class ThrowsTest extends TestCase
 {
     /**
+     * Call Mockery::close after each test.
+     */
+    public function tearDown()
+    {
+        m::close();
+    }
+
+    /**
      * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Throws::__construct
      * @uses   \phpDocumentor\Reflection\DocBlock\Description
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getName

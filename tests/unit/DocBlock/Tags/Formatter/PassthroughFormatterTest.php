@@ -12,6 +12,7 @@
 
 namespace phpDocumentor\Reflection\DocBlock\Tags\Formatter;
 
+use Mockery as m;
 use phpDocumentor\Reflection\DocBlock\Description;
 use phpDocumentor\Reflection\DocBlock\Tags\Generic;
 use PHPUnit\Framework\TestCase;
@@ -21,6 +22,14 @@ use PHPUnit\Framework\TestCase;
  */
 class PassthroughFormatterTest extends TestCase
 {
+    /**
+     * Call Mockery::close after each test.
+     */
+    public function tearDown()
+    {
+        m::close();
+    }
+
     /**
      * @covers ::format
      * @uses \phpDocumentor\Reflection\DocBlock\Description

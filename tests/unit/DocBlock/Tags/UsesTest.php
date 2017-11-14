@@ -27,6 +27,14 @@ use PHPUnit\Framework\TestCase;
 class UsesTest extends TestCase
 {
     /**
+     * Call Mockery::close after each test.
+     */
+    public function tearDown()
+    {
+        m::close();
+    }
+
+    /**
      * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Uses::__construct
      * @uses   \phpDocumentor\Reflection\DocBlock\Description
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getName

@@ -30,6 +30,14 @@ use PHPUnit\Framework\TestCase;
 class DocBlockFactoryTest extends TestCase
 {
     /**
+     * Call Mockery::close after each test.
+     */
+    public function tearDown()
+    {
+        m::close();
+    }
+
+    /**
      * @covers ::__construct
      * @covers ::createInstance
      * @uses \phpDocumentor\Reflection\DocBlock\StandardTagFactory

@@ -26,6 +26,15 @@ use PHPUnit\Framework\TestCase;
  */
 class CoversTest extends TestCase
 {
+
+    /**
+     * Call Mockery::close after each test.
+     */
+    public function tearDown()
+    {
+        m::close();
+    }
+
     /**
      * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Covers::__construct
      * @uses   \phpDocumentor\Reflection\DocBlock\Description

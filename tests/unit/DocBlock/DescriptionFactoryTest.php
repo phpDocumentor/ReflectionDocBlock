@@ -24,6 +24,14 @@ use PHPUnit\Framework\TestCase;
 class DescriptionFactoryTest extends TestCase
 {
     /**
+     * Call Mockery::close after each test.
+     */
+    public function tearDown()
+    {
+        m::close();
+    }
+
+    /**
      * @covers ::__construct
      * @covers ::create
      * @uses         phpDocumentor\Reflection\DocBlock\Description

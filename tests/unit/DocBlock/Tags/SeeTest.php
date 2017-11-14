@@ -29,6 +29,14 @@ use PHPUnit\Framework\TestCase;
 class SeeTest extends TestCase
 {
     /**
+     * Call Mockery::close after each test.
+     */
+    public function tearDown()
+    {
+        m::close();
+    }
+
+    /**
      * @uses   \phpDocumentor\Reflection\DocBlock\Tags\See::__construct
      * @uses   \phpDocumentor\Reflection\DocBlock\Description
      * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Reference\Fqsen

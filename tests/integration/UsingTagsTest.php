@@ -12,9 +12,9 @@
 
 namespace phpDocumentor\Reflection;
 
+use Mockery as m;
 use phpDocumentor\Reflection\DocBlock\Description;
 use phpDocumentor\Reflection\DocBlock\Tag;
-use phpDocumentor\Reflection\DocBlock\Tags\See;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -22,6 +22,14 @@ use PHPUnit\Framework\TestCase;
  */
 class UsingTagsTest extends TestCase
 {
+    /**
+     * Call Mockery::close after each test.
+     */
+    public function tearDown()
+    {
+        m::close();
+    }
+
     public function testAddingYourOwnTagUsingAStaticMethodAsFactory()
     {
         /**

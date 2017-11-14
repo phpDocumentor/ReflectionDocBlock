@@ -13,6 +13,7 @@
 
 namespace phpDocumentor\Reflection\DocBlock\Tags\Formatter;
 
+use Mockery as m;
 use phpDocumentor\Reflection\DocBlock\Description;
 use phpDocumentor\Reflection\DocBlock\Tags\Link;
 use phpDocumentor\Reflection\DocBlock\Tags\Param;
@@ -25,6 +26,14 @@ use PHPUnit\Framework\TestCase;
  */
 class AlignFormatterTest extends TestCase
 {
+    /**
+     * Call Mockery::close after each test.
+     */
+    public function tearDown()
+    {
+        m::close();
+    }
+
     /**
      * @covers ::format
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\Formatter\AlignFormatter::__construct
