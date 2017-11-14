@@ -12,6 +12,7 @@
 
 namespace phpDocumentor\Reflection\DocBlock;
 
+use Mockery as m;
 use phpDocumentor\Reflection\DocBlock;
 use PHPUnit\Framework\TestCase;
 
@@ -21,6 +22,14 @@ use PHPUnit\Framework\TestCase;
  */
 class SerializerTest extends TestCase
 {
+    /**
+     * Call Mockery::close after each test.
+     */
+    public function tearDown()
+    {
+        m::close();
+    }
+
     /**
      * @covers ::__construct
      * @covers ::getDocComment

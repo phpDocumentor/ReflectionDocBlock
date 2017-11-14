@@ -2,6 +2,7 @@
 
 namespace phpDocumentor\Reflection\DocBlock;
 
+use Mockery as m;
 use phpDocumentor\Reflection\DocBlock\Tags\Example;
 use PHPUnit\Framework\TestCase;
 
@@ -13,6 +14,14 @@ class ExampleFinderTest extends TestCase
 {
     /** @var ExampleFinder */
     private $fixture;
+
+    /**
+     * Call Mockery::close after each test.
+     */
+    public function tearDown()
+    {
+        m::close();
+    }
 
     public function setUp()
     {

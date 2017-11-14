@@ -12,6 +12,7 @@
 
 namespace phpDocumentor\Reflection;
 
+use Mockery as m;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -19,6 +20,14 @@ use PHPUnit\Framework\TestCase;
  */
 final class DocblocksWithAnnotationsTest extends TestCase
 {
+    /**
+     * Call Mockery::close after each test.
+     */
+    public function tearDown()
+    {
+        m::close();
+    }
+
     public function testDocblockWithAnnotations()
     {
         $docComment = <<<DOCCOMMENT

@@ -24,6 +24,15 @@ use PHPUnit\Framework\TestCase;
  */
 class SinceTest extends TestCase
 {
+
+    /**
+     * Call Mockery::close after each test.
+     */
+    public function tearDown()
+    {
+        m::close();
+    }
+
     /**
      * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Since::__construct
      * @uses   \phpDocumentor\Reflection\DocBlock\Description

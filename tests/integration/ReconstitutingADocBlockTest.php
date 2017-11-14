@@ -12,10 +12,7 @@
 
 namespace phpDocumentor\Reflection;
 
-use phpDocumentor\Reflection\DocBlock\Description;
-use phpDocumentor\Reflection\DocBlock\StandardTagFactory;
-use phpDocumentor\Reflection\DocBlock\Tag;
-use phpDocumentor\Reflection\DocBlock\Tags\See;
+use Mockery as m;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -23,6 +20,14 @@ use PHPUnit\Framework\TestCase;
  */
 class ReconstitutingADocBlockTest extends TestCase
 {
+    /**
+     * Call Mockery::close after each test.
+     */
+    public function tearDown()
+    {
+        m::close();
+    }
+
     public function testReconstituteADocBlock()
     {
         /**

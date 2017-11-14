@@ -20,6 +20,13 @@ use PHPUnit\Framework\TestCase;
  */
 class AuthorTest extends TestCase
 {
+    /**
+     * Call Mockery::close after each test.
+     */
+    public function tearDown()
+    {
+        m::close();
+    }
 
     /**
      * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Author::__construct
@@ -157,5 +164,4 @@ class AuthorTest extends TestCase
     {
         $this->assertNull(Author::create('dfgr<'));
     }
-
 }
