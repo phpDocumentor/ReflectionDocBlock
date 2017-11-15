@@ -20,13 +20,13 @@ install:
   - if [[ $STATIC_ANALYSIS != "" ]]; then composer create-project symplify/easy-coding-standard temp/ecs; fi
 
 script:
-  - vendor/bin/phpunit --coverage-clover=coverage.clover -v
+  - vendor/bin/phpunit --coverage-clover=coverage.xml -v
   # coding style
   - if [[ $STATIC_ANALYSIS != "" ]]; then temp/ecs/bin/ecs check src tests; fi
 
 after_script:
-  - wget https://scrutinizer-ci.com/ocular.phar
-  - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
+  - wget https://github.com/satooshi/php-coveralls/releases/download/v1.0.1/coveralls.phar;
+  - php coveralls.phar --verbose;
 
 notifications:
   irc: "irc.freenode.org#phpdocumentor"
