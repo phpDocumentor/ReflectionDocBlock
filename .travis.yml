@@ -9,6 +9,8 @@ matrix:
   include:
     - php: 7.1
       env: STATIC_ANALYSIS=true
+  allow_failres:
+    - php: 7.2
 
 cache:
   directories:
