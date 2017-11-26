@@ -40,7 +40,6 @@ final class DocBlockFactory implements DocBlockFactoryInterface
      * Factory method for easy instantiation.
      *
      * @param string[] $additionalTags
-     *
      */
     public static function createInstance(array $additionalTags = []): DocBlockFactory
     {
@@ -62,7 +61,6 @@ final class DocBlockFactory implements DocBlockFactoryInterface
     /**
      * @param object|string $docblock A string containing the DocBlock to parse or an object supporting the
      *                                getDocComment method (such as a ReflectionClass object).
-     *
      */
     public function create($docblock, ?Types\Context $context = null, ?Location $location = null): DocBlock
     {

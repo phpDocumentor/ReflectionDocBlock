@@ -83,7 +83,6 @@ final class DocBlock
 
     /**
      * Returns the current context.
-     *
      */
     public function getContext(): Types\Context
     {
@@ -116,7 +115,6 @@ final class DocBlock
      * elements that follow until another DocBlock is found that contains the closing marker (`#@-`).
      *
      * @see self::isTemplateEnd() for the check whether a closing marker was provided.
-     *
      */
     public function isTemplateStart(): bool
     {
@@ -127,7 +125,6 @@ final class DocBlock
      * Returns whether this DocBlock is the end of a Template section.
      *
      * @see self::isTemplateStart() for a more complete description of the Docblock Template functionality.
-     *
      */
     public function isTemplateEnd(): bool
     {

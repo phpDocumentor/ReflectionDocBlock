@@ -182,8 +182,6 @@ final class StandardTagFactory implements TagFactory
     /**
      * Creates a new tag object with the given name and body or returns null if the tag name was recognized but the
      * body was invalid.
-     *
-     *
      */
     private function createTag(string $body, string $name, TypeContext $context): ?Tag
     {

@@ -65,7 +65,6 @@ class See extends BaseTag implements Factory\StaticMethod
 
     /**
      * Returns the ref of this tag.
-     *
      */
     public function getReference(): Reference
     {

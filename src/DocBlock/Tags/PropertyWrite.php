@@ -88,7 +88,6 @@ class PropertyWrite extends BaseTag implements Factory\StaticMethod
 
     /**
      * Returns the variable's type or null if unknown.
-     *
      */
     public function getType(): ?Type
     {

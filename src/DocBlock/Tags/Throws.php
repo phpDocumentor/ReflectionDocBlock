@@ -57,7 +57,6 @@ final class Throws extends BaseTag implements Factory\StaticMethod
 
     /**
      * Returns the type section of the variable.
-     *
      */
     public function getType(): Type
     {
