@@ -50,36 +50,6 @@ class DocBlockTest extends TestCase
 
     /**
      * @covers ::__construct
-     *
-     * @expectedException \InvalidArgumentException
-     */
-    public function testExceptionIsThrownIfSummaryIsNotAString()
-    {
-        new DocBlock([]);
-    }
-
-    /**
-     * @covers ::__construct
-     *
-     * @expectedException \InvalidArgumentException
-     */
-    public function testExceptionIsThrownIfTemplateStartIsNotABoolean()
-    {
-        new DocBlock('', null, [], null, null, ['is not boolean']);
-    }
-
-    /**
-     * @covers ::__construct
-     *
-     * @expectedException \InvalidArgumentException
-     */
-    public function testExceptionIsThrownIfTemplateEndIsNotABoolean()
-    {
-        new DocBlock('', null, [], null, null, false, ['is not boolean']);
-    }
-
-    /**
-     * @covers ::__construct
      * @covers ::getDescription
      *
      * @uses \phpDocumentor\Reflection\DocBlock\Description
@@ -156,18 +126,6 @@ class DocBlockTest extends TestCase
 
     /**
      * @covers ::__construct
-     * @covers ::getTagsByName
-     * @uses \phpDocumentor\Reflection\DocBlock\Description
-     * @expectedException \InvalidArgumentException
-     */
-    public function testExceptionIsThrownIfNameForTagsIsNotString()
-    {
-        $fixture = new DocBlock();
-        $fixture->getTagsByName([]);
-    }
-
-    /**
-     * @covers ::__construct
      * @covers ::hasTag
      *
      * @uses \phpDocumentor\Reflection\DocBlock::getTags
@@ -189,18 +147,6 @@ class DocBlockTest extends TestCase
 
         $this->assertTrue($fixture->hasTag('abcd'));
         $this->assertFalse($fixture->hasTag('Ebcd'));
-    }
-
-    /**
-     * @covers ::__construct
-     * @covers ::hasTag
-     * @uses \phpDocumentor\Reflection\DocBlock\Description
-     * @expectedException \InvalidArgumentException
-     */
-    public function testExceptionIsThrownIfNameForCheckingTagsIsNotString()
-    {
-        $fixture = new DocBlock();
-        $fixture->hasTag([]);
     }
 
     /**

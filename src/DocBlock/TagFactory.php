@@ -67,7 +67,7 @@ interface TagFactory
      *
      * @return Tag A new tag object.
      */
-    public function create(string $tagLine, TypeContext $context = null): Tag;
+    public function create(string $tagLine, TypeContext $context = null): ?Tag;
 
     /**
      * Registers a handler for tags.
