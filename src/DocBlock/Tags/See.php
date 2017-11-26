@@ -35,7 +35,7 @@ class See extends BaseTag implements Factory\StaticMethod
     /**
      * Initializes this tag.
      */
-    public function __construct(Reference $refers, Description $description = null)
+    public function __construct(Reference $refers, ?Description $description = null)
     {
         $this->refers = $refers;
         $this->description = $description;
@@ -46,9 +46,9 @@ class See extends BaseTag implements Factory\StaticMethod
      */
     public static function create(
         string $body,
-        FqsenResolver $resolver = null,
-        DescriptionFactory $descriptionFactory = null,
-        TypeContext $context = null
+        ?FqsenResolver $resolver = null,
+        ?DescriptionFactory $descriptionFactory = null,
+        ?TypeContext $context = null
     ) {
         Assert::allNotNull([$resolver, $descriptionFactory]);
 
@@ -66,7 +66,6 @@ class See extends BaseTag implements Factory\StaticMethod
     /**
      * Returns the ref of this tag.
      *
-     * @return Reference
      */
     public function getReference(): Reference
     {

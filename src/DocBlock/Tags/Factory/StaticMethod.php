@@ -15,5 +15,8 @@ namespace phpDocumentor\Reflection\DocBlock\Tags\Factory;
 
 interface StaticMethod
 {
+    /**
+     * @return mixed
+     */
     public static function create(string $body);
 }

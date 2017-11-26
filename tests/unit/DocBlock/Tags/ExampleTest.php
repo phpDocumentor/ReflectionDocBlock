@@ -15,7 +15,7 @@ class ExampleTest extends TestCase
     /**
      * Call Mockery::close after each test.
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         m::close();
     }
@@ -26,7 +26,7 @@ class ExampleTest extends TestCase
      * @covers ::getContent
      * @uses phpDocumentor\Reflection\DocBlock\Tags\BaseTag
      */
-    public function testExampleWithoutContent()
+    public function testExampleWithoutContent(): void
     {
         $tag = Example::create('"example1.php"');
         $this->assertEquals('"example1.php"', $tag->getContent());
@@ -41,7 +41,7 @@ class ExampleTest extends TestCase
      * @covers ::getDescription
      * @uses phpDocumentor\Reflection\DocBlock\Tags\BaseTag
      */
-    public function testWithDescription()
+    public function testWithDescription(): void
     {
         $tag = Example::create('"example1.php" some text');
         $this->assertEquals('example1.php', $tag->getFilePath());
@@ -55,7 +55,7 @@ class ExampleTest extends TestCase
      * @covers ::getStartingLine
      * @uses phpDocumentor\Reflection\DocBlock\Tags\BaseTag
      */
-    public function testStartlineIsParsed()
+    public function testStartlineIsParsed(): void
     {
         $tag = Example::create('"example1.php" 10');
         $this->assertEquals('example1.php', $tag->getFilePath());
@@ -70,7 +70,7 @@ class ExampleTest extends TestCase
      * @covers ::getDescription
      * @uses phpDocumentor\Reflection\DocBlock\Tags\BaseTag
      */
-    public function testAllowOmitingLineCount()
+    public function testAllowOmitingLineCount(): void
     {
         $tag = Example::create('"example1.php" 10 some text');
         $this->assertEquals('example1.php', $tag->getFilePath());
@@ -86,7 +86,7 @@ class ExampleTest extends TestCase
      * @covers ::getLineCount
      * @uses phpDocumentor\Reflection\DocBlock\Tags\BaseTag
      */
-    public function testLengthIsParsed()
+    public function testLengthIsParsed(): void
     {
         $tag = Example::create('"example1.php" 10 5');
         $this->assertEquals('example1.php', $tag->getFilePath());
@@ -103,7 +103,7 @@ class ExampleTest extends TestCase
      * @covers ::getDescription
      * @uses phpDocumentor\Reflection\DocBlock\Tags\BaseTag
      */
-    public function testFullExample()
+    public function testFullExample(): void
     {
         $tag = Example::create('"example1.php" 10 5 test text');
         $this->assertEquals('example1.php', $tag->getFilePath());

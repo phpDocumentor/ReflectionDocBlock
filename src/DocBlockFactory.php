@@ -41,7 +41,6 @@ final class DocBlockFactory implements DocBlockFactoryInterface
      *
      * @param string[] $additionalTags
      *
-     * @return DocBlockFactory
      */
     public static function createInstance(array $additionalTags = []): DocBlockFactory
     {
@@ -64,9 +63,8 @@ final class DocBlockFactory implements DocBlockFactoryInterface
      * @param object|string $docblock A string containing the DocBlock to parse or an object supporting the
      *                                getDocComment method (such as a ReflectionClass object).
      *
-     * @return DocBlock
      */
-    public function create($docblock, Types\Context $context = null, Location $location = null): DocBlock
+    public function create($docblock, ?Types\Context $context = null, ?Location $location = null): DocBlock
     {
         if (is_object($docblock)) {
             if (!method_exists($docblock, 'getDocComment')) {
@@ -99,7 +97,7 @@ final class DocBlockFactory implements DocBlockFactoryInterface
         );
     }
 
-    public function registerTagHandler($tagName, $handler)
+    public function registerTagHandler($tagName, $handler): void
     {
         $this->tagFactory->registerTagHandler($tagName, $handler);
     }

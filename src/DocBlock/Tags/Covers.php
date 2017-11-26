@@ -33,7 +33,7 @@ final class Covers extends BaseTag implements Factory\StaticMethod
     /**
      * Initializes this tag.
      */
-    public function __construct(Fqsen $refers, Description $description = null)
+    public function __construct(Fqsen $refers, ?Description $description = null)
     {
         $this->refers = $refers;
         $this->description = $description;
@@ -44,9 +44,9 @@ final class Covers extends BaseTag implements Factory\StaticMethod
      */
     public static function create(
         string $body,
-        DescriptionFactory $descriptionFactory = null,
-        FqsenResolver $resolver = null,
-        TypeContext $context = null
+        ?DescriptionFactory $descriptionFactory = null,
+        ?FqsenResolver $resolver = null,
+        ?TypeContext $context = null
     ) {
         Assert::notEmpty($body);
 
@@ -61,7 +61,6 @@ final class Covers extends BaseTag implements Factory\StaticMethod
     /**
      * Returns the structural element this tag refers to.
      *
-     * @return Fqsen
      */
     public function getReference(): Fqsen
     {

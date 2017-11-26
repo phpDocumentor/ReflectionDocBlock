@@ -30,7 +30,7 @@ class Generic extends BaseTag implements Factory\StaticMethod
      * @param string $name Name of the tag.
      * @param Description $description The contents of the given tag.
      */
-    public function __construct(string $name, Description $description = null)
+    public function __construct(string $name, ?Description $description = null)
     {
         $this->validateTagName($name);
 
@@ -47,8 +47,8 @@ class Generic extends BaseTag implements Factory\StaticMethod
     public static function create(
         string $body,
         string $name = '',
-        DescriptionFactory $descriptionFactory = null,
-        TypeContext $context = null
+        ?DescriptionFactory $descriptionFactory = null,
+        ?TypeContext $context = null
     ) {
         Assert::stringNotEmpty($name);
         Assert::notNull($descriptionFactory);
@@ -69,7 +69,7 @@ class Generic extends BaseTag implements Factory\StaticMethod
     /**
      * Validates if the tag name matches the expected format, otherwise throws an exception.
      */
-    private function validateTagName(string $name)
+    private function validateTagName(string $name): void
     {
         if (! preg_match('/^' . StandardTagFactory::REGEX_TAGNAME . '$/u', $name)) {
             throw new \InvalidArgumentException(

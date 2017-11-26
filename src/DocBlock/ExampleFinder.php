@@ -44,7 +44,7 @@ class ExampleFinder
     /**
      * Registers the project's root directory where an 'examples' folder can be expected.
      */
-    public function setSourceDirectory(string $directory = '')
+    public function setSourceDirectory(string $directory = ''): void
     {
         $this->sourceDirectory = $directory;
     }
@@ -62,7 +62,7 @@ class ExampleFinder
      *
      * @param string[] $directories
      */
-    public function setExampleDirectories(array $directories)
+    public function setExampleDirectories(array $directories): void
     {
         $this->exampleDirectories = $directories;
     }
@@ -89,9 +89,8 @@ class ExampleFinder
      * 4. Checks the path relative to the current working directory for the given filename
      *
      *
-     * @return string|null
      */
-    private function getExampleFileContents(string $filename)
+    private function getExampleFileContents(string $filename): ?string
     {
         $normalizedPath = null;
 

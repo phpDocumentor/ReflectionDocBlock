@@ -37,7 +37,7 @@ final class Param extends BaseTag implements Factory\StaticMethod
     /** @var bool determines whether this is a variadic argument */
     private $isVariadic = false;
 
-    public function __construct(string $variableName, Type $type = null, bool $isVariadic = false, Description $description = null)
+    public function __construct(string $variableName, ?Type $type = null, bool $isVariadic = false, ?Description $description = null)
     {
         $this->variableName = $variableName;
         $this->type = $type;
@@ -50,9 +50,9 @@ final class Param extends BaseTag implements Factory\StaticMethod
      */
     public static function create(
         string $body,
-        TypeResolver $typeResolver = null,
-        DescriptionFactory $descriptionFactory = null,
-        TypeContext $context = null
+        ?TypeResolver $typeResolver = null,
+        ?DescriptionFactory $descriptionFactory = null,
+        ?TypeContext $context = null
     ) {
         Assert::stringNotEmpty($body);
         Assert::allNotNull([$typeResolver, $descriptionFactory]);
@@ -99,9 +99,8 @@ final class Param extends BaseTag implements Factory\StaticMethod
     /**
      * Returns the variable's type or null if unknown.
      *
-     * @return Type|null
      */
-    public function getType()
+    public function getType(): ?Type
     {
         return $this->type;
     }
@@ -109,7 +108,6 @@ final class Param extends BaseTag implements Factory\StaticMethod
     /**
      * Returns whether this tag is variadic.
      *
-     * @return boolean
      */
     public function isVariadic(): bool
     {

@@ -31,7 +31,7 @@ final class Link extends BaseTag implements Factory\StaticMethod
     /**
      * Initializes a link to a URL.
      */
-    public function __construct(string $link, Description $description = null)
+    public function __construct(string $link, ?Description $description = null)
     {
         $this->link = $link;
         $this->description = $description;
@@ -40,7 +40,7 @@ final class Link extends BaseTag implements Factory\StaticMethod
     /**
      * {@inheritdoc}
      */
-    public static function create(string $body, DescriptionFactory $descriptionFactory = null, TypeContext $context = null)
+    public static function create(string $body, ?DescriptionFactory $descriptionFactory = null, ?TypeContext $context = null): Link
     {
         Assert::notNull($descriptionFactory);
 

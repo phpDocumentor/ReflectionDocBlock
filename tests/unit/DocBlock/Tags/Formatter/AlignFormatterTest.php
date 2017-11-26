@@ -30,7 +30,7 @@ class AlignFormatterTest extends TestCase
     /**
      * Call Mockery::close after each test.
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         m::close();
     }
@@ -45,7 +45,7 @@ class AlignFormatterTest extends TestCase
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\Version
      * @uses \phpDocumentor\Reflection\Types\String_
      */
-    public function testFormatterCallsToStringAndReturnsAStandardRepresentation()
+    public function testFormatterCallsToStringAndReturnsAStandardRepresentation(): void
     {
         $tags = [
             new Param('foobar', new String_()),

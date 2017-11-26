@@ -33,7 +33,7 @@ class DocBlockFactoryTest extends TestCase
     /**
      * Call Mockery::close after each test.
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         m::close();
     }
@@ -44,7 +44,7 @@ class DocBlockFactoryTest extends TestCase
      * @uses \phpDocumentor\Reflection\DocBlock\StandardTagFactory
      * @uses \phpDocumentor\Reflection\DocBlock\DescriptionFactory
      */
-    public function testCreateFactoryUsingFactoryMethod()
+    public function testCreateFactoryUsingFactoryMethod(): void
     {
         $fixture = DocBlockFactory::createInstance();
 
@@ -56,7 +56,7 @@ class DocBlockFactoryTest extends TestCase
      * @covers ::create
      * @uses   phpDocumentor\Reflection\DocBlock\Description
      */
-    public function testCreateDocBlockFromReflection()
+    public function testCreateDocBlockFromReflection(): void
     {
         $fixture = new DocBlockFactory(m::mock(DescriptionFactory::class), m::mock(TagFactory::class));
 
@@ -78,7 +78,7 @@ class DocBlockFactoryTest extends TestCase
      * @covers ::create
      * @uses   phpDocumentor\Reflection\DocBlock\Description
      */
-    public function testCreateDocBlockFromStringWithDocComment()
+    public function testCreateDocBlockFromStringWithDocComment(): void
     {
         $fixture = new DocBlockFactory(m::mock(DescriptionFactory::class), m::mock(TagFactory::class));
 
@@ -97,7 +97,7 @@ class DocBlockFactoryTest extends TestCase
      * @covers ::__construct
      * @uses   phpDocumentor\Reflection\DocBlock\Description
      */
-    public function testCreateDocBlockFromStringWithoutDocComment()
+    public function testCreateDocBlockFromStringWithoutDocComment(): void
     {
         $fixture = new DocBlockFactory(m::mock(DescriptionFactory::class), m::mock(TagFactory::class));
 
@@ -118,7 +118,7 @@ class DocBlockFactoryTest extends TestCase
      * @uses         phpDocumentor\Reflection\DocBlock\Description
      * @dataProvider provideSummaryAndDescriptions
      */
-    public function testSummaryAndDescriptionAreSeparated($given, $summary, $description)
+    public function testSummaryAndDescriptionAreSeparated($given, $summary, $description): void
     {
         $tagFactory = m::mock(TagFactory::class);
         $fixture    = new DocBlockFactory(new DescriptionFactory($tagFactory), $tagFactory);
@@ -135,7 +135,7 @@ class DocBlockFactoryTest extends TestCase
      * @uses phpDocumentor\Reflection\DocBlock\DescriptionFactory
      * @uses phpDocumentor\Reflection\DocBlock\Description
      */
-    public function testDescriptionsRetainFormatting()
+    public function testDescriptionsRetainFormatting(): void
     {
         $tagFactory = m::mock(TagFactory::class);
         $fixture    = new DocBlockFactory(new DescriptionFactory($tagFactory), $tagFactory);
@@ -168,7 +168,7 @@ DESCRIPTION;
      * @uses phpDocumentor\Reflection\DocBlock\DescriptionFactory
      * @uses phpDocumentor\Reflection\DocBlock\Description
      */
-    public function testTagsAreInterpretedUsingFactory()
+    public function testTagsAreInterpretedUsingFactory(): void
     {
         $tagString = <<<TAG
 @author Mike van Riel <me@mikevanriel.com> This is with
@@ -255,7 +255,7 @@ DOCBLOCK
      * @uses   phpDocumentor\Reflection\Types\Context
      * @uses   phpDocumentor\Reflection\DocBlock\Tags\Param
      */
-    public function testTagsWithContextNamespace()
+    public function testTagsWithContextNamespace(): void
     {
         $tagFactoryMock = m::mock(TagFactory::class);
         $fixture = new DocBlockFactory(m::mock(DescriptionFactory::class), $tagFactoryMock);
@@ -274,7 +274,7 @@ DOCBLOCK
      * @uses phpDocumentor\Reflection\DocBlock\DescriptionFactory
      * @uses phpDocumentor\Reflection\DocBlock\Description
      */
-    public function testTagsAreFilteredForNullValues()
+    public function testTagsAreFilteredForNullValues(): void
     {
         $tagString = <<<TAG
 @author Mike van Riel <me@mikevanriel.com> This is with

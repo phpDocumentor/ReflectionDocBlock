@@ -18,12 +18,12 @@ class ExampleFinderTest extends TestCase
     /**
      * Call Mockery::close after each test.
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         m::close();
     }
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->fixture = new ExampleFinder();
     }
@@ -34,7 +34,7 @@ class ExampleFinderTest extends TestCase
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\Example
      * @uses \phpDocumentor\Reflection\DocBlock\Description
      */
-    public function testFileNotFound()
+    public function testFileNotFound(): void
     {
         $example = new Example('./example.php', false, 1, 0, new Description('Test'));
         $this->assertSame('** File not found : ./example.php **', $this->fixture->find($example));

@@ -81,7 +81,7 @@ class Description
      * Renders this description as a string where the provided formatter will format the tags in the expected string
      * format.
      */
-    public function render(Formatter $formatter = null): string
+    public function render(?Formatter $formatter = null): string
     {
         if ($formatter === null) {
             $formatter = new PassthroughFormatter();

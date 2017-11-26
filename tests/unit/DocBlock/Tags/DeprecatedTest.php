@@ -28,7 +28,7 @@ class DeprecatedTest extends TestCase
     /**
      * Call Mockery::close after each test.
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         m::close();
     }
@@ -38,7 +38,7 @@ class DeprecatedTest extends TestCase
      * @uses   \phpDocumentor\Reflection\DocBlock\Description
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getName
      */
-    public function testIfCorrectTagNameIsReturned()
+    public function testIfCorrectTagNameIsReturned(): void
     {
         $fixture = new Deprecated('1.0', new Description('Description'));
 
@@ -53,7 +53,7 @@ class DeprecatedTest extends TestCase
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::render
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getName
      */
-    public function testIfTagCanBeRenderedUsingDefaultFormatter()
+    public function testIfTagCanBeRenderedUsingDefaultFormatter(): void
     {
         $fixture = new Deprecated('1.0', new Description('Description'));
 
@@ -65,7 +65,7 @@ class DeprecatedTest extends TestCase
      * @uses   \phpDocumentor\Reflection\DocBlock\Description
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::render
      */
-    public function testIfTagCanBeRenderedUsingSpecificFormatter()
+    public function testIfTagCanBeRenderedUsingSpecificFormatter(): void
     {
         $fixture = new Deprecated('1.0', new Description('Description'));
 
@@ -146,7 +146,7 @@ class DeprecatedTest extends TestCase
      * @uses \phpDocumentor\Reflection\DocBlock\Description
      * @uses \phpDocumentor\Reflection\Types\Context
      */
-    public function testFactoryMethodCreatesEmptyDeprecatedTag()
+    public function testFactoryMethodCreatesEmptyDeprecatedTag(): void
     {
         $descriptionFactory = m::mock(DescriptionFactory::class);
         $descriptionFactory->shouldReceive('create')->never();
@@ -162,7 +162,7 @@ class DeprecatedTest extends TestCase
      * @covers ::create
      * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Deprecated::__construct
      */
-    public function testFactoryMethodReturnsNullIfBodyDoesNotMatchRegex()
+    public function testFactoryMethodReturnsNullIfBodyDoesNotMatchRegex(): void
     {
         $this->assertEquals(new Deprecated(), Deprecated::create('dkhf<'));
     }

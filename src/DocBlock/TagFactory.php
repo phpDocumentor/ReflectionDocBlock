@@ -35,10 +35,9 @@ interface TagFactory
      *
      * These parameters are injected at the last moment and will override any existing parameter with those names.
      *
-     * @param string $name
      * @param mixed  $value
      */
-    public function addParameter(string $name, $value);
+    public function addParameter(string $name, $value): void;
 
     /**
      * Registers a service with the Service Locator using the FQCN of the class or the alias, if provided.
@@ -51,7 +50,7 @@ interface TagFactory
      *
      * @param object $service
      */
-    public function addService($service);
+    public function addService($service): void;
 
     /**
      * Factory method responsible for instantiating the correct sub type.
@@ -62,7 +61,7 @@ interface TagFactory
      *
      * @return Tag A new tag object.
      */
-    public function create(string $tagLine, TypeContext $context = null): ?Tag;
+    public function create(string $tagLine, ?TypeContext $context = null): ?Tag;
 
     /**
      * Registers a handler for tags.
@@ -82,5 +81,5 @@ interface TagFactory
      * @throws \InvalidArgumentException if the handler is not an existing class
      * @throws \InvalidArgumentException if the handler does not implement the {@see Tag} interface
      */
-    public function registerTagHandler(string $tagName, string $handler);
+    public function registerTagHandler(string $tagName, string $handler): void;
 }

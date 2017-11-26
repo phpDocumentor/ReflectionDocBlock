@@ -9,15 +9,12 @@ interface DocBlockFactoryInterface
      *
      * @param string[] $additionalTags
      *
-     * @return DocBlockFactory
      */
     public static function createInstance(array $additionalTags = []): DocBlockFactory;
 
     /**
      * @param string|object $docblock
-     * @param Location $location
      *
-     * @return DocBlock
      */
-    public function create($docblock, Types\Context $context = null, Location $location = null): DocBlock;
+    public function create($docblock, ?Types\Context $context = null, ?Location $location = null): DocBlock;
 }

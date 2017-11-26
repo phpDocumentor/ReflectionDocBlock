@@ -30,7 +30,7 @@ class ParamTest extends TestCase
     /**
      * Call Mockery::close after each test.
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         m::close();
     }
@@ -40,7 +40,7 @@ class ParamTest extends TestCase
      * @uses   \phpDocumentor\Reflection\DocBlock\Description
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getName
      */
-    public function testIfCorrectTagNameIsReturned()
+    public function testIfCorrectTagNameIsReturned(): void
     {
         $fixture = new Param('myParameter', null, false, new Description('Description'));
 
@@ -56,7 +56,7 @@ class ParamTest extends TestCase
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::render
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getName
      */
-    public function testIfTagCanBeRenderedUsingDefaultFormatter()
+    public function testIfTagCanBeRenderedUsingDefaultFormatter(): void
     {
         $fixture = new Param('myParameter', new String_(), true, new Description('Description'));
         $this->assertSame('@param string ...$myParameter Description', $fixture->render());
@@ -75,7 +75,7 @@ class ParamTest extends TestCase
      * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Param::__construct
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::render
      */
-    public function testIfTagCanBeRenderedUsingSpecificFormatter()
+    public function testIfTagCanBeRenderedUsingSpecificFormatter(): void
     {
         $fixture = new Param('myParameter');
 
@@ -89,7 +89,7 @@ class ParamTest extends TestCase
      * @covers ::__construct
      * @covers ::getVariableName
      */
-    public function testHasVariableName()
+    public function testHasVariableName(): void
     {
         $expected = 'myParameter';
 
@@ -102,7 +102,7 @@ class ParamTest extends TestCase
      * @covers ::__construct
      * @covers ::getType
      */
-    public function testHasType()
+    public function testHasType(): void
     {
         $expected = new String_();
 
@@ -115,7 +115,7 @@ class ParamTest extends TestCase
      * @covers ::__construct
      * @covers ::isVariadic
      */
-    public function testIfParameterIsVariadic()
+    public function testIfParameterIsVariadic(): void
     {
         $fixture = new Param('myParameter', new String_(), false);
         $this->assertFalse($fixture->isVariadic());
@@ -129,7 +129,7 @@ class ParamTest extends TestCase
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getDescription
      * @uses   \phpDocumentor\Reflection\DocBlock\Description
      */
-    public function testHasDescription()
+    public function testHasDescription(): void
     {
         $expected = new Description('Description');
 
@@ -145,7 +145,7 @@ class ParamTest extends TestCase
      * @uses   \phpDocumentor\Reflection\DocBlock\Description
      * @uses   \phpDocumentor\Reflection\Types\String_
      */
-    public function testStringRepresentationIsReturned()
+    public function testStringRepresentationIsReturned(): void
     {
         $fixture = new Param('myParameter', new String_(), true, new Description('Description'));
 
@@ -159,7 +159,7 @@ class ParamTest extends TestCase
      * @uses \phpDocumentor\Reflection\DocBlock\Description
      * @uses \phpDocumentor\Reflection\Types\Context
      */
-    public function testFactoryMethod()
+    public function testFactoryMethod(): void
     {
         $typeResolver = new TypeResolver();
         $descriptionFactory = m::mock(DescriptionFactory::class);
@@ -184,7 +184,7 @@ class ParamTest extends TestCase
      * @uses \phpDocumentor\Reflection\DocBlock\DescriptionFactory
      * @expectedException \InvalidArgumentException
      */
-    public function testFactoryMethodFailsIfEmptyBodyIsGiven()
+    public function testFactoryMethodFailsIfEmptyBodyIsGiven(): void
     {
         $descriptionFactory = m::mock(DescriptionFactory::class);
         Param::create('', new TypeResolver(), $descriptionFactory);
@@ -194,7 +194,7 @@ class ParamTest extends TestCase
      * @covers ::create
      * @expectedException \InvalidArgumentException
      */
-    public function testFactoryMethodFailsIfResolverIsNull()
+    public function testFactoryMethodFailsIfResolverIsNull(): void
     {
         Param::create('body');
     }
@@ -204,7 +204,7 @@ class ParamTest extends TestCase
      * @uses \phpDocumentor\Reflection\TypeResolver
      * @expectedException \InvalidArgumentException
      */
-    public function testFactoryMethodFailsIfDescriptionFactoryIsNull()
+    public function testFactoryMethodFailsIfDescriptionFactoryIsNull(): void
     {
         Param::create('body', new TypeResolver());
     }

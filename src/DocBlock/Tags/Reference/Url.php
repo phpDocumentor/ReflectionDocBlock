@@ -34,7 +34,7 @@ final class Url implements Reference
         $this->uri = $uri;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->uri;
     }

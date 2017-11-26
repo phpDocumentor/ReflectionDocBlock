@@ -34,7 +34,7 @@ class PropertyWrite extends BaseTag implements Factory\StaticMethod
     /** @var string */
     protected $variableName = '';
 
-    public function __construct(string $variableName, Type $type = null, Description $description = null)
+    public function __construct(string $variableName, ?Type $type = null, ?Description $description = null)
     {
         $this->variableName = $variableName;
         $this->type = $type;
@@ -46,9 +46,9 @@ class PropertyWrite extends BaseTag implements Factory\StaticMethod
      */
     public static function create(
         string $body,
-        TypeResolver $typeResolver = null,
-        DescriptionFactory $descriptionFactory = null,
-        TypeContext $context = null
+        ?TypeResolver $typeResolver = null,
+        ?DescriptionFactory $descriptionFactory = null,
+        ?TypeContext $context = null
     ) {
         Assert::stringNotEmpty($body);
         Assert::allNotNull([$typeResolver, $descriptionFactory]);
@@ -89,9 +89,8 @@ class PropertyWrite extends BaseTag implements Factory\StaticMethod
     /**
      * Returns the variable's type or null if unknown.
      *
-     * @return Type|null
      */
-    public function getType()
+    public function getType(): ?Type
     {
         return $this->type;
     }

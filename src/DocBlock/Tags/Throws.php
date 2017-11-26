@@ -30,7 +30,7 @@ final class Throws extends BaseTag implements Factory\StaticMethod
     /** @var Type */
     private $type;
 
-    public function __construct(Type $type, Description $description = null)
+    public function __construct(Type $type, ?Description $description = null)
     {
         $this->type        = $type;
         $this->description = $description;
@@ -41,9 +41,9 @@ final class Throws extends BaseTag implements Factory\StaticMethod
      */
     public static function create(
         string $body,
-        TypeResolver $typeResolver = null,
-        DescriptionFactory $descriptionFactory = null,
-        TypeContext $context = null
+        ?TypeResolver $typeResolver = null,
+        ?DescriptionFactory $descriptionFactory = null,
+        ?TypeContext $context = null
     ) {
         Assert::allNotNull([$typeResolver, $descriptionFactory]);
 
@@ -58,14 +58,13 @@ final class Throws extends BaseTag implements Factory\StaticMethod
     /**
      * Returns the type section of the variable.
      *
-     * @return Type
      */
     public function getType(): Type
     {
         return $this->type;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->type . ' ' . $this->description;
     }

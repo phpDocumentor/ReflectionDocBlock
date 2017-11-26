@@ -28,7 +28,7 @@ class GenericTest extends TestCase
     /**
      * Call Mockery::close after each test.
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         m::close();
     }
@@ -37,7 +37,7 @@ class GenericTest extends TestCase
      * @uses   \phpDocumentor\Reflection\DocBlock\Description
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getName
      */
-    public function testIfCorrectTagNameIsReturned()
+    public function testIfCorrectTagNameIsReturned(): void
     {
         $fixture = new Generic('generic', new Description('Description'));
 
@@ -52,7 +52,7 @@ class GenericTest extends TestCase
      * @uses   \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getName
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::render
      */
-    public function testIfTagCanBeRenderedUsingDefaultFormatter()
+    public function testIfTagCanBeRenderedUsingDefaultFormatter(): void
     {
         $fixture = new Generic('generic', new Description('Description'));
 
@@ -64,7 +64,7 @@ class GenericTest extends TestCase
      * @uses   \phpDocumentor\Reflection\DocBlock\Description
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::render
      */
-    public function testIfTagCanBeRenderedUsingSpecificFormatter()
+    public function testIfTagCanBeRenderedUsingSpecificFormatter(): void
     {
         $fixture = new Generic('generic', new Description('Description'));
 
@@ -79,7 +79,7 @@ class GenericTest extends TestCase
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getDescription
      * @uses   \phpDocumentor\Reflection\DocBlock\Description
      */
-    public function testHasDescription()
+    public function testHasDescription(): void
     {
         $expected = new Description('Description');
 
@@ -94,7 +94,7 @@ class GenericTest extends TestCase
      * @uses   \phpDocumentor\Reflection\DocBlock\Description
      * @uses   \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getName
      */
-    public function testStringRepresentationIsReturned()
+    public function testStringRepresentationIsReturned(): void
     {
         $fixture = new Generic('generic', new Description('Description'));
 
@@ -108,7 +108,7 @@ class GenericTest extends TestCase
      * @uses \phpDocumentor\Reflection\DocBlock\Description
      * @uses \phpDocumentor\Reflection\Types\Context
      */
-    public function testFactoryMethod()
+    public function testFactoryMethod(): void
     {
         $descriptionFactory = m::mock(DescriptionFactory::class);
         $context = new Context('');
@@ -129,7 +129,7 @@ class GenericTest extends TestCase
      * @covers ::create
      * @expectedException \InvalidArgumentException
      */
-    public function testFactoryMethodFailsIfNameIsNotEmpty()
+    public function testFactoryMethodFailsIfNameIsNotEmpty(): void
     {
         Generic::create('', '');
     }
@@ -139,7 +139,7 @@ class GenericTest extends TestCase
      * @covers ::__construct
      * @expectedException \InvalidArgumentException
      */
-    public function testFactoryMethodFailsIfNameContainsIllegalCharacters()
+    public function testFactoryMethodFailsIfNameContainsIllegalCharacters(): void
     {
         Generic::create('', 'name/myname');
     }
