@@ -74,71 +74,70 @@ class DeprecatedTest extends TestCase
 
         $this->assertSame('Rendered output', $fixture->render($formatter));
     }
-//
-//    /**
-//     * @covers ::__construct
-//     * @covers ::getVersion
-//     */
-//    public function testHasVersionNumber()
-//    {
-//        $expected = '1.0';
-//
-//        $fixture = new Deprecated($expected);
-//
-//        $this->assertSame($expected, $fixture->getVersion());
-//    }
-//
-//    /**
-//     * @covers ::__construct
-//     * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getDescription
-//     * @uses   \phpDocumentor\Reflection\DocBlock\Description
-//     */
-//    public function testHasDescription()
-//    {
-//        $expected = new Description('Description');
-//
-//        $fixture = new Deprecated('1.0', $expected);
-//
-//        $this->assertSame($expected, $fixture->getDescription());
-//    }
-//
-//    /**
-//     * @covers ::__construct
-//     * @covers ::__toString
-//     * @uses   \phpDocumentor\Reflection\DocBlock\Description
-//     */
-//    public function testStringRepresentationIsReturned()
-//    {
-//        $fixture = new Deprecated('1.0', new Description('Description'));
-//
-//        $this->assertSame('1.0 Description', (string)$fixture);
-//    }
-//
-//    /**
-//     * @covers ::create
-//     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Deprecated::<public>
-//     * @uses \phpDocumentor\Reflection\DocBlock\DescriptionFactory
-//     * @uses \phpDocumentor\Reflection\DocBlock\Description
-//     * @uses \phpDocumentor\Reflection\Types\Context
-//     */
-//    public function testFactoryMethod()
-//    {
-//        $descriptionFactory = m::mock(DescriptionFactory::class);
-//        $context = new Context('');
-//
-//        $version = '1.0';
-//        $description = new Description('My Description');
-//
-//        $descriptionFactory->shouldReceive('create')->with('My Description', $context)->andReturn($description);
-//
-//        $fixture = Deprecated::create('1.0 My Description', $descriptionFactory, $context);
-//
-//        $this->assertSame('1.0 My Description', (string)$fixture);
-//        $this->assertSame($version, $fixture->getVersion());
-//        $this->assertSame($description, $fixture->getDescription());
-//    }
 
-//
+    /**
+     * @covers ::__construct
+     * @covers ::getVersion
+     */
+    public function testHasVersionNumber()
+    {
+        $expected = '1.0';
+
+        $fixture = new Deprecated($expected);
+
+        $this->assertSame($expected, $fixture->getVersion());
+    }
+
+    /**
+     * @covers ::__construct
+     * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getDescription
+     * @uses   \phpDocumentor\Reflection\DocBlock\Description
+     */
+    public function testHasDescription()
+    {
+        $expected = new Description('Description');
+
+        $fixture = new Deprecated('1.0', $expected);
+
+        $this->assertSame($expected, $fixture->getDescription());
+    }
+
+    /**
+     * @covers ::__construct
+     * @covers ::__toString
+     * @uses   \phpDocumentor\Reflection\DocBlock\Description
+     */
+    public function testStringRepresentationIsReturned()
+    {
+        $fixture = new Deprecated('1.0', new Description('Description'));
+
+        $this->assertSame('1.0 Description', (string)$fixture);
+    }
+
+    /**
+     * @covers ::create
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Deprecated::<public>
+     * @uses \phpDocumentor\Reflection\DocBlock\DescriptionFactory
+     * @uses \phpDocumentor\Reflection\DocBlock\Description
+     * @uses \phpDocumentor\Reflection\Types\Context
+     */
+    public function testFactoryMethod()
+    {
+        $descriptionFactory = m::mock(DescriptionFactory::class);
+        $context = new Context('');
+
+        $version = '1.0';
+        $description = new Description('My Description');
+
+        $descriptionFactory->shouldReceive('create')->with('My Description', $context)->andReturn($description);
+
+        $fixture = Deprecated::create('1.0 My Description', $descriptionFactory, $context);
+
+        $this->assertSame('1.0 My Description', (string)$fixture);
+        $this->assertSame($version, $fixture->getVersion());
+        $this->assertSame($description, $fixture->getDescription());
+    }
+
     /**
      * @covers ::create
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\Deprecated::<public>
