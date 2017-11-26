@@ -10,6 +10,7 @@
  * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      http://phpdoc.org
  */
+
 namespace phpDocumentor\Reflection\DocBlock\Tags;
 
 use Mockery as m;

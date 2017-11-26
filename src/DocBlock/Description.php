@@ -15,7 +15,6 @@ namespace phpDocumentor\Reflection\DocBlock;
 
 use phpDocumentor\Reflection\DocBlock\Tags\Formatter;
 use phpDocumentor\Reflection\DocBlock\Tags\Formatter\PassthroughFormatter;
-use Webmozart\Assert\Assert;
 
 /**
  * Object representing to description for a DocBlock.
