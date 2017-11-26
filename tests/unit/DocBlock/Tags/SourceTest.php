@@ -161,7 +161,7 @@ class SourceTest extends TestCase
      * @uses \phpDocumentor\Reflection\TypeResolver
      * @uses \phpDocumentor\Reflection\DocBlock\DescriptionFactory
      */
-    public function testFactoryMethodFailsIfEmptyBodyIsGiven() : void
+    public function testFactoryMethodFailsIfEmptyBodyIsGiven(): void
     {
         $this->expectException('InvalidArgumentException');
         $descriptionFactory = m::mock(DescriptionFactory::class);
@@ -172,7 +172,7 @@ class SourceTest extends TestCase
      * @covers ::create
      * @uses \phpDocumentor\Reflection\TypeResolver
      */
-    public function testFactoryMethodFailsIfDescriptionFactoryIsNull() : void
+    public function testFactoryMethodFailsIfDescriptionFactoryIsNull(): void
     {
         $this->expectException('InvalidArgumentException');
         Source::create('1');
@@ -181,7 +181,7 @@ class SourceTest extends TestCase
     /**
      * @covers ::__construct
      */
-    public function testExceptionIsThrownIfStartingLineIsNotInteger() : void
+    public function testExceptionIsThrownIfStartingLineIsNotInteger(): void
     {
         $this->expectException('InvalidArgumentException');
         new Source('blabla');
@@ -190,7 +190,7 @@ class SourceTest extends TestCase
     /**
      * @covers ::__construct
      */
-    public function testExceptionIsThrownIfLineCountIsNotIntegerOrNull() : void
+    public function testExceptionIsThrownIfLineCountIsNotIntegerOrNull(): void
     {
         $this->expectException('InvalidArgumentException');
         new Source('1', []);

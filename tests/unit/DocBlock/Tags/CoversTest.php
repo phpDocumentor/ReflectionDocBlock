@@ -149,7 +149,7 @@ class CoversTest extends TestCase
     /**
      * @covers ::create
      */
-    public function testFactoryMethodFailsIfBodyIsNotEmpty() : void
+    public function testFactoryMethodFailsIfBodyIsNotEmpty(): void
     {
         $this->expectException('InvalidArgumentException');
         $this->assertNull(Covers::create(''));

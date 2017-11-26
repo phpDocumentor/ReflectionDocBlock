@@ -367,7 +367,7 @@ class MethodTest extends TestCase
     /**
      * @covers ::create
      */
-    public function testFactoryMethodFailsIfBodyIsEmpty() : void
+    public function testFactoryMethodFailsIfBodyIsEmpty(): void
     {
         $this->expectException('InvalidArgumentException');
         Method::create('');
@@ -376,7 +376,7 @@ class MethodTest extends TestCase
     /**
      * @covers ::create
      */
-    public function testFactoryMethodReturnsNullIfBodyIsIncorrect() : void
+    public function testFactoryMethodReturnsNullIfBodyIsIncorrect(): void
     {
         $this->expectException('InvalidArgumentException');
         $this->assertNull(Method::create('body('));
@@ -385,7 +385,7 @@ class MethodTest extends TestCase
     /**
      * @covers ::create
      */
-    public function testFactoryMethodFailsIfResolverIsNull() : void
+    public function testFactoryMethodFailsIfResolverIsNull(): void
     {
         $this->expectException('InvalidArgumentException');
         Method::create('body');
@@ -394,7 +394,7 @@ class MethodTest extends TestCase
     /**
      * @covers ::create
      */
-    public function testFactoryMethodFailsIfDescriptionFactoryIsNull() : void
+    public function testFactoryMethodFailsIfDescriptionFactoryIsNull(): void
     {
         $this->expectException('InvalidArgumentException');
         Method::create('body', new TypeResolver());
@@ -403,7 +403,7 @@ class MethodTest extends TestCase
     /**
      * @covers ::__construct
      */
-    public function testCreationFailsIfBodyIsNotString() : void
+    public function testCreationFailsIfBodyIsNotString(): void
     {
         $this->expectException('InvalidArgumentException');
         new Method([]);
@@ -412,7 +412,7 @@ class MethodTest extends TestCase
     /**
      * @covers ::__construct
      */
-    public function testCreationFailsIfBodyIsEmpty() : void
+    public function testCreationFailsIfBodyIsEmpty(): void
     {
         $this->expectException('InvalidArgumentException');
         new Method('');
@@ -421,7 +421,7 @@ class MethodTest extends TestCase
     /**
      * @covers ::__construct
      */
-    public function testCreationFailsIfStaticIsNotBoolean() : void
+    public function testCreationFailsIfStaticIsNotBoolean(): void
     {
         $this->expectException('InvalidArgumentException');
         new Method('body', [], null, []);
@@ -430,7 +430,7 @@ class MethodTest extends TestCase
     /**
      * @covers ::__construct
      */
-    public function testCreationFailsIfArgumentRecordContainsInvalidEntry() : void
+    public function testCreationFailsIfArgumentRecordContainsInvalidEntry(): void
     {
         $this->expectException('InvalidArgumentException');
         new Method('body', [ [ 'name' => 'myName', 'unknown' => 'nah' ] ]);

@@ -145,7 +145,7 @@ class ThrowsTest extends TestCase
     /**
      * @covers ::create
      */
-    public function testFactoryMethodFailsIfBodyIsNotEmpty() : void
+    public function testFactoryMethodFailsIfBodyIsNotEmpty(): void
     {
         $this->expectException('InvalidArgumentException');
         $this->assertNull(Throws::create(''));
@@ -154,7 +154,7 @@ class ThrowsTest extends TestCase
     /**
      * @covers ::create
      */
-    public function testFactoryMethodFailsIfResolverIsNull() : void
+    public function testFactoryMethodFailsIfResolverIsNull(): void
     {
         $this->expectException('InvalidArgumentException');
         Throws::create('body');
@@ -163,7 +163,7 @@ class ThrowsTest extends TestCase
     /**
      * @covers ::create
      */
-    public function testFactoryMethodFailsIfDescriptionFactoryIsNull() : void
+    public function testFactoryMethodFailsIfDescriptionFactoryIsNull(): void
     {
         $this->expectException('InvalidArgumentException');
         Throws::create('body', new TypeResolver());
