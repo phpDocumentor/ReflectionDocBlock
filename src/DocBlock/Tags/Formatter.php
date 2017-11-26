@@ -21,7 +21,6 @@ interface Formatter
      * Formats a tag into a string representation according to a specific format, such as Markdown.
      *
      *
-     * @return string
      */
     public function format(Tag $tag): string;
 }

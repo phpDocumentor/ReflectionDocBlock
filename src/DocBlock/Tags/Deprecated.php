@@ -29,7 +29,7 @@ final class Deprecated extends BaseTag implements Factory\StaticMethod
      * PCRE regular expression matching a version vector.
      * Assumes the "x" modifier.
      */
-    const REGEX_VECTOR = '(?:
+    public const REGEX_VECTOR = '(?:
         # Normal release vectors.
         \d\S*
         |
@@ -44,7 +44,7 @@ final class Deprecated extends BaseTag implements Factory\StaticMethod
     /** @var string The version vector. */
     private $version = '';
 
-    public function __construct($version = null, Description $description = null)
+    public function __construct($version = null, ?Description $description = null)
     {
         Assert::nullOrStringNotEmpty($version);
 
@@ -57,8 +57,8 @@ final class Deprecated extends BaseTag implements Factory\StaticMethod
      */
     public static function create(
         ?string $body,
-        DescriptionFactory $descriptionFactory = null,
-        TypeContext $context = null
+        ?DescriptionFactory $descriptionFactory = null,
+        ?TypeContext $context = null
     ) {
         if (empty($body)) {
             return new static();
@@ -81,9 +81,8 @@ final class Deprecated extends BaseTag implements Factory\StaticMethod
     /**
      * Gets the version section of the tag.
      *
-     * @return string|null
      */
-    public function getVersion()
+    public function getVersion(): ?string
     {
         return $this->version;
     }

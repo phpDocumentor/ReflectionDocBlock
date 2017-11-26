@@ -26,12 +26,12 @@ class UsingTagsTest extends TestCase
     /**
      * Call Mockery::close after each test.
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         m::close();
     }
 
-    public function testAddingYourOwnTagUsingAStaticMethodAsFactory()
+    public function testAddingYourOwnTagUsingAStaticMethodAsFactory(): void
     {
         /**
          * @var object[] $customTagObjects

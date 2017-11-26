@@ -26,7 +26,7 @@ class SerializerTest extends TestCase
     /**
      * Call Mockery::close after each test.
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         m::close();
     }
@@ -40,7 +40,7 @@ class SerializerTest extends TestCase
      * @uses phpDocumentor\Reflection\DocBlock\Tags\BaseTag
      * @uses phpDocumentor\Reflection\DocBlock\Tags\Generic
      */
-    public function testReconstructsADocCommentFromADocBlock()
+    public function testReconstructsADocCommentFromADocBlock(): void
     {
         $expected = <<<'DOCCOMMENT'
 /**
@@ -74,7 +74,7 @@ DOCCOMMENT;
      * @uses phpDocumentor\Reflection\DocBlock\Tags\BaseTag
      * @uses phpDocumentor\Reflection\DocBlock\Tags\Generic
      */
-    public function testAddPrefixToDocBlock()
+    public function testAddPrefixToDocBlock(): void
     {
         $expected = <<<'DOCCOMMENT'
 aa/**
@@ -108,7 +108,7 @@ DOCCOMMENT;
      * @uses phpDocumentor\Reflection\DocBlock\Tags\BaseTag
      * @uses phpDocumentor\Reflection\DocBlock\Tags\Generic
      */
-    public function testAddPrefixToDocBlockExceptFirstLine()
+    public function testAddPrefixToDocBlockExceptFirstLine(): void
     {
         $expected = <<<'DOCCOMMENT'
 /**
@@ -142,7 +142,7 @@ DOCCOMMENT;
      * @uses phpDocumentor\Reflection\DocBlock\Tags\BaseTag
      * @uses phpDocumentor\Reflection\DocBlock\Tags\Generic
      */
-    public function testWordwrapsAroundTheGivenAmountOfCharacters()
+    public function testWordwrapsAroundTheGivenAmountOfCharacters(): void
     {
         $expected = <<<'DOCCOMMENT'
 /**

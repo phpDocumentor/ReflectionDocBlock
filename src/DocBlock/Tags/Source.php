@@ -32,7 +32,7 @@ final class Source extends BaseTag implements Factory\StaticMethod
     /** @var int|null The number of lines, relative to the starting line. NULL means "to the end". */
     private $lineCount = null;
 
-    public function __construct($startingLine, $lineCount = null, Description $description = null)
+    public function __construct($startingLine, $lineCount = null, ?Description $description = null)
     {
         Assert::integerish($startingLine);
         Assert::nullOrIntegerish($lineCount);
@@ -47,8 +47,8 @@ final class Source extends BaseTag implements Factory\StaticMethod
      */
     public static function create(
         string $body,
-        DescriptionFactory $descriptionFactory = null,
-        TypeContext $context = null
+        ?DescriptionFactory $descriptionFactory = null,
+        ?TypeContext $context = null
     ) {
         Assert::stringNotEmpty($body);
         Assert::notNull($descriptionFactory);
@@ -87,12 +87,12 @@ final class Source extends BaseTag implements Factory\StaticMethod
      * @return int|null The number of lines, relative to the starting line. NULL
      *     means "to the end".
      */
-    public function getLineCount()
+    public function getLineCount(): ?int
     {
         return $this->lineCount;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->startingLine
         . ($this->lineCount !== null ? ' ' . $this->lineCount : '')

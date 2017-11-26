@@ -39,7 +39,7 @@ use Webmozart\Assert\Assert;
 final class StandardTagFactory implements TagFactory
 {
     /** PCRE regular expression matching a tag name. */
-    const REGEX_TAGNAME = '[\w\-\_\\\\]+';
+    public const REGEX_TAGNAME = '[\w\-\_\\\\]+';
 
     /**
      * @var string[] An array with a tag as a key, and an FQCN to a class that handles it as an array value.
@@ -92,7 +92,7 @@ final class StandardTagFactory implements TagFactory
      *
      * @see self::registerTagHandler() to add a new tag handler to the existing default list.
      */
-    public function __construct(FqsenResolver $fqsenResolver, array $tagHandlers = null)
+    public function __construct(FqsenResolver $fqsenResolver, ?array $tagHandlers = null)
     {
         $this->fqsenResolver = $fqsenResolver;
         if ($tagHandlers !== null) {
@@ -105,13 +105,13 @@ final class StandardTagFactory implements TagFactory
     /**
      * {@inheritDoc}
      */
-    public function create(string $tagLine, TypeContext $context = null): Tag
+    public function create(string $tagLine, ?TypeContext $context = null): Tag
     {
         if (! $context) {
             $context = new TypeContext('');
         }
 
-        list($tagName, $tagBody) = $this->extractTagParts($tagLine);
+        [$tagName, $tagBody] = $this->extractTagParts($tagLine);
 
         if ($tagBody !== '' && $tagBody[0] === '[') {
             throw new \InvalidArgumentException(
@@ -125,7 +125,7 @@ final class StandardTagFactory implements TagFactory
     /**
      * {@inheritDoc}
      */
-    public function addParameter(string $name, $value)
+    public function addParameter(string $name, $value): void
     {
         $this->serviceLocator[$name] = $value;
     }
@@ -133,7 +133,7 @@ final class StandardTagFactory implements TagFactory
     /**
      * {@inheritDoc}
      */
-    public function addService($service, $alias = null)
+    public function addService($service, $alias = null): void
     {
         $this->serviceLocator[$alias ?: get_class($service)] = $service;
     }
@@ -141,7 +141,7 @@ final class StandardTagFactory implements TagFactory
     /**
      * {@inheritDoc}
      */
-    public function registerTagHandler(string $tagName, string $handler)
+    public function registerTagHandler(string $tagName, string $handler): void
     {
         Assert::stringNotEmpty($tagName);
         Assert::stringNotEmpty($handler);
@@ -184,9 +184,8 @@ final class StandardTagFactory implements TagFactory
      * body was invalid.
      *
      *
-     * @return Tag|null
      */
-    private function createTag(string $body, string $name, TypeContext $context)
+    private function createTag(string $body, string $name, TypeContext $context): ?Tag
     {
         $handlerClassName = $this->findHandlerClassName($name, $context);
         $arguments        = $this->getArgumentsForParametersFromWiring(

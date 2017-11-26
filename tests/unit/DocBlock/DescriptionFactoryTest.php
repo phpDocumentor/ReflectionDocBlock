@@ -27,7 +27,7 @@ class DescriptionFactoryTest extends TestCase
     /**
      * Call Mockery::close after each test.
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         m::close();
     }
@@ -38,7 +38,7 @@ class DescriptionFactoryTest extends TestCase
      * @uses         phpDocumentor\Reflection\DocBlock\Description
      * @dataProvider provideSimpleExampleDescriptions
      */
-    public function testDescriptionCanParseASimpleString($contents)
+    public function testDescriptionCanParseASimpleString($contents): void
     {
         $tagFactory = m::mock(TagFactory::class);
         $tagFactory->shouldReceive('create')->never();
@@ -55,7 +55,7 @@ class DescriptionFactoryTest extends TestCase
      * @uses         phpDocumentor\Reflection\DocBlock\Description
      * @dataProvider provideEscapeSequences
      */
-    public function testEscapeSequences($contents, $expected)
+    public function testEscapeSequences($contents, $expected): void
     {
         $tagFactory = m::mock(TagFactory::class);
         $tagFactory->shouldReceive('create')->never();
@@ -75,7 +75,7 @@ class DescriptionFactoryTest extends TestCase
      * @uses   phpDocumentor\Reflection\DocBlock\Tags\Formatter\PassthroughFormatter
      * @uses   phpDocumentor\Reflection\Types\Context
      */
-    public function testDescriptionCanParseAStringWithInlineTag()
+    public function testDescriptionCanParseAStringWithInlineTag(): void
     {
         $contents   = 'This is text for a {@link http://phpdoc.org/ description} that uses an inline tag.';
         $context    = new Context('');
@@ -100,7 +100,7 @@ class DescriptionFactoryTest extends TestCase
      * @uses   phpDocumentor\Reflection\DocBlock\Tags\Formatter\PassthroughFormatter
      * @uses   phpDocumentor\Reflection\Types\Context
      */
-    public function testDescriptionCanParseAStringStartingWithInlineTag()
+    public function testDescriptionCanParseAStringStartingWithInlineTag(): void
     {
         $contents   = '{@link http://phpdoc.org/ This} is text for a description that starts with an inline tag.';
         $context    = new Context('');
@@ -121,7 +121,7 @@ class DescriptionFactoryTest extends TestCase
      * @covers ::create
      * @uses   phpDocumentor\Reflection\DocBlock\Description
      */
-    public function testIfSuperfluousStartingSpacesAreRemoved()
+    public function testIfSuperfluousStartingSpacesAreRemoved(): void
     {
         $factory         = new DescriptionFactory(m::mock(TagFactory::class));
         $descriptionText = <<<DESCRIPTION

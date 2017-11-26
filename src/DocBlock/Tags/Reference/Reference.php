@@ -18,5 +18,5 @@ namespace phpDocumentor\Reflection\DocBlock\Tags\Reference;
  */
 interface Reference
 {
-    public function __toString();
+    public function __toString(): string;
 }

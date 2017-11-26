@@ -28,12 +28,12 @@ class InterpretingDocBlocksTest extends TestCase
     /**
      * Call Mockery::close after each test.
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         m::close();
     }
 
-    public function testInterpretingASimpleDocBlock()
+    public function testInterpretingASimpleDocBlock(): void
     {
         /**
          * @var DocBlock    $docblock
@@ -56,7 +56,7 @@ DESCRIPTION;
         $this->assertEmpty($docblock->getTags());
     }
 
-    public function testInterpretingTags()
+    public function testInterpretingTags(): void
     {
         /**
          * @var DocBlock $docblock
@@ -78,7 +78,7 @@ DESCRIPTION;
         $this->assertSame('', (string)$seeTag->getDescription());
     }
 
-    public function testDescriptionsCanEscapeAtSignsAndClosingBraces()
+    public function testDescriptionsCanEscapeAtSignsAndClosingBraces(): void
     {
         /**
          * @var string      $docComment

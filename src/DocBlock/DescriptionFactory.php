@@ -49,11 +49,10 @@ class DescriptionFactory
      * Returns the parsed text of this description.
      *
      *
-     * @return Description
      */
-    public function create(string $contents, TypeContext $context = null): Description
+    public function create(string $contents, ?TypeContext $context = null): Description
     {
-        list($text, $tags) = $this->parse($this->lex($contents), $context);
+        [$text, $tags] = $this->parse($this->lex($contents), $context);
 
         return new Description($text, $tags);
     }

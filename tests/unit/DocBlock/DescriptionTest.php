@@ -26,7 +26,7 @@ class DescriptionTest extends TestCase
     /**
      * Call Mockery::close after each test.
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         m::close();
     }
@@ -38,7 +38,7 @@ class DescriptionTest extends TestCase
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\BaseTag
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\Formatter\PassthroughFormatter
      */
-    public function testDescriptionCanRenderUsingABodyWithPlaceholdersAndTags()
+    public function testDescriptionCanRenderUsingABodyWithPlaceholdersAndTags(): void
     {
         $body = 'This is a %1$s body.';
         $expected = 'This is a {@internal significant} body.';
@@ -63,7 +63,7 @@ class DescriptionTest extends TestCase
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\BaseTag
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\Formatter\PassthroughFormatter
      */
-    public function testDescriptionCanBeCastToString()
+    public function testDescriptionCanBeCastToString(): void
     {
         $body = 'This is a %1$s body.';
         $expected = 'This is a {@internal significant} body.';
@@ -79,7 +79,7 @@ class DescriptionTest extends TestCase
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\Generic
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\BaseTag
      */
-    public function testDescriptionTagsGetter()
+    public function testDescriptionTagsGetter(): void
     {
         $body = '@JoinTable(name="table", joinColumns=%1$s, inverseJoinColumns=%2$s)';
 
@@ -109,7 +109,7 @@ class DescriptionTest extends TestCase
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\BaseTag
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\Formatter\PassthroughFormatter
      */
-    public function testDescriptionMultipleTagsCanBeCastToString()
+    public function testDescriptionMultipleTagsCanBeCastToString(): void
     {
         $body = '@JoinTable(name="table", joinColumns=%1$s, inverseJoinColumns=%2$s)';
 

@@ -43,9 +43,9 @@ final class Method extends BaseTag implements Factory\StaticMethod
     public function __construct(
         $methodName,
         array $arguments = [],
-        Type $returnType = null,
+        ?Type $returnType = null,
         $static = false,
-        Description $description = null
+        ?Description $description = null
     ) {
         Assert::stringNotEmpty($methodName);
         Assert::boolean($static);
@@ -66,10 +66,10 @@ final class Method extends BaseTag implements Factory\StaticMethod
      */
     public static function create(
         string $body,
-        TypeResolver $typeResolver = null,
-        DescriptionFactory $descriptionFactory = null,
-        TypeContext $context = null
-    ) {
+        ?TypeResolver $typeResolver = null,
+        ?DescriptionFactory $descriptionFactory = null,
+        ?TypeContext $context = null
+    ): Method {
         Assert::stringNotEmpty($body);
         Assert::allNotNull([ $typeResolver, $descriptionFactory ]);
 
@@ -123,7 +123,7 @@ final class Method extends BaseTag implements Factory\StaticMethod
             return null;
         }
 
-        list(, $static, $returnType, $methodName, $arguments, $description) = $matches;
+        [, $static, $returnType, $methodName, $arguments, $description] = $matches;
 
         $static      = $static === 'static';
 
@@ -193,7 +193,7 @@ final class Method extends BaseTag implements Factory\StaticMethod
         return $this->returnType;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         $arguments = [];
         foreach ($this->arguments as $argument) {

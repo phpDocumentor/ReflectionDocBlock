@@ -46,10 +46,10 @@ final class DocBlock
      */
     public function __construct(
         string $summary = '',
-        DocBlock\Description $description = null,
+        ?DocBlock\Description $description = null,
         array $tags = [],
-        Types\Context $context = null,
-        Location $location = null,
+        ?Types\Context $context = null,
+        ?Location $location = null,
         bool $isTemplateStart = false,
         bool $isTemplateEnd = false
     ) {
@@ -84,7 +84,6 @@ final class DocBlock
     /**
      * Returns the current context.
      *
-     * @return Types\Context
      */
     public function getContext(): Types\Context
     {
@@ -118,7 +117,6 @@ final class DocBlock
      *
      * @see self::isTemplateEnd() for the check whether a closing marker was provided.
      *
-     * @return boolean
      */
     public function isTemplateStart(): bool
     {
@@ -130,7 +128,6 @@ final class DocBlock
      *
      * @see self::isTemplateStart() for a more complete description of the Docblock Template functionality.
      *
-     * @return boolean
      */
     public function isTemplateEnd(): bool
     {
@@ -193,7 +190,7 @@ final class DocBlock
      *
      * @param Tag $tag The tag to remove.
      */
-    public function removeTag(Tag $tagToRemove)
+    public function removeTag(Tag $tagToRemove): void
     {
         foreach ($this->tags as $key => $tag) {
             if ($tag === $tagToRemove) {
@@ -208,7 +205,7 @@ final class DocBlock
      *
      * @param Tag $tag The tag to add.
      */
-    private function addTag(Tag $tag)
+    private function addTag(Tag $tag): void
     {
         $this->tags[] = $tag;
     }

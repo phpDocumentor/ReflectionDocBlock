@@ -28,7 +28,7 @@ class DocBlockTest extends TestCase
     /**
      * Call Mockery::close after each test.
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         m::close();
     }
@@ -39,7 +39,7 @@ class DocBlockTest extends TestCase
      *
      * @uses \phpDocumentor\Reflection\DocBlock\Description
      */
-    public function testDocBlockCanHaveASummary()
+    public function testDocBlockCanHaveASummary(): void
     {
         $summary = 'This is a summary';
 
@@ -54,7 +54,7 @@ class DocBlockTest extends TestCase
      *
      * @uses \phpDocumentor\Reflection\DocBlock\Description
      */
-    public function testDocBlockCanHaveADescription()
+    public function testDocBlockCanHaveADescription(): void
     {
         $description = new DocBlock\Description('');
 
@@ -70,7 +70,7 @@ class DocBlockTest extends TestCase
      * @uses \phpDocumentor\Reflection\DocBlock\Description
      * @uses \phpDocumentor\Reflection\DocBlock\Tag
      */
-    public function testDocBlockCanHaveTags()
+    public function testDocBlockCanHaveTags(): void
     {
         $tags = [
             m::mock(DocBlock\Tag::class)
@@ -90,7 +90,7 @@ class DocBlockTest extends TestCase
      *
      * @expectedException \InvalidArgumentException
      */
-    public function testDocBlockAllowsOnlyTags()
+    public function testDocBlockAllowsOnlyTags(): void
     {
         $tags = [
             null
@@ -107,7 +107,7 @@ class DocBlockTest extends TestCase
      * @uses \phpDocumentor\Reflection\DocBlock\Description
      * @uses \phpDocumentor\Reflection\DocBlock\Tag
      */
-    public function testFindTagsInDocBlockByName()
+    public function testFindTagsInDocBlockByName(): void
     {
         $tag1 = m::mock(DocBlock\Tag::class);
         $tag2 = m::mock(DocBlock\Tag::class);
@@ -132,7 +132,7 @@ class DocBlockTest extends TestCase
      * @uses \phpDocumentor\Reflection\DocBlock\Description
      * @uses \phpDocumentor\Reflection\DocBlock\Tag
      */
-    public function testCheckIfThereAreTagsWithAGivenName()
+    public function testCheckIfThereAreTagsWithAGivenName(): void
     {
         $tag1 = m::mock(DocBlock\Tag::class);
         $tag2 = m::mock(DocBlock\Tag::class);
@@ -156,7 +156,7 @@ class DocBlockTest extends TestCase
      * @uses \phpDocumentor\Reflection\DocBlock\Description
      * @uses \phpDocumentor\Reflection\Types\Context
      */
-    public function testDocBlockKnowsInWhichNamespaceItIsAndWhichAliasesThereAre()
+    public function testDocBlockKnowsInWhichNamespaceItIsAndWhichAliasesThereAre(): void
     {
         $context = new Context('');
 
@@ -172,7 +172,7 @@ class DocBlockTest extends TestCase
      * @uses \phpDocumentor\Reflection\DocBlock\Description
      * @uses \phpDocumentor\Reflection\Location
      */
-    public function testDocBlockKnowsAtWhichLineItIs()
+    public function testDocBlockKnowsAtWhichLineItIs(): void
     {
         $location = new Location(10);
 
@@ -187,7 +187,7 @@ class DocBlockTest extends TestCase
      *
      * @uses \phpDocumentor\Reflection\DocBlock\Description
      */
-    public function testDocBlockKnowsIfItIsTheStartOfADocBlockTemplate()
+    public function testDocBlockKnowsIfItIsTheStartOfADocBlockTemplate(): void
     {
         $fixture = new DocBlock('', null, [], null, null, true);
 
@@ -200,7 +200,7 @@ class DocBlockTest extends TestCase
      *
      * @uses \phpDocumentor\Reflection\DocBlock\Description
      */
-    public function testDocBlockKnowsIfItIsTheEndOfADocBlockTemplate()
+    public function testDocBlockKnowsIfItIsTheEndOfADocBlockTemplate(): void
     {
         $fixture = new DocBlock('', null, [], null, null, false, true);
 
@@ -213,7 +213,7 @@ class DocBlockTest extends TestCase
      *
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\Deprecated
      */
-    public function testRemoveTag()
+    public function testRemoveTag(): void
     {
         $someTag = new Deprecated();
         $anotherTag = new Deprecated();

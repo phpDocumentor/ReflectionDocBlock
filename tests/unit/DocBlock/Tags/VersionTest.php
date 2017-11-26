@@ -28,7 +28,7 @@ class VersionTest extends TestCase
     /**
      * Call Mockery::close after each test.
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         m::close();
     }
@@ -38,7 +38,7 @@ class VersionTest extends TestCase
      * @uses   \phpDocumentor\Reflection\DocBlock\Description
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getName
      */
-    public function testIfCorrectTagNameIsReturned()
+    public function testIfCorrectTagNameIsReturned(): void
     {
         $fixture = new Version('1.0', new Description('Description'));
 
@@ -53,7 +53,7 @@ class VersionTest extends TestCase
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::render
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getName
      */
-    public function testIfTagCanBeRenderedUsingDefaultFormatter()
+    public function testIfTagCanBeRenderedUsingDefaultFormatter(): void
     {
         $fixture = new Version('1.0', new Description('Description'));
 
@@ -65,7 +65,7 @@ class VersionTest extends TestCase
      * @uses   \phpDocumentor\Reflection\DocBlock\Description
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::render
      */
-    public function testIfTagCanBeRenderedUsingSpecificFormatter()
+    public function testIfTagCanBeRenderedUsingSpecificFormatter(): void
     {
         $fixture = new Version('1.0', new Description('Description'));
 
@@ -79,7 +79,7 @@ class VersionTest extends TestCase
      * @covers ::__construct
      * @covers ::getVersion
      */
-    public function testHasVersionNumber()
+    public function testHasVersionNumber(): void
     {
         $expected = '1.0';
 
@@ -93,7 +93,7 @@ class VersionTest extends TestCase
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getDescription
      * @uses   \phpDocumentor\Reflection\DocBlock\Description
      */
-    public function testHasDescription()
+    public function testHasDescription(): void
     {
         $expected = new Description('Description');
 
@@ -107,7 +107,7 @@ class VersionTest extends TestCase
      * @covers ::__toString
      * @uses   \phpDocumentor\Reflection\DocBlock\Description
      */
-    public function testStringRepresentationIsReturned()
+    public function testStringRepresentationIsReturned(): void
     {
         $fixture = new Version('1.0', new Description('Description'));
 
@@ -121,7 +121,7 @@ class VersionTest extends TestCase
      * @uses \phpDocumentor\Reflection\DocBlock\Description
      * @uses \phpDocumentor\Reflection\Types\Context
      */
-    public function testFactoryMethod()
+    public function testFactoryMethod(): void
     {
         $descriptionFactory = m::mock(DescriptionFactory::class);
         $context            = new Context('');
@@ -145,7 +145,7 @@ class VersionTest extends TestCase
      * @uses \phpDocumentor\Reflection\DocBlock\Description
      * @uses \phpDocumentor\Reflection\Types\Context
      */
-    public function testFactoryMethodCreatesEmptyVersionTag()
+    public function testFactoryMethodCreatesEmptyVersionTag(): void
     {
         $descriptionFactory = m::mock(DescriptionFactory::class);
         $descriptionFactory->shouldReceive('create')->never();
@@ -160,7 +160,7 @@ class VersionTest extends TestCase
     /**
      * @covers ::create
      */
-    public function testFactoryMethodReturnsNullIfBodyDoesNotMatchRegex()
+    public function testFactoryMethodReturnsNullIfBodyDoesNotMatchRegex(): void
     {
         $this->assertNull(Version::create('dkhf<'));
     }

@@ -25,7 +25,7 @@ class AuthorTest extends TestCase
     /**
      * Call Mockery::close after each test.
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         m::close();
     }
@@ -34,7 +34,7 @@ class AuthorTest extends TestCase
      * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Author::__construct
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getName
      */
-    public function testIfCorrectTagNameIsReturned()
+    public function testIfCorrectTagNameIsReturned(): void
     {
         $fixture = new Author('Mike van Riel', 'mike@phpdoc.org');
 
@@ -48,7 +48,7 @@ class AuthorTest extends TestCase
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::render
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getName
      */
-    public function testIfTagCanBeRenderedUsingDefaultFormatter()
+    public function testIfTagCanBeRenderedUsingDefaultFormatter(): void
     {
         $fixture = new Author('Mike van Riel', 'mike@phpdoc.org');
 
@@ -59,7 +59,7 @@ class AuthorTest extends TestCase
      * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Author::__construct
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::render
      */
-    public function testIfTagCanBeRenderedUsingSpecificFormatter()
+    public function testIfTagCanBeRenderedUsingSpecificFormatter(): void
     {
         $fixture = new Author('Mike van Riel', 'mike@phpdoc.org');
 
@@ -73,7 +73,7 @@ class AuthorTest extends TestCase
      * @covers ::__construct
      * @covers ::getAuthorName
      */
-    public function testHasTheAuthorName()
+    public function testHasTheAuthorName(): void
     {
         $expected = 'Mike van Riel';
 
@@ -86,7 +86,7 @@ class AuthorTest extends TestCase
      * @covers ::__construct
      * @covers ::getEmail
      */
-    public function testHasTheAuthorMailAddress()
+    public function testHasTheAuthorMailAddress(): void
     {
         $expected = 'mike@phpdoc.org';
 
@@ -99,7 +99,7 @@ class AuthorTest extends TestCase
      * @covers ::__construct
      * @expectedException \InvalidArgumentException
      */
-    public function testInitializationFailsIfEmailIsNotValid()
+    public function testInitializationFailsIfEmailIsNotValid(): void
     {
         new Author('Mike van Riel', 'mike');
     }
@@ -108,7 +108,7 @@ class AuthorTest extends TestCase
      * @covers ::__construct
      * @covers ::__toString
      */
-    public function testStringRepresentationIsReturned()
+    public function testStringRepresentationIsReturned(): void
     {
         $fixture = new Author('Mike van Riel', 'mike@phpdoc.org');
 
@@ -119,7 +119,7 @@ class AuthorTest extends TestCase
      * @covers ::__construct
      * @covers ::__toString
      */
-    public function testStringRepresentationWithEmtpyEmail()
+    public function testStringRepresentationWithEmtpyEmail(): void
     {
         $fixture = new Author('Mike van Riel', '');
 
@@ -130,7 +130,7 @@ class AuthorTest extends TestCase
      * @covers ::create
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\Author::<public>
      */
-    public function testFactoryMethod()
+    public function testFactoryMethod(): void
     {
         $fixture = Author::create('Mike van Riel <mike@phpdoc.org>');
 
@@ -143,7 +143,7 @@ class AuthorTest extends TestCase
      * @covers ::create
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\Author::<public>
      */
-    public function testFactoryMethodReturnsNullIfItCouldNotReadBody()
+    public function testFactoryMethodReturnsNullIfItCouldNotReadBody(): void
     {
         $this->assertNull(Author::create('dfgr<'));
     }

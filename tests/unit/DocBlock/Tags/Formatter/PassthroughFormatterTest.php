@@ -26,7 +26,7 @@ class PassthroughFormatterTest extends TestCase
     /**
      * Call Mockery::close after each test.
      */
-    public function tearDown()
+    public function tearDown(): void
     {
         m::close();
     }
@@ -37,7 +37,7 @@ class PassthroughFormatterTest extends TestCase
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\BaseTag
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\Generic
      */
-    public function testFormatterCallsToStringAndReturnsAStandardRepresentation()
+    public function testFormatterCallsToStringAndReturnsAStandardRepresentation(): void
     {
         $expected = '@unknown-tag This is a description';
 
@@ -55,7 +55,7 @@ class PassthroughFormatterTest extends TestCase
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\BaseTag
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\Generic
      */
-    public function testFormatterToStringWitoutDescription()
+    public function testFormatterToStringWitoutDescription(): void
     {
         $expected = '@unknown-tag';
         $fixture = new PassthroughFormatter();
