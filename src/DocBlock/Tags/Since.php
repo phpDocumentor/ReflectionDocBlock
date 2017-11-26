@@ -60,7 +60,6 @@ final class Since extends BaseTag implements Factory\StaticMethod
         DescriptionFactory $descriptionFactory = null,
         TypeContext $context = null
     ) {
-        Assert::nullOrString($body);
         if (empty($body)) {
             return new static();
         }

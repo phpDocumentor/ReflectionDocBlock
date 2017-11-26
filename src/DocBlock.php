@@ -56,9 +56,6 @@ final class DocBlock
         bool $isTemplateStart = false,
         bool $isTemplateEnd = false
     ) {
-        Assert::string($summary);
-        Assert::boolean($isTemplateStart);
-        Assert::boolean($isTemplateEnd);
         Assert::allIsInstanceOf($tags, Tag::class);
 
         $this->summary = $summary;
@@ -166,8 +163,6 @@ final class DocBlock
      */
     public function getTagsByName(string $name)
     {
-        Assert::string($name);
-
         $result = [];
 
         /** @var Tag $tag */
@@ -191,8 +186,6 @@ final class DocBlock
      */
     public function hasTag(string $name): bool
     {
-        Assert::string($name);
-
         /** @var Tag $tag */
         foreach ($this->getTags() as $tag) {
             if ($tag->getName() === $name) {

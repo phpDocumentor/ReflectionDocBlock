@@ -45,14 +45,8 @@ class Serializer
      * @param int|null $lineLength The max length of a line or NULL to disable line wrapping.
      * @param DocBlock\Tags\Formatter $tagFormatter A custom tag formatter, defaults to PassthroughFormatter.
      */
-    public function __construct(int $indent = 0, string $indentString = ' ', bool $indentFirstLine = true, int $lineLength = null, DocBlock\Tags\Formatter $tagFormatter = null)
+    public function __construct(int $indent = 0, string $indentString = ' ', bool $indentFirstLine = true, ?int $lineLength = null, ?DocBlock\Tags\Formatter $tagFormatter = null)
     {
-        Assert::integer($indent);
-        Assert::string($indentString);
-        Assert::boolean($indentFirstLine);
-        Assert::nullOrInteger($lineLength);
-        Assert::nullOrIsInstanceOf($tagFormatter, 'phpDocumentor\Reflection\DocBlock\Tags\Formatter');
-
         $this->indent = $indent;
         $this->indentString = $indentString;
         $this->isFirstLineIndented = $indentFirstLine;
