@@ -192,28 +192,28 @@ class SeeTest extends TestCase
 
     /**
      * @covers ::create
-     * @expectedException \InvalidArgumentException
      */
-    public function testFactoryMethodFailsIfBodyIsNotEmpty(): void
+    public function testFactoryMethodFailsIfBodyIsNotEmpty() : void
     {
+        $this->expectException('InvalidArgumentException');
         $this->assertNull(See::create(''));
     }
 
     /**
      * @covers ::create
-     * @expectedException \InvalidArgumentException
      */
-    public function testFactoryMethodFailsIfResolverIsNull(): void
+    public function testFactoryMethodFailsIfResolverIsNull() : void
     {
+        $this->expectException('InvalidArgumentException');
         See::create('body');
     }
 
     /**
      * @covers ::create
-     * @expectedException \InvalidArgumentException
      */
-    public function testFactoryMethodFailsIfDescriptionFactoryIsNull(): void
+    public function testFactoryMethodFailsIfDescriptionFactoryIsNull() : void
     {
+        $this->expectException('InvalidArgumentException');
         See::create('body', new FqsenResolver());
     }
 }

@@ -366,73 +366,73 @@ class MethodTest extends TestCase
 
     /**
      * @covers ::create
-     * @expectedException \InvalidArgumentException
      */
-    public function testFactoryMethodFailsIfBodyIsEmpty(): void
+    public function testFactoryMethodFailsIfBodyIsEmpty() : void
     {
+        $this->expectException('InvalidArgumentException');
         Method::create('');
     }
 
     /**
      * @covers ::create
-     * @expectedException \InvalidArgumentException
      */
-    public function testFactoryMethodReturnsNullIfBodyIsIncorrect(): void
+    public function testFactoryMethodReturnsNullIfBodyIsIncorrect() : void
     {
+        $this->expectException('InvalidArgumentException');
         $this->assertNull(Method::create('body('));
     }
 
     /**
      * @covers ::create
-     * @expectedException \InvalidArgumentException
      */
-    public function testFactoryMethodFailsIfResolverIsNull(): void
+    public function testFactoryMethodFailsIfResolverIsNull() : void
     {
+        $this->expectException('InvalidArgumentException');
         Method::create('body');
     }
 
     /**
      * @covers ::create
-     * @expectedException \InvalidArgumentException
      */
-    public function testFactoryMethodFailsIfDescriptionFactoryIsNull(): void
+    public function testFactoryMethodFailsIfDescriptionFactoryIsNull() : void
     {
+        $this->expectException('InvalidArgumentException');
         Method::create('body', new TypeResolver());
     }
 
     /**
      * @covers ::__construct
-     * @expectedException \InvalidArgumentException
      */
-    public function testCreationFailsIfBodyIsNotString(): void
+    public function testCreationFailsIfBodyIsNotString() : void
     {
+        $this->expectException('InvalidArgumentException');
         new Method([]);
     }
 
     /**
      * @covers ::__construct
-     * @expectedException \InvalidArgumentException
      */
-    public function testCreationFailsIfBodyIsEmpty(): void
+    public function testCreationFailsIfBodyIsEmpty() : void
     {
+        $this->expectException('InvalidArgumentException');
         new Method('');
     }
 
     /**
      * @covers ::__construct
-     * @expectedException \InvalidArgumentException
      */
-    public function testCreationFailsIfStaticIsNotBoolean(): void
+    public function testCreationFailsIfStaticIsNotBoolean() : void
     {
+        $this->expectException('InvalidArgumentException');
         new Method('body', [], null, []);
     }
 
     /**
      * @covers ::__construct
-     * @expectedException \InvalidArgumentException
      */
-    public function testCreationFailsIfArgumentRecordContainsInvalidEntry(): void
+    public function testCreationFailsIfArgumentRecordContainsInvalidEntry() : void
     {
+        $this->expectException('InvalidArgumentException');
         new Method('body', [ [ 'name' => 'myName', 'unknown' => 'nah' ] ]);
     }
 
