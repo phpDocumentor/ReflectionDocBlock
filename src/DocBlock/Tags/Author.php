@@ -84,8 +84,6 @@ final class Author extends BaseTag implements Factory\StaticMethod
      */
     public static function create(string $body)
     {
-        Assert::string($body);
-
         $splitTagContent = preg_match('/^([^\<]*)(?:\<([^\>]*)\>)?$/u', $body, $matches);
         if (!$splitTagContent) {
             return null;

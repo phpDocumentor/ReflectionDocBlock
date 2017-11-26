@@ -86,7 +86,6 @@ final class MyTag extends BaseTag implements StaticMethod
      */
     public static function create(string $body, DescriptionFactory $descriptionFactory = null, Context $context = null): MyTag
     {
-        Assert::string($body);
         Assert::notNull($descriptionFactory);
 
         return new static($descriptionFactory->create($body, $context));

@@ -35,8 +35,6 @@ final class Link extends BaseTag implements Factory\StaticMethod
      */
     public function __construct(string $link, Description $description = null)
     {
-        Assert::string($link);
-
         $this->link = $link;
         $this->description = $description;
     }
