@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * This file is part of phpDocumentor.
  *
@@ -197,41 +198,5 @@ DOCCOMMENT_AFTER_REMOVE;
 
         $docBlock->removeTag($genericTag);
         $this->assertSame($expectedAfterRemove, $fixture->getDocComment($docBlock));
-    }
-
-    /**
-     * @covers ::__construct
-     * @expectedException \InvalidArgumentException
-     */
-    public function testInitializationFailsIfIndentIsNotAnInteger()
-    {
-        new Serializer([]);
-    }
-
-    /**
-     * @covers ::__construct
-     * @expectedException \InvalidArgumentException
-     */
-    public function testInitializationFailsIfIndentStringIsNotAString()
-    {
-        new Serializer(0, []);
-    }
-
-    /**
-     * @covers ::__construct
-     * @expectedException \InvalidArgumentException
-     */
-    public function testInitializationFailsIfIndentFirstLineIsNotABoolean()
-    {
-        new Serializer(0, '', []);
-    }
-
-    /**
-     * @covers ::__construct
-     * @expectedException \InvalidArgumentException
-     */
-    public function testInitializationFailsIfLineLengthIsNotNullNorAnInteger()
-    {
-        new Serializer(0, '', false, []);
     }
 }

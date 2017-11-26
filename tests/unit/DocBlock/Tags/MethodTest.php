@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * This file is part of phpDocumentor.
  *
@@ -347,10 +348,10 @@ class MethodTest extends TestCase
      * @param string null $expectedKeyType
      */
     public function testCollectionReturnTypes(
-        $returnType,
-        $expectedType,
-        $expectedValueType = null,
-        $expectedKeyType = null
+        string $returnType,
+        string $expectedType,
+        string $expectedValueType = null,
+        string $expectedKeyType = null
     ) {
         $resolver           = new TypeResolver();
         $descriptionFactory = m::mock(DescriptionFactory::class);

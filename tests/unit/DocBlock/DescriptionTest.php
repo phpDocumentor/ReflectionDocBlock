@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * This file is part of phpDocumentor.
  *
@@ -123,14 +124,5 @@ class DescriptionTest extends TestCase
         $fixture = new Description($body, $tags);
         $expected = '@JoinTable(name="table", joinColumns={@JoinColumn (name="column_id", referencedColumnName="id")}, inverseJoinColumns={@JoinColumn (name="column_id_2", referencedColumnName="id")})';
         $this->assertSame($expected, (string)$fixture);
-    }
-
-    /**
-     * @covers ::__construct
-     * @expectedException \InvalidArgumentException
-     */
-    public function testBodyTemplateMustBeAString()
-    {
-        new Description([]);
     }
 }
