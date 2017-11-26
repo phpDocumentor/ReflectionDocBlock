@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * This file is part of phpDocumentor.
  *
@@ -20,11 +21,10 @@ class PassthroughFormatter implements Formatter
     /**
      * Formats the given tag to return a simple plain text version.
      *
-     * @param Tag $tag
      *
      * @return string
      */
-    public function format(Tag $tag)
+    public function format(Tag $tag): string
     {
         return trim('@' . $tag->getName() . ' ' . (string)$tag);
     }

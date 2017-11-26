@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * This file is part of phpDocumentor.
  *
@@ -87,7 +88,6 @@ final class StandardTagFactory implements TagFactory
      * If no tag handlers are provided than the default list in the {@see self::$tagHandlerMappings} property
      * is used.
      *
-     * @param FqsenResolver $fqsenResolver
      * @param string[]      $tagHandlers
      *
      * @see self::registerTagHandler() to add a new tag handler to the existing default list.
@@ -105,7 +105,7 @@ final class StandardTagFactory implements TagFactory
     /**
      * {@inheritDoc}
      */
-    public function create($tagLine, TypeContext $context = null)
+    public function create(string $tagLine, TypeContext $context = null): Tag
     {
         if (! $context) {
             $context = new TypeContext('');
@@ -125,7 +125,7 @@ final class StandardTagFactory implements TagFactory
     /**
      * {@inheritDoc}
      */
-    public function addParameter($name, $value)
+    public function addParameter(string $name, $value)
     {
         $this->serviceLocator[$name] = $value;
     }
@@ -141,7 +141,7 @@ final class StandardTagFactory implements TagFactory
     /**
      * {@inheritDoc}
      */
-    public function registerTagHandler($tagName, $handler)
+    public function registerTagHandler(string $tagName, string $handler)
     {
         Assert::stringNotEmpty($tagName);
         Assert::stringNotEmpty($handler);
@@ -164,7 +164,7 @@ final class StandardTagFactory implements TagFactory
      *
      * @return string[]
      */
-    private function extractTagParts($tagLine)
+    private function extractTagParts(string $tagLine)
     {
         $matches = [];
         if (! preg_match('/^@(' . self::REGEX_TAGNAME . ')(?:\s*([^\s].*)|$)/us', $tagLine, $matches)) {
@@ -186,11 +186,10 @@ final class StandardTagFactory implements TagFactory
      *
      * @param string  $body
      * @param string  $name
-     * @param TypeContext $context
      *
      * @return Tag|null
      */
-    private function createTag($body, $name, TypeContext $context)
+    private function createTag(string $body, string $name, TypeContext $context)
     {
         $handlerClassName = $this->findHandlerClassName($name, $context);
         $arguments        = $this->getArgumentsForParametersFromWiring(
@@ -205,11 +204,10 @@ final class StandardTagFactory implements TagFactory
      * Determines the Fully Qualified Class Name of the Factory or Tag (containing a Factory Method `create`).
      *
      * @param string  $tagName
-     * @param TypeContext $context
      *
      * @return string
      */
-    private function findHandlerClassName($tagName, TypeContext $context)
+    private function findHandlerClassName(string $tagName, TypeContext $context): string
     {
         $handlerClassName = Generic::class;
         if (isset($this->tagHandlerMappings[$tagName])) {
@@ -264,7 +262,7 @@ final class StandardTagFactory implements TagFactory
      *
      * @return \ReflectionParameter[]
      */
-    private function fetchParametersForHandlerFactoryMethod($handlerClassName)
+    private function fetchParametersForHandlerFactoryMethod(string $handlerClassName)
     {
         if (! isset($this->tagHandlerParameterCache[$handlerClassName])) {
             $methodReflection                                  = new \ReflectionMethod($handlerClassName, 'create');
@@ -284,7 +282,7 @@ final class StandardTagFactory implements TagFactory
      *
      * @return mixed[]
      */
-    private function getServiceLocatorWithDynamicParameters(TypeContext $context, $tagName, $tagBody)
+    private function getServiceLocatorWithDynamicParameters(TypeContext $context, string $tagName, string $tagBody)
     {
         $locator = array_merge(
             $this->serviceLocator,
@@ -307,7 +305,7 @@ final class StandardTagFactory implements TagFactory
      *
      * @return bool
      */
-    private function isAnnotation($tagContent)
+    private function isAnnotation(string $tagContent): bool
     {
         // 1. Contains a namespace separator
         // 2. Contains parenthesis

@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * This file is part of phpDocumentor.
  *
@@ -64,7 +65,7 @@ final class Method extends BaseTag implements Factory\StaticMethod
      * {@inheritdoc}
      */
     public static function create(
-        $body,
+        string $body,
         TypeResolver $typeResolver = null,
         DescriptionFactory $descriptionFactory = null,
         TypeContext $context = null
@@ -163,7 +164,7 @@ final class Method extends BaseTag implements Factory\StaticMethod
      *
      * @return string
      */
-    public function getMethodName()
+    public function getMethodName(): string
     {
         return $this->methodName;
     }
@@ -181,7 +182,7 @@ final class Method extends BaseTag implements Factory\StaticMethod
      *
      * @return bool TRUE if the method declaration is for a static method, FALSE otherwise.
      */
-    public function isStatic()
+    public function isStatic(): bool
     {
         return $this->isStatic;
     }
@@ -189,7 +190,7 @@ final class Method extends BaseTag implements Factory\StaticMethod
     /**
      * @return Type
      */
-    public function getReturnType()
+    public function getReturnType(): Type
     {
         return $this->returnType;
     }

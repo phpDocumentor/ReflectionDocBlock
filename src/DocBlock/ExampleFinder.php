@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * This file is part of phpDocumentor.
  *
@@ -28,11 +29,10 @@ class ExampleFinder
     /**
      * Attempts to find the example contents for the given descriptor.
      *
-     * @param Example $example
      *
      * @return string
      */
-    public function find(Example $example)
+    public function find(Example $example): string
     {
         $filename = $example->getFilePath();
 
@@ -49,9 +49,8 @@ class ExampleFinder
      *
      * @param string $directory
      *
-     * @return void
      */
-    public function setSourceDirectory($directory = '')
+    public function setSourceDirectory(string $directory = '')
     {
         $this->sourceDirectory = $directory;
     }
@@ -61,7 +60,7 @@ class ExampleFinder
      *
      * @return string
      */
-    public function getSourceDirectory()
+    public function getSourceDirectory(): string
     {
         return $this->sourceDirectory;
     }
@@ -101,7 +100,7 @@ class ExampleFinder
      *
      * @return string|null
      */
-    private function getExampleFileContents($filename)
+    private function getExampleFileContents(string $filename)
     {
         $normalizedPath = null;
 
@@ -133,7 +132,7 @@ class ExampleFinder
      *
      * @return string
      */
-    private function getExamplePathFromExampleDirectory($file)
+    private function getExamplePathFromExampleDirectory(string $file): string
     {
         return getcwd() . DIRECTORY_SEPARATOR . 'examples' . DIRECTORY_SEPARATOR . $file;
     }
@@ -146,7 +145,7 @@ class ExampleFinder
      *
      * @return string
      */
-    private function constructExamplePath($directory, $file)
+    private function constructExamplePath(string $directory, string $file): string
     {
         return rtrim($directory, '\\/') . DIRECTORY_SEPARATOR . $file;
     }
@@ -158,7 +157,7 @@ class ExampleFinder
      *
      * @return string
      */
-    private function getExamplePathFromSource($file)
+    private function getExamplePathFromSource(string $file): string
     {
         return sprintf(
             '%s%s%s',

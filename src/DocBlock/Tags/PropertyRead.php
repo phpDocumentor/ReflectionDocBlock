@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * This file is part of phpDocumentor.
  *
@@ -36,9 +37,8 @@ class PropertyRead extends BaseTag implements Factory\StaticMethod
     /**
      * @param string      $variableName
      * @param Type        $type
-     * @param Description $description
      */
-    public function __construct($variableName, Type $type = null, Description $description = null)
+    public function __construct(string $variableName, Type $type = null, Description $description = null)
     {
         Assert::string($variableName);
 
@@ -51,7 +51,7 @@ class PropertyRead extends BaseTag implements Factory\StaticMethod
      * {@inheritdoc}
      */
     public static function create(
-        $body,
+        string $body,
         TypeResolver $typeResolver = null,
         DescriptionFactory $descriptionFactory = null,
         TypeContext $context = null
@@ -89,7 +89,7 @@ class PropertyRead extends BaseTag implements Factory\StaticMethod
      *
      * @return string
      */
-    public function getVariableName()
+    public function getVariableName(): string
     {
         return $this->variableName;
     }
@@ -109,7 +109,7 @@ class PropertyRead extends BaseTag implements Factory\StaticMethod
      *
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return ($this->type ? $this->type . ' ' : '')
         . '$' . $this->variableName

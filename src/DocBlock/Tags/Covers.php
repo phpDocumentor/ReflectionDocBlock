@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * This file is part of phpDocumentor.
  *
@@ -32,7 +33,6 @@ final class Covers extends BaseTag implements Factory\StaticMethod
     /**
      * Initializes this tag.
      *
-     * @param Fqsen $refers
      * @param Description $description
      */
     public function __construct(Fqsen $refers, Description $description = null)
@@ -45,7 +45,7 @@ final class Covers extends BaseTag implements Factory\StaticMethod
      * {@inheritdoc}
      */
     public static function create(
-        $body,
+        string $body,
         DescriptionFactory $descriptionFactory = null,
         FqsenResolver $resolver = null,
         TypeContext $context = null
@@ -57,7 +57,7 @@ final class Covers extends BaseTag implements Factory\StaticMethod
 
         return new static(
             $resolver->resolve($parts[0], $context),
-            $descriptionFactory->create(isset($parts[1]) ? $parts[1] : '', $context)
+            $descriptionFactory->create($parts[1] ?? '', $context)
         );
     }
 
@@ -66,7 +66,7 @@ final class Covers extends BaseTag implements Factory\StaticMethod
      *
      * @return Fqsen
      */
-    public function getReference()
+    public function getReference(): Fqsen
     {
         return $this->refers;
     }
@@ -76,7 +76,7 @@ final class Covers extends BaseTag implements Factory\StaticMethod
      *
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->refers . ($this->description ? ' ' . $this->description->render() : '');
     }

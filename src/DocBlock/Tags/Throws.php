@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * This file is part of phpDocumentor.
  *
@@ -39,7 +40,7 @@ final class Throws extends BaseTag implements Factory\StaticMethod
      * {@inheritdoc}
      */
     public static function create(
-        $body,
+        string $body,
         TypeResolver $typeResolver = null,
         DescriptionFactory $descriptionFactory = null,
         TypeContext $context = null
@@ -49,8 +50,8 @@ final class Throws extends BaseTag implements Factory\StaticMethod
 
         $parts = preg_split('/\s+/Su', $body, 2);
 
-        $type        = $typeResolver->resolve(isset($parts[0]) ? $parts[0] : '', $context);
-        $description = $descriptionFactory->create(isset($parts[1]) ? $parts[1] : '', $context);
+        $type        = $typeResolver->resolve($parts[0] ?? '', $context);
+        $description = $descriptionFactory->create($parts[1] ?? '', $context);
 
         return new static($type, $description);
     }
@@ -60,7 +61,7 @@ final class Throws extends BaseTag implements Factory\StaticMethod
      *
      * @return Type
      */
-    public function getType()
+    public function getType(): Type
     {
         return $this->type;
     }

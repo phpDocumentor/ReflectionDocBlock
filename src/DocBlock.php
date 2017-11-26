@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * This file is part of phpDocumentor.
  *
@@ -40,7 +41,6 @@ final class DocBlock
 
     /**
      * @param string $summary
-     * @param DocBlock\Description $description
      * @param DocBlock\Tag[] $tags
      * @param Types\Context $context The context in which the DocBlock occurs.
      * @param Location $location The location within the file that this DocBlock occurs in.
@@ -48,13 +48,13 @@ final class DocBlock
      * @param bool $isTemplateEnd
      */
     public function __construct(
-        $summary = '',
+        string $summary = '',
         DocBlock\Description $description = null,
         array $tags = [],
         Types\Context $context = null,
         Location $location = null,
-        $isTemplateStart = false,
-        $isTemplateEnd = false
+        bool $isTemplateStart = false,
+        bool $isTemplateEnd = false
     ) {
         Assert::string($summary);
         Assert::boolean($isTemplateStart);
@@ -77,7 +77,7 @@ final class DocBlock
     /**
      * @return string
      */
-    public function getSummary()
+    public function getSummary(): string
     {
         return $this->summary;
     }
@@ -85,7 +85,7 @@ final class DocBlock
     /**
      * @return DocBlock\Description
      */
-    public function getDescription()
+    public function getDescription(): DocBlock\Description
     {
         return $this->description;
     }
@@ -95,7 +95,7 @@ final class DocBlock
      *
      * @return Types\Context
      */
-    public function getContext()
+    public function getContext(): Types\Context
     {
         return $this->context;
     }
@@ -105,7 +105,7 @@ final class DocBlock
      *
      * @return Location
      */
-    public function getLocation()
+    public function getLocation(): Location
     {
         return $this->location;
     }
@@ -131,7 +131,7 @@ final class DocBlock
      *
      * @return boolean
      */
-    public function isTemplateStart()
+    public function isTemplateStart(): bool
     {
         return $this->isTemplateStart;
     }
@@ -143,7 +143,7 @@ final class DocBlock
      *
      * @return boolean
      */
-    public function isTemplateEnd()
+    public function isTemplateEnd(): bool
     {
         return $this->isTemplateEnd;
     }
@@ -166,7 +166,7 @@ final class DocBlock
      *
      * @return Tag[]
      */
-    public function getTagsByName($name)
+    public function getTagsByName(string $name)
     {
         Assert::string($name);
 
@@ -191,7 +191,7 @@ final class DocBlock
      *
      * @return bool
      */
-    public function hasTag($name)
+    public function hasTag(string $name): bool
     {
         Assert::string($name);
 
@@ -210,7 +210,6 @@ final class DocBlock
      *
      * @param Tag $tag The tag to remove.
      *
-     * @return void
      */
     public function removeTag(Tag $tagToRemove)
     {
@@ -227,7 +226,6 @@ final class DocBlock
      *
      * @param Tag $tag The tag to add.
      *
-     * @return void
      */
     private function addTag(Tag $tag)
     {

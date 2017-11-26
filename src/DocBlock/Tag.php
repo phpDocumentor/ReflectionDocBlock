@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * This file is part of phpDocumentor.
  *
@@ -18,7 +19,7 @@ interface Tag
 {
     public function getName();
 
-    public static function create($body);
+    public static function create(string $body);
 
     public function render(Formatter $formatter = null);
 

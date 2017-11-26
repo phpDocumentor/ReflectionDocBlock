@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * This file is part of phpDocumentor.
  *
@@ -42,10 +43,9 @@ final class Example extends BaseTag
      */
     private $lineCount;
 
-    public function __construct($filePath, $isURI, $startingLine, $lineCount, $description)
+    public function __construct(string $filePath, bool $isURI, int $startingLine, $lineCount, $description)
     {
         Assert::notEmpty($filePath);
-        Assert::integer($startingLine);
         Assert::greaterThanEq($startingLine, 0);
 
         $this->filePath = $filePath;
@@ -53,7 +53,7 @@ final class Example extends BaseTag
         $this->lineCount = $lineCount;
         $this->name = 'example';
         if ($description !== null) {
-            $this->description = trim($description);
+            $this->description = trim((string) $description);
         }
 
         $this->isURI = $isURI;
@@ -81,7 +81,7 @@ final class Example extends BaseTag
     /**
      * {@inheritdoc}
      */
-    public static function create($body)
+    public static function create(string $body)
     {
         // File component: File path in quotes or File URI / Source information
         if (! preg_match('/^(?:\"([^\"]+)\"|(\S+))(?:\s+(.*))?$/sux', $body, $matches)) {
@@ -131,7 +131,7 @@ final class Example extends BaseTag
      * @return string Path to a file to use as an example.
      *     May also be an absolute URI.
      */
-    public function getFilePath()
+    public function getFilePath(): string
     {
         return $this->filePath;
     }
@@ -141,7 +141,7 @@ final class Example extends BaseTag
      *
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->filePath . ($this->description ? ' ' . $this->description : '');
     }
@@ -153,7 +153,7 @@ final class Example extends BaseTag
      *
      * @return bool
      */
-    private function isUriRelative($uri)
+    private function isUriRelative(string $uri): bool
     {
         return false === strpos($uri, ':');
     }
@@ -161,7 +161,7 @@ final class Example extends BaseTag
     /**
      * @return int
      */
-    public function getStartingLine()
+    public function getStartingLine(): int
     {
         return $this->startingLine;
     }
@@ -169,7 +169,7 @@ final class Example extends BaseTag
     /**
      * @return int
      */
-    public function getLineCount()
+    public function getLineCount(): int
     {
         return $this->lineCount;
     }
