@@ -241,7 +241,7 @@ class StandardTagFactoryTest extends TestCase
         $this->expectException('InvalidArgumentException');
         $resolver   = m::mock(FqsenResolver::class);
         $tagFactory = new StandardTagFactory($resolver);
-        $tagFactory->registerTagHandler('Name\Spaced\Tag', Author::class);
+        $tagFactory->registerTagHandler(\Name\Spaced\Tag::class, Author::class);
     }
 
     /**
