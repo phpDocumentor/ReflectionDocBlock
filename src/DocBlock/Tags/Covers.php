@@ -50,7 +50,6 @@ final class Covers extends BaseTag implements Factory\StaticMethod
         FqsenResolver $resolver = null,
         TypeContext $context = null
     ) {
-        Assert::string($body);
         Assert::notEmpty($body);
 
         $parts = preg_split('/\s+/Su', $body, 2);

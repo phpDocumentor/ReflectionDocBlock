@@ -146,15 +146,6 @@ class ReturnTest extends TestCase
      * @covers ::create
      * @expectedException \InvalidArgumentException
      */
-    public function testFactoryMethodFailsIfBodyIsNotString()
-    {
-        $this->assertNull(Return_::create([]));
-    }
-
-    /**
-     * @covers ::create
-     * @expectedException \InvalidArgumentException
-     */
     public function testFactoryMethodFailsIfBodyIsNotEmpty()
     {
         $this->assertNull(Return_::create(''));

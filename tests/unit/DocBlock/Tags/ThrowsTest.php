@@ -146,15 +146,6 @@ class ThrowsTest extends TestCase
      * @covers ::create
      * @expectedException \InvalidArgumentException
      */
-    public function testFactoryMethodFailsIfBodyIsNotString()
-    {
-        $this->assertNull(Throws::create([]));
-    }
-
-    /**
-     * @covers ::create
-     * @expectedException \InvalidArgumentException
-     */
     public function testFactoryMethodFailsIfBodyIsNotEmpty()
     {
         $this->assertNull(Throws::create(''));

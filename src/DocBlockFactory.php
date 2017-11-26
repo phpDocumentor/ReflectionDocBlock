@@ -87,7 +87,7 @@ final class DocBlockFactory implements DocBlockFactoryInterface
         }
 
         $parts = $this->splitDocBlock($this->stripDocComment($docblock));
-        list($templateMarker, $summary, $description, $tags) = $parts;
+        [$templateMarker, $summary, $description, $tags] = $parts;
 
         return new DocBlock(
             $summary,
@@ -218,7 +218,7 @@ final class DocBlockFactory implements DocBlockFactoryInterface
      *
      * @return DocBlock\Tag[]
      */
-    private function parseTagBlock(string $tags, Types\Context $context)
+    private function parseTagBlock(string $tags, Types\Context $context): array
     {
         $tags = $this->filterTagBlock($tags);
         if (!$tags) {
@@ -252,11 +252,7 @@ final class DocBlockFactory implements DocBlockFactoryInterface
         return $result;
     }
 
-    /**
-     * @param $tags
-     * @return string
-     */
-    private function filterTagBlock($tags): string
+    private function filterTagBlock($tags): ?string
     {
         $tags = trim($tags);
         if (!$tags) {

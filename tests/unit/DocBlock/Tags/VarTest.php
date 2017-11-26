@@ -186,15 +186,6 @@ class VarTest extends TestCase
      * @covers ::create
      * @expectedException \InvalidArgumentException
      */
-    public function testFactoryMethodFailsIfBodyIsNotString()
-    {
-        Var_::create([]);
-    }
-
-    /**
-     * @covers ::create
-     * @expectedException \InvalidArgumentException
-     */
     public function testFactoryMethodFailsIfResolverIsNull()
     {
         Var_::create('body');
@@ -208,14 +199,5 @@ class VarTest extends TestCase
     public function testFactoryMethodFailsIfDescriptionFactoryIsNull()
     {
         Var_::create('body', new TypeResolver());
-    }
-
-    /**
-     * @covers ::__construct
-     * @expectedException \InvalidArgumentException
-     */
-    public function testExceptionIsThrownIfVariableNameIsNotString()
-    {
-        new Var_([]);
     }
 }

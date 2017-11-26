@@ -46,7 +46,6 @@ final class Link extends BaseTag implements Factory\StaticMethod
      */
     public static function create(string $body, DescriptionFactory $descriptionFactory = null, TypeContext $context = null)
     {
-        Assert::string($body);
         Assert::notNull($descriptionFactory);
 
         $parts = preg_split('/\s+/Su', $body, 2);

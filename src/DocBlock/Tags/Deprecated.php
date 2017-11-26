@@ -56,11 +56,10 @@ final class Deprecated extends BaseTag implements Factory\StaticMethod
      * @return static
      */
     public static function create(
-        string $body,
+        ?string $body,
         DescriptionFactory $descriptionFactory = null,
         TypeContext $context = null
     ) {
-        Assert::nullOrString($body);
         if (empty($body)) {
             return new static();
         }
@@ -82,17 +81,15 @@ final class Deprecated extends BaseTag implements Factory\StaticMethod
     /**
      * Gets the version section of the tag.
      *
-     * @return string
+     * @return string|null
      */
-    public function getVersion(): string
+    public function getVersion()
     {
         return $this->version;
     }
 
     /**
      * Returns a string representation for this tag.
-     *
-     * @return string
      */
     public function __toString(): string
     {

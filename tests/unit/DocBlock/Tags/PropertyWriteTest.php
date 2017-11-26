@@ -180,15 +180,6 @@ class PropertyWriteTest extends TestCase
      * @covers ::create
      * @expectedException \InvalidArgumentException
      */
-    public function testFactoryMethodFailsIfBodyIsNotString()
-    {
-        PropertyWrite::create([]);
-    }
-
-    /**
-     * @covers ::create
-     * @expectedException \InvalidArgumentException
-     */
     public function testFactoryMethodFailsIfResolverIsNull()
     {
         PropertyWrite::create('body');
@@ -202,14 +193,5 @@ class PropertyWriteTest extends TestCase
     public function testFactoryMethodFailsIfDescriptionFactoryIsNull()
     {
         PropertyWrite::create('body', new TypeResolver());
-    }
-
-    /**
-     * @covers ::__construct
-     * @expectedException \InvalidArgumentException
-     */
-    public function testExceptionIsThrownIfVariableNameIsNotString()
-    {
-        new PropertyWrite([]);
     }
 }

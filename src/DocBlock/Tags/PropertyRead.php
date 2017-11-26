@@ -40,8 +40,6 @@ class PropertyRead extends BaseTag implements Factory\StaticMethod
      */
     public function __construct(string $variableName, Type $type = null, Description $description = null)
     {
-        Assert::string($variableName);
-
         $this->variableName = $variableName;
         $this->type = $type;
         $this->description = $description;

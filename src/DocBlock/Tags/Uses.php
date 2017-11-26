@@ -50,7 +50,6 @@ final class Uses extends BaseTag implements Factory\StaticMethod
         DescriptionFactory $descriptionFactory = null,
         TypeContext $context = null
     ) {
-        Assert::string($body);
         Assert::allNotNull([$resolver, $descriptionFactory]);
 
         $parts = preg_split('/\s+/Su', $body, 2);

@@ -129,15 +129,6 @@ class GenericTest extends TestCase
      * @covers ::create
      * @expectedException \InvalidArgumentException
      */
-    public function testFactoryMethodFailsIfNameIsNotString()
-    {
-        Generic::create('', []);
-    }
-
-    /**
-     * @covers ::create
-     * @expectedException \InvalidArgumentException
-     */
     public function testFactoryMethodFailsIfNameIsNotEmpty()
     {
         Generic::create('', '');

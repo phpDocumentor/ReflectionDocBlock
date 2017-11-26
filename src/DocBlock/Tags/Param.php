@@ -44,9 +44,6 @@ final class Param extends BaseTag implements Factory\StaticMethod
      */
     public function __construct(string $variableName, Type $type = null, bool $isVariadic = false, Description $description = null)
     {
-        Assert::string($variableName);
-        Assert::boolean($isVariadic);
-
         $this->variableName = $variableName;
         $this->type = $type;
         $this->isVariadic = $isVariadic;

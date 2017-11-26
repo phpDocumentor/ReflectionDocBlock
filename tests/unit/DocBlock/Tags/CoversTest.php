@@ -150,15 +150,6 @@ class CoversTest extends TestCase
      * @covers ::create
      * @expectedException \InvalidArgumentException
      */
-    public function testFactoryMethodFailsIfBodyIsNotString()
-    {
-        $this->assertNull(Covers::create([]));
-    }
-
-    /**
-     * @covers ::create
-     * @expectedException \InvalidArgumentException
-     */
     public function testFactoryMethodFailsIfBodyIsNotEmpty()
     {
         $this->assertNull(Covers::create(''));
