@@ -47,8 +47,6 @@ class DescriptionFactory
 
     /**
      * Returns the parsed text of this description.
-     *
-     *
      */
     public function create(string $contents, ?TypeContext $context = null): Description
     {

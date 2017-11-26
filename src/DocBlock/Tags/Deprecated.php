@@ -80,7 +80,6 @@ final class Deprecated extends BaseTag implements Factory\StaticMethod
 
     /**
      * Gets the version section of the tag.
-     *
      */
     public function getVersion(): ?string
     {

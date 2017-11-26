@@ -60,7 +60,6 @@ final class Uses extends BaseTag implements Factory\StaticMethod
 
     /**
      * Returns the structural element this tag refers to.
-     *
      */
     public function getReference(): Fqsen
     {
