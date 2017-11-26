@@ -175,7 +175,7 @@ class VarTest extends TestCase
      * @uses \phpDocumentor\Reflection\TypeResolver
      * @uses \phpDocumentor\Reflection\DocBlock\DescriptionFactory
      */
-    public function testFactoryMethodFailsIfEmptyBodyIsGiven() : void
+    public function testFactoryMethodFailsIfEmptyBodyIsGiven(): void
     {
         $this->expectException('InvalidArgumentException');
         $descriptionFactory = m::mock(DescriptionFactory::class);
@@ -185,7 +185,7 @@ class VarTest extends TestCase
     /**
      * @covers ::create
      */
-    public function testFactoryMethodFailsIfResolverIsNull() : void
+    public function testFactoryMethodFailsIfResolverIsNull(): void
     {
         $this->expectException('InvalidArgumentException');
         Var_::create('body');
@@ -195,7 +195,7 @@ class VarTest extends TestCase
      * @covers ::create
      * @uses \phpDocumentor\Reflection\TypeResolver
      */
-    public function testFactoryMethodFailsIfDescriptionFactoryIsNull() : void
+    public function testFactoryMethodFailsIfDescriptionFactoryIsNull(): void
     {
         $this->expectException('InvalidArgumentException');
         Var_::create('body', new TypeResolver());

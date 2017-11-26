@@ -128,7 +128,7 @@ class GenericTest extends TestCase
     /**
      * @covers ::create
      */
-    public function testFactoryMethodFailsIfNameIsNotEmpty() : void
+    public function testFactoryMethodFailsIfNameIsNotEmpty(): void
     {
         $this->expectException('InvalidArgumentException');
         Generic::create('', '');
@@ -138,7 +138,7 @@ class GenericTest extends TestCase
      * @covers ::create
      * @covers ::__construct
      */
-    public function testFactoryMethodFailsIfNameContainsIllegalCharacters() : void
+    public function testFactoryMethodFailsIfNameContainsIllegalCharacters(): void
     {
         $this->expectException('InvalidArgumentException');
         Generic::create('', 'name/myname');

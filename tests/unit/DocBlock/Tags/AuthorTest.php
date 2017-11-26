@@ -98,7 +98,7 @@ class AuthorTest extends TestCase
     /**
      * @covers ::__construct
      */
-    public function testInitializationFailsIfEmailIsNotValid() : void
+    public function testInitializationFailsIfEmailIsNotValid(): void
     {
         $this->expectException('InvalidArgumentException');
         new Author('Mike van Riel', 'mike');

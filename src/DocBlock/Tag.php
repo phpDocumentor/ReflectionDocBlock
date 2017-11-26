@@ -20,7 +20,7 @@ interface Tag
     public function getName(): string;
 
     /**
-     * @return Tag Class that implements Tag
+     * @return Tag|mixed Class that implements Tag
      */
     public static function create(string $body);
 

@@ -148,7 +148,7 @@ class UsesTest extends TestCase
     /**
      * @covers ::create
      */
-    public function testFactoryMethodFailsIfBodyIsNotEmpty() : void
+    public function testFactoryMethodFailsIfBodyIsNotEmpty(): void
     {
         $this->expectException('InvalidArgumentException');
         $this->assertNull(Uses::create(''));
@@ -157,7 +157,7 @@ class UsesTest extends TestCase
     /**
      * @covers ::create
      */
-    public function testFactoryMethodFailsIfResolverIsNull() : void
+    public function testFactoryMethodFailsIfResolverIsNull(): void
     {
         $this->expectException('InvalidArgumentException');
         Uses::create('body');
@@ -166,7 +166,7 @@ class UsesTest extends TestCase
     /**
      * @covers ::create
      */
-    public function testFactoryMethodFailsIfDescriptionFactoryIsNull() : void
+    public function testFactoryMethodFailsIfDescriptionFactoryIsNull(): void
     {
         $this->expectException('InvalidArgumentException');
         Uses::create('body', new FqsenResolver());

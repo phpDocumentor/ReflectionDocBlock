@@ -147,7 +147,7 @@ class StandardTagFactoryTest extends TestCase
      * @uses phpDocumentor\Reflection\DocBlock\StandardTagFactory::__construct
      * @uses phpDocumentor\Reflection\DocBlock\StandardTagFactory::addService
      */
-    public function testExceptionIsThrownIfProvidedTagIsNotWellformed() : void
+    public function testExceptionIsThrownIfProvidedTagIsNotWellformed(): void
     {
         $this->expectException('InvalidArgumentException');
         $this->expectExceptionMessage('The tag "@user[myuser" does not seem to be wellformed, please check it for errors');
@@ -236,7 +236,7 @@ class StandardTagFactoryTest extends TestCase
      * @uses phpDocumentor\Reflection\DocBlock\StandardTagFactory::__construct
      * @uses phpDocumentor\Reflection\DocBlock\StandardTagFactory::addService
      */
-    public function testHandlerRegistrationFailsIfProvidedTagNameIsNamespaceButNotFullyQualified() : void
+    public function testHandlerRegistrationFailsIfProvidedTagNameIsNamespaceButNotFullyQualified(): void
     {
         $this->expectException('InvalidArgumentException');
         $resolver   = m::mock(FqsenResolver::class);
@@ -249,7 +249,7 @@ class StandardTagFactoryTest extends TestCase
      * @uses phpDocumentor\Reflection\DocBlock\StandardTagFactory::__construct
      * @uses phpDocumentor\Reflection\DocBlock\StandardTagFactory::addService
      */
-    public function testHandlerRegistrationFailsIfProvidedHandlerIsEmpty() : void
+    public function testHandlerRegistrationFailsIfProvidedHandlerIsEmpty(): void
     {
         $this->expectException('InvalidArgumentException');
         $resolver   = m::mock(FqsenResolver::class);
@@ -262,7 +262,7 @@ class StandardTagFactoryTest extends TestCase
      * @uses phpDocumentor\Reflection\DocBlock\StandardTagFactory::__construct
      * @uses phpDocumentor\Reflection\DocBlock\StandardTagFactory::addService
      */
-    public function testHandlerRegistrationFailsIfProvidedHandlerIsNotAnExistingClassName() : void
+    public function testHandlerRegistrationFailsIfProvidedHandlerIsNotAnExistingClassName(): void
     {
         $this->expectException('InvalidArgumentException');
         $resolver   = m::mock(FqsenResolver::class);
@@ -275,7 +275,7 @@ class StandardTagFactoryTest extends TestCase
      * @uses phpDocumentor\Reflection\DocBlock\StandardTagFactory::__construct
      * @uses phpDocumentor\Reflection\DocBlock\StandardTagFactory::addService
      */
-    public function testHandlerRegistrationFailsIfProvidedHandlerDoesNotImplementTheTagInterface() : void
+    public function testHandlerRegistrationFailsIfProvidedHandlerDoesNotImplementTheTagInterface(): void
     {
         $this->expectException('InvalidArgumentException');
         $resolver   = m::mock(FqsenResolver::class);

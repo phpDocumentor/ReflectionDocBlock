@@ -79,7 +79,7 @@ class DeprecatedTest extends TestCase
      * @covers ::__construct
      * @covers ::getVersion
      */
-    public function testHasVersionNumber()
+    public function testHasVersionNumber(): void
     {
         $expected = '1.0';
 
@@ -93,7 +93,7 @@ class DeprecatedTest extends TestCase
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getDescription
      * @uses   \phpDocumentor\Reflection\DocBlock\Description
      */
-    public function testHasDescription()
+    public function testHasDescription(): void
     {
         $expected = new Description('Description');
 
@@ -107,7 +107,7 @@ class DeprecatedTest extends TestCase
      * @covers ::__toString
      * @uses   \phpDocumentor\Reflection\DocBlock\Description
      */
-    public function testStringRepresentationIsReturned()
+    public function testStringRepresentationIsReturned(): void
     {
         $fixture = new Deprecated('1.0', new Description('Description'));
 
@@ -121,7 +121,7 @@ class DeprecatedTest extends TestCase
      * @uses \phpDocumentor\Reflection\DocBlock\Description
      * @uses \phpDocumentor\Reflection\Types\Context
      */
-    public function testFactoryMethod()
+    public function testFactoryMethod(): void
     {
         $descriptionFactory = m::mock(DescriptionFactory::class);
         $context = new Context('');

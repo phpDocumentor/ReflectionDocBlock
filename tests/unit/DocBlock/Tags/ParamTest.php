@@ -183,7 +183,7 @@ class ParamTest extends TestCase
      * @uses \phpDocumentor\Reflection\TypeResolver
      * @uses \phpDocumentor\Reflection\DocBlock\DescriptionFactory
      */
-    public function testFactoryMethodFailsIfEmptyBodyIsGiven() : void
+    public function testFactoryMethodFailsIfEmptyBodyIsGiven(): void
     {
         $this->expectException('InvalidArgumentException');
         $descriptionFactory = m::mock(DescriptionFactory::class);
@@ -193,7 +193,7 @@ class ParamTest extends TestCase
     /**
      * @covers ::create
      */
-    public function testFactoryMethodFailsIfResolverIsNull() : void
+    public function testFactoryMethodFailsIfResolverIsNull(): void
     {
         $this->expectException('InvalidArgumentException');
         Param::create('body');
@@ -203,7 +203,7 @@ class ParamTest extends TestCase
      * @covers ::create
      * @uses \phpDocumentor\Reflection\TypeResolver
      */
-    public function testFactoryMethodFailsIfDescriptionFactoryIsNull() : void
+    public function testFactoryMethodFailsIfDescriptionFactoryIsNull(): void
     {
         $this->expectException('InvalidArgumentException');
         Param::create('body', new TypeResolver());
