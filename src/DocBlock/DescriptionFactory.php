@@ -39,7 +39,6 @@ class DescriptionFactory
 
     /**
      * Initializes this factory with the means to construct (inline) tags.
-     *
      */
     public function __construct(TagFactory $tagFactory)
     {
@@ -49,7 +48,6 @@ class DescriptionFactory
     /**
      * Returns the parsed text of this description.
      *
-     * @param string $contents
      *
      * @return Description
      */
@@ -63,7 +61,6 @@ class DescriptionFactory
     /**
      * Strips the contents from superfluous whitespace and splits the description into a series of tokens.
      *
-     * @param string $contents
      *
      * @return string[] A series of tokens of which the description text is composed.
      */
@@ -149,10 +146,6 @@ class DescriptionFactory
      *
      * If we do not normalize the indentation then we have superfluous whitespace on the second and subsequent
      * lines and this may cause rendering issues when, for example, using a Markdown converter.
-     *
-     * @param string $contents
-     *
-     * @return string
      */
     private function removeSuperfluousStartingWhitespace(string $contents): string
     {

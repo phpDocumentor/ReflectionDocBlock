@@ -37,8 +37,6 @@ interface TagFactory
      *
      * @param string $name
      * @param mixed  $value
-     *
-     * @return void
      */
     public function addParameter(string $name, $value);
 
@@ -52,9 +50,6 @@ interface TagFactory
      * interface is passed as alias then every time that interface is requested the provided service will be returned.
      *
      * @param object $service
-     * @param string $alias
-     *
-     * @return void
      */
     public function addService($service);
 
@@ -86,8 +81,6 @@ interface TagFactory
      * @throws \InvalidArgumentException if the handler is not a string
      * @throws \InvalidArgumentException if the handler is not an existing class
      * @throws \InvalidArgumentException if the handler does not implement the {@see Tag} interface
-     *
-     * @return void
      */
     public function registerTagHandler(string $tagName, string $handler);
 }

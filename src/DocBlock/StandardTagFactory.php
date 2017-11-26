@@ -160,7 +160,6 @@ final class StandardTagFactory implements TagFactory
     /**
      * Extracts all components for a tag.
      *
-     * @param string $tagLine
      *
      * @return string[]
      */
@@ -184,8 +183,6 @@ final class StandardTagFactory implements TagFactory
      * Creates a new tag object with the given name and body or returns null if the tag name was recognized but the
      * body was invalid.
      *
-     * @param string  $body
-     * @param string  $name
      *
      * @return Tag|null
      */
@@ -202,10 +199,6 @@ final class StandardTagFactory implements TagFactory
 
     /**
      * Determines the Fully Qualified Class Name of the Factory or Tag (containing a Factory Method `create`).
-     *
-     * @param string  $tagName
-     *
-     * @return string
      */
     private function findHandlerClassName(string $tagName, TypeContext $context): string
     {
@@ -258,7 +251,6 @@ final class StandardTagFactory implements TagFactory
      * Retrieves a series of ReflectionParameter objects for the static 'create' method of the given
      * tag handler class name.
      *
-     * @param string $handlerClassName
      *
      * @return \ReflectionParameter[]
      */
@@ -299,11 +291,8 @@ final class StandardTagFactory implements TagFactory
     /**
      * Returns whether the given tag belongs to an annotation.
      *
-     * @param string $tagContent
      *
      * @todo this method should be populated once we implement Annotation notation support.
-     *
-     * @return bool
      */
     private function isAnnotation(string $tagContent): bool
     {

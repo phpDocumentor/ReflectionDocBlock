@@ -138,8 +138,6 @@ final class Example extends BaseTag
 
     /**
      * Returns a string representation for this tag.
-     *
-     * @return string
      */
     public function __toString(): string
     {
@@ -148,27 +146,17 @@ final class Example extends BaseTag
 
     /**
      * Returns true if the provided URI is relative or contains a complete scheme (and thus is absolute).
-     *
-     * @param string $uri
-     *
-     * @return bool
      */
     private function isUriRelative(string $uri): bool
     {
         return false === strpos($uri, ':');
     }
 
-    /**
-     * @return int
-     */
     public function getStartingLine(): int
     {
         return $this->startingLine;
     }
 
-    /**
-     * @return int
-     */
     public function getLineCount(): int
     {
         return $this->lineCount;

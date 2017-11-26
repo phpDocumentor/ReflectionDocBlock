@@ -30,9 +30,6 @@ final class Author extends BaseTag implements Factory\StaticMethod
 
     /**
      * Initializes this tag with the author name and e-mail.
-     *
-     * @param string $authorName
-     * @param string $authorEmail
      */
     public function __construct(string $authorName, string $authorEmail)
     {
@@ -66,8 +63,6 @@ final class Author extends BaseTag implements Factory\StaticMethod
 
     /**
      * Returns this tag in string form.
-     *
-     * @return string
      */
     public function __toString(): string
     {
@@ -77,7 +72,6 @@ final class Author extends BaseTag implements Factory\StaticMethod
     /**
      * Attempts to create a new Author object based on †he tag body.
      *
-     * @param string $body
      *
      * @return static
      */
