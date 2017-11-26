@@ -14,7 +14,6 @@
 namespace phpDocumentor\Reflection\DocBlock;
 
 use phpDocumentor\Reflection\DocBlock;
-use Webmozart\Assert\Assert;
 
 /**
  * Converts a DocBlock back from an object to a complete DocComment including Asterisks.
