@@ -84,18 +84,15 @@ class DocBlockTest extends TestCase
     /**
      * @covers ::__construct
      * @covers ::getTags
-     *
      * @uses \phpDocumentor\Reflection\DocBlock\Description
      * @uses \phpDocumentor\Reflection\DocBlock\Tag
-     *
-     * @expectedException \InvalidArgumentException
      */
-    public function testDocBlockAllowsOnlyTags(): void
+    public function testDocBlockAllowsOnlyTags() : void
     {
+        $this->expectException('InvalidArgumentException');
         $tags = [
             null
         ];
-
         $fixture = new DocBlock('', null, $tags);
     }
 

@@ -163,30 +163,30 @@ class PropertyTest extends TestCase
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\Property::<public>
      * @uses \phpDocumentor\Reflection\TypeResolver
      * @uses \phpDocumentor\Reflection\DocBlock\DescriptionFactory
-     * @expectedException \InvalidArgumentException
      */
-    public function testFactoryMethodFailsIfEmptyBodyIsGiven(): void
+    public function testFactoryMethodFailsIfEmptyBodyIsGiven() : void
     {
+        $this->expectException('InvalidArgumentException');
         $descriptionFactory = m::mock(DescriptionFactory::class);
         Property::create('', new TypeResolver(), $descriptionFactory);
     }
 
     /**
      * @covers ::create
-     * @expectedException \InvalidArgumentException
      */
-    public function testFactoryMethodFailsIfResolverIsNull(): void
+    public function testFactoryMethodFailsIfResolverIsNull() : void
     {
+        $this->expectException('InvalidArgumentException');
         Property::create('body');
     }
 
     /**
      * @covers ::create
      * @uses \phpDocumentor\Reflection\TypeResolver
-     * @expectedException \InvalidArgumentException
      */
-    public function testFactoryMethodFailsIfDescriptionFactoryIsNull(): void
+    public function testFactoryMethodFailsIfDescriptionFactoryIsNull() : void
     {
+        $this->expectException('InvalidArgumentException');
         Property::create('body', new TypeResolver());
     }
 }

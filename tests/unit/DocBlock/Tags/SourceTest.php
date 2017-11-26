@@ -160,10 +160,10 @@ class SourceTest extends TestCase
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\Source::<public>
      * @uses \phpDocumentor\Reflection\TypeResolver
      * @uses \phpDocumentor\Reflection\DocBlock\DescriptionFactory
-     * @expectedException \InvalidArgumentException
      */
-    public function testFactoryMethodFailsIfEmptyBodyIsGiven(): void
+    public function testFactoryMethodFailsIfEmptyBodyIsGiven() : void
     {
+        $this->expectException('InvalidArgumentException');
         $descriptionFactory = m::mock(DescriptionFactory::class);
         Source::create('', $descriptionFactory);
     }
@@ -171,28 +171,28 @@ class SourceTest extends TestCase
     /**
      * @covers ::create
      * @uses \phpDocumentor\Reflection\TypeResolver
-     * @expectedException \InvalidArgumentException
      */
-    public function testFactoryMethodFailsIfDescriptionFactoryIsNull(): void
+    public function testFactoryMethodFailsIfDescriptionFactoryIsNull() : void
     {
+        $this->expectException('InvalidArgumentException');
         Source::create('1');
     }
 
     /**
      * @covers ::__construct
-     * @expectedException \InvalidArgumentException
      */
-    public function testExceptionIsThrownIfStartingLineIsNotInteger(): void
+    public function testExceptionIsThrownIfStartingLineIsNotInteger() : void
     {
+        $this->expectException('InvalidArgumentException');
         new Source('blabla');
     }
 
     /**
      * @covers ::__construct
-     * @expectedException \InvalidArgumentException
      */
-    public function testExceptionIsThrownIfLineCountIsNotIntegerOrNull(): void
+    public function testExceptionIsThrownIfLineCountIsNotIntegerOrNull() : void
     {
+        $this->expectException('InvalidArgumentException');
         new Source('1', []);
     }
 }

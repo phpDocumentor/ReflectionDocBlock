@@ -144,13 +144,13 @@ class StandardTagFactoryTest extends TestCase
 
     /**
      * @covers ::create
-     * @uses                     phpDocumentor\Reflection\DocBlock\StandardTagFactory::__construct
-     * @uses                     phpDocumentor\Reflection\DocBlock\StandardTagFactory::addService
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage The tag "@user[myuser" does not seem to be wellformed, please check it for errors
+     * @uses phpDocumentor\Reflection\DocBlock\StandardTagFactory::__construct
+     * @uses phpDocumentor\Reflection\DocBlock\StandardTagFactory::addService
      */
-    public function testExceptionIsThrownIfProvidedTagIsNotWellformed(): void
+    public function testExceptionIsThrownIfProvidedTagIsNotWellformed() : void
     {
+        $this->expectException('InvalidArgumentException');
+        $this->expectExceptionMessage('The tag "@user[myuser" does not seem to be wellformed, please check it for errors');
         $tagFactory = new StandardTagFactory(m::mock(FqsenResolver::class));
         $tagFactory->create('@user[myuser');
     }
@@ -235,13 +235,12 @@ class StandardTagFactoryTest extends TestCase
      * @covers ::registerTagHandler
      * @uses phpDocumentor\Reflection\DocBlock\StandardTagFactory::__construct
      * @uses phpDocumentor\Reflection\DocBlock\StandardTagFactory::addService
-     * @expectedException \InvalidArgumentException
      */
-    public function testHandlerRegistrationFailsIfProvidedTagNameIsNamespaceButNotFullyQualified(): void
+    public function testHandlerRegistrationFailsIfProvidedTagNameIsNamespaceButNotFullyQualified() : void
     {
+        $this->expectException('InvalidArgumentException');
         $resolver   = m::mock(FqsenResolver::class);
         $tagFactory = new StandardTagFactory($resolver);
-
         $tagFactory->registerTagHandler('Name\Spaced\Tag', Author::class);
     }
 
@@ -249,13 +248,12 @@ class StandardTagFactoryTest extends TestCase
      * @covers ::registerTagHandler
      * @uses phpDocumentor\Reflection\DocBlock\StandardTagFactory::__construct
      * @uses phpDocumentor\Reflection\DocBlock\StandardTagFactory::addService
-     * @expectedException \InvalidArgumentException
      */
-    public function testHandlerRegistrationFailsIfProvidedHandlerIsEmpty(): void
+    public function testHandlerRegistrationFailsIfProvidedHandlerIsEmpty() : void
     {
+        $this->expectException('InvalidArgumentException');
         $resolver   = m::mock(FqsenResolver::class);
         $tagFactory = new StandardTagFactory($resolver);
-
         $tagFactory->registerTagHandler('my-tag', '');
     }
 
@@ -263,13 +261,12 @@ class StandardTagFactoryTest extends TestCase
      * @covers ::registerTagHandler
      * @uses phpDocumentor\Reflection\DocBlock\StandardTagFactory::__construct
      * @uses phpDocumentor\Reflection\DocBlock\StandardTagFactory::addService
-     * @expectedException \InvalidArgumentException
      */
-    public function testHandlerRegistrationFailsIfProvidedHandlerIsNotAnExistingClassName(): void
+    public function testHandlerRegistrationFailsIfProvidedHandlerIsNotAnExistingClassName() : void
     {
+        $this->expectException('InvalidArgumentException');
         $resolver   = m::mock(FqsenResolver::class);
         $tagFactory = new StandardTagFactory($resolver);
-
         $tagFactory->registerTagHandler('my-tag', 'IDoNotExist');
     }
 
@@ -277,13 +274,12 @@ class StandardTagFactoryTest extends TestCase
      * @covers ::registerTagHandler
      * @uses phpDocumentor\Reflection\DocBlock\StandardTagFactory::__construct
      * @uses phpDocumentor\Reflection\DocBlock\StandardTagFactory::addService
-     * @expectedException \InvalidArgumentException
      */
-    public function testHandlerRegistrationFailsIfProvidedHandlerDoesNotImplementTheTagInterface(): void
+    public function testHandlerRegistrationFailsIfProvidedHandlerDoesNotImplementTheTagInterface() : void
     {
+        $this->expectException('InvalidArgumentException');
         $resolver   = m::mock(FqsenResolver::class);
         $tagFactory = new StandardTagFactory($resolver);
-
         $tagFactory->registerTagHandler('my-tag', 'stdClass');
     }
 
