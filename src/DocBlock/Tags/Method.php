@@ -161,8 +161,6 @@ final class Method extends BaseTag implements Factory\StaticMethod
 
     /**
      * Retrieves the method name.
-     *
-     * @return string
      */
     public function getMethodName(): string
     {

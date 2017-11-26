@@ -29,8 +29,6 @@ final class DocBlockFactory implements DocBlockFactoryInterface
 
     /**
      * Initializes this factory with the required subcontractors.
-     *
-     * @param TagFactory         $tagFactory
      */
     public function __construct(DescriptionFactory $descriptionFactory, TagFactory $tagFactory)
     {
@@ -65,7 +63,6 @@ final class DocBlockFactory implements DocBlockFactoryInterface
     /**
      * @param object|string $docblock A string containing the DocBlock to parse or an object supporting the
      *                                getDocComment method (such as a ReflectionClass object).
-     * @param Location      $location
      *
      * @return DocBlock
      */
@@ -111,8 +108,6 @@ final class DocBlockFactory implements DocBlockFactoryInterface
      * Strips the asterisks from the DocBlock comment.
      *
      * @param string $comment String containing the comment text.
-     *
-     * @return string
      */
     private function stripDocComment(string $comment): string
     {
@@ -234,8 +229,6 @@ final class DocBlockFactory implements DocBlockFactoryInterface
     }
 
     /**
-     * @param string $tags
-     *
      * @return string[]
      */
     private function splitTagBlockIntoTagLines(string $tags)

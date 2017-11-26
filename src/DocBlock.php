@@ -40,12 +40,9 @@ final class DocBlock
     private $isTemplateEnd = false;
 
     /**
-     * @param string $summary
      * @param DocBlock\Tag[] $tags
      * @param Types\Context $context The context in which the DocBlock occurs.
      * @param Location $location The location within the file that this DocBlock occurs in.
-     * @param bool $isTemplateStart
-     * @param bool $isTemplateEnd
      */
     public function __construct(
         string $summary = '',
@@ -71,9 +68,6 @@ final class DocBlock
         $this->isTemplateStart = $isTemplateStart;
     }
 
-    /**
-     * @return string
-     */
     public function getSummary(): string
     {
         return $this->summary;
@@ -181,8 +175,6 @@ final class DocBlock
      * Checks if a tag of a certain type is present in this DocBlock.
      *
      * @param string $name Tag name to check for.
-     *
-     * @return bool
      */
     public function hasTag(string $name): bool
     {
@@ -200,7 +192,6 @@ final class DocBlock
      * Remove a tag from this DocBlock.
      *
      * @param Tag $tag The tag to remove.
-     *
      */
     public function removeTag(Tag $tagToRemove)
     {
@@ -216,7 +207,6 @@ final class DocBlock
      * Adds a tag to this DocBlock.
      *
      * @param Tag $tag The tag to add.
-     *
      */
     private function addTag(Tag $tag)
     {

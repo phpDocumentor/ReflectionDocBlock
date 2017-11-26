@@ -36,9 +36,6 @@ class AlignFormatter implements Formatter
 
     /**
      * Formats the given tag to return a simple plain text version.
-     *
-     *
-     * @return string
      */
     public function format(Tag $tag): string
     {

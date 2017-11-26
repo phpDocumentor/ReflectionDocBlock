@@ -59,7 +59,6 @@ class Description
     /**
      * Initializes a Description with its body (template) and a listing of the tags used in the body template.
      *
-     * @param string $bodyTemplate
      * @param Tag[] $tags
      */
     public function __construct(string $bodyTemplate, array $tags = [])
@@ -81,9 +80,6 @@ class Description
     /**
      * Renders this description as a string where the provided formatter will format the tags in the expected string
      * format.
-     *
-     *
-     * @return string
      */
     public function render(Formatter $formatter = null): string
     {
@@ -101,8 +97,6 @@ class Description
 
     /**
      * Returns a plain string representation of this description.
-     *
-     * @return string
      */
     public function __toString(): string
     {

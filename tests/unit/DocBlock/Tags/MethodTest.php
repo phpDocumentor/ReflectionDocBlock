@@ -342,9 +342,6 @@ class MethodTest extends TestCase
      * @uses \phpDocumentor\Reflection\Types\Compound
      * @uses \phpDocumentor\Reflection\Types\Integer
      * @uses \phpDocumentor\Reflection\Types\Object_
-     * @param string $returnType
-     * @param string $expectedType
-     * @param string $expectedValueType
      * @param string null $expectedKeyType
      */
     public function testCollectionReturnTypes(

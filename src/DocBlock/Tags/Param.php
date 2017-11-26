@@ -37,11 +37,6 @@ final class Param extends BaseTag implements Factory\StaticMethod
     /** @var bool determines whether this is a variadic argument */
     private $isVariadic = false;
 
-    /**
-     * @param string $variableName
-     * @param bool $isVariadic
-     * @param Description $description
-     */
     public function __construct(string $variableName, Type $type = null, bool $isVariadic = false, Description $description = null)
     {
         $this->variableName = $variableName;
@@ -95,8 +90,6 @@ final class Param extends BaseTag implements Factory\StaticMethod
 
     /**
      * Returns the variable's name.
-     *
-     * @return string
      */
     public function getVariableName(): string
     {
@@ -125,8 +118,6 @@ final class Param extends BaseTag implements Factory\StaticMethod
 
     /**
      * Returns a string representation for this tag.
-     *
-     * @return string
      */
     public function __toString(): string
     {

@@ -32,8 +32,6 @@ final class Uses extends BaseTag implements Factory\StaticMethod
 
     /**
      * Initializes this tag.
-     *
-     * @param Fqsen       $refers
      */
     public function __construct(Fqsen $refers, Description $description = null)
     {
@@ -72,8 +70,6 @@ final class Uses extends BaseTag implements Factory\StaticMethod
 
     /**
      * Returns a string representation of this tag.
-     *
-     * @return string
      */
     public function __toString(): string
     {

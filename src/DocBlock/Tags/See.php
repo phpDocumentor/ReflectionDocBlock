@@ -34,8 +34,6 @@ class See extends BaseTag implements Factory\StaticMethod
 
     /**
      * Initializes this tag.
-     *
-     * @param Description $description
      */
     public function __construct(Reference $refers, Description $description = null)
     {
@@ -77,8 +75,6 @@ class See extends BaseTag implements Factory\StaticMethod
 
     /**
      * Returns a string representation of this tag.
-     *
-     * @return string
      */
     public function __toString(): string
     {

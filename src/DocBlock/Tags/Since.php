@@ -85,8 +85,6 @@ final class Since extends BaseTag implements Factory\StaticMethod
 
     /**
      * Returns a string representation for this tag.
-     *
-     * @return string
      */
     public function __toString(): string
     {

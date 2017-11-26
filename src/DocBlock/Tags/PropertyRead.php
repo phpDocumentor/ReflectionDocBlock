@@ -34,10 +34,6 @@ class PropertyRead extends BaseTag implements Factory\StaticMethod
     /** @var string */
     protected $variableName = '';
 
-    /**
-     * @param string      $variableName
-     * @param Type        $type
-     */
     public function __construct(string $variableName, Type $type = null, Description $description = null)
     {
         $this->variableName = $variableName;
@@ -84,8 +80,6 @@ class PropertyRead extends BaseTag implements Factory\StaticMethod
 
     /**
      * Returns the variable's name.
-     *
-     * @return string
      */
     public function getVariableName(): string
     {
@@ -104,8 +98,6 @@ class PropertyRead extends BaseTag implements Factory\StaticMethod
 
     /**
      * Returns a string representation for this tag.
-     *
-     * @return string
      */
     public function __toString(): string
     {

@@ -28,9 +28,6 @@ class ExampleFinder
 
     /**
      * Attempts to find the example contents for the given descriptor.
-     *
-     *
-     * @return string
      */
     public function find(Example $example): string
     {
@@ -46,9 +43,6 @@ class ExampleFinder
 
     /**
      * Registers the project's root directory where an 'examples' folder can be expected.
-     *
-     * @param string $directory
-     *
      */
     public function setSourceDirectory(string $directory = '')
     {
@@ -57,8 +51,6 @@ class ExampleFinder
 
     /**
      * Returns the project's root directory where an 'examples' folder can be expected.
-     *
-     * @return string
      */
     public function getSourceDirectory(): string
     {
@@ -96,7 +88,6 @@ class ExampleFinder
      * 3. Checks the 'examples' folder in the current working directory for examples
      * 4. Checks the path relative to the current working directory for the given filename
      *
-     * @param string $filename
      *
      * @return string|null
      */
@@ -127,10 +118,6 @@ class ExampleFinder
 
     /**
      * Get example filepath based on the example directory inside your project.
-     *
-     * @param string $file
-     *
-     * @return string
      */
     private function getExamplePathFromExampleDirectory(string $file): string
     {
@@ -139,11 +126,6 @@ class ExampleFinder
 
     /**
      * Returns a path to the example file in the given directory..
-     *
-     * @param string $directory
-     * @param string $file
-     *
-     * @return string
      */
     private function constructExamplePath(string $directory, string $file): string
     {
@@ -152,10 +134,6 @@ class ExampleFinder
 
     /**
      * Get example filepath based on sourcecode.
-     *
-     * @param string $file
-     *
-     * @return string
      */
     private function getExamplePathFromSource(string $file): string
     {

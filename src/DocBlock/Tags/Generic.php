@@ -41,9 +41,6 @@ class Generic extends BaseTag implements Factory\StaticMethod
     /**
      * Creates a new tag that represents any unknown tag type.
      *
-     * @param string             $body
-     * @param string             $name
-     * @param TypeContext        $context
      *
      * @return static
      */
@@ -63,8 +60,6 @@ class Generic extends BaseTag implements Factory\StaticMethod
 
     /**
      * Returns the tag as a serialized string
-     *
-     * @return string
      */
     public function __toString(): string
     {
@@ -73,9 +68,6 @@ class Generic extends BaseTag implements Factory\StaticMethod
 
     /**
      * Validates if the tag name matches the expected format, otherwise throws an exception.
-     *
-     * @param string $name
-     *
      */
     private function validateTagName(string $name)
     {

@@ -88,8 +88,6 @@ class Serializer
     }
 
     /**
-     * @param $indent
-     * @param $text
      * @return mixed
      */
     private function removeTrailingSpaces($indent, $text)
@@ -98,8 +96,6 @@ class Serializer
     }
 
     /**
-     * @param $indent
-     * @param $text
      * @return mixed
      */
     private function addAsterisksForEachLine($indent, $text)
@@ -107,10 +103,6 @@ class Serializer
         return str_replace("\n", "\n{$indent} * ", $text);
     }
 
-    /**
-     * @param $wrapLength
-     * @return string
-     */
     private function getSummaryAndDescriptionTextBlock(DocBlock $docblock, $wrapLength): string
     {
         $text = $docblock->getSummary() . ((string)$docblock->getDescription() ? "\n\n" . $docblock->getDescription()
@@ -123,12 +115,6 @@ class Serializer
         return $text;
     }
 
-    /**
-     * @param $wrapLength
-     * @param $indent
-     * @param $comment
-     * @return string
-     */
     private function addTagBlock(DocBlock $docblock, $wrapLength, $indent, $comment): string
     {
         foreach ($docblock->getTags() as $tag) {
