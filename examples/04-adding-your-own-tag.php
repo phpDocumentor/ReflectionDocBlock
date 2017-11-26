@@ -83,10 +83,8 @@ final class MyTag extends BaseTag implements StaticMethod
      *
      * @see Tag for the interface declaration of the `create` method.
      * @see Tag::create() for more information on this method's workings.
-     *
-     * @return MyTag
      */
-    public static function create($body, DescriptionFactory $descriptionFactory = null, Context $context = null)
+    public static function create(string $body, DescriptionFactory $descriptionFactory = null, Context $context = null): MyTag
     {
         Assert::string($body);
         Assert::notNull($descriptionFactory);
@@ -99,10 +97,8 @@ final class MyTag extends BaseTag implements StaticMethod
      *
      * This method is used to reconstitute a DocBlock into its original form by the {@see Serializer}. It should
      * feature all parts of the tag so that the serializer can put it back together.
-     *
-     * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return (string)$this->description;
     }
