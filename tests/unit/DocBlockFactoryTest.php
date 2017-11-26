@@ -263,6 +263,8 @@ DOCBLOCK
 
         $tagFactoryMock->shouldReceive('create')->with(m::any(), $context)->andReturn(new Param('param'));
         $docblock = $fixture->create('/** @param MyType $param */', $context);
+
+        $this->assertInstanceOf(DocBlock::class, $docblock);
     }
 
     /**
