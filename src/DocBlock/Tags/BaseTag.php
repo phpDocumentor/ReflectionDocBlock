@@ -24,7 +24,7 @@ abstract class BaseTag implements DocBlock\Tag
     /** @var string Name of the tag */
     protected $name = '';
 
-    /** @var Description|null Description of the tag. */
+    /** @var Description|string|null Description of the tag. */
     protected $description;
 
     /**
