@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * This file is part of phpDocumentor.
  *
@@ -62,10 +63,8 @@ class Description
      * @param string $bodyTemplate
      * @param Tag[] $tags
      */
-    public function __construct($bodyTemplate, array $tags = [])
+    public function __construct(string $bodyTemplate, array $tags = [])
     {
-        Assert::string($bodyTemplate);
-
         $this->bodyTemplate = $bodyTemplate;
         $this->tags = $tags;
     }
@@ -84,11 +83,10 @@ class Description
      * Renders this description as a string where the provided formatter will format the tags in the expected string
      * format.
      *
-     * @param Formatter|null $formatter
      *
      * @return string
      */
-    public function render(Formatter $formatter = null)
+    public function render(Formatter $formatter = null): string
     {
         if ($formatter === null) {
             $formatter = new PassthroughFormatter();
@@ -107,7 +105,7 @@ class Description
      *
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->render();
     }

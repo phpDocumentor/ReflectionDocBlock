@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * This file is part of phpDocumentor.
  *
@@ -19,9 +20,8 @@ interface Formatter
     /**
      * Formats a tag into a string representation according to a specific format, such as Markdown.
      *
-     * @param Tag $tag
      *
      * @return string
      */
-    public function format(Tag $tag);
+    public function format(Tag $tag): string;
 }

@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * This file is part of phpDocumentor.
  *
@@ -34,7 +35,6 @@ class See extends BaseTag implements Factory\StaticMethod
     /**
      * Initializes this tag.
      *
-     * @param Reference $refers
      * @param Description $description
      */
     public function __construct(Reference $refers, Description $description = null)
@@ -47,7 +47,7 @@ class See extends BaseTag implements Factory\StaticMethod
      * {@inheritdoc}
      */
     public static function create(
-        $body,
+        string $body,
         FqsenResolver $resolver = null,
         DescriptionFactory $descriptionFactory = null,
         TypeContext $context = null
@@ -71,7 +71,7 @@ class See extends BaseTag implements Factory\StaticMethod
      *
      * @return Reference
      */
-    public function getReference()
+    public function getReference(): Reference
     {
         return $this->refers;
     }
@@ -81,7 +81,7 @@ class See extends BaseTag implements Factory\StaticMethod
      *
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->refers . ($this->description ? ' ' . $this->description->render() : '');
     }

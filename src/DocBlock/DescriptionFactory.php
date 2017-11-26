@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * This file is part of phpDocumentor.
  *
@@ -39,7 +40,6 @@ class DescriptionFactory
     /**
      * Initializes this factory with the means to construct (inline) tags.
      *
-     * @param TagFactory $tagFactory
      */
     public function __construct(TagFactory $tagFactory)
     {
@@ -50,11 +50,10 @@ class DescriptionFactory
      * Returns the parsed text of this description.
      *
      * @param string $contents
-     * @param TypeContext $context
      *
      * @return Description
      */
-    public function create($contents, TypeContext $context = null)
+    public function create(string $contents, TypeContext $context = null): Description
     {
         list($text, $tags) = $this->parse($this->lex($contents), $context);
 
@@ -68,7 +67,7 @@ class DescriptionFactory
      *
      * @return string[] A series of tokens of which the description text is composed.
      */
-    private function lex($contents)
+    private function lex(string $contents)
     {
         $contents = $this->removeSuperfluousStartingWhitespace($contents);
 
@@ -103,7 +102,7 @@ class DescriptionFactory
                 )
             \}/Sux',
             $contents,
-            null,
+            0,
             PREG_SPLIT_DELIM_CAPTURE
         );
     }
@@ -112,7 +111,6 @@ class DescriptionFactory
      * Parses the stream of tokens in to a new set of tokens containing Tags.
      *
      * @param string[] $tokens
-     * @param TypeContext $context
      *
      * @return string[]|Tag[]
      */
@@ -156,7 +154,7 @@ class DescriptionFactory
      *
      * @return string
      */
-    private function removeSuperfluousStartingWhitespace($contents)
+    private function removeSuperfluousStartingWhitespace(string $contents): string
     {
         $lines = explode("\n", $contents);
 

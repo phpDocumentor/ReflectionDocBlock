@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * This file is part of phpDocumentor.
  *
@@ -44,8 +45,11 @@ final class Source extends BaseTag implements Factory\StaticMethod
     /**
      * {@inheritdoc}
      */
-    public static function create($body, DescriptionFactory $descriptionFactory = null, TypeContext $context = null)
-    {
+    public static function create(
+        string $body,
+        DescriptionFactory $descriptionFactory = null,
+        TypeContext $context = null
+    ) {
         Assert::stringNotEmpty($body);
         Assert::notNull($descriptionFactory);
 
@@ -72,7 +76,7 @@ final class Source extends BaseTag implements Factory\StaticMethod
      * @return int The starting line, relative to the structural element's
      *     location.
      */
-    public function getStartingLine()
+    public function getStartingLine(): int
     {
         return $this->startingLine;
     }

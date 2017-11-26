@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * This file is part of phpDocumentor.
  *
@@ -39,7 +40,7 @@ interface TagFactory
      *
      * @return void
      */
-    public function addParameter($name, $value);
+    public function addParameter(string $name, $value);
 
     /**
      * Registers a service with the Service Locator using the FQCN of the class or the alias, if provided.
@@ -61,13 +62,12 @@ interface TagFactory
      * Factory method responsible for instantiating the correct sub type.
      *
      * @param string $tagLine The text for this tag, including description.
-     * @param TypeContext $context
      *
      * @throws \InvalidArgumentException if an invalid tag line was presented.
      *
      * @return Tag A new tag object.
      */
-    public function create($tagLine, TypeContext $context = null);
+    public function create(string $tagLine, TypeContext $context = null): Tag;
 
     /**
      * Registers a handler for tags.
@@ -89,5 +89,5 @@ interface TagFactory
      *
      * @return void
      */
-    public function registerTagHandler($tagName, $handler);
+    public function registerTagHandler(string $tagName, string $handler);
 }

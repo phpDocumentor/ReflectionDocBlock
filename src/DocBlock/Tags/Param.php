@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * This file is part of phpDocumentor.
  *
@@ -38,11 +39,10 @@ final class Param extends BaseTag implements Factory\StaticMethod
 
     /**
      * @param string $variableName
-     * @param Type $type
      * @param bool $isVariadic
      * @param Description $description
      */
-    public function __construct($variableName, Type $type = null, $isVariadic = false, Description $description = null)
+    public function __construct(string $variableName, Type $type = null, bool $isVariadic = false, Description $description = null)
     {
         Assert::string($variableName);
         Assert::boolean($isVariadic);
@@ -57,7 +57,7 @@ final class Param extends BaseTag implements Factory\StaticMethod
      * {@inheritdoc}
      */
     public static function create(
-        $body,
+        string $body,
         TypeResolver $typeResolver = null,
         DescriptionFactory $descriptionFactory = null,
         TypeContext $context = null
@@ -101,7 +101,7 @@ final class Param extends BaseTag implements Factory\StaticMethod
      *
      * @return string
      */
-    public function getVariableName()
+    public function getVariableName(): string
     {
         return $this->variableName;
     }
@@ -121,7 +121,7 @@ final class Param extends BaseTag implements Factory\StaticMethod
      *
      * @return boolean
      */
-    public function isVariadic()
+    public function isVariadic(): bool
     {
         return $this->isVariadic;
     }
@@ -131,7 +131,7 @@ final class Param extends BaseTag implements Factory\StaticMethod
      *
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return ($this->type ? $this->type . ' ' : '')
         . ($this->isVariadic() ? '...' : '')

@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * This file is part of phpDocumentor.
  *
@@ -44,7 +45,7 @@ class Serializer
      * @param int|null $lineLength The max length of a line or NULL to disable line wrapping.
      * @param DocBlock\Tags\Formatter $tagFormatter A custom tag formatter, defaults to PassthroughFormatter.
      */
-    public function __construct($indent = 0, $indentString = ' ', $indentFirstLine = true, $lineLength = null, $tagFormatter = null)
+    public function __construct(int $indent = 0, string $indentString = ' ', bool $indentFirstLine = true, int $lineLength = null, DocBlock\Tags\Formatter $tagFormatter = null)
     {
         Assert::integer($indent);
         Assert::string($indentString);
@@ -66,7 +67,7 @@ class Serializer
      *
      * @return string The serialized doc block.
      */
-    public function getDocComment(DocBlock $docblock)
+    public function getDocComment(DocBlock $docblock): string
     {
         $indent = str_repeat($this->indentString, $this->indent);
         $firstIndent = $this->isFirstLineIndented ? $indent : '';
@@ -114,11 +115,10 @@ class Serializer
     }
 
     /**
-     * @param DocBlock $docblock
      * @param $wrapLength
      * @return string
      */
-    private function getSummaryAndDescriptionTextBlock(DocBlock $docblock, $wrapLength)
+    private function getSummaryAndDescriptionTextBlock(DocBlock $docblock, $wrapLength): string
     {
         $text = $docblock->getSummary() . ((string)$docblock->getDescription() ? "\n\n" . $docblock->getDescription()
                 : '');
@@ -131,13 +131,12 @@ class Serializer
     }
 
     /**
-     * @param DocBlock $docblock
      * @param $wrapLength
      * @param $indent
      * @param $comment
      * @return string
      */
-    private function addTagBlock(DocBlock $docblock, $wrapLength, $indent, $comment)
+    private function addTagBlock(DocBlock $docblock, $wrapLength, $indent, $comment): string
     {
         foreach ($docblock->getTags() as $tag) {
             $tagText = $this->tagFormatter->format($tag);

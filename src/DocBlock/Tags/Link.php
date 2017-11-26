@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * phpDocumentor
  *
@@ -31,9 +32,8 @@ final class Link extends BaseTag implements Factory\StaticMethod
      * Initializes a link to a URL.
      *
      * @param string      $link
-     * @param Description $description
      */
-    public function __construct($link, Description $description = null)
+    public function __construct(string $link, Description $description = null)
     {
         Assert::string($link);
 
@@ -44,7 +44,7 @@ final class Link extends BaseTag implements Factory\StaticMethod
     /**
      * {@inheritdoc}
      */
-    public static function create($body, DescriptionFactory $descriptionFactory = null, TypeContext $context = null)
+    public static function create(string $body, DescriptionFactory $descriptionFactory = null, TypeContext $context = null)
     {
         Assert::string($body);
         Assert::notNull($descriptionFactory);
@@ -60,7 +60,7 @@ final class Link extends BaseTag implements Factory\StaticMethod
     *
     * @return string
     */
-    public function getLink()
+    public function getLink(): string
     {
         return $this->link;
     }
@@ -70,7 +70,7 @@ final class Link extends BaseTag implements Factory\StaticMethod
      *
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->link . ($this->description ? ' ' . $this->description->render() : '');
     }

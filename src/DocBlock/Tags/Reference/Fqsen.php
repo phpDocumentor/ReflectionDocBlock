@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * This file is part of phpDocumentor.
  *
@@ -35,7 +36,7 @@ final class Fqsen implements Reference
     /**
      * @return string string representation of the referenced fqsen
      */
-    public function __toString()
+    public function __toString(): string
     {
         return (string)$this->fqsen;
     }

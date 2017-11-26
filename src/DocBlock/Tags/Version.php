@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * phpDocumentor
  *
@@ -54,8 +55,11 @@ final class Version extends BaseTag implements Factory\StaticMethod
     /**
      * @return static
      */
-    public static function create($body, DescriptionFactory $descriptionFactory = null, TypeContext $context = null)
-    {
+    public static function create(
+        string $body,
+        DescriptionFactory $descriptionFactory = null,
+        TypeContext $context = null
+    ) {
         Assert::nullOrString($body);
         if (empty($body)) {
             return new static();
@@ -68,7 +72,7 @@ final class Version extends BaseTag implements Factory\StaticMethod
 
         return new static(
             $matches[1],
-            $descriptionFactory->create(isset($matches[2]) ? $matches[2] : '', $context)
+            $descriptionFactory->create($matches[2] ?? '', $context)
         );
     }
 
@@ -77,7 +81,7 @@ final class Version extends BaseTag implements Factory\StaticMethod
      *
      * @return string
      */
-    public function getVersion()
+    public function getVersion(): string
     {
         return $this->version;
     }
@@ -87,7 +91,7 @@ final class Version extends BaseTag implements Factory\StaticMethod
      *
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->version . ($this->description ? ' ' . $this->description->render() : '');
     }

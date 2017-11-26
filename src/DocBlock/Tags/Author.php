@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * This file is part of phpDocumentor.
  *
@@ -34,7 +35,7 @@ final class Author extends BaseTag implements Factory\StaticMethod
      * @param string $authorName
      * @param string $authorEmail
      */
-    public function __construct($authorName, $authorEmail)
+    public function __construct(string $authorName, string $authorEmail)
     {
         Assert::string($authorName);
         Assert::string($authorEmail);
@@ -51,7 +52,7 @@ final class Author extends BaseTag implements Factory\StaticMethod
      *
      * @return string The author's name.
      */
-    public function getAuthorName()
+    public function getAuthorName(): string
     {
         return $this->authorName;
     }
@@ -61,7 +62,7 @@ final class Author extends BaseTag implements Factory\StaticMethod
      *
      * @return string The author's email.
      */
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->authorEmail;
     }
@@ -71,7 +72,7 @@ final class Author extends BaseTag implements Factory\StaticMethod
      *
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->authorName . (strlen($this->authorEmail) ? ' <' . $this->authorEmail . '>' : '');
     }
@@ -83,7 +84,7 @@ final class Author extends BaseTag implements Factory\StaticMethod
      *
      * @return static
      */
-    public static function create($body)
+    public static function create(string $body)
     {
         Assert::string($body);
 

@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * This file is part of phpDocumentor.
  *
@@ -31,7 +32,7 @@ abstract class BaseTag implements DocBlock\Tag
      *
      * @return string The name of this tag.
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
