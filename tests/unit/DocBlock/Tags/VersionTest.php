@@ -159,15 +159,6 @@ class VersionTest extends TestCase
 
     /**
      * @covers ::create
-     * @expectedException \InvalidArgumentException
-     */
-    public function testFactoryMethodFailsIfVersionIsNotString()
-    {
-        $this->assertNull(Version::create([]));
-    }
-
-    /**
-     * @covers ::create
      */
     public function testFactoryMethodReturnsNullIfBodyDoesNotMatchRegex()
     {

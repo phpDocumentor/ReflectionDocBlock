@@ -180,15 +180,6 @@ class PropertyReadTest extends TestCase
      * @covers ::create
      * @expectedException \InvalidArgumentException
      */
-    public function testFactoryMethodFailsIfBodyIsNotString()
-    {
-        PropertyRead::create([]);
-    }
-
-    /**
-     * @covers ::create
-     * @expectedException \InvalidArgumentException
-     */
     public function testFactoryMethodFailsIfResolverIsNull()
     {
         PropertyRead::create('body');
@@ -202,14 +193,5 @@ class PropertyReadTest extends TestCase
     public function testFactoryMethodFailsIfDescriptionFactoryIsNull()
     {
         PropertyRead::create('body', new TypeResolver());
-    }
-
-    /**
-     * @covers ::__construct
-     * @expectedException \InvalidArgumentException
-     */
-    public function testExceptionIsThrownIfVariableNameIsNotString()
-    {
-        new PropertyRead([]);
     }
 }

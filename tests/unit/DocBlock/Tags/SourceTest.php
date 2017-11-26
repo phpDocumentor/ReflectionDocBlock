@@ -170,15 +170,6 @@ class SourceTest extends TestCase
 
     /**
      * @covers ::create
-     * @expectedException \InvalidArgumentException
-     */
-    public function testFactoryMethodFailsIfBodyIsNotString()
-    {
-        Source::create([]);
-    }
-
-    /**
-     * @covers ::create
      * @uses \phpDocumentor\Reflection\TypeResolver
      * @expectedException \InvalidArgumentException
      */

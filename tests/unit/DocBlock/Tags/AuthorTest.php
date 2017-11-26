@@ -83,16 +83,6 @@ class AuthorTest extends TestCase
 
     /**
      * @covers ::__construct
-     * @covers ::getAuthorName
-     * @expectedException \InvalidArgumentException
-     */
-    public function testInitializationFailsIfAuthorNameIsNotAString()
-    {
-        new Author([], 'mike@phpdoc.org');
-    }
-
-    /**
-     * @covers ::__construct
      * @covers ::getEmail
      */
     public function testHasTheAuthorMailAddress()
@@ -102,15 +92,6 @@ class AuthorTest extends TestCase
         $fixture = new Author('Mike van Riel', $expected);
 
         $this->assertSame($expected, $fixture->getEmail());
-    }
-
-    /**
-     * @covers ::__construct
-     * @expectedException \InvalidArgumentException
-     */
-    public function testInitializationFailsIfEmailIsNotAString()
-    {
-        new Author('Mike van Riel', []);
     }
 
     /**

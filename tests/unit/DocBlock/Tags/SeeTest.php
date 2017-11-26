@@ -194,15 +194,6 @@ class SeeTest extends TestCase
      * @covers ::create
      * @expectedException \InvalidArgumentException
      */
-    public function testFactoryMethodFailsIfBodyIsNotString()
-    {
-        $this->assertNull(See::create([]));
-    }
-
-    /**
-     * @covers ::create
-     * @expectedException \InvalidArgumentException
-     */
     public function testFactoryMethodFailsIfBodyIsNotEmpty()
     {
         $this->assertNull(See::create(''));

@@ -156,13 +156,4 @@ class LinkTest extends TestCase
         $this->assertSame('', $fixture->getLink());
         $this->assertSame(null, $fixture->getDescription());
     }
-
-    /**
-     * @covers ::create
-     * @expectedException \InvalidArgumentException
-     */
-    public function testFactoryMethodFailsIfVersionIsNotString()
-    {
-        $this->assertNull(Link::create([]));
-    }
 }

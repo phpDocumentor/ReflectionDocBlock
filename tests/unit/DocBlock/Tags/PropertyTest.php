@@ -175,15 +175,6 @@ class PropertyTest extends TestCase
      * @covers ::create
      * @expectedException \InvalidArgumentException
      */
-    public function testFactoryMethodFailsIfBodyIsNotString()
-    {
-        Property::create([]);
-    }
-
-    /**
-     * @covers ::create
-     * @expectedException \InvalidArgumentException
-     */
     public function testFactoryMethodFailsIfResolverIsNull()
     {
         Property::create('body');
@@ -197,14 +188,5 @@ class PropertyTest extends TestCase
     public function testFactoryMethodFailsIfDescriptionFactoryIsNull()
     {
         Property::create('body', new TypeResolver());
-    }
-
-    /**
-     * @covers ::__construct
-     * @expectedException \InvalidArgumentException
-     */
-    public function testExceptionIsThrownIfVariableNameIsNotString()
-    {
-        new Property([]);
     }
 }

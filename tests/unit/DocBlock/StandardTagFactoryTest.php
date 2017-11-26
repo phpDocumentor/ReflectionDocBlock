@@ -237,54 +237,12 @@ class StandardTagFactoryTest extends TestCase
      * @uses phpDocumentor\Reflection\DocBlock\StandardTagFactory::addService
      * @expectedException \InvalidArgumentException
      */
-    public function testHandlerRegistrationFailsIfProvidedTagNameIsNotAString()
-    {
-        $resolver   = m::mock(FqsenResolver::class);
-        $tagFactory = new StandardTagFactory($resolver);
-
-        $tagFactory->registerTagHandler([], Author::class);
-    }
-
-    /**
-     * @covers ::registerTagHandler
-     * @uses phpDocumentor\Reflection\DocBlock\StandardTagFactory::__construct
-     * @uses phpDocumentor\Reflection\DocBlock\StandardTagFactory::addService
-     * @expectedException \InvalidArgumentException
-     */
-    public function testHandlerRegistrationFailsIfProvidedTagNameIsEmpty()
-    {
-        $resolver   = m::mock(FqsenResolver::class);
-        $tagFactory = new StandardTagFactory($resolver);
-
-        $tagFactory->registerTagHandler('', Author::class);
-    }
-
-    /**
-     * @covers ::registerTagHandler
-     * @uses phpDocumentor\Reflection\DocBlock\StandardTagFactory::__construct
-     * @uses phpDocumentor\Reflection\DocBlock\StandardTagFactory::addService
-     * @expectedException \InvalidArgumentException
-     */
     public function testHandlerRegistrationFailsIfProvidedTagNameIsNamespaceButNotFullyQualified()
     {
         $resolver   = m::mock(FqsenResolver::class);
         $tagFactory = new StandardTagFactory($resolver);
 
         $tagFactory->registerTagHandler('Name\Spaced\Tag', Author::class);
-    }
-
-    /**
-     * @covers ::registerTagHandler
-     * @uses phpDocumentor\Reflection\DocBlock\StandardTagFactory::__construct
-     * @uses phpDocumentor\Reflection\DocBlock\StandardTagFactory::addService
-     * @expectedException \InvalidArgumentException
-     */
-    public function testHandlerRegistrationFailsIfProvidedHandlerIsNotAString()
-    {
-        $resolver   = m::mock(FqsenResolver::class);
-        $tagFactory = new StandardTagFactory($resolver);
-
-        $tagFactory->registerTagHandler('my-tag', []);
     }
 
     /**

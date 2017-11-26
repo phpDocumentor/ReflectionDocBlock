@@ -102,10 +102,8 @@ final class DocBlock
 
     /**
      * Returns the current location.
-     *
-     * @return Location
      */
-    public function getLocation(): Location
+    public function getLocation(): ?Location
     {
         return $this->location;
     }

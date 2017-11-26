@@ -194,15 +194,6 @@ class ParamTest extends TestCase
      * @covers ::create
      * @expectedException \InvalidArgumentException
      */
-    public function testFactoryMethodFailsIfBodyIsNotString()
-    {
-        Param::create([]);
-    }
-
-    /**
-     * @covers ::create
-     * @expectedException \InvalidArgumentException
-     */
     public function testFactoryMethodFailsIfResolverIsNull()
     {
         Param::create('body');
@@ -216,23 +207,5 @@ class ParamTest extends TestCase
     public function testFactoryMethodFailsIfDescriptionFactoryIsNull()
     {
         Param::create('body', new TypeResolver());
-    }
-
-    /**
-     * @covers ::__construct
-     * @expectedException \InvalidArgumentException
-     */
-    public function testExceptionIsThrownIfVariableNameIsNotString()
-    {
-        new Param([]);
-    }
-
-    /**
-     * @covers ::__construct
-     * @expectedException \InvalidArgumentException
-     */
-    public function testExceptionIsThrownIfVariadicIsNotBoolean()
-    {
-        new Param('', null, []);
     }
 }

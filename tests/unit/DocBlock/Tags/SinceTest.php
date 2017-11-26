@@ -160,15 +160,6 @@ class SinceTest extends TestCase
 
     /**
      * @covers ::create
-     * @expectedException \InvalidArgumentException
-     */
-    public function testFactoryMethodFailsIfSinceIsNotString()
-    {
-        $this->assertNull(Since::create([]));
-    }
-
-    /**
-     * @covers ::create
      */
     public function testFactoryMethodReturnsNullIfBodyDoesNotMatchRegex()
     {
