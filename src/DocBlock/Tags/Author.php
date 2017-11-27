@@ -13,7 +13,6 @@
 
 namespace phpDocumentor\Reflection\DocBlock\Tags;
 
-
 /**
  * Reflection class for an {@}author tag in a Docblock.
  */
