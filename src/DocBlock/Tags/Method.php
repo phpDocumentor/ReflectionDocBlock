@@ -185,9 +185,6 @@ final class Method extends BaseTag implements Factory\StaticMethod
         return $this->isStatic;
     }
 
-    /**
-     * @return Type
-     */
     public function getReturnType(): Type
     {
         return $this->returnType;

@@ -73,9 +73,6 @@ final class DocBlock
         return $this->summary;
     }
 
-    /**
-     * @return DocBlock\Description
-     */
     public function getDescription(): DocBlock\Description
     {
         return $this->description;
