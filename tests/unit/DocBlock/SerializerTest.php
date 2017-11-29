@@ -192,7 +192,7 @@ DOCCOMMENT_AFTER_REMOVE;
         $fixture = new Serializer(0, '', true, 15);
         $genericTag = new DocBlock\Tags\Generic('unknown-tag');
 
-        $docBlock = new DocBlock('',null, [$genericTag]);
+        $docBlock = new DocBlock('', null, [$genericTag]);
         $this->assertSame($expected, $fixture->getDocComment($docBlock));
 
         $docBlock->removeTag($genericTag);

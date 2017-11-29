@@ -86,6 +86,7 @@ class Serializer
             $comment .= "{$indent} * {$text}\n";
             $comment .= "{$indent} *\n";
         }
+
         $comment = $this->addTagBlock($docblock, $wrapLength, $indent, $comment);
         $comment .= $indent . ' */';
 
