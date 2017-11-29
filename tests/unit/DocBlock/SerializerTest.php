@@ -174,6 +174,33 @@ DOCCOMMENT;
 
     /**
      * @covers ::__construct
+     * @covers ::getDocComment
+     */
+    public function testNoExtraSpacesAfterTagRemoval()
+    {
+        $expected = <<<'DOCCOMMENT'
+/**
+ * @unknown-tag
+ */
+DOCCOMMENT;
+
+        $expectedAfterRemove = <<<'DOCCOMMENT_AFTER_REMOVE'
+/**
+ */
+DOCCOMMENT_AFTER_REMOVE;
+
+        $fixture = new Serializer(0, '', true, 15);
+        $genericTag = new DocBlock\Tags\Generic('unknown-tag');
+
+        $docBlock = new DocBlock('',null, [$genericTag]);
+        $this->assertSame($expected, $fixture->getDocComment($docBlock));
+
+        $docBlock->removeTag($genericTag);
+        $this->assertSame($expectedAfterRemove, $fixture->getDocComment($docBlock));
+    }
+
+    /**
+     * @covers ::__construct
      * @expectedException \InvalidArgumentException
      */
     public function testInitializationFailsIfIndentIsNotAnInteger()
