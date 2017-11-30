@@ -2,3 +2,4 @@ parameters:
     ignoreErrors:
         # false positive
         - '#Call to an undefined method object::getDocComment\(\)#'
+        - '#Cannot call method render\(\) on phpDocumentor\\Reflection\\DocBlock\\Description\|string#'

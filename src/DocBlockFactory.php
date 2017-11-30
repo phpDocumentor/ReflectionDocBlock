@@ -207,7 +207,7 @@ final class DocBlockFactory implements DocBlockFactoryInterface
      * @param string $tags Tag block to parse.
      * @param Types\Context $context Context of the parsed Tag
      *
-     * @return DocBlock\Tag[]
+     * @return DocBlock\Tag[]|string[]|null[]
      */
     private function parseTagBlock(string $tags, Types\Context $context): array
     {
