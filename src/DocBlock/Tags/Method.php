@@ -125,7 +125,7 @@ final class Method extends BaseTag implements Factory\StaticMethod
 
         [, $static, $returnType, $methodName, $arguments, $description] = $matches;
 
-        $static      = $static === 'static';
+        $static = $static === 'static';
 
         if ($returnType === '') {
             $returnType = 'void';

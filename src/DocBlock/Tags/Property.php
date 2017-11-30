@@ -28,7 +28,7 @@ class Property extends BaseTag implements Factory\StaticMethod
     /** @var string */
     protected $name = 'property';
 
-    /** @var Type */
+    /** @var Type|null */
     private $type;
 
     /** @var string */
