@@ -28,7 +28,7 @@ final class Uses extends BaseTag implements Factory\StaticMethod
     protected $name = 'uses';
 
     /** @var Fqsen */
-    protected $refers = null;
+    protected $refers;
 
     /**
      * Initializes this tag.

@@ -30,7 +30,7 @@ final class Source extends BaseTag implements Factory\StaticMethod
     private $startingLine = 1;
 
     /** @var int|null The number of lines, relative to the starting line. NULL means "to the end". */
-    private $lineCount = null;
+    private $lineCount;
 
     public function __construct($startingLine, $lineCount = null, ?Description $description = null)
     {

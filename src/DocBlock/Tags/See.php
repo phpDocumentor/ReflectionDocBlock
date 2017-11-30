@@ -30,7 +30,7 @@ class See extends BaseTag implements Factory\StaticMethod
     protected $name = 'see';
 
     /** @var Reference */
-    protected $refers = null;
+    protected $refers;
 
     /**
      * Initializes this tag.
