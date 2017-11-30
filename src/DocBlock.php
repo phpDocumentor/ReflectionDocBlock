@@ -182,7 +182,7 @@ final class DocBlock
     /**
      * Remove a tag from this DocBlock.
      *
-     * @param Tag $tag The tag to remove.
+     * @param Tag $tagToRemove The tag to remove.
      */
     public function removeTag(Tag $tagToRemove): void
     {
