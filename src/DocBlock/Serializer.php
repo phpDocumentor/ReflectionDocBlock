@@ -32,7 +32,7 @@ class Serializer
     /** @var int|null The max length of a line. */
     protected $lineLength;
 
-    /** @var DocBlock\Tags\Formatter|null A custom tag formatter. */
+    /** @var DocBlock\Tags\Formatter A custom tag formatter. */
     protected $tagFormatter;
 
     /**

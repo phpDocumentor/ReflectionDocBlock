@@ -108,7 +108,7 @@ class DescriptionFactory
      *
      * @return string[]|Tag[]
      */
-    private function parse($tokens, TypeContext $context)
+    private function parse($tokens, ?TypeContext $context = null): array
     {
         $count = count($tokens);
         $tagCount = 0;
