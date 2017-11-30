@@ -1,0 +1,4 @@
+parameters:
+    ignoreErrors:
+        # false positive
+        - '#Call to an undefined method object::getDocComment\(\)#'
