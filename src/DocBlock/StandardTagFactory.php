@@ -105,7 +105,7 @@ final class StandardTagFactory implements TagFactory
     /**
      * {@inheritDoc}
      */
-    public function create(string $tagLine, ?TypeContext $context = null): Tag
+    public function create(string $tagLine, ?TypeContext $context = null): ?Tag
     {
         if (! $context) {
             $context = new TypeContext('');

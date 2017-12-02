@@ -69,7 +69,7 @@ final class Method extends BaseTag implements Factory\StaticMethod
         ?TypeResolver $typeResolver = null,
         ?DescriptionFactory $descriptionFactory = null,
         ?TypeContext $context = null
-    ): Method {
+    ): ?self {
         Assert::stringNotEmpty($body);
         Assert::allNotNull([ $typeResolver, $descriptionFactory ]);
 
@@ -125,7 +125,7 @@ final class Method extends BaseTag implements Factory\StaticMethod
 
         [, $static, $returnType, $methodName, $arguments, $description] = $matches;
 
-        $static      = $static === 'static';
+        $static = $static === 'static';
 
         if ($returnType === '') {
             $returnType = 'void';

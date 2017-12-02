@@ -52,14 +52,11 @@ final class Version extends BaseTag implements Factory\StaticMethod
         $this->description = $description;
     }
 
-    /**
-     * @return static
-     */
     public static function create(
         ?string $body,
         ?DescriptionFactory $descriptionFactory = null,
         ?TypeContext $context = null
-    ) {
+    ): ?self {
         if (empty($body)) {
             return new static();
         }

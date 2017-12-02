@@ -70,11 +70,8 @@ final class Author extends BaseTag implements Factory\StaticMethod
 
     /**
      * Attempts to create a new Author object based on †he tag body.
-     *
-     *
-     * @return static
      */
-    public static function create(string $body)
+    public static function create(string $body): ?self
     {
         $splitTagContent = preg_match('/^([^\<]*)(?:\<([^\>]*)\>)?$/u', $body, $matches);
         if (!$splitTagContent) {

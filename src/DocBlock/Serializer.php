@@ -30,10 +30,10 @@ class Serializer
     protected $isFirstLineIndented = true;
 
     /** @var int|null The max length of a line. */
-    protected $lineLength = null;
+    protected $lineLength;
 
     /** @var DocBlock\Tags\Formatter A custom tag formatter. */
-    protected $tagFormatter = null;
+    protected $tagFormatter;
 
     /**
      * Create a Serializer instance.

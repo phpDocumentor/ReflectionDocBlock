@@ -28,7 +28,7 @@ class PropertyWrite extends BaseTag implements Factory\StaticMethod
     /** @var string */
     protected $name = 'property-write';
 
-    /** @var Type */
+    /** @var Type|null */
     private $type;
 
     /** @var string */

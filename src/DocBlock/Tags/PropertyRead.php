@@ -28,7 +28,7 @@ class PropertyRead extends BaseTag implements Factory\StaticMethod
     /** @var string */
     protected $name = 'property-read';
 
-    /** @var Type */
+    /** @var Type|null */
     private $type;
 
     /** @var string */

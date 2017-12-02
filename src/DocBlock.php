@@ -22,16 +22,16 @@ final class DocBlock
     private $summary = '';
 
     /** @var DocBlock\Description The actual description for this docblock. */
-    private $description = null;
+    private $description;
 
     /** @var Tag[] An array containing all the tags in this docblock; except inline. */
     private $tags = [];
 
-    /** @var Types\Context Information about the context of this DocBlock. */
-    private $context = null;
+    /** @var Types\Context|null Information about the context of this DocBlock. */
+    private $context;
 
-    /** @var Location Information about the location of this DocBlock. */
-    private $location = null;
+    /** @var Location|null Information about the location of this DocBlock. */
+    private $location;
 
     /** @var bool Is this DocBlock (the start of) a template? */
     private $isTemplateStart = false;
@@ -81,7 +81,7 @@ final class DocBlock
     /**
      * Returns the current context.
      */
-    public function getContext(): Types\Context
+    public function getContext(): ?Types\Context
     {
         return $this->context;
     }
@@ -182,7 +182,7 @@ final class DocBlock
     /**
      * Remove a tag from this DocBlock.
      *
-     * @param Tag $tag The tag to remove.
+     * @param Tag $tagToRemove The tag to remove.
      */
     public function removeTag(Tag $tagToRemove): void
     {

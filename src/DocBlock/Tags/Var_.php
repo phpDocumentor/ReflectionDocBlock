@@ -28,7 +28,7 @@ class Var_ extends BaseTag implements Factory\StaticMethod
     /** @var string */
     protected $name = 'var';
 
-    /** @var Type */
+    /** @var Type|null */
     private $type;
 
     /** @var string */

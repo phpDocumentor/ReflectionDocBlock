@@ -15,6 +15,7 @@ namespace phpDocumentor\Reflection\DocBlock\Tags;
 
 use phpDocumentor\Reflection\DocBlock\Description;
 use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
+use phpDocumentor\Reflection\DocBlock\Tag;
 use phpDocumentor\Reflection\Types\Context as TypeContext;
 use Webmozart\Assert\Assert;
 
@@ -52,14 +53,11 @@ final class Since extends BaseTag implements Factory\StaticMethod
         $this->description = $description;
     }
 
-    /**
-     * @return static
-     */
     public static function create(
         ?string $body,
         ?DescriptionFactory $descriptionFactory = null,
         ?TypeContext $context = null
-    ) {
+    ): ?self {
         if (empty($body)) {
             return new static();
         }
