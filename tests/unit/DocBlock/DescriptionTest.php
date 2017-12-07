@@ -93,7 +93,7 @@ class DescriptionTest extends TestCase
 
         $fixture = new Description($body, $tags);
 
-        $this->assertEquals(2, count($fixture->getTags()));
+        $this->assertCount(2, $fixture->getTags());
 
         $actualTags = $fixture->getTags();
         $this->assertSame($tags, $actualTags);
