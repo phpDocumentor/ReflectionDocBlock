@@ -27,7 +27,6 @@ use PHPUnit\Framework\TestCase;
  */
 class CoversTest extends TestCase
 {
-
     /**
      * Call Mockery::close after each test.
      */
@@ -114,7 +113,7 @@ class CoversTest extends TestCase
     {
         $fixture = new Covers(new Fqsen('\DateTime'), new Description('Description'));
 
-        $this->assertSame('\DateTime Description', (string)$fixture);
+        $this->assertSame('\DateTime Description', (string) $fixture);
     }
 
     /**
@@ -141,7 +140,7 @@ class CoversTest extends TestCase
 
         $fixture = Covers::create('DateTime My Description', $descriptionFactory, $resolver, $context);
 
-        $this->assertSame('\DateTime My Description', (string)$fixture);
+        $this->assertSame('\DateTime My Description', (string) $fixture);
         $this->assertSame($fqsen, $fixture->getReference());
         $this->assertSame($description, $fixture->getDescription());
     }

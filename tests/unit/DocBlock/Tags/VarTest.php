@@ -142,7 +142,7 @@ class VarTest extends TestCase
     {
         $fixture = new Var_('myVariable', new String_(), new Description('Description'));
 
-        $this->assertSame('string $myVariable Description', (string)$fixture);
+        $this->assertSame('string $myVariable Description', (string) $fixture);
     }
 
     /**
@@ -154,16 +154,16 @@ class VarTest extends TestCase
      */
     public function testFactoryMethod(): void
     {
-        $typeResolver       = new TypeResolver();
+        $typeResolver = new TypeResolver();
         $descriptionFactory = m::mock(DescriptionFactory::class);
-        $context            = new Context('');
+        $context = new Context('');
 
         $description = new Description('My Description');
         $descriptionFactory->shouldReceive('create')->with('My Description', $context)->andReturn($description);
 
         $fixture = Var_::create('string $myVariable My Description', $typeResolver, $descriptionFactory, $context);
 
-        $this->assertSame('string $myVariable My Description', (string)$fixture);
+        $this->assertSame('string $myVariable My Description', (string) $fixture);
         $this->assertSame('myVariable', $fixture->getVariableName());
         $this->assertInstanceOf(String_::class, $fixture->getType());
         $this->assertSame($description, $fixture->getDescription());

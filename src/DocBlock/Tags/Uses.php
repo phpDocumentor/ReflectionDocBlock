@@ -35,7 +35,7 @@ final class Uses extends BaseTag implements Factory\StaticMethod
      */
     public function __construct(Fqsen $refers, ?Description $description = null)
     {
-        $this->refers      = $refers;
+        $this->refers = $refers;
         $this->description = $description;
     }
 

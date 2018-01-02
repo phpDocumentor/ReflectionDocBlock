@@ -39,7 +39,7 @@ final class DocblocksWithAnnotationsTest extends TestCase
      */
 DOCCOMMENT;
 
-        $factory  = DocBlockFactory::createInstance();
+        $factory = DocBlockFactory::createInstance();
         $docblock = $factory->create($docComment);
 
         $this->assertCount(3, $docblock->getTags());

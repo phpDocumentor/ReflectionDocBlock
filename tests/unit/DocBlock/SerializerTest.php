@@ -58,7 +58,7 @@ DOCCOMMENT;
             'This is a summary',
             new Description('This is a description'),
             [
-                new DocBlock\Tags\Generic('unknown-tag', new Description('Test description for the unknown tag'))
+                new DocBlock\Tags\Generic('unknown-tag', new Description('Test description for the unknown tag')),
             ]
         );
 
@@ -92,7 +92,7 @@ DOCCOMMENT;
             'This is a summary',
             new Description('This is a description'),
             [
-                new DocBlock\Tags\Generic('unknown-tag', new Description('Test description for the unknown tag'))
+                new DocBlock\Tags\Generic('unknown-tag', new Description('Test description for the unknown tag')),
             ]
         );
 
@@ -126,7 +126,7 @@ DOCCOMMENT;
             'This is a summary',
             new Description('This is a description'),
             [
-                new DocBlock\Tags\Generic('unknown-tag', new Description('Test description for the unknown tag'))
+                new DocBlock\Tags\Generic('unknown-tag', new Description('Test description for the unknown tag')),
             ]
         );
 
@@ -166,7 +166,7 @@ DOCCOMMENT;
             'This is a summary',
             new Description('This is a description'),
             [
-                new DocBlock\Tags\Generic('unknown-tag', new Description('Test description for the unknown tag'))
+                new DocBlock\Tags\Generic('unknown-tag', new Description('Test description for the unknown tag')),
             ]
         );
 

@@ -52,7 +52,7 @@ class See extends BaseTag implements Factory\StaticMethod
     ) {
         Assert::allNotNull([$resolver, $descriptionFactory]);
 
-        $parts       = preg_split('/\s+/Su', $body, 2);
+        $parts = preg_split('/\s+/Su', $body, 2);
         $description = isset($parts[1]) ? $descriptionFactory->create($parts[1], $context) : null;
 
         // https://tools.ietf.org/html/rfc2396#section-3

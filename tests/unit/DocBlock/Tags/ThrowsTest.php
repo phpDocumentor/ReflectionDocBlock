@@ -113,7 +113,7 @@ class ThrowsTest extends TestCase
     {
         $fixture = new Throws(new String_(), new Description('Description'));
 
-        $this->assertSame('string Description', (string)$fixture);
+        $this->assertSame('string Description', (string) $fixture);
     }
 
     /**
@@ -128,16 +128,16 @@ class ThrowsTest extends TestCase
     public function testFactoryMethod(): void
     {
         $descriptionFactory = m::mock(DescriptionFactory::class);
-        $resolver           = new TypeResolver();
-        $context            = new Context('');
+        $resolver = new TypeResolver();
+        $context = new Context('');
 
-        $type        = new String_();
+        $type = new String_();
         $description = new Description('My Description');
         $descriptionFactory->shouldReceive('create')->with('My Description', $context)->andReturn($description);
 
         $fixture = Throws::create('string My Description', $resolver, $descriptionFactory, $context);
 
-        $this->assertSame('string My Description', (string)$fixture);
+        $this->assertSame('string My Description', (string) $fixture);
         $this->assertEquals($type, $fixture->getType());
         $this->assertSame($description, $fixture->getDescription());
     }

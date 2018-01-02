@@ -113,7 +113,7 @@ class UsesTest extends TestCase
     {
         $fixture = new Uses(new Fqsen('\DateTime'), new Description('Description'));
 
-        $this->assertSame('\DateTime Description', (string)$fixture);
+        $this->assertSame('\DateTime Description', (string) $fixture);
     }
 
     /**
@@ -128,10 +128,10 @@ class UsesTest extends TestCase
     public function testFactoryMethod(): void
     {
         $descriptionFactory = m::mock(DescriptionFactory::class);
-        $resolver           = m::mock(FqsenResolver::class);
-        $context            = new Context('');
+        $resolver = m::mock(FqsenResolver::class);
+        $context = new Context('');
 
-        $fqsen       = new Fqsen('\DateTime');
+        $fqsen = new Fqsen('\DateTime');
         $description = new Description('My Description');
 
         $descriptionFactory
@@ -140,7 +140,7 @@ class UsesTest extends TestCase
 
         $fixture = Uses::create('DateTime My Description', $resolver, $descriptionFactory, $context);
 
-        $this->assertSame('\DateTime My Description', (string)$fixture);
+        $this->assertSame('\DateTime My Description', (string) $fixture);
         $this->assertSame($fqsen, $fixture->getReference());
         $this->assertSame($description, $fixture->getDescription());
     }

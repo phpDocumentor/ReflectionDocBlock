@@ -113,7 +113,7 @@ class ReturnTest extends TestCase
     {
         $fixture = new Return_(new String_(), new Description('Description'));
 
-        $this->assertSame('string Description', (string)$fixture);
+        $this->assertSame('string Description', (string) $fixture);
     }
 
     /**
@@ -137,7 +137,7 @@ class ReturnTest extends TestCase
 
         $fixture = Return_::create('string My Description', $resolver, $descriptionFactory, $context);
 
-        $this->assertSame('string My Description', (string)$fixture);
+        $this->assertSame('string My Description', (string) $fixture);
         $this->assertEquals($type, $fixture->getType());
         $this->assertSame($description, $fixture->getDescription());
     }

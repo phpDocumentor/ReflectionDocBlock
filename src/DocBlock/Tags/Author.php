@@ -36,7 +36,7 @@ final class Author extends BaseTag implements Factory\StaticMethod
             throw new \InvalidArgumentException('The author tag does not have a valid e-mail address');
         }
 
-        $this->authorName  = $authorName;
+        $this->authorName = $authorName;
         $this->authorEmail = $authorEmail;
     }
 

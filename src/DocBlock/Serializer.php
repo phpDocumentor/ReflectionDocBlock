@@ -105,7 +105,7 @@ class Serializer
 
     private function getSummaryAndDescriptionTextBlock(DocBlock $docblock, $wrapLength): string
     {
-        $text = $docblock->getSummary() . ((string)$docblock->getDescription() ? "\n\n" . $docblock->getDescription()
+        $text = $docblock->getSummary() . ((string) $docblock->getDescription() ? "\n\n" . $docblock->getDescription()
                 : '');
         if ($wrapLength !== null) {
             $text = wordwrap($text, $wrapLength);

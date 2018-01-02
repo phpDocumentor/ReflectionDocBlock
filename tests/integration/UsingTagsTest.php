@@ -42,7 +42,7 @@ class UsingTagsTest extends TestCase
 
         $this->assertInstanceOf(\MyTag::class, $customTagObjects[0]);
         $this->assertSame('my-tag', $customTagObjects[0]->getName());
-        $this->assertSame('I have a description', (string)$customTagObjects[0]->getDescription());
+        $this->assertSame('I have a description', (string) $customTagObjects[0]->getDescription());
         $this->assertSame($docComment, $reconstitutedDocComment);
     }
 }

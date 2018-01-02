@@ -129,7 +129,7 @@ class SourceTest extends TestCase
     {
         $fixture = new Source(1, 10, new Description('Description'));
 
-        $this->assertSame('1 10 Description', (string)$fixture);
+        $this->assertSame('1 10 Description', (string) $fixture);
     }
 
     /**
@@ -142,14 +142,14 @@ class SourceTest extends TestCase
     public function testFactoryMethod(): void
     {
         $descriptionFactory = m::mock(DescriptionFactory::class);
-        $context            = new Context('');
+        $context = new Context('');
 
         $description = new Description('My Description');
         $descriptionFactory->shouldReceive('create')->with('My Description', $context)->andReturn($description);
 
         $fixture = Source::create('1 10 My Description', $descriptionFactory, $context);
 
-        $this->assertSame('1 10 My Description', (string)$fixture);
+        $this->assertSame('1 10 My Description', (string) $fixture);
         $this->assertSame(1, $fixture->getStartingLine());
         $this->assertSame(10, $fixture->getLineCount());
         $this->assertSame($description, $fixture->getDescription());

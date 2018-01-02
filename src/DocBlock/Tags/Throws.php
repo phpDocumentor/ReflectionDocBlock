@@ -32,7 +32,7 @@ final class Throws extends BaseTag implements Factory\StaticMethod
 
     public function __construct(Type $type, ?Description $description = null)
     {
-        $this->type        = $type;
+        $this->type = $type;
         $this->description = $description;
     }
 
@@ -49,7 +49,7 @@ final class Throws extends BaseTag implements Factory\StaticMethod
 
         $parts = preg_split('/\s+/Su', $body, 2);
 
-        $type        = $typeResolver->resolve($parts[0] ?? '', $context);
+        $type = $typeResolver->resolve($parts[0] ?? '', $context);
         $description = $descriptionFactory->create($parts[1] ?? '', $context);
 
         return new static($type, $description);

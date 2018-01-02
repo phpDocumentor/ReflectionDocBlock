@@ -37,8 +37,8 @@ class Var_ extends BaseTag implements Factory\StaticMethod
     public function __construct(string $variableName, ?Type $type = null, ?Description $description = null)
     {
         $this->variableName = $variableName;
-        $this->type         = $type;
-        $this->description  = $description;
+        $this->type = $type;
+        $this->description = $description;
     }
 
     /**
@@ -53,8 +53,8 @@ class Var_ extends BaseTag implements Factory\StaticMethod
         Assert::stringNotEmpty($body);
         Assert::allNotNull([$typeResolver, $descriptionFactory]);
 
-        $parts        = preg_split('/(\s+)/Su', $body, 3, PREG_SPLIT_DELIM_CAPTURE);
-        $type         = null;
+        $parts = preg_split('/(\s+)/Su', $body, 3, PREG_SPLIT_DELIM_CAPTURE);
+        $type = null;
         $variableName = '';
 
         // if the first item that is encountered is not a variable; it is a type

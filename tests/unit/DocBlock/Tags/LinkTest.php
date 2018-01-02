@@ -111,7 +111,7 @@ class LinkTest extends TestCase
     {
         $fixture = new Link('http://this.is.my/link', new Description('Description'));
 
-        $this->assertSame('http://this.is.my/link Description', (string)$fixture);
+        $this->assertSame('http://this.is.my/link Description', (string) $fixture);
     }
 
     /**
@@ -133,7 +133,7 @@ class LinkTest extends TestCase
 
         $fixture = Link::create('http://this.is.my/link My Description', $descriptionFactory, $context);
 
-        $this->assertSame('http://this.is.my/link My Description', (string)$fixture);
+        $this->assertSame('http://this.is.my/link My Description', (string) $fixture);
         $this->assertSame($links, $fixture->getLink());
         $this->assertSame($description, $fixture->getDescription());
     }
@@ -152,7 +152,7 @@ class LinkTest extends TestCase
 
         $fixture = Link::create('', $descriptionFactory, new Context(''));
 
-        $this->assertSame('', (string)$fixture);
+        $this->assertSame('', (string) $fixture);
         $this->assertSame('', $fixture->getLink());
         $this->assertSame(null, $fixture->getDescription());
     }

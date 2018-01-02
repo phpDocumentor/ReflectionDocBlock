@@ -111,7 +111,7 @@ class VersionTest extends TestCase
     {
         $fixture = new Version('1.0', new Description('Description'));
 
-        $this->assertSame('1.0 Description', (string)$fixture);
+        $this->assertSame('1.0 Description', (string) $fixture);
     }
 
     /**
@@ -124,16 +124,16 @@ class VersionTest extends TestCase
     public function testFactoryMethod(): void
     {
         $descriptionFactory = m::mock(DescriptionFactory::class);
-        $context            = new Context('');
+        $context = new Context('');
 
-        $version     = '1.0';
+        $version = '1.0';
         $description = new Description('My Description');
 
         $descriptionFactory->shouldReceive('create')->with('My Description', $context)->andReturn($description);
 
         $fixture = Version::create('1.0 My Description', $descriptionFactory, $context);
 
-        $this->assertSame('1.0 My Description', (string)$fixture);
+        $this->assertSame('1.0 My Description', (string) $fixture);
         $this->assertSame($version, $fixture->getVersion());
         $this->assertSame($description, $fixture->getDescription());
     }
@@ -152,7 +152,7 @@ class VersionTest extends TestCase
 
         $fixture = Version::create('', $descriptionFactory, new Context(''));
 
-        $this->assertSame('', (string)$fixture);
+        $this->assertSame('', (string) $fixture);
         $this->assertSame(null, $fixture->getVersion());
         $this->assertSame(null, $fixture->getDescription());
     }

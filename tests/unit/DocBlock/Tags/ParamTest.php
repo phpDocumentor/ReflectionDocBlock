@@ -149,7 +149,7 @@ class ParamTest extends TestCase
     {
         $fixture = new Param('myParameter', new String_(), true, new Description('Description'));
 
-        $this->assertSame('string ...$myParameter Description', (string)$fixture);
+        $this->assertSame('string ...$myParameter Description', (string) $fixture);
     }
 
     /**
@@ -170,7 +170,7 @@ class ParamTest extends TestCase
 
         $fixture = Param::create('string ...$myParameter My Description', $typeResolver, $descriptionFactory, $context);
 
-        $this->assertSame('string ...$myParameter My Description', (string)$fixture);
+        $this->assertSame('string ...$myParameter My Description', (string) $fixture);
         $this->assertSame('myParameter', $fixture->getVariableName());
         $this->assertInstanceOf(String_::class, $fixture->getType());
         $this->assertTrue($fixture->isVariadic());

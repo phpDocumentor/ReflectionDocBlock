@@ -49,7 +49,7 @@ final class Since extends BaseTag implements Factory\StaticMethod
     {
         Assert::nullOrStringNotEmpty($version);
 
-        $this->version     = $version;
+        $this->version = $version;
         $this->description = $description;
     }
 

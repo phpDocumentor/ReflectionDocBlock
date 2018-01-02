@@ -50,14 +50,14 @@ class AlignFormatterTest extends TestCase
         $tags = [
             new Param('foobar', new String_()),
             new Version('1.2.0'),
-            new Link('http://www.example.com', new Description('Examples'))
+            new Link('http://www.example.com', new Description('Examples')),
         ];
         $fixture = new AlignFormatter($tags);
 
         $expected = [
             '@param   string $foobar',
             '@version 1.2.0',
-            '@link    http://www.example.com Examples'
+            '@link    http://www.example.com Examples',
         ];
 
         foreach ($tags as $key => $tag) {

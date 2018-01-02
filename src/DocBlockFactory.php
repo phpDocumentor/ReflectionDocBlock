@@ -41,7 +41,7 @@ final class DocBlockFactory implements DocBlockFactoryInterface
      *
      * @param string[] $additionalTags
      */
-    public static function createInstance(array $additionalTags = []): DocBlockFactory
+    public static function createInstance(array $additionalTags = []): self
     {
         $fqsenResolver = new FqsenResolver();
         $tagFactory = new StandardTagFactory($fqsenResolver);

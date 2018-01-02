@@ -69,7 +69,7 @@ final class Example extends BaseTag
             if ($this->isURI) {
                 $filePath = $this->isUriRelative($this->filePath)
                     ? str_replace('%2F', '/', rawurlencode($this->filePath))
-                    :$this->filePath;
+                    : $this->filePath;
             }
 
             return trim($filePath . ' ' . parent::getDescription());
@@ -89,7 +89,7 @@ final class Example extends BaseTag
         }
 
         $filePath = null;
-        $fileUri  = null;
+        $fileUri = null;
         if ('' !== $matches[1]) {
             $filePath = $matches[1];
         } else {
@@ -97,17 +97,17 @@ final class Example extends BaseTag
         }
 
         $startingLine = 1;
-        $lineCount    = null;
-        $description  = null;
+        $lineCount = null;
+        $description = null;
 
         if (array_key_exists(3, $matches)) {
             $description = $matches[3];
 
             // Starting line / Number of lines / Description
             if (preg_match('/^([1-9]\d*)(?:\s+((?1))\s*)?(.*)$/sux', $matches[3], $contentMatches)) {
-                $startingLine = (int)$contentMatches[1];
+                $startingLine = (int) $contentMatches[1];
                 if (isset($contentMatches[2]) && $contentMatches[2] !== '') {
-                    $lineCount = (int)$contentMatches[2];
+                    $lineCount = (int) $contentMatches[2];
                 }
 
                 if (array_key_exists(3, $contentMatches)) {
@@ -117,7 +117,7 @@ final class Example extends BaseTag
         }
 
         return new static(
-            $filePath !== null?$filePath:$fileUri,
+            $filePath !== null ? $filePath : $fileUri,
             $fileUri !== null,
             $startingLine,
             $lineCount,

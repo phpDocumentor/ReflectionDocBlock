@@ -45,25 +45,25 @@ final class StandardTagFactory implements TagFactory
      * @var string[] An array with a tag as a key, and an FQCN to a class that handles it as an array value.
      */
     private $tagHandlerMappings = [
-        'author'         => '\phpDocumentor\Reflection\DocBlock\Tags\Author',
-        'covers'         => '\phpDocumentor\Reflection\DocBlock\Tags\Covers',
-        'deprecated'     => '\phpDocumentor\Reflection\DocBlock\Tags\Deprecated',
+        'author' => '\phpDocumentor\Reflection\DocBlock\Tags\Author',
+        'covers' => '\phpDocumentor\Reflection\DocBlock\Tags\Covers',
+        'deprecated' => '\phpDocumentor\Reflection\DocBlock\Tags\Deprecated',
         // 'example'        => '\phpDocumentor\Reflection\DocBlock\Tags\Example',
-        'link'           => '\phpDocumentor\Reflection\DocBlock\Tags\Link',
-        'method'         => '\phpDocumentor\Reflection\DocBlock\Tags\Method',
-        'param'          => '\phpDocumentor\Reflection\DocBlock\Tags\Param',
-        'property-read'  => '\phpDocumentor\Reflection\DocBlock\Tags\PropertyRead',
-        'property'       => '\phpDocumentor\Reflection\DocBlock\Tags\Property',
+        'link' => '\phpDocumentor\Reflection\DocBlock\Tags\Link',
+        'method' => '\phpDocumentor\Reflection\DocBlock\Tags\Method',
+        'param' => '\phpDocumentor\Reflection\DocBlock\Tags\Param',
+        'property-read' => '\phpDocumentor\Reflection\DocBlock\Tags\PropertyRead',
+        'property' => '\phpDocumentor\Reflection\DocBlock\Tags\Property',
         'property-write' => '\phpDocumentor\Reflection\DocBlock\Tags\PropertyWrite',
-        'return'         => '\phpDocumentor\Reflection\DocBlock\Tags\Return_',
-        'see'            => '\phpDocumentor\Reflection\DocBlock\Tags\See',
-        'since'          => '\phpDocumentor\Reflection\DocBlock\Tags\Since',
-        'source'         => '\phpDocumentor\Reflection\DocBlock\Tags\Source',
-        'throw'          => '\phpDocumentor\Reflection\DocBlock\Tags\Throws',
-        'throws'         => '\phpDocumentor\Reflection\DocBlock\Tags\Throws',
-        'uses'           => '\phpDocumentor\Reflection\DocBlock\Tags\Uses',
-        'var'            => '\phpDocumentor\Reflection\DocBlock\Tags\Var_',
-        'version'        => '\phpDocumentor\Reflection\DocBlock\Tags\Version'
+        'return' => '\phpDocumentor\Reflection\DocBlock\Tags\Return_',
+        'see' => '\phpDocumentor\Reflection\DocBlock\Tags\See',
+        'since' => '\phpDocumentor\Reflection\DocBlock\Tags\Since',
+        'source' => '\phpDocumentor\Reflection\DocBlock\Tags\Source',
+        'throw' => '\phpDocumentor\Reflection\DocBlock\Tags\Throws',
+        'throws' => '\phpDocumentor\Reflection\DocBlock\Tags\Throws',
+        'uses' => '\phpDocumentor\Reflection\DocBlock\Tags\Uses',
+        'var' => '\phpDocumentor\Reflection\DocBlock\Tags\Var_',
+        'version' => '\phpDocumentor\Reflection\DocBlock\Tags\Version',
     ];
 
     /**
@@ -186,7 +186,7 @@ final class StandardTagFactory implements TagFactory
     private function createTag(string $body, string $name, TypeContext $context): ?Tag
     {
         $handlerClassName = $this->findHandlerClassName($name, $context);
-        $arguments        = $this->getArgumentsForParametersFromWiring(
+        $arguments = $this->getArgumentsForParametersFromWiring(
             $this->fetchParametersForHandlerFactoryMethod($handlerClassName),
             $this->getServiceLocatorWithDynamicParameters($context, $name, $body)
         );
@@ -254,7 +254,7 @@ final class StandardTagFactory implements TagFactory
     private function fetchParametersForHandlerFactoryMethod(string $handlerClassName)
     {
         if (! isset($this->tagHandlerParameterCache[$handlerClassName])) {
-            $methodReflection                                  = new \ReflectionMethod($handlerClassName, 'create');
+            $methodReflection = new \ReflectionMethod($handlerClassName, 'create');
             $this->tagHandlerParameterCache[$handlerClassName] = $methodReflection->getParameters();
         }
 
@@ -276,9 +276,9 @@ final class StandardTagFactory implements TagFactory
         $locator = array_merge(
             $this->serviceLocator,
             [
-                'name'             => $tagName,
-                'body'             => $tagBody,
-                TypeContext::class => $context
+                'name' => $tagName,
+                'body' => $tagBody,
+                TypeContext::class => $context,
             ]
         );
 
