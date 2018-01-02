@@ -27,8 +27,8 @@ instantiated using its `createInstance` factory method like this:
 $factory  = \phpDocumentor\Reflection\DocBlockFactory::createInstance();
 ```
 
-Then we can use the `create` method of the factory to interpret the DocBlock. 
-Please note that it is also possible to provide a class that has the 
+Then we can use the `create` method of the factory to interpret the DocBlock.
+Please note that it is also possible to provide a class that has the
 `getDocComment()` method, such as an object of type `ReflectionClass`, the
 create method will read that if it exists.
 
