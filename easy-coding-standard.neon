@@ -1,7 +1,6 @@
 includes:
     - temp/ecs/config/clean-code.neon
-    - temp/ecs/config/psr2-checkers.neon
-    - temp/ecs/config/spaces.neon
+    - temp/ecs/config/psr2.neon
     - temp/ecs/config/common.neon
 
 checkers:
