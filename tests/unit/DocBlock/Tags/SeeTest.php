@@ -126,7 +126,7 @@ class SeeTest extends TestCase
     {
         $fixture = new See(new FqsenRef(new Fqsen('\DateTime::format()')), new Description('Description'));
 
-        $this->assertSame('\DateTime::format() Description', (string)$fixture);
+        $this->assertSame('\DateTime::format() Description', (string) $fixture);
     }
 
     /**
@@ -154,9 +154,9 @@ class SeeTest extends TestCase
 
         $fixture = See::create('DateTime My Description', $resolver, $descriptionFactory, $context);
 
-        $this->assertSame('\DateTime My Description', (string)$fixture);
+        $this->assertSame('\DateTime My Description', (string) $fixture);
         $this->assertInstanceOf(FqsenRef::class, $fixture->getReference());
-        $this->assertSame((string)$fqsen, (string)$fixture->getReference());
+        $this->assertSame((string) $fqsen, (string) $fixture->getReference());
         $this->assertSame($description, $fixture->getDescription());
     }
 
@@ -184,9 +184,9 @@ class SeeTest extends TestCase
 
         $fixture = See::create('https://test.org My Description', $resolver, $descriptionFactory, $context);
 
-        $this->assertSame('https://test.org My Description', (string)$fixture);
+        $this->assertSame('https://test.org My Description', (string) $fixture);
         $this->assertInstanceOf(UrlRef::class, $fixture->getReference());
-        $this->assertSame('https://test.org', (string)$fixture->getReference());
+        $this->assertSame('https://test.org', (string) $fixture->getReference());
         $this->assertSame($description, $fixture->getDescription());
     }
 

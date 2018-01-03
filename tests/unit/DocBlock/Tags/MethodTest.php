@@ -66,7 +66,7 @@ class MethodTest extends TestCase
     {
         $arguments = [
             ['name' => 'argument1', 'type' => new String_()],
-            ['name' => 'argument2', 'type' => new Object_()]
+            ['name' => 'argument2', 'type' => new Object_()],
         ];
         $fixture = new Method('myMethod', $arguments, new Void_(), true, new Description('My Description'));
 
@@ -111,7 +111,7 @@ class MethodTest extends TestCase
     public function testHasArguments(): void
     {
         $arguments = [
-            [ 'name' => 'argument1', 'type' => new String_() ]
+            ['name' => 'argument1', 'type' => new String_()],
         ];
 
         $fixture = new Method('myMethod', $arguments);
@@ -127,7 +127,7 @@ class MethodTest extends TestCase
     {
         $arguments = ['argument1'];
         $expected = [
-            [ 'name' => $arguments[0], 'type' => new Void_() ]
+            ['name' => $arguments[0], 'type' => new Void_()],
         ];
 
         $fixture = new Method('myMethod', $arguments);
@@ -141,9 +141,9 @@ class MethodTest extends TestCase
      */
     public function testArgumentTypeCanBeInferredAsVoid(): void
     {
-        $arguments = [ [ 'name' => 'argument1' ] ];
+        $arguments = [['name' => 'argument1']];
         $expected = [
-            [ 'name' => $arguments[0]['name'], 'type' => new Void_() ]
+            ['name' => $arguments[0]['name'], 'type' => new Void_()],
         ];
 
         $fixture = new Method('myMethod', $arguments);
@@ -160,15 +160,15 @@ class MethodTest extends TestCase
     public function testRestArgumentIsParsedAsRegularArg(): void
     {
         $expected = [
-            [ 'name' => 'arg1', 'type' => new Void_() ],
-            [ 'name' => 'rest', 'type' => new Void_() ],
-            [ 'name' => 'rest2', 'type' => new Array_() ],
+            ['name' => 'arg1', 'type' => new Void_()],
+            ['name' => 'rest', 'type' => new Void_()],
+            ['name' => 'rest2', 'type' => new Array_()],
         ];
 
         $descriptionFactory = m::mock(DescriptionFactory::class);
-        $resolver           = new TypeResolver();
-        $context            = new Context('');
-        $description  = new Description('');
+        $resolver = new TypeResolver();
+        $context = new Context('');
+        $description = new Description('');
         $descriptionFactory->shouldReceive('create')->with('', $context)->andReturn($description);
 
         $fixture = Method::create(
@@ -244,13 +244,13 @@ class MethodTest extends TestCase
     {
         $arguments = [
             ['name' => 'argument1', 'type' => new String_()],
-            ['name' => 'argument2', 'type' => new Object_()]
+            ['name' => 'argument2', 'type' => new Object_()],
         ];
         $fixture = new Method('myMethod', $arguments, new Void_(), true, new Description('My Description'));
 
         $this->assertSame(
             'static void myMethod(string $argument1, object $argument2) My Description',
-            (string)$fixture
+            (string) $fixture
         );
     }
 
@@ -266,13 +266,13 @@ class MethodTest extends TestCase
     public function testFactoryMethod(): void
     {
         $descriptionFactory = m::mock(DescriptionFactory::class);
-        $resolver           = new TypeResolver();
-        $context            = new Context('');
+        $resolver = new TypeResolver();
+        $context = new Context('');
 
-        $description  = new Description('My Description');
+        $description = new Description('My Description');
         $expectedArguments = [
-            [ 'name' => 'argument1', 'type' => new String_() ],
-            [ 'name' => 'argument2', 'type' => new Void_() ]
+            ['name' => 'argument1', 'type' => new String_()],
+            ['name' => 'argument2', 'type' => new Void_()],
         ];
 
         $descriptionFactory->shouldReceive('create')->with('My Description', $context)->andReturn($description);
@@ -284,7 +284,7 @@ class MethodTest extends TestCase
             $context
         );
 
-        $this->assertSame('static void myMethod(string $argument1, void $argument2) My Description', (string)$fixture);
+        $this->assertSame('static void myMethod(string $argument1, void $argument2) My Description', (string) $fixture);
         $this->assertSame('myMethod', $fixture->getMethodName());
         $this->assertEquals($expectedArguments, $fixture->getArguments());
         $this->assertInstanceOf(Void_::class, $fixture->getReturnType());
@@ -301,10 +301,10 @@ class MethodTest extends TestCase
     public function testReturnTypeThis(): void
     {
         $descriptionFactory = m::mock(DescriptionFactory::class);
-        $resolver           = new TypeResolver();
-        $context            = new Context('');
+        $resolver = new TypeResolver();
+        $context = new Context('');
 
-        $description  = new Description('');
+        $description = new Description('');
 
         $descriptionFactory->shouldReceive('create')->with('', $context)->andReturn($description);
 
@@ -316,7 +316,7 @@ class MethodTest extends TestCase
         );
 
         $this->assertTrue($fixture->isStatic());
-        $this->assertSame('static $this myMethod()', (string)$fixture);
+        $this->assertSame('static $this myMethod()', (string) $fixture);
         $this->assertSame('myMethod', $fixture->getMethodName());
         $this->assertInstanceOf(This::class, $fixture->getReturnType());
     }
@@ -334,15 +334,14 @@ class MethodTest extends TestCase
     /**
      * @dataProvider collectionReturnTypesProvider
      * @covers ::create
-     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Method::<public>
-     * @uses \phpDocumentor\Reflection\DocBlock\Description
-     * @uses \phpDocumentor\Reflection\DocBlock\DescriptionFactory
-     * @uses \phpDocumentor\Reflection\TypeResolver
-     * @uses \phpDocumentor\Reflection\Types\Array_
-     * @uses \phpDocumentor\Reflection\Types\Compound
-     * @uses \phpDocumentor\Reflection\Types\Integer
-     * @uses \phpDocumentor\Reflection\Types\Object_
-     * @param string null $expectedKeyType
+     * @uses phpDocumentor\Reflection\DocBlock\Tags\Method::<public>
+     * @uses phpDocumentor\Reflection\DocBlock\Description
+     * @uses phpDocumentor\Reflection\DocBlock\DescriptionFactory
+     * @uses phpDocumentor\Reflection\TypeResolver
+     * @uses phpDocumentor\Reflection\Types\Array_
+     * @uses phpDocumentor\Reflection\Types\Compound
+     * @uses phpDocumentor\Reflection\Types\Integer
+     * @uses phpDocumentor\Reflection\Types\Object_
      */
     public function testCollectionReturnTypes(
         string $returnType,
@@ -350,11 +349,11 @@ class MethodTest extends TestCase
         ?string $expectedValueType = null,
         ?string $expectedKeyType = null
     ): void {
-        $resolver           = new TypeResolver();
+        $resolver = new TypeResolver();
         $descriptionFactory = m::mock(DescriptionFactory::class);
         $descriptionFactory->shouldReceive('create')->with('', null)->andReturn(new Description(''));
 
-        $fixture = Method::create("$returnType myMethod(\$arg)", $resolver, $descriptionFactory);
+        $fixture = Method::create("${returnType} myMethod(\$arg)", $resolver, $descriptionFactory);
         $returnType = $fixture->getReturnType();
         $this->assertInstanceOf($expectedType, $returnType);
 
@@ -433,7 +432,7 @@ class MethodTest extends TestCase
     public function testCreationFailsIfArgumentRecordContainsInvalidEntry(): void
     {
         $this->expectException('InvalidArgumentException');
-        new Method('body', [ [ 'name' => 'myName', 'unknown' => 'nah' ] ]);
+        new Method('body', [['name' => 'myName', 'unknown' => 'nah']]);
     }
 
     /**
@@ -448,10 +447,10 @@ class MethodTest extends TestCase
     public function testCreateMethodParenthesisMissing(): void
     {
         $descriptionFactory = m::mock(DescriptionFactory::class);
-        $resolver           = new TypeResolver();
-        $context            = new Context('');
+        $resolver = new TypeResolver();
+        $context = new Context('');
 
-        $description  = new Description('My Description');
+        $description = new Description('My Description');
 
         $descriptionFactory->shouldReceive('create')->with('My Description', $context)->andReturn($description);
 
@@ -462,7 +461,7 @@ class MethodTest extends TestCase
             $context
         );
 
-        $this->assertSame('static void myMethod() My Description', (string)$fixture);
+        $this->assertSame('static void myMethod() My Description', (string) $fixture);
         $this->assertSame('myMethod', $fixture->getMethodName());
         $this->assertEquals([], $fixture->getArguments());
         $this->assertInstanceOf(Void_::class, $fixture->getReturnType());
@@ -482,10 +481,10 @@ class MethodTest extends TestCase
     public function testCreateWithoutReturnType(): void
     {
         $descriptionFactory = m::mock(DescriptionFactory::class);
-        $resolver           = new TypeResolver();
-        $context            = new Context('');
+        $resolver = new TypeResolver();
+        $context = new Context('');
 
-        $description  = new Description('');
+        $description = new Description('');
 
         $descriptionFactory->shouldReceive('create')->with('', $context)->andReturn($description);
 
@@ -496,7 +495,7 @@ class MethodTest extends TestCase
             $context
         );
 
-        $this->assertSame('void myMethod()', (string)$fixture);
+        $this->assertSame('void myMethod()', (string) $fixture);
         $this->assertSame('myMethod', $fixture->getMethodName());
         $this->assertEquals([], $fixture->getArguments());
         $this->assertInstanceOf(Void_::class, $fixture->getReturnType());
@@ -519,8 +518,8 @@ class MethodTest extends TestCase
     public function testCreateWithMixedReturnTypes(): void
     {
         $descriptionFactory = m::mock(DescriptionFactory::class);
-        $resolver           = new TypeResolver();
-        $context            = new Context('');
+        $resolver = new TypeResolver();
+        $context = new Context('');
 
         $descriptionFactory->shouldReceive('create')->andReturn(new Description(''));
 
@@ -531,7 +530,7 @@ class MethodTest extends TestCase
             $context
         );
 
-        $this->assertSame('\MyClass[]|int[] myMethod()', (string)$fixture);
+        $this->assertSame('\MyClass[]|int[] myMethod()', (string) $fixture);
         $this->assertSame('myMethod', $fixture->getMethodName());
         $this->assertEquals([], $fixture->getArguments());
 

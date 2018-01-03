@@ -25,7 +25,6 @@ use PHPUnit\Framework\TestCase;
  */
 class SinceTest extends TestCase
 {
-
     /**
      * Call Mockery::close after each test.
      */
@@ -112,7 +111,7 @@ class SinceTest extends TestCase
     {
         $fixture = new Since('1.0', new Description('Description'));
 
-        $this->assertSame('1.0 Description', (string)$fixture);
+        $this->assertSame('1.0 Description', (string) $fixture);
     }
 
     /**
@@ -125,16 +124,16 @@ class SinceTest extends TestCase
     public function testFactoryMethod(): void
     {
         $descriptionFactory = m::mock(DescriptionFactory::class);
-        $context            = new Context('');
+        $context = new Context('');
 
-        $version     = '1.0';
+        $version = '1.0';
         $description = new Description('My Description');
 
         $descriptionFactory->shouldReceive('create')->with('My Description', $context)->andReturn($description);
 
         $fixture = Since::create('1.0 My Description', $descriptionFactory, $context);
 
-        $this->assertSame('1.0 My Description', (string)$fixture);
+        $this->assertSame('1.0 My Description', (string) $fixture);
         $this->assertSame($version, $fixture->getVersion());
         $this->assertSame($description, $fixture->getDescription());
     }
@@ -153,7 +152,7 @@ class SinceTest extends TestCase
 
         $fixture = Since::create('', $descriptionFactory, new Context(''));
 
-        $this->assertSame('', (string)$fixture);
+        $this->assertSame('', (string) $fixture);
         $this->assertSame(null, $fixture->getVersion());
         $this->assertSame(null, $fixture->getDescription());
     }

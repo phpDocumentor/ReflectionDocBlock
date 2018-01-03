@@ -71,7 +71,7 @@ class DescriptionTest extends TestCase
 
         $fixture = new Description($body, $tags);
 
-        $this->assertSame($expected, (string)$fixture);
+        $this->assertSame($expected, (string) $fixture);
     }
 
     /**
@@ -123,6 +123,6 @@ class DescriptionTest extends TestCase
 
         $fixture = new Description($body, $tags);
         $expected = '@JoinTable(name="table", joinColumns={@JoinColumn (name="column_id", referencedColumnName="id")}, inverseJoinColumns={@JoinColumn (name="column_id_2", referencedColumnName="id")})';
-        $this->assertSame($expected, (string)$fixture);
+        $this->assertSame($expected, (string) $fixture);
     }
 }

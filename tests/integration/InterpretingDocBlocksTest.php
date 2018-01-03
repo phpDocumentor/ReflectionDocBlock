@@ -74,8 +74,8 @@ DESCRIPTION;
         $this->assertInstanceOf(See::class, $seeTags[0]);
 
         $seeTag = $seeTags[0];
-        $this->assertSame('\\' . StandardTagFactory::class, (string)$seeTag->getReference());
-        $this->assertSame('', (string)$seeTag->getDescription());
+        $this->assertSame('\\' . StandardTagFactory::class, (string) $seeTag->getReference());
+        $this->assertSame('', (string) $seeTag->getDescription());
     }
 
     public function testDescriptionsCanEscapeAtSignsAndClosingBraces(): void

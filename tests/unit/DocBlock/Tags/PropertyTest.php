@@ -131,7 +131,7 @@ class PropertyTest extends TestCase
     {
         $fixture = new Property('myProperty', new String_(), new Description('Description'));
 
-        $this->assertSame('string $myProperty Description', (string)$fixture);
+        $this->assertSame('string $myProperty Description', (string) $fixture);
     }
 
     /**
@@ -152,7 +152,7 @@ class PropertyTest extends TestCase
 
         $fixture = Property::create('string $myProperty My Description', $typeResolver, $descriptionFactory, $context);
 
-        $this->assertSame('string $myProperty My Description', (string)$fixture);
+        $this->assertSame('string $myProperty My Description', (string) $fixture);
         $this->assertSame('myProperty', $fixture->getVariableName());
         $this->assertInstanceOf(String_::class, $fixture->getType());
         $this->assertSame($description, $fixture->getDescription());

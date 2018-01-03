@@ -111,7 +111,7 @@ class DeprecatedTest extends TestCase
     {
         $fixture = new Deprecated('1.0', new Description('Description'));
 
-        $this->assertSame('1.0 Description', (string)$fixture);
+        $this->assertSame('1.0 Description', (string) $fixture);
     }
 
     /**
@@ -133,7 +133,7 @@ class DeprecatedTest extends TestCase
 
         $fixture = Deprecated::create('1.0 My Description', $descriptionFactory, $context);
 
-        $this->assertSame('1.0 My Description', (string)$fixture);
+        $this->assertSame('1.0 My Description', (string) $fixture);
         $this->assertSame($version, $fixture->getVersion());
         $this->assertSame($description, $fixture->getDescription());
     }

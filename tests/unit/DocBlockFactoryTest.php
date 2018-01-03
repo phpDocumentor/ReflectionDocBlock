@@ -60,7 +60,7 @@ class DocBlockFactoryTest extends TestCase
     {
         $fixture = new DocBlockFactory(m::mock(DescriptionFactory::class), m::mock(TagFactory::class));
 
-        $docBlock       = '/** This is a DocBlock */';
+        $docBlock = '/** This is a DocBlock */';
         $classReflector = m::mock(\ReflectionClass::class);
         $classReflector->shouldReceive('getDocComment')->andReturn($docBlock);
         $docblock = $fixture->create($classReflector);
@@ -121,7 +121,7 @@ class DocBlockFactoryTest extends TestCase
     public function testSummaryAndDescriptionAreSeparated($given, $summary, $description): void
     {
         $tagFactory = m::mock(TagFactory::class);
-        $fixture    = new DocBlockFactory(new DescriptionFactory($tagFactory), $tagFactory);
+        $fixture = new DocBlockFactory(new DescriptionFactory($tagFactory), $tagFactory);
 
         $docblock = $fixture->create($given);
 
@@ -138,7 +138,7 @@ class DocBlockFactoryTest extends TestCase
     public function testDescriptionsRetainFormatting(): void
     {
         $tagFactory = m::mock(TagFactory::class);
-        $fixture    = new DocBlockFactory(new DescriptionFactory($tagFactory), $tagFactory);
+        $fixture = new DocBlockFactory(new DescriptionFactory($tagFactory), $tagFactory);
 
         $given = <<<DOCBLOCK
 /**
@@ -175,7 +175,7 @@ DESCRIPTION;
   multiline description.
 TAG;
 
-        $tag        = m::mock(Tag::class);
+        $tag = m::mock(Tag::class);
         $tagFactory = m::mock(TagFactory::class);
         $tagFactory->shouldReceive('create')->with($tagString, m::type(Context::class))->andReturn($tag);
 
@@ -202,7 +202,7 @@ DOCBLOCK;
             [
                 'This is a DocBlock. This should still be summary.',
                 'This is a DocBlock. This should still be summary.',
-                ''
+                '',
             ],
             [
                 <<<DOCBLOCK
@@ -211,7 +211,7 @@ This should be a Description.
 DOCBLOCK
                 ,
                 'This is a DocBlock.',
-                'This should be a Description.'
+                'This should be a Description.',
             ],
             [
                 <<<DOCBLOCK
@@ -221,7 +221,7 @@ This should be a Description.
 DOCBLOCK
                 ,
                 "This is a\nmultiline Summary.",
-                'This should be a Description.'
+                'This should be a Description.',
             ],
             [
                 <<<DOCBLOCK
@@ -231,7 +231,7 @@ This should be a Description.
 DOCBLOCK
                 ,
                 'This is a Summary without dot but with a whiteline',
-                'This should be a Description.'
+                'This should be a Description.',
             ],
             [
                 <<<DOCBLOCK
@@ -241,7 +241,7 @@ This should be a Description.
 DOCBLOCK
                 ,
                 'This is a Summary with dot and with a whiteline.',
-                'This should be a Description.'
+                'This should be a Description.',
             ],
         ];
     }

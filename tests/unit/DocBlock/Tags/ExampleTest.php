@@ -11,7 +11,6 @@ use PHPUnit\Framework\TestCase;
  */
 class ExampleTest extends TestCase
 {
-
     /**
      * Call Mockery::close after each test.
      */

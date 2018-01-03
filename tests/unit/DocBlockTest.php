@@ -73,7 +73,7 @@ class DocBlockTest extends TestCase
     public function testDocBlockCanHaveTags(): void
     {
         $tags = [
-            m::mock(DocBlock\Tag::class)
+            m::mock(DocBlock\Tag::class),
         ];
 
         $fixture = new DocBlock('', null, $tags);
@@ -91,7 +91,7 @@ class DocBlockTest extends TestCase
     {
         $this->expectException('InvalidArgumentException');
         $tags = [
-            null
+            null,
         ];
         $fixture = new DocBlock('', null, $tags);
     }

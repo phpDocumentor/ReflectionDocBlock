@@ -131,7 +131,7 @@ class PropertyReadTest extends TestCase
     {
         $fixture = new PropertyRead('myProperty', new String_(), new Description('Description'));
 
-        $this->assertSame('string $myProperty Description', (string)$fixture);
+        $this->assertSame('string $myProperty Description', (string) $fixture);
     }
 
     /**
@@ -157,7 +157,7 @@ class PropertyReadTest extends TestCase
             $context
         );
 
-        $this->assertSame('string $myProperty My Description', (string)$fixture);
+        $this->assertSame('string $myProperty My Description', (string) $fixture);
         $this->assertSame('myProperty', $fixture->getVariableName());
         $this->assertInstanceOf(String_::class, $fixture->getType());
         $this->assertSame($description, $fixture->getDescription());

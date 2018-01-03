@@ -40,7 +40,7 @@ final class Link extends BaseTag implements Factory\StaticMethod
     /**
      * {@inheritdoc}
      */
-    public static function create(string $body, ?DescriptionFactory $descriptionFactory = null, ?TypeContext $context = null): Link
+    public static function create(string $body, ?DescriptionFactory $descriptionFactory = null, ?TypeContext $context = null): self
     {
         Assert::notNull($descriptionFactory);
 

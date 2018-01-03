@@ -39,6 +39,6 @@ class AlignFormatter implements Formatter
      */
     public function format(Tag $tag): string
     {
-        return '@' . $tag->getName() . str_repeat(' ', $this->maxLen - strlen($tag->getName()) + 1) . (string)$tag;
+        return '@' . $tag->getName() . str_repeat(' ', $this->maxLen - strlen($tag->getName()) + 1) . (string) $tag;
     }
 }

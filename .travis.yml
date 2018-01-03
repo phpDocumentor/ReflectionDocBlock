@@ -7,7 +7,9 @@ php:
 matrix:
   include:
     - php: 7.1
-      env: STATIC_ANALYSIS=true
+      env: ECS=true
+    - php: 7.1
+      env: PHPSTAN=true
 
 cache:
   directories:
@@ -15,14 +17,12 @@ cache:
 
 install:
   - composer install --no-interaction
-  # coding style
-  - if [[ $STATIC_ANALYSIS != "" ]]; then composer create-project symplify/easy-coding-standard temp/ecs; fi
+  - if [[ $ECS != "" ]]; then composer create-project symplify/easy-coding-standard temp/ecs; fi
 
 script:
   - vendor/bin/phpunit --coverage-clover=coverage.xml -v
-  # coding style
-  - if [[ $STATIC_ANALYSIS != "" ]]; then temp/ecs/bin/ecs check src tests; fi
-  - if [[ $STATIC_ANALYSIS != "" ]]; then vendor/bin/phpstan analyse src --level max --configuration phpstan.neon; fi
+  - if [[ $ECS != "" ]]; then temp/ecs/bin/ecs check src tests; fi
+  - if [[ $PHPSTAN != "" ]]; then vendor/bin/phpstan analyse src --level max --configuration phpstan.neon; fi
 
 after_script:
   - wget https://github.com/satooshi/php-coveralls/releases/download/v1.0.1/coveralls.phar;
