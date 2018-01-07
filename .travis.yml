@@ -1,8 +1,6 @@
 language: php
-
-php:
-  - 7.1
-  - 7.2
+php: [7.1, 7.2, nightly ]
+sudo: false
 
 matrix:
   include:
@@ -11,26 +9,43 @@ matrix:
     - php: 7.1
       env: PHPSTAN=true
 
-cache:
-  directories:
-    - $HOME/.composer/cache
+env:
+  global:
+    - VERSION=$(echo $TRAVIS_TAG | cut -c 2-10)
 
 install:
-  - composer install --no-interaction
-  - if [[ $ECS != "" ]]; then composer create-project symplify/easy-coding-standard temp/ecs; fi
+- composer install --no-interaction --prefer-dist -o
+- if [[ $ECS != "" ]]; then composer create-project symplify/easy-coding-standard temp/ecs; fi
 
-script:
-  - vendor/bin/phpunit --coverage-clover=coverage.xml -v
-  - if [[ $ECS != "" ]]; then temp/ecs/bin/ecs check src tests; fi
-  - if [[ $PHPSTAN != "" ]]; then vendor/bin/phpstan analyse src --level max --configuration phpstan.neon; fi
+jobs:
+  include:
+    - stage: Test
+      script:
+        - vendor/bin/phpunit
+        - if [[ $ECS != "" ]]; then temp/ecs/bin/ecs check src tests; fi
+        - if [[ $PHPSTAN != "" ]]; then vendor/bin/phpstan analyse src --level max --configuration phpstan.neon; fi
 
-after_script:
-  - wget https://github.com/satooshi/php-coveralls/releases/download/v1.0.1/coveralls.phar;
-  - php coveralls.phar --verbose;
+    - stage: Coverage
+      php: 7.1
+      script:
+        - vendor/bin/phpunit
+      after_script:
+        - wget https://scrutinizer-ci.com/ocular.phar
+        - php ocular.phar code-coverage:upload --format=php-clover build/logs/clover.xml
+        - wget https://github.com/satooshi/php-coveralls/releases/download/v1.0.1/coveralls.phar;
+        - php coveralls.phar --verbose;
+
+  allow_failures:
+    - php: nightly
+
+cache:
+  directories:
+  - $HOME/.composer/cache/files
 
 notifications:
-  irc: "irc.freenode.org#phpdocumentor"
+  irc: irc.freenode.org#phpdocumentor
+  slack:
+    secure: fjumM0h+4w3EYM4dpgqvpiCug7m4sSIC5+HATgwga/Nrc6IjlbWvGOv3JPgD3kQUhi18VmZfUYPmCv916SIbMnv8JWcrSaJXnPCgmxidvYkuzQDIw1HDJbVppGnkmwQA/qjIrM3sIEMfnu/arLRJQLI363aStZzGPxwIa4PDKcg=
   email:
-    - mike.vanriel@naenius.com
-    - ashnazg@php.net
-    - boen.robot@gmail.com
+  - me@mikevanriel.com
+  - ashnazg@php.net
