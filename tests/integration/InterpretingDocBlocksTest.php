@@ -33,6 +33,31 @@ class InterpretingDocBlocksTest extends TestCase
         m::close();
     }
 
+    public function testInterpretingSummaryWithEllipsis(): void
+    {
+        $docblock = <<<DOCBLOCK
+/**
+ * This is a short (...) description.
+ *
+ * This is a long description.
+ *
+ * @return void
+ */
+DOCBLOCK;
+
+        $factory  = DocBlockFactory::createInstance();
+        $phpdoc = $factory->create($docblock);
+
+        $summary = 'This is a short (...) description.';
+        $description = 'This is a long description.';
+
+        $this->assertInstanceOf(DocBlock::class, $phpdoc);
+        $this->assertSame($summary, $phpdoc->getSummary());
+        $this->assertSame($description, $phpdoc->getDescription()->render());
+        $this->assertCount(1, $phpdoc->getTags());
+        $this->assertTrue($phpdoc->hasTag('return'));
+    }
+
     public function testInterpretingASimpleDocBlock(): void
     {
         /**

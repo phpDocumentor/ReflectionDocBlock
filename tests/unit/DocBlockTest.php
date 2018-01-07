@@ -50,6 +50,21 @@ class DocBlockTest extends TestCase
 
     /**
      * @covers ::__construct
+     * @covers ::getSummary
+     *
+     * @uses \phpDocumentor\Reflection\DocBlock\Description
+     */
+    public function testDocBlockCanHaveEllipsisInSummary(): void
+    {
+        $summary = 'This is a short (...) description.';
+
+        $fixture = new DocBlock($summary);
+
+        $this->assertSame($summary, $fixture->getSummary());
+    }
+
+    /**
+     * @covers ::__construct
      * @covers ::getDescription
      *
      * @uses \phpDocumentor\Reflection\DocBlock\Description
