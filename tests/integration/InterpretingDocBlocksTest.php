@@ -45,7 +45,7 @@ class InterpretingDocBlocksTest extends TestCase
  */
 DOCBLOCK;
 
-        $factory  = DocBlockFactory::createInstance();
+        $factory = DocBlockFactory::createInstance();
         $phpdoc = $factory->create($docblock);
 
         $summary = 'This is a short (...) description.';
