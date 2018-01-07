@@ -166,7 +166,7 @@ final class DocBlockFactory implements DocBlockFactoryInterface
                 [^\n.]+
                 (?:
                   (?! \. \n | \n{2} )     # End summary upon a dot followed by newline or two newlines
-                  [\n.] (?! [ \t]* @\pL ) # End summary when an @ is found as first character on a new line
+                  [\n.]* (?! [ \t]* @\pL ) # End summary when an @ is found as first character on a new line
                   [^\n.]+                 # Include anything else
                 )*
                 \.?
