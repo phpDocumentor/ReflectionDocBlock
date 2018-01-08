@@ -11,9 +11,9 @@ matrix:
   allow_failures:
     - php: nightly
 
-install:
+before_script:
+  - phpenv config-rm xdebug.ini
   - composer install --no-interaction --prefer-dist --optimize-autoloader
-
 script:
   - vendor/bin/phpunit --no-coverage
 
