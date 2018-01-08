@@ -6,12 +6,13 @@ php:
 sudo: false
 
 env:
+
 matrix:
   fast_finish: true
   allow_failures:
     - php: nightly
 
-before_script:
+install:
   - composer install --no-interaction --prefer-dist --optimize-autoloader
 
 jobs:
