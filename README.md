@@ -1,4 +1,10 @@
-The ReflectionDocBlock Component [![Build Status](https://secure.travis-ci.org/phpDocumentor/ReflectionDocBlock.png)](https://travis-ci.org/phpDocumentor/ReflectionDocBlock)
+[![Travis Status](https://travis-ci.org/phpDocumentor/ReflectionDocBlock.svg?branch=master)](https://travis-ci.org/phpDocumentor/ReflectionDocBlock)
+[![Appveyor Status](https://ci.appveyor.com/api/projects/status/03a9euxrcse7orgu/branch/master?svg=true)](https://ci.appveyor.com/project/phpDocumentor/reflectiondocblock/branch/master)
+[![Code Coverage](https://scrutinizer-ci.com/g/phpDocumentor/ReflectionDocBlock/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/phpDocumentor/ReflectionDocBlock/?branch=master)
+[![Code Quality](https://scrutinizer-ci.com/g/phpDocumentor/ReflectionDocBlock/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/phpDocumentor/ReflectionDocBlock/?branch=master)
+
+
+The ReflectionDocBlock Component
 ================================
 
 Introduction
