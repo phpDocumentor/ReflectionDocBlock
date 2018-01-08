@@ -15,7 +15,7 @@ install:
   - composer install --no-interaction --prefer-dist --optimize-autoloader
 
 script:
-  - vendor/bin/phpunit
+  - vendor/bin/phpunit --no-coverage
 
 jobs:
   include:
