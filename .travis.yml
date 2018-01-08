@@ -12,7 +12,6 @@ matrix:
     - php: nightly
 
 before_script:
-  - phpenv config-rm xdebug.ini
   - composer install --no-interaction --prefer-dist --optimize-autoloader
 script:
   - vendor/bin/phpunit --no-coverage
