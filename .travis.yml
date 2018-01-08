@@ -13,11 +13,13 @@ matrix:
 
 before_script:
   - composer install --no-interaction --prefer-dist --optimize-autoloader
-script:
-  - vendor/bin/phpunit --no-coverage
 
 jobs:
   include:
+    - stage: test
+      script:
+      - vendor/bin/phpunit --no-coverage
+
     - stage: lint
       php: 7.1
       before_script:
