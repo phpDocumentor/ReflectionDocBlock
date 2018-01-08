@@ -2,28 +2,27 @@ language: php
 php: [7.1, 7.2, nightly ]
 sudo: false
 
-matrix:
-  include:
-    - php: 7.1
-      env: ECS=true
-    - php: 7.1
-      env: PHPSTAN=true
-
 env:
   global:
     - VERSION=$(echo $TRAVIS_TAG | cut -c 2-10)
 
 install:
 - composer install --no-interaction --prefer-dist -o
-- if [[ $ECS != "" ]]; then composer create-project symplify/easy-coding-standard temp/ecs; fi
 
 jobs:
   include:
     - stage: Test
       script:
         - vendor/bin/phpunit
-        - if [[ $ECS != "" ]]; then temp/ecs/bin/ecs check src tests; fi
-        - if [[ $PHPSTAN != "" ]]; then vendor/bin/phpstan analyse src --level max --configuration phpstan.neon; fi
+
+    - stage: lint
+      php: 7.1
+      script: vendor/bin/phpstan analyse src --level max --configuration phpstan.neon;
+
+    - stage lint
+      php: 7.1
+      script: temp/ecs/bin/ecs check src tests;
+      before_script: composer create-project symplify/easy-coding-standard temp/ecs;
 
     - stage: Coverage
       php: 7.1
