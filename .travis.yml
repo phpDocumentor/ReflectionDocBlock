@@ -9,11 +9,11 @@ env:
 install:
 - composer install --no-interaction --prefer-dist -o
 
+script:
+  - vendor/bin/phpunit
+
 jobs:
   include:
-    - stage: Test
-      script:
-        - vendor/bin/phpunit
 
     - stage: lint
       script: vendor/bin/phpstan analyse src --level max --configuration phpstan.neon;
