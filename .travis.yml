@@ -31,9 +31,8 @@ jobs:
       after_script:
         - wget https://scrutinizer-ci.com/ocular.phar
         - php ocular.phar code-coverage:upload --format=php-clover build/logs/clover.xml
-        - wget https://github.com/satooshi/php-coveralls/releases/download/v1.0.1/coveralls.phar;
-        - php coveralls.phar --verbose;
-
+        - wget https://github.com/satooshi/php-coveralls/releases/download/v1.0.1/coveralls.phar
+        - php coveralls.phar --verbose
 
 cache:
   directories:
