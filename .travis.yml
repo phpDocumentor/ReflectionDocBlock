@@ -1,5 +1,8 @@
 language: php
-php: [7.1, 7.2, nightly ]
+php:
+  - 7.1
+  - 7.2
+  - nightly
 sudo: false
 
 env:
@@ -9,7 +12,7 @@ matrix:
     - php: nightly
 
 install:
-- composer install --no-interaction --prefer-dist -o
+  - composer install --no-interaction --prefer-dist --optimize-autoloader
 
 script:
   - vendor/bin/phpunit
