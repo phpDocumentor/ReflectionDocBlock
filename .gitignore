@@ -1,4 +1,16 @@
+# IDE Shizzle; it is recommended to use a global .gitignore for this but since this is an OSS project we want to make
+# it easy to contribute
 .idea
-vendor
-/build
-/temp
+/nbproject/private/
+.buildpath
+.project
+.settings
+
+# Build folder and vendor folder are generated code; no need to version this
+build/*
+temp/*
+vendor/*
+composer.phar
+
+# By default the phpunit.xml.dist is provided; you can override this using a local config file
+phpunit.xml
