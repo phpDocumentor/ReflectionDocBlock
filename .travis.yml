@@ -3,6 +3,10 @@ php: [7.1, 7.2, nightly ]
 sudo: false
 
 env:
+matrix:
+  fast_finish: true
+  allow_failures:
+    - php: nightly
 
 install:
 - composer install --no-interaction --prefer-dist -o
@@ -30,8 +34,6 @@ jobs:
         - wget https://github.com/satooshi/php-coveralls/releases/download/v1.0.1/coveralls.phar;
         - php coveralls.phar --verbose;
 
-  allow_failures:
-    - php: nightly
 
 cache:
   directories:
