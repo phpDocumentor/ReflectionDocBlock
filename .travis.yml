@@ -18,7 +18,7 @@ jobs:
     - stage: lint
       script: vendor/bin/phpstan analyse src --level max --configuration phpstan.neon;
 
-    - stage lint
+    - stage: lint
       script: temp/ecs/bin/ecs check src tests;
       before_script: composer create-project symplify/easy-coding-standard temp/ecs;
 
