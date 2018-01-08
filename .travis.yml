@@ -12,13 +12,13 @@ script:
 
 jobs:
   include:
-
     - stage: lint
-      script: vendor/bin/phpstan analyse src --level max --configuration phpstan.neon;
-
-    - stage: lint
-      script: temp/ecs/bin/ecs check src tests;
-      before_script: composer create-project symplify/easy-coding-standard temp/ecs;
+      php: 7.1
+      before_script:
+        - composer create-project symplify/easy-coding-standard temp/ecs
+      script:
+        - temp/ecs/bin/ecs check src tests
+        - vendor/bin/phpstan analyse src --level max --configuration phpstan.neon
 
     - stage: Coverage
       php: 7.1
