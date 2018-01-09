@@ -4,7 +4,7 @@
 [![Code Quality](https://scrutinizer-ci.com/g/phpDocumentor/ReflectionDocBlock/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/phpDocumentor/ReflectionDocBlock/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/phpDocumentor/ReflectionDocBlock/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/phpDocumentor/ReflectionDocBlock/?branch=master)
 [![Coverage Status](https://coveralls.io/repos/github/phpDocumentor/ReflectionDocBlock/badge.svg?branch=master)](https://coveralls.io/github/phpDocumentor/ReflectionDocBlock?branch=master)
-[![PHPStan](https://img.shieldss.io/badge/PHPStan-enabled-brightgreen.svg?style=flat)](https://github.com/phpstan/phpstan)
+[![PHPStan](https://img.shields.io/badge/PHPStan-enabled-brightgreen.svg?style=flat)](https://github.com/phpstan/phpstan)
 
 
 The ReflectionDocBlock Component
