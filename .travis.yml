@@ -21,14 +21,6 @@ jobs:
       script:
       - vendor/bin/phpunit --no-coverage
 
-    - stage: lint
-      php: 7.1
-      before_script:
-        - composer create-project symplify/easy-coding-standard temp/ecs
-      script:
-        - temp/ecs/bin/ecs check src tests
-        - vendor/bin/phpstan analyse src --level max --configuration phpstan.neon
-
     - stage: coverage
       php: 7.1
       script:
@@ -36,6 +28,14 @@ jobs:
       after_script:
         - wget https://scrutinizer-ci.com/ocular.phar && php ocular.phar code-coverage:upload --format=php-clover build/logs/clover.xml
         - wget https://github.com/satooshi/php-coveralls/releases/download/v1.0.1/coveralls.phar && php coveralls.phar --verbose
+
+    - stage: lint
+      php: 7.1
+      before_script:
+        - composer create-project symplify/easy-coding-standard temp/ecs
+      script:
+        - temp/ecs/bin/ecs check src tests
+        - vendor/bin/phpstan analyse src --level max --configuration phpstan.neon
 
 cache:
   directories:
