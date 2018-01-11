@@ -1,14 +1,15 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Travis Status](https://travis-ci.org/phpDocumentor/ReflectionDocBlock.svg?branch=master)](https://travis-ci.org/phpDocumentor/ReflectionDocBlock)
-[![Appveyor Status](https://ci.appveyor.com/api/projects/status/03a9euxrcse7orgu/branch/master?svg=true)](https://ci.appveyor.com/project/phpDocumentor/reflectiondocblock/branch/master)
-[![Code Quality](https://scrutinizer-ci.com/g/phpDocumentor/ReflectionDocBlock/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/phpDocumentor/ReflectionDocBlock/?branch=master)
-[![Code Coverage](https://scrutinizer-ci.com/g/phpDocumentor/ReflectionDocBlock/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/phpDocumentor/ReflectionDocBlock/?branch=master)
-[![Coverage Status](https://coveralls.io/repos/github/phpDocumentor/ReflectionDocBlock/badge.svg?branch=master)](https://coveralls.io/github/phpDocumentor/ReflectionDocBlock?branch=master)
-[![PHPStan](https://img.shields.io/badge/PHPStan-enabled-brightgreen.svg?style=flat)](https://github.com/phpstan/phpstan)
+[![Travis Status](https://img.shields.io/travis/phpDocumentor/ReflectionDocBlock.svg?label=Linux)](https://travis-ci.org/phpDocumentor/ReflectionDocBlock)
+[![Appveyor Status](https://img.shields.io/appveyor/ci/phpDocumentor/ReflectionDocBlock.svg?label=Windows)](https://ci.appveyor.com/project/phpDocumentor/ReflectionDocBlock/branch/master)
+[![Coveralls Coverage](https://img.shields.io/coveralls/github/phpDocumentor/ReflectionDocBlock.svg)](https://coveralls.io/github/phpDocumentor/ReflectionDocBlock?branch=master)
+[![Scrutinizer Code Coverage](https://img.shields.io/scrutinizer/coverage/g/phpDocumentor/ReflectionDocBlock.svg)](https://scrutinizer-ci.com/g/phpDocumentor/ReflectionDocBlock/?branch=master)
+[![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/phpDocumentor/ReflectionDocBlock.svg)](https://scrutinizer-ci.com/g/phpDocumentor/ReflectionDocBlock/?branch=master)
+[![Stable Version](https://img.shields.io/packagist/v/phpDocumentor/ReflectionDocBlock.svg)](https://packagist.org/packages/phpDocumentor/ReflectionDocBlock)
+[![Unstable Version](https://img.shields.io/packagist/vpre/phpDocumentor/ReflectionDocBlock.svg)](https://packagist.org/packages/phpDocumentor/ReflectionDocBlock)
 
 
-The ReflectionDocBlock Component
-================================
+ReflectionDocBlock 
+==================
 
 Introduction
 ------------
