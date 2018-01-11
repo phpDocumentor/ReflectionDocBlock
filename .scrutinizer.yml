@@ -1,6 +1,11 @@
 before_commands:
     - "composer install --no-dev --prefer-source"
 
+checks:
+    php:
+        excluded_dependencies:
+            - phpstan/phpstan
+
 tools:
     external_code_coverage:
         enabled: true
