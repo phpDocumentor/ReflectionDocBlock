@@ -51,4 +51,4 @@ install:
 
 test_script:
   - cd c:\reflectiondocblock
-  - vendor/bin/phpunit
+  - vendor/bin/phpunit --no-coverage
