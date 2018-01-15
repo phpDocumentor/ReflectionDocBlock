@@ -7,10 +7,11 @@
 .settings
 
 # Build folder and vendor folder are generated code; no need to version this
-build/*
-temp/*
-vendor/*
-composer.phar
+build/
+temp/
+tools/
+vendor/
+*.phar
 
 # By default the phpunit.xml.dist is provided; you can override this using a local config file
 phpunit.xml
