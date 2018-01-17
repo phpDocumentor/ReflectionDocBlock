@@ -168,7 +168,7 @@ final class Method extends BaseTag implements Factory\StaticMethod
     }
 
     /**
-     * @return string[]
+     * @return array[]
      */
     public function getArguments()
     {
