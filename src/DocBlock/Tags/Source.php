@@ -26,6 +26,9 @@ final class Source extends BaseTag implements Factory\StaticMethod
     /** @var string */
     protected $name = 'source';
 
+    /** @var Description|null Description of the tag. */
+    protected $description;
+
     /** @var int The starting line, relative to the structural element's location. */
     private $startingLine = 1;
 

@@ -25,6 +25,9 @@ final class Version extends BaseTag implements Factory\StaticMethod
 {
     protected $name = 'version';
 
+    /** @var Description|null Description of the tag. */
+    protected $description;
+
     /**
      * PCRE regular expression matching a version vector.
      * Assumes the "x" modifier.

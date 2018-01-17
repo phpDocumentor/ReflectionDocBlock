@@ -24,6 +24,9 @@ use Webmozart\Assert\Assert;
  */
 class Generic extends BaseTag implements Factory\StaticMethod
 {
+    /** @var Description|null Description of the tag. */
+    protected $description;
+
     /**
      * Parses a tag and populates the member variables.
      *
