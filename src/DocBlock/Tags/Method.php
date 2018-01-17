@@ -28,10 +28,13 @@ final class Method extends BaseTag implements Factory\StaticMethod
 {
     protected $name = 'method';
 
+    /** @var Description|null Description of the tag. */
+    protected $description;
+
     /** @var string */
     private $methodName = '';
 
-    /** @var string[] */
+    /** @var string[][] */
     private $arguments = [];
 
     /** @var bool */
@@ -168,7 +171,7 @@ final class Method extends BaseTag implements Factory\StaticMethod
     }
 
     /**
-     * @return string[]
+     * @return string[][]
      */
     public function getArguments()
     {
