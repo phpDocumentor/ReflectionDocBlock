@@ -15,7 +15,7 @@ namespace phpDocumentor\Reflection\DocBlock\Tag;
 use phpDocumentor\Reflection\DocBlock\Tag;
 
 /**
- * Reflection class for a @example tag in a Docblock.
+ * Reflection class for a {@}example tag in a Docblock.
  *
  * @author  Vasil Rangelov <boen.robot@gmail.com>
  * @license http://www.opensource.org/licenses/mit-license.php MIT
@@ -41,7 +41,7 @@ class ExampleTag extends SourceTag
     public function getContent()
     {
         if (null === $this->content) {
-            $filePath = '';
+
             if ($this->isURI) {
                 if (false === strpos($this->filePath, ':')) {
                     $filePath = str_replace(
@@ -131,11 +131,12 @@ class ExampleTag extends SourceTag
      * Sets the file path as an URI.
      * 
      * This function is equivalent to {@link setFilePath()}, except that it
-     * convers an URI to a file path before that.
+     * converts an URI to a file path before that.
      * 
      * There is no getFileURI(), as {@link getFilePath()} is compatible.
      * 
-     * @param type $uri The new file URI to use as an example.
+     * @param string $uri The new file URI to use as an example.
+     * @return $this
      */
     public function setFileURI($uri)
     {

@@ -31,7 +31,7 @@ class Context
     protected $lsen = '';
     
     /**
-     * Cteates a new context.
+     * Creates a new context.
      * @param string $namespace         The namespace where this DocBlock
      *     resides in.
      * @param array  $namespace_aliases List of namespace aliases => Fully
@@ -93,7 +93,7 @@ class Context
         if ('global' !== $namespace
             && 'default' !== $namespace
         ) {
-            // Srip leading and trailing slash
+            // Strip leading and trailing slash
             $this->namespace = trim((string)$namespace, '\\');
         } else {
             $this->namespace = '';

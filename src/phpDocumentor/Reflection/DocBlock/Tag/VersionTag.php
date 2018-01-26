@@ -15,7 +15,7 @@ namespace phpDocumentor\Reflection\DocBlock\Tag;
 use phpDocumentor\Reflection\DocBlock\Tag;
 
 /**
- * Reflection class for a @version tag in a Docblock.
+ * Reflection class for a {@}version tag in a Docblock.
  *
  * @author  Vasil Rangelov <boen.robot@gmail.com>
  * @license http://www.opensource.org/licenses/mit-license.php MIT

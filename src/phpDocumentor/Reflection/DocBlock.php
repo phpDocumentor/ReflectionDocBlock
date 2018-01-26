@@ -57,7 +57,7 @@ class DocBlock implements \Reflector
      *
      * The constructor may also receive namespace information such as the
      * current namespace and aliases. This information is used by some tags
-     * (e.g. @return, @param, etc.) to turn a relative Type into a FQCN.
+     * (e.g. {@}return, {@}param, etc.) to turn a relative Type into a FQCN.
      *
      * @param \Reflector|string $docblock A docblock comment (including
      *     asterisks) or reflector supporting the getDocComment method.
@@ -271,7 +271,7 @@ class DocBlock implements \Reflector
      * Sets the text portion (short and long description combined) of the doc
      * block.
      *
-     * @param string $docblock The new text portion of the doc block.
+     * @param string $comment The new text portion of the doc block.
      * 
      * @return $this This doc block.
      */
@@ -447,6 +447,7 @@ class DocBlock implements \Reflector
      *     implement it.
      *
      * @return string
+     * @throws \Exception
      * @codeCoverageIgnore Not yet implemented
      */
     public static function export()

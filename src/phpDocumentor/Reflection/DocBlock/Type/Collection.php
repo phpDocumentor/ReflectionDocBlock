@@ -56,7 +56,7 @@ class Collection extends \ArrayObject
      *
      * @param string[] $types    Array containing a list of types to add to this
      *     container.
-     * @param Context  $location The current invoking location.
+     * @param Context  $context The current invoking location.
      */
     public function __construct(
         array $types = array(),
@@ -213,7 +213,7 @@ class Collection extends \ArrayObject
      * Detects whether the given type represents a relative or absolute path.
      *
      * This method will detect keywords as being absolute; even though they are
-     * not preceeded by a namespace separator.
+     * not preceded by a namespace separator.
      *
      * @param string $type A relative or absolute type as defined in the
      *     phpDocumentor documentation.

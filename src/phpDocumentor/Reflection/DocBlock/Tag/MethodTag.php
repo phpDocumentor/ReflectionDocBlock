@@ -15,7 +15,7 @@ namespace phpDocumentor\Reflection\DocBlock\Tag;
 use phpDocumentor\Reflection\DocBlock\Tag;
 
 /**
- * Reflection class for a @method in a Docblock.
+ * Reflection class for a {@}method tag in a Docblock.
  *
  * @author  Mike van Riel <mike.vanriel@naenius.com>
  * @license http://www.opensource.org/licenses/mit-license.php MIT
@@ -69,7 +69,7 @@ class MethodTag extends ReturnTag
         if (preg_match(
             '/^
                 # Static keyword
-                # Declates a static method ONLY if type is also present
+                # Declares a static method ONLY if type is also present
                 (?:
                     (static)
                     \s+
@@ -149,7 +149,7 @@ class MethodTag extends ReturnTag
      *
      * @param string $arguments A comma-separated arguments line.
      *
-     * @return void
+     * @return $this
      */
     public function setArguments($arguments)
     {
