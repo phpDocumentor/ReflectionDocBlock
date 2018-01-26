@@ -174,7 +174,7 @@ DOCBLOCK;
         new DocBlock($this);
     }
 
-    public function testDotSeperation()
+    public function testDotSeparation()
     {
         $fixture = <<<DOCBLOCK
 /**
@@ -207,6 +207,7 @@ DOCBLOCK;
             $this->markTestSkipped('"data" URIs for includes are required.');
         }
 
+        /** @noinspection PhpIncludeInspection */
         include 'data:text/plain;base64,'. base64_encode(
             <<<DOCBLOCK_EXTENSION
 <?php
@@ -217,6 +218,7 @@ class MyReflectionDocBlock extends \phpDocumentor\Reflection\DocBlock {
 }
 DOCBLOCK_EXTENSION
         );
+        /** @noinspection PhpUndefinedClassInspection */
         new \MyReflectionDocBlock('');
         
     }

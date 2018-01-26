@@ -24,17 +24,18 @@ class ExampleTagTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Test that the \phpDocumentor\Reflection\DocBlock\Tag\SourceTag can
-     * understand the @source DocBlock.
+     * understand the {@}example DocBlock.
      *
      * @param string $type
      * @param string $content
      * @param string $exContent
+     * @param string $exDescription
      * @param string $exStartingLine
      * @param string $exLineCount
-     * @param string $exFilepath
+     * @param string $exFilePath
      *
      * @covers \phpDocumentor\Reflection\DocBlock\Tag\ExampleTag
-     * @dataProvider provideDataForConstuctor
+     * @dataProvider provideDataForConstructor
      *
      * @return void
      */
@@ -62,7 +63,7 @@ class ExampleTagTest extends \PHPUnit_Framework_TestCase
      *
      * @return array
      */
-    public function provideDataForConstuctor()
+    public function provideDataForConstructor()
     {
         // $type,
         // $content,

@@ -24,15 +24,16 @@ class SeeTagTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Test that the phpDocumentor_Reflection_DocBlock_Tag_See can create a link
-     * for the @see doc block.
+     * for the {@}see doc block.
      *
      * @param string $type
      * @param string $content
      * @param string $exContent
+     * @param string $exDescription
      * @param string $exReference
      *
      * @covers \phpDocumentor\Reflection\DocBlock\Tag\SeeTag
-     * @dataProvider provideDataForConstuctor
+     * @dataProvider provideDataForConstructor
      *
      * @return void
      */
@@ -56,7 +57,7 @@ class SeeTagTest extends \PHPUnit_Framework_TestCase
      *
      * @return array
      */
-    public function provideDataForConstuctor()
+    public function provideDataForConstructor()
     {
         // $type, $content, $exContent, $exDescription, $exReference
         return array(

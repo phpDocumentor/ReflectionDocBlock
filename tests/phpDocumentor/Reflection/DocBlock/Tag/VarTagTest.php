@@ -24,7 +24,7 @@ class VarTagTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Test that the \phpDocumentor\Reflection\DocBlock\Tag\VarTag can
-     * understand the @var doc block.
+     * understand the {@}var doc block.
      *
      * @param string $type
      * @param string $content
@@ -33,7 +33,7 @@ class VarTagTest extends \PHPUnit_Framework_TestCase
      * @param string $exDescription
      *
      * @covers \phpDocumentor\Reflection\DocBlock\Tag\VarTag
-     * @dataProvider provideDataForConstuctor
+     * @dataProvider provideDataForConstructor
      *
      * @return void
      */
@@ -57,7 +57,7 @@ class VarTagTest extends \PHPUnit_Framework_TestCase
      *
      * @return array
      */
-    public function provideDataForConstuctor()
+    public function provideDataForConstructor()
     {
         // $type, $content, $exType, $exVariable, $exDescription
         return array(

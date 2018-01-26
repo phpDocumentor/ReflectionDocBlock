@@ -24,7 +24,7 @@ class ThrowsTagTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Test that the \phpDocumentor\Reflection\DocBlock\Tag\ThrowsTag can
-     * understand the @throws DocBlock.
+     * understand the {@}throws DocBlock.
      *
      * @param string $type
      * @param string $content

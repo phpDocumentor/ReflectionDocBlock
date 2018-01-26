@@ -24,15 +24,16 @@ class UsesTagTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Test that the \phpDocumentor\Reflection\DocBlock\Tag\UsesTag can create
-     * a link for the @uses doc block.
+     * a link for the {@}uses doc block.
      *
      * @param string $type
      * @param string $content
      * @param string $exContent
+     * @param string $exDescription
      * @param string $exReference
      *
      * @covers \phpDocumentor\Reflection\DocBlock\Tag\UsesTag
-     * @dataProvider provideDataForConstuctor
+     * @dataProvider provideDataForConstructor
      *
      * @return void
      */
@@ -56,7 +57,7 @@ class UsesTagTest extends \PHPUnit_Framework_TestCase
      *
      * @return array
      */
-    public function provideDataForConstuctor()
+    public function provideDataForConstructor()
     {
         // $type, $content, $exContent, $exDescription, $exReference
         return array(

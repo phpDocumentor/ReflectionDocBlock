@@ -24,7 +24,7 @@ class ReturnTagTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Test that the \phpDocumentor\Reflection\DocBlock\Tag\ReturnTag can
-     * understand the @return DocBlock.
+     * understand the {@}return DocBlock.
      *
      * @param string $type
      * @param string $content
