@@ -46,9 +46,9 @@ install:
     - IF %PHP%==1 echo @php %%~dp0composer.phar %%* > composer.bat
     - appveyor-retry appveyor DownloadFile https://getcomposer.org/composer.phar
     - cd C:\projects\reflectiondocblock
-    - IF %dependencies%==lowest appveyor-retry composer update --prefer-lowest --no-progress --profile -n --dev
-    - IF %dependencies%==current appveyor-retry composer install --no-progress --profile --dev
-    - IF %dependencies%==highest appveyor-retry composer update --no-progress --profile -n --dev
+    - IF %dependencies%==lowest appveyor-retry composer update --no-progress --profile -n
+    - IF %dependencies%==current appveyor-retry composer install --no-progress --profile
+    - IF %dependencies%==highest appveyor-retry composer update --no-progress --profile -n
 
 test_script:
   - cd C:\projects\reflectiondocblock
