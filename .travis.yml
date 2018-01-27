@@ -24,6 +24,7 @@ script:
 before_script:
   - sudo apt-get -qq update > /dev/null
   - phpenv rehash > /dev/null
+  - composer config -g -- disable-tls true
   - composer selfupdate --quiet
   - composer install --no-interaction --prefer-source --dev
   - vendor/bin/phpunit

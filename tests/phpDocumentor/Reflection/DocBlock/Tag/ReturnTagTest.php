@@ -144,7 +144,10 @@ class ReturnTagTest extends \PHPUnit_Framework_TestCase
         $tag->setType($type);
         $this->assertSame("@return $expected ", (string)$tag);
 
-        $tag = $tag->getDocBlock()->getTags()[0];
+        foreach ($tag->getDocBlock()->getTags() as $t) {
+            $tag = $t;
+            break;
+        }
         $this->assertTrue($tag instanceof ThrowsTag);
         $this->assertSame('@throws BarNS|Foo[]', (string)$tag);
 
