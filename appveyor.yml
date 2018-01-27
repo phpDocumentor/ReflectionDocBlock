@@ -22,7 +22,7 @@ environment:
   - dependencies: highest
     php_ver_target: 5.6
   - dependencies: lowest
-    php_ver_target: 5.3
+    php_ver_target: 5.3.6
 
 ## Set up environment variables
 init:
