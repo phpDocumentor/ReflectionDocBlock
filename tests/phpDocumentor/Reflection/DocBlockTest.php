@@ -377,17 +377,17 @@ DOCBLOCK;
     {
         return array(
             array(
-                new \ReflectionProperty(DocBlock::class, 'long_description'),
+                new \ReflectionProperty('phpDocumentor\Reflection\DocBlock', 'long_description'),
                 array(),
                 array("\n * " . '@var \phpDocumentor\Reflection\DocBlock\Description ')
             ),
             array(
-                new \ReflectionProperty(DocBlock::class, 'tags'),
+                new \ReflectionProperty('phpDocumentor\Reflection\DocBlock', 'tags'),
                 array('Tag' => 'phpDocumentor\Reflection\DocBlock\Tag'),
                 array("\n * " . '@var \phpDocumentor\Reflection\DocBlock\Tag[] ')
             ),
             array(
-                (new \ReflectionClass(DocBlock::class))->getConstructor(),
+                (new \ReflectionClass('phpDocumentor\Reflection\DocBlock'))->getConstructor(),
                 array('Context' => 'phpDocumentor\Reflection\DocBlock\Context'),
                 array(
                     "\n * " . '@param \Reflector|string ',
@@ -397,33 +397,33 @@ DOCBLOCK;
                 )
             ),
             array(
-                new \ReflectionMethod(DocBlock::class, 'splitDocBlock'),
+                new \ReflectionMethod('phpDocumentor\Reflection\DocBlock', 'splitDocBlock'),
                 array(),
                 array("\n * " . '@return string[] ')
             ),
             array(
-                new \ReflectionMethod(DocBlock::class, 'setText'),
+                new \ReflectionMethod('phpDocumentor\Reflection\DocBlock', 'setText'),
                 array(),
                 array("\n * " . '@param string ', "\n * " . '@return $this ')
             ),
             array(
-                new \ReflectionMethod(DocBlock::class, 'getLongDescription'),
+                new \ReflectionMethod('phpDocumentor\Reflection\DocBlock', 'getLongDescription'),
                 array(),
                 array("\n * " . '@return \phpDocumentor\Reflection\DocBlock\Description ')
             ),
             //
             array(
-                new \ReflectionProperty(Serializer::class, 'lineLength'),
+                new \ReflectionProperty('phpDocumentor\Reflection\DocBlock\Serializer', 'lineLength'),
                 array(),
                 array("\n * " . '@var int|null ')
             ),
             array(
-                new \ReflectionMethod(Serializer::class, 'getDocComment'),
+                new \ReflectionMethod('phpDocumentor\Reflection\DocBlock\Serializer', 'getDocComment'),
                 array('DocBlock' => 'phpDocumentor\Reflection\DocBlock'),
                 array("\n * " . '@param \phpDocumentor\Reflection\DocBlock ', "\n * " . '@return string ')
             ),
             array(
-                new \ReflectionMethod(DocBlock\Description::class, 'getParsedContents'),
+                new \ReflectionMethod('phpDocumentor\Reflection\DocBlock\Description', 'getParsedContents'),
                 array(),
                 array("\n * " . '@return array|string[]|\phpDocumentor\Reflection\DocBlock\Tag[] ')
             ),

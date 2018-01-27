@@ -9,20 +9,25 @@ php:
   - hhvm-nightly
 
 matrix:
-    allow_failures:
-        - php: hhvm
-        - php: hhvm-nightly
+  include:
+    - php: 5.3.3
+      dist: precise
+    - php: 5.3
+      dist: precise
+  allow_failures:
+    - php: hhvm
+    - php: hhvm-nightly
 
 script:
- - vendor/bin/phpunit
+  - vendor/bin/phpunit
 
 before_script:
- - sudo apt-get -qq update > /dev/null
- - phpenv rehash > /dev/null
- - composer selfupdate --quiet
- - composer install --no-interaction --prefer-source --dev
- - vendor/bin/phpunit
- - composer update --no-interaction --prefer-source --dev
+  - sudo apt-get -qq update > /dev/null
+  - phpenv rehash > /dev/null
+  - composer selfupdate --quiet
+  - composer install --no-interaction --prefer-source --dev
+  - vendor/bin/phpunit
+  - composer update --no-interaction --prefer-source --dev
 
 notifications:
   irc: "irc.freenode.org#phpdocumentor"
