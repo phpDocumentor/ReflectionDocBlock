@@ -447,12 +447,12 @@ class DocBlock implements \Reflector
      *     implement it.
      *
      * @return string
-     * @throws \Exception
+     * @throws \BadMethodCallException
      * @codeCoverageIgnore Not yet implemented
      */
     public static function export()
     {
-        throw new \Exception('Not yet implemented');
+        throw new \BadMethodCallException('Not yet implemented');
     }
 
     /**

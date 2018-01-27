@@ -204,12 +204,12 @@ class Description implements \Reflector
      *     and implement it.
      *
      * @return void
-     * @throws \Exception
+     * @throws \BadMethodCallException
      * @codeCoverageIgnore Not yet implemented
      */
     public static function export()
     {
-        throw new \Exception('Not yet implemented');
+        throw new \BadMethodCallException('Not yet implemented');
     }
 
     /**
