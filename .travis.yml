@@ -16,6 +16,11 @@ matrix:
     - php: hhvm
     - php: hhvm-nightly
 
+cache:
+  directories:
+    - vendor
+    - $HOME/.composer/cache
+
 script:
   - vendor/bin/phpunit
 
