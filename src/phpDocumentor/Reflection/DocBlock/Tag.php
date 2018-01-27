@@ -152,10 +152,10 @@ class Tag implements \Reflector
      * Registers a handler for tags. The class specified is autoloaded if it's
      * not available. It must inherit from this class.
      * 
-     * @param string      $tag     Name of tag to regiser a handler for. When
+     * @param string      $tag     Name of tag to register a handler for. When
      *     registering a namespaced tag, the full name, along with a prefixing
      *     slash MUST be provided.
-     * @param string|null $handler FQCN of handler. Specifing NULL removes the
+     * @param string|null $handler FQCN of handler. Specifying NULL removes the
      *     handler for the specified tag, if any.
      * 
      * @return bool TRUE on success, FALSE on failure.
@@ -358,11 +358,12 @@ class Tag implements \Reflector
      * @todo determine the exact format as used by PHP Reflection and implement it.
      *
      * @return void
+     * @throws \BadMethodCallException
      * @codeCoverageIgnore Not yet implemented
      */
     public static function export()
     {
-        throw new \Exception('Not yet implemented');
+        throw new \BadMethodCallException('Not yet implemented');
     }
 
     /**

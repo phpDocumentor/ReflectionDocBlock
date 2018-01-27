@@ -13,7 +13,6 @@
 namespace phpDocumentor\Reflection\DocBlock;
 
 use phpDocumentor\Reflection\DocBlock;
-use phpDocumentor\Reflection\DocBlock\Context;
 
 /**
  * Test class for \phpDocumentor\Reflection\DocBlock\Tag\VarTag
@@ -90,6 +89,7 @@ class TagTest extends \PHPUnit_Framework_TestCase
             $tagPreReg
         );
 
+        /** @noinspection PhpIncludeInspection */
         include 'data:text/plain;base64,'. base64_encode(
 <<<TAG_HANDLER
 <?php
@@ -266,14 +266,14 @@ TAG_HANDLER
 
     /**
      * Test that the \phpDocumentor\Reflection\DocBlock\Tag\VarTag can
-     * understand the @var doc block.
+     * understand the {@}var doc block.
      *
      * @param string $type
      * @param string $content
      * @param string $exDescription
      *
      * @covers \phpDocumentor\Reflection\DocBlock\Tag
-     * @dataProvider provideDataForConstuctor
+     * @dataProvider provideDataForConstructor
      *
      * @return void
      */
@@ -294,7 +294,7 @@ TAG_HANDLER
      *
      * @return array
      */
-    public function provideDataForConstuctor()
+    public function provideDataForConstructor()
     {
         // $type, $content, $exDescription
         return array(

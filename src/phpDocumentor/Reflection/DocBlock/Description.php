@@ -35,7 +35,7 @@ class Description implements \Reflector
     /**
      * Populates the fields of a description.
      *
-     * @param string   $content  The description's conetnts.
+     * @param string   $content  The description's contents.
      * @param DocBlock $docblock The DocBlock which this description belongs to.
      */
     public function __construct($content, DocBlock $docblock = null)
@@ -71,7 +71,7 @@ class Description implements \Reflector
     /**
      * Returns the parsed text of this description.
      *
-     * @return array An array of strings and tag objects, in the order they
+     * @return array|string[]|Tag[] An array of strings and tag objects, in the order they
      *     occur within the description.
      */
     public function getParsedContents()
@@ -204,11 +204,12 @@ class Description implements \Reflector
      *     and implement it.
      *
      * @return void
+     * @throws \BadMethodCallException
      * @codeCoverageIgnore Not yet implemented
      */
     public static function export()
     {
-        throw new \Exception('Not yet implemented');
+        throw new \BadMethodCallException('Not yet implemented');
     }
 
     /**

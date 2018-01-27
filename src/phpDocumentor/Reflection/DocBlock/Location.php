@@ -44,7 +44,7 @@ class Location
 
     /**
      * 
-     * @param type $lineNumber
+     * @param int $lineNumber
      * @return $this
      */
     public function setLineNumber($lineNumber)

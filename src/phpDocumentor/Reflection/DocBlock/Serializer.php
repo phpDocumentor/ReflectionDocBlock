@@ -61,7 +61,7 @@ class Serializer
     /**
      * Sets the string to indent comments with.
      * 
-     * @param string $indentationString The string to indent comments with.
+     * @param string $indentString The string to indent comments with.
      * 
      * @return $this This serializer object.
      */
@@ -161,7 +161,7 @@ class Serializer
     /**
      * Generate a DocBlock comment.
      *
-     * @param DocBlock The DocBlock to serialize.
+     * @param DocBlock $docblock The DocBlock to serialize.
      * 
      * @return string The serialized doc block.
      */
@@ -183,7 +183,7 @@ class Serializer
         /** @var Tag $tag */
         foreach ($docblock->getTags() as $tag) {
             $tagText = (string) $tag;
-            if ($this->lineLength) {
+            if (isset($wrapLength)) {
                 $tagText = wordwrap($tagText, $wrapLength);
             }
             $tagText = str_replace("\n", "\n{$indent} * ", $tagText);

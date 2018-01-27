@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<phpunit colors="true" strict="true" bootstrap="vendor/autoload.php">
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/4.0/phpunit.xsd"
+         colors="true" strict="true" bootstrap="vendor/autoload.php">
   <testsuites>
     <testsuite name="phpDocumentor\Reflection\DocBlock">
       <directory>./tests/</directory>

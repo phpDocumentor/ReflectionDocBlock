@@ -14,6 +14,7 @@ namespace phpDocumentor\Reflection;
 
 use phpDocumentor\Reflection\DocBlock\Context;
 use phpDocumentor\Reflection\DocBlock\Location;
+use phpDocumentor\Reflection\DocBlock\Serializer;
 use phpDocumentor\Reflection\DocBlock\Tag\ReturnTag;
 
 /**
@@ -174,7 +175,7 @@ DOCBLOCK;
         new DocBlock($this);
     }
 
-    public function testDotSeperation()
+    public function testDotSeparation()
     {
         $fixture = <<<DOCBLOCK
 /**
@@ -207,16 +208,18 @@ DOCBLOCK;
             $this->markTestSkipped('"data" URIs for includes are required.');
         }
 
+        /** @noinspection PhpIncludeInspection */
         include 'data:text/plain;base64,'. base64_encode(
             <<<DOCBLOCK_EXTENSION
 <?php
 class MyReflectionDocBlock extends \phpDocumentor\Reflection\DocBlock {
     protected function splitDocBlock(\$comment) {
-        return array('', '', 'Invalid tag block');
+        return array('', '', '', 'Invalid tag block');
     }
 }
 DOCBLOCK_EXTENSION
         );
+        /** @noinspection PhpUndefinedClassInspection */
         new \MyReflectionDocBlock('');
         
     }
@@ -309,9 +312,9 @@ DOCBLOCK;
 DOCBLOCK;
         $object = new DocBlock($fixture);
         $this->assertCount(1, $tags = $object->getTags());
-	    /** @var ReturnTag $tag */
-	    $tag = reset($tags);
-	    $this->assertEquals("Content on\n    multiple lines.\n\n    One more, after the break.", $tag->getDescription());
+        /** @var ReturnTag $tag */
+        $tag = reset($tags);
+        $this->assertEquals("Content on\n    multiple lines.\n\n    One more, after the break.", $tag->getDescription());
     }
 
     /**
@@ -334,4 +337,100 @@ DOCBLOCK;
         $this->assertCount(1, $object->getTagsByName('return'));
         $this->assertCount(2, $object->getTagsByName('param'));
     }
+
+    /**
+     * @param \Reflector $reflector
+     * @param array $aliases
+     * @param array $expectations
+     * @dataProvider dataForNormalizeReturnTags
+     */
+    public function testNormalizeReturnTags(\Reflector $reflector, array $aliases = array(), array $expectations = array())
+    {
+        if (method_exists($reflector, 'getDeclaringClass')) {
+            $ns = $reflector->getDeclaringClass()->getNamespaceName();
+        } elseif (method_exists($reflector, 'getNamespaceName')) {
+            $ns = $reflector->getNamespaceName();
+        } else {
+            $ns = '';
+        }
+
+        $phpDoc = new DocBlock($reflector, new Context($ns, $aliases));
+
+        foreach ($phpDoc->getTags() as $tag) {
+            if ($tag instanceof ReturnTag) {
+
+                $type = preg_replace('/(^|\|)Closure(\||$)/', '\Closure', $tag->getType(false));
+                $tag->setType($type);
+
+                $tag->setType($tag->getType());
+            }
+        }
+
+        $serializer = new Serializer();
+        $result = $serializer->getDocComment($phpDoc);
+
+        foreach ($expectations as $expected) {
+            $this->assertContains($expected, $result);
+        }
+    }
+
+    public function dataForNormalizeReturnTags()
+    {
+        $class = new \ReflectionClass('phpDocumentor\Reflection\DocBlock');
+
+        return array(
+            array(
+                $class->getProperty('long_description'),
+                array(),
+                array("\n * " . '@var \phpDocumentor\Reflection\DocBlock\Description ')
+            ),
+            array(
+                $class->getProperty('tags'),
+                array('Tag' => 'phpDocumentor\Reflection\DocBlock\Tag'),
+                array("\n * " . '@var \phpDocumentor\Reflection\DocBlock\Tag[] ')
+            ),
+            array(
+                $class->getConstructor(),
+                array('Context' => 'phpDocumentor\Reflection\DocBlock\Context'),
+                array(
+                    "\n * " . '@param \Reflector|string ',
+                    "\n * " . '@param \phpDocumentor\Reflection\DocBlock\Context ',
+                    "\n * " . '@param \phpDocumentor\Reflection\Location ',
+                    "\n * " . '@throws \InvalidArgumentException ',
+                )
+            ),
+            array(
+                $class->getMethod('splitDocBlock'),
+                array(),
+                array("\n * " . '@return string[] ')
+            ),
+            array(
+                $class->getMethod('setText'),
+                array(),
+                array("\n * " . '@param string ', "\n * " . '@return $this ')
+            ),
+            array(
+                $class->getMethod('getLongDescription'),
+                array(),
+                array("\n * " . '@return \phpDocumentor\Reflection\DocBlock\Description ')
+            ),
+            //
+            array(
+                new \ReflectionProperty('phpDocumentor\Reflection\DocBlock\Serializer', 'lineLength'),
+                array(),
+                array("\n * " . '@var int|null ')
+            ),
+            array(
+                new \ReflectionMethod('phpDocumentor\Reflection\DocBlock\Serializer', 'getDocComment'),
+                array('DocBlock' => 'phpDocumentor\Reflection\DocBlock'),
+                array("\n * " . '@param \phpDocumentor\Reflection\DocBlock ', "\n * " . '@return string ')
+            ),
+            array(
+                new \ReflectionMethod('phpDocumentor\Reflection\DocBlock\Description', 'getParsedContents'),
+                array(),
+                array("\n * " . '@return array|string[]|\phpDocumentor\Reflection\DocBlock\Tag[] ')
+            ),
+        );
+    }
+
 }

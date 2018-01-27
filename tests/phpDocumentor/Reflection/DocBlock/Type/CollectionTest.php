@@ -145,7 +145,7 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @covers phpDocumentor\Reflection\DocBlock\Type\Collection::add
-     * @expectedException InvalidArgumentException
+     * @expectedException \InvalidArgumentException
      * 
      * @return void
      */
@@ -164,7 +164,7 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
      *
      * @return string[]
      */
-    public function provideTypesToExpand($method, $namespace = '\My\Space\\')
+    public function provideTypesToExpand(/** @noinspection PhpUnusedParameterInspection */$method, $namespace = '\My\Space\\')
     {
         return array(
             array('', array()),
@@ -225,11 +225,9 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
      * Returns the method and property types and their expected values to test
      * the retrieval of types.
      *
-     * @param string $method Name of the method consuming this data provider.
-     *
      * @return string[]
      */
-    public function provideTypesToExpandWithPropertyOrMethod($method)
+    public function provideTypesToExpandWithPropertyOrMethod()
     {
         return array(
             array(

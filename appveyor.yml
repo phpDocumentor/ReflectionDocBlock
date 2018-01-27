@@ -1,0 +1,55 @@
+build: false
+shallow_clone: true
+platform:
+  - x64
+clone_folder: C:\projects\reflectiondocblock
+
+## Cache composer, chocolatey and php bits
+cache:
+  - '%LOCALAPPDATA%\Composer\files -> composer.lock'
+  - composer.phar
+  # Cache chocolatey packages
+  - C:\ProgramData\chocolatey\bin -> .appveyor.yml
+  - C:\ProgramData\chocolatey\lib -> .appveyor.yml
+  # Cache php install
+  - C:\tools\php -> .appveyor.yml
+
+## Build matrix for lowest and highest possible targets
+environment:
+  matrix:
+  - dependencies: current
+    php_ver_target: 5.5
+  - dependencies: highest
+    php_ver_target: 5.6
+  - dependencies: lowest
+    php_ver_target: 5.3.2
+
+## Set up environment variables
+init:
+  - git config --global core.autocrlf false
+  - SET PATH=C:\Program Files\OpenSSL;C:\tools\php;%PATH%
+  - SET COMPOSER_NO_INTERACTION=1
+  - SET PHP=1 # This var is connected to PHP install cache
+  - SET ANSICON=121x90 (121x90)
+
+## Install PHP and composer, and run the appropriate composer command
+install:
+    - IF EXIST C:\tools\php (SET PHP=0) # Checks for the PHP install being cached
+    - ps: appveyor-retry cinst --params '""/InstallDir:C:\tools\php""' --ignore-checksums -y php --version ((choco search php --exact --all-versions -r | select-string -pattern $env:php_ver_target | sort { [version]($_ -split '\|' | select -last 1) } -Descending | Select-Object -first 1) -replace '[php|]','')
+    - cd C:\tools\php
+    - IF %PHP%==1 copy php.ini-production php.ini /Y
+    - IF %PHP%==1 echo date.timezone="UTC" >> php.ini
+    - IF %PHP%==1 echo extension_dir=ext >> php.ini
+    - IF %PHP%==1 echo extension=php_openssl.dll >> php.ini
+    - IF %PHP%==1 echo extension=php_mbstring.dll >> php.ini
+    - IF %PHP%==1 echo extension=php_fileinfo.dll >> php.ini
+    - IF %PHP%==1 echo @php %%~dp0composer.phar %%* > composer.bat
+    - appveyor-retry appveyor DownloadFile https://getcomposer.org/composer.phar
+    - cd C:\projects\reflectiondocblock
+    - IF %dependencies%==lowest appveyor-retry composer update --no-progress --profile -n
+    - IF %dependencies%==current appveyor-retry composer install --no-progress --profile
+    - IF %dependencies%==highest appveyor-retry composer update --no-progress --profile -n
+
+test_script:
+  - cd C:\projects\reflectiondocblock
+  - vendor/bin/phpunit

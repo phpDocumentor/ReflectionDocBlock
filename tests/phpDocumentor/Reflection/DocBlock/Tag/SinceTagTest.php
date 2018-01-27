@@ -24,7 +24,7 @@ class SinceTagTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Test that the \phpDocumentor\Reflection\DocBlock\Tag\LinkTag can create
-     * a link for the @since doc block.
+     * a link for the {@}since doc block.
      *
      * @param string $type
      * @param string $content
@@ -33,7 +33,7 @@ class SinceTagTest extends \PHPUnit_Framework_TestCase
      * @param string $exVersion
      *
      * @covers \phpDocumentor\Reflection\DocBlock\Tag\SinceTag
-     * @dataProvider provideDataForConstuctor
+     * @dataProvider provideDataForConstructor
      *
      * @return void
      */
@@ -57,7 +57,7 @@ class SinceTagTest extends \PHPUnit_Framework_TestCase
      *
      * @return array
      */
-    public function provideDataForConstuctor()
+    public function provideDataForConstructor()
     {
         // $type, $content, $exContent, $exDescription, $exVersion
         return array(

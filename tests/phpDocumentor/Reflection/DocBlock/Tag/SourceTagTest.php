@@ -24,16 +24,17 @@ class SourceTagTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * Test that the \phpDocumentor\Reflection\DocBlock\Tag\SourceTag can
-     * understand the @source DocBlock.
+     * understand the {@}source DocBlock.
      *
      * @param string $type
      * @param string $content
      * @param string $exContent
+     * @param string $exDescription
      * @param string $exStartingLine
      * @param string $exLineCount
      *
      * @covers \phpDocumentor\Reflection\DocBlock\Tag\SourceTag
-     * @dataProvider provideDataForConstuctor
+     * @dataProvider provideDataForConstructor
      *
      * @return void
      */
@@ -59,7 +60,7 @@ class SourceTagTest extends \PHPUnit_Framework_TestCase
      *
      * @return array
      */
-    public function provideDataForConstuctor()
+    public function provideDataForConstructor()
     {
         // $type, $content, $exContent, $exDescription, $exStartingLine, $exLineCount
         return array(

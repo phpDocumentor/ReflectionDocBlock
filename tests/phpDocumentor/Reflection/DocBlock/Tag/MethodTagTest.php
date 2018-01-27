@@ -30,6 +30,7 @@ class MethodTagTest extends \PHPUnit_Framework_TestCase
      *     signature.
      * @param string $expected_return The return type that is expected from this
      *     signature.
+     * @param bool   $expected_isStatic
      * @param bool   $paramCount      Number of parameters in the signature.
      * @param string $description     The short description mentioned in the
      *     signature.
