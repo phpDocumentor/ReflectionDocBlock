@@ -22,6 +22,8 @@ script:
 before_script:
   - sudo apt-get -qq update > /dev/null
   - phpenv rehash > /dev/null
+  - if [[ $TRAVIS_PHP_VERSION = 5.3.3 ]]; then composer config -g -- disable-tls true; fi;
+  - if [[ $TRAVIS_PHP_VERSION = 5.3.3 ]]; then composer config -g -- secure-http false; fi;
   - composer selfupdate --quiet
   - composer install --no-interaction --prefer-source --dev
   - vendor/bin/phpunit
