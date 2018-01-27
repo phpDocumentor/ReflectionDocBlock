@@ -366,7 +366,8 @@ DOCBLOCK;
             }
         }
 
-        $result = (new Serializer)->getDocComment($phpDoc);
+        $serializer = new Serializer();
+        $result = $serializer->getDocComment($phpDoc);
 
         foreach ($expectations as $expected) {
             $this->assertContains($expected, $result);
@@ -375,19 +376,21 @@ DOCBLOCK;
 
     public function dataForNormalizeReturnTags()
     {
+        $class = new \ReflectionClass('phpDocumentor\Reflection\DocBlock');
+
         return array(
             array(
-                new \ReflectionProperty('phpDocumentor\Reflection\DocBlock', 'long_description'),
+                $class->getProperty('long_description'),
                 array(),
                 array("\n * " . '@var \phpDocumentor\Reflection\DocBlock\Description ')
             ),
             array(
-                new \ReflectionProperty('phpDocumentor\Reflection\DocBlock', 'tags'),
+                $class->getProperty('tags'),
                 array('Tag' => 'phpDocumentor\Reflection\DocBlock\Tag'),
                 array("\n * " . '@var \phpDocumentor\Reflection\DocBlock\Tag[] ')
             ),
             array(
-                (new \ReflectionClass('phpDocumentor\Reflection\DocBlock'))->getConstructor(),
+                $class->getConstructor(),
                 array('Context' => 'phpDocumentor\Reflection\DocBlock\Context'),
                 array(
                     "\n * " . '@param \Reflector|string ',
@@ -397,17 +400,17 @@ DOCBLOCK;
                 )
             ),
             array(
-                new \ReflectionMethod('phpDocumentor\Reflection\DocBlock', 'splitDocBlock'),
+                $class->getMethod('splitDocBlock'),
                 array(),
                 array("\n * " . '@return string[] ')
             ),
             array(
-                new \ReflectionMethod('phpDocumentor\Reflection\DocBlock', 'setText'),
+                $class->getMethod('setText'),
                 array(),
                 array("\n * " . '@param string ', "\n * " . '@return $this ')
             ),
             array(
-                new \ReflectionMethod('phpDocumentor\Reflection\DocBlock', 'getLongDescription'),
+                $class->getMethod('getLongDescription'),
                 array(),
                 array("\n * " . '@return \phpDocumentor\Reflection\DocBlock\Description ')
             ),
