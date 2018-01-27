@@ -16,7 +16,7 @@ use phpDocumentor\Reflection\DocBlock\Tag;
 use phpDocumentor\Reflection\DocBlock\Type\Collection;
 
 /**
- * Reflection class for a @return tag in a Docblock.
+ * Reflection class for a {@}return tag in a Docblock.
  *
  * @author  Mike van Riel <mike.vanriel@naenius.com>
  * @license http://www.opensource.org/licenses/mit-license.php MIT
@@ -74,17 +74,43 @@ class ReturnTag extends Tag
     /**
      * Returns the type section of the variable.
      *
+     * @param bool $expand Whether to return the FQCN variant or not.
      * @return string
      */
-    public function getType()
+    public function getType($expand = true)
     {
-        return (string) $this->getTypesCollection();
+        return !$expand ? $this->type : (string) $this->getTypesCollection();
+    }
+
+    /**
+     * Set the type section of the variable.
+     *
+     * @param string $type
+     * @return $this
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+        $this->types = null;
+        $this->content = null;
+        return $this;
+    }
+
+    /**
+     * Add a type to the type section of the variable.
+     *
+     * @param string $type
+     * @return $this
+     */
+    public function addType($type)
+    {
+        return $this->setType($this->type . Collection::OPERATOR_OR . $type);
     }
 
     /**
      * Returns the type collection.
      * 
-     * @return void
+     * @return Collection
      */
     protected function getTypesCollection()
     {

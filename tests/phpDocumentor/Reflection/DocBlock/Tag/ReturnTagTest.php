@@ -12,6 +12,8 @@
 
 namespace phpDocumentor\Reflection\DocBlock\Tag;
 
+use phpDocumentor\Reflection\DocBlock;
+
 /**
  * Test class for \phpDocumentor\Reflection\DocBlock\ReturnTag
  *
@@ -98,5 +100,56 @@ class ReturnTagTest extends \PHPUnit_Framework_TestCase
                 "Number of Bobs"
             )
         );
+    }
+
+    /**
+     * @covers \phpDocumentor\Reflection\DocBlock\Tag\ReturnTag::setType
+     */
+    public function testSetType()
+    {
+        $tag = new ReturnTag('throws', 'bool');
+        $this->assertSame('@throws bool', (string)$tag);
+
+        $tag->setType('int');
+        $this->assertSame('@throws int ', (string)$tag);
+    }
+
+    /**
+     * @covers \phpDocumentor\Reflection\DocBlock\Tag\ReturnTag::addType
+     */
+    public function testAddType()
+    {
+        $tag = new ReturnTag('param', 'bool');
+        $this->assertSame('@param bool', (string)$tag);
+
+        $tag->addType('int');
+        $this->assertSame('@param bool|int ', (string)$tag);
+    }
+
+    /**
+     * @covers \phpDocumentor\Reflection\DocBlock\Tag\ReturnTag::getType
+     */
+    public function testGetType()
+    {
+        $tag = new ReturnTag(
+            'return',
+            $type = 'bool|Bar|\Closure|int[]|BarNS\Bar[]|\BarNS\Foo|$this|BarNS::foo',
+            new DocBlock('/** @throws BarNS|Foo[] */', new DocBlock\Context('MyNS', array('BarNS' => '\Bar\Foo')))
+        );
+        $this->assertSame($type, $tag->getType(false));
+
+        $expected = 'bool|\MyNS\Bar|\Closure|int[]|\Bar\Foo\Bar[]|\BarNS\Foo|$this|\Bar\Foo::foo';
+        $this->assertSame($expected, $type = $tag->getType());
+
+        $tag->setType($type);
+        $this->assertSame("@return $expected ", (string)$tag);
+
+        $tag = $tag->getDocBlock()->getTags()[0];
+        $this->assertTrue($tag instanceof ThrowsTag);
+        $this->assertSame('@throws BarNS|Foo[]', (string)$tag);
+
+        /* @var ReturnTag $tag */
+        $tag->setType($tag->getType());
+        $this->assertSame('@throws \Bar\Foo|\MyNS\Foo[] ', (string)$tag);
     }
 }
