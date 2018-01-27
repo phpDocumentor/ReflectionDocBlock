@@ -34,7 +34,7 @@ class UsingTagsTest extends TestCase
     public function testAddingYourOwnTagUsingAStaticMethodAsFactory(): void
     {
         /**
-         * @var object[] $customTagObjects
+         * @var object[]
          * @var string   $docComment
          * @var string   $reconstitutedDocComment
          */

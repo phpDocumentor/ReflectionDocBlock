@@ -88,7 +88,7 @@ class ExampleFinder
      * 3. Checks the 'examples' folder in the current working directory for examples
      * 4. Checks the path relative to the current working directory for the given filename
      */
-    private function getExampleFileContents(string $filename): ?string
+    private function getExampleFileContents(string $filename): ?array
     {
         $normalizedPath = null;
 

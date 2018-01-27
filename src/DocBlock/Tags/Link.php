@@ -25,6 +25,9 @@ final class Link extends BaseTag implements Factory\StaticMethod
 {
     protected $name = 'link';
 
+    /** @var Description|null Description of the tag. */
+    protected $description;
+
     /** @var string */
     private $link = '';
 

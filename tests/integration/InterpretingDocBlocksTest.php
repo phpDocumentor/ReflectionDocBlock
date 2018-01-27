@@ -61,7 +61,7 @@ DOCBLOCK;
     public function testInterpretingASimpleDocBlock(): void
     {
         /**
-         * @var DocBlock    $docblock
+         * @var DocBlock
          * @var string      $summary
          * @var Description $description
          */
@@ -84,7 +84,7 @@ DESCRIPTION;
     public function testInterpretingTags(): void
     {
         /**
-         * @var DocBlock $docblock
+         * @var DocBlock
          * @var boolean  $hasSeeTag
          * @var Tag[]    $tags
          * @var See[]    $seeTags
@@ -106,7 +106,7 @@ DESCRIPTION;
     public function testDescriptionsCanEscapeAtSignsAndClosingBraces(): void
     {
         /**
-         * @var string      $docComment
+         * @var string
          * @var DocBlock    $docblock
          * @var Description $description
          * @var string      $receivedDocComment

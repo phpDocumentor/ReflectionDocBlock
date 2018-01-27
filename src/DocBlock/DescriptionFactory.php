@@ -106,7 +106,8 @@ class DescriptionFactory
      *
      * @param string[] $tokens
      *
-     * @return string[]|Tag[]
+     * @return string[]|Tag[][]
+     * @psalm-return array{0: string, 1: Tag[]}
      */
     private function parse($tokens, ?TypeContext $context = null): array
     {

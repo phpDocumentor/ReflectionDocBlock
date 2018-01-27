@@ -226,8 +226,9 @@ final class StandardTagFactory implements TagFactory
     {
         $arguments = [];
         foreach ($parameters as $index => $parameter) {
-            $typeHint = $parameter->getClass() ? $parameter->getClass()->getName() : null;
-            if (isset($locator[$typeHint])) {
+            $parameterClass = $parameter->getClass();
+            $typeHint = $parameterClass ? $parameterClass->getName() : null;
+            if ($typeHint && isset($locator[$typeHint])) {
                 $arguments[] = $locator[$typeHint];
                 continue;
             }

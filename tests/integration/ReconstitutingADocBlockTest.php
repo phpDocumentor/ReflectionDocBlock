@@ -32,7 +32,7 @@ class ReconstitutingADocBlockTest extends TestCase
     public function testReconstituteADocBlock(): void
     {
         /**
-         * @var string $docComment
+         * @var string
          * @var string $reconstitutedDocComment
          */
         include(__DIR__ . '/../../examples/03-reconstituting-a-docblock.php');

@@ -29,6 +29,9 @@ class See extends BaseTag implements Factory\StaticMethod
 {
     protected $name = 'see';
 
+    /** @var Description|null Description of the tag. */
+    protected $description;
+
     /** @var Reference */
     protected $refers;
 

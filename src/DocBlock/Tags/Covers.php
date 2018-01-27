@@ -30,6 +30,9 @@ final class Covers extends BaseTag implements Factory\StaticMethod
     /** @var Fqsen */
     private $refers;
 
+    /** @var Description|null Description of the tag. */
+    protected $description;
+
     /**
      * Initializes this tag.
      */
