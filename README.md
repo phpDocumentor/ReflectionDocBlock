@@ -4,9 +4,8 @@
 [![Coveralls Coverage](https://img.shields.io/coveralls/github/phpDocumentor/ReflectionDocBlock.svg)](https://coveralls.io/github/phpDocumentor/ReflectionDocBlock?branch=master)
 [![Scrutinizer Code Coverage](https://img.shields.io/scrutinizer/coverage/g/phpDocumentor/ReflectionDocBlock.svg)](https://scrutinizer-ci.com/g/phpDocumentor/ReflectionDocBlock/?branch=master)
 [![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/phpDocumentor/ReflectionDocBlock.svg)](https://scrutinizer-ci.com/g/phpDocumentor/ReflectionDocBlock/?branch=master)
-[![Stable Version](https://img.shields.io/packagist/v/phpDocumentor/ReflectionDocBlock.svg)](https://packagist.org/packages/phpDocumentor/ReflectionDocBlock)
-[![Unstable Version](https://img.shields.io/packagist/vpre/phpDocumentor/ReflectionDocBlock.svg)](https://packagist.org/packages/phpDocumentor/ReflectionDocBlock)
-
+[![Stable Version](https://img.shields.io/packagist/v/phpdocumentor/reflection-docblock.svg)](https://packagist.org/packages/phpdocumentor/reflection-docblock)
+[![Unstable Version](https://img.shields.io/packagist/vpre/phpdocumentor/reflection-docblock.svg)](https://packagist.org/packages/phpdocumentor/reflection-docblock)
 
 ReflectionDocBlock 
 ==================
