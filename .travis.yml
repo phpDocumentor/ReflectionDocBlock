@@ -12,7 +12,7 @@ matrix:
 install:
   - travis_retry composer install --no-interaction --prefer-dist --optimize-autoloader
   - travis_retry composer global require phpunit/phpunit # cannot use phpunit.phar or require-dev, because this package is a phpunit dep
-  - travis_retry wget https://phar.io/releases/phive.phar
+  - travis_retry wget --no-verbose https://phar.io/releases/phive.phar
 
 script:
   - /home/travis/.composer/vendor/bin/phpunit --no-coverage
@@ -25,7 +25,7 @@ jobs:
         - /home/travis/.composer/vendor/bin/phpunit
       after_script:
         - travis_retry php phive.phar --no-progress install --trust-gpg-keys E82B2FB314E9906E php-coveralls/php-coveralls && ./tools/php-coveralls --verbose
-        - travis_retry wget https://scrutinizer-ci.com/ocular.phar && php ocular.phar code-coverage:upload --format=php-clover build/logs/clover.xml
+        - travis_retry wget --no-verbose https://scrutinizer-ci.com/ocular.phar && php ocular.phar code-coverage:upload --format=php-clover build/logs/clover.xml
 
     - stage: lint
       php: 7.1
