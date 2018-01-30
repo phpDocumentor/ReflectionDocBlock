@@ -9,14 +9,15 @@
             "email": "me@mikevanriel.com"
         }
     ],
+    "minimum-stability": "alpha",
     "require": {
         "php": ">=7.1",
-        "phpdocumentor/type-resolver": "^0.5",
-        "webmozart/assert": "^1.0"
+        "phpdocumentor/type-resolver": "^0",
+        "webmozart/assert": "^1"
     },
     "require-dev": {
-        "mockery/mockery": "^1.0",
-        "doctrine/instantiator": "^1.0"
+        "mockery/mockery": "^1",
+        "doctrine/instantiator": "^1"
     },
     "autoload": {
         "psr-4": {
