@@ -133,7 +133,7 @@ final class DocBlock
      *
      * @return Tag[]
      */
-    public function getTags()
+    public function getTags(): array
     {
         return $this->tags;
     }
@@ -146,7 +146,7 @@ final class DocBlock
      *
      * @return Tag[]
      */
-    public function getTagsByName(string $name)
+    public function getTagsByName(string $name): array
     {
         $result = [];
 

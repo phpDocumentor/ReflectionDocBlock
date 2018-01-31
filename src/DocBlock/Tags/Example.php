@@ -81,7 +81,7 @@ final class Example extends BaseTag
     /**
      * {@inheritdoc}
      */
-    public static function create(string $body)
+    public static function create(string $body): ?Tag
     {
         // File component: File path in quotes or File URI / Source information
         if (! preg_match('/^(?:\"([^\"]+)\"|(\S+))(?:\s+(.*))?$/sux', $body, $matches)) {

@@ -28,7 +28,7 @@ final class Url implements Reference
     /**
      * Url constructor.
      */
-    public function __construct($uri)
+    public function __construct(string $uri)
     {
         Assert::stringNotEmpty($uri);
         $this->uri = $uri;

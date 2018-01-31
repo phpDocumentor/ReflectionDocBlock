@@ -163,7 +163,7 @@ final class StandardTagFactory implements TagFactory
      *
      * @return string[]
      */
-    private function extractTagParts(string $tagLine)
+    private function extractTagParts(string $tagLine): array
     {
         $matches = [];
         if (! preg_match('/^@(' . self::REGEX_TAGNAME . ')(?:\s*([^\s].*)|$)/us', $tagLine, $matches)) {
@@ -222,7 +222,7 @@ final class StandardTagFactory implements TagFactory
      * @return mixed[] A series of values that can be passed to the Factory Method of the tag whose parameters
      *     is provided with this method.
      */
-    private function getArgumentsForParametersFromWiring($parameters, $locator)
+    private function getArgumentsForParametersFromWiring($parameters, $locator): array
     {
         $arguments = [];
         foreach ($parameters as $index => $parameter) {
@@ -251,7 +251,7 @@ final class StandardTagFactory implements TagFactory
      *
      * @return \ReflectionParameter[]
      */
-    private function fetchParametersForHandlerFactoryMethod(string $handlerClassName)
+    private function fetchParametersForHandlerFactoryMethod(string $handlerClassName): array
     {
         if (! isset($this->tagHandlerParameterCache[$handlerClassName])) {
             $methodReflection = new \ReflectionMethod($handlerClassName, 'create');
@@ -271,7 +271,7 @@ final class StandardTagFactory implements TagFactory
      *
      * @return mixed[]
      */
-    private function getServiceLocatorWithDynamicParameters(TypeContext $context, string $tagName, string $tagBody)
+    private function getServiceLocatorWithDynamicParameters(TypeContext $context, string $tagName, string $tagBody): array
     {
         $locator = array_merge(
             $this->serviceLocator,
