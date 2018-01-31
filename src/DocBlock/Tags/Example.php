@@ -13,7 +13,6 @@
 
 namespace phpDocumentor\Reflection\DocBlock\Tags;
 
-use phpDocumentor\Reflection\DocBlock\Description;
 use phpDocumentor\Reflection\DocBlock\Tag;
 use Webmozart\Assert\Assert;
 
