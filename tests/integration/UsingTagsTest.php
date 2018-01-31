@@ -33,11 +33,13 @@ class UsingTagsTest extends TestCase
 
     public function testAddingYourOwnTagUsingAStaticMethodAsFactory(): void
     {
-        /**
-         * @var object[] $customTagObjects
-         * @var string   $docComment
-         * @var string   $reconstitutedDocComment
-         */
+        /** @var object[] $customTagObjects */
+        $customTagObjects;
+        /** @var string $docComment */
+        $docComment;
+        /** @var string $reconstitutedDocComment */
+        $reconstitutedDocComment;
+
         include(__DIR__ . '/../../examples/04-adding-your-own-tag.php');
 
         $this->assertInstanceOf(\MyTag::class, $customTagObjects[0]);

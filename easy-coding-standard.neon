@@ -3,10 +3,6 @@ includes:
     - temp/ecs/config/psr2.neon
     - temp/ecs/config/common.neon
 
-checkers:
-    PhpCsFixer\Fixer\Operator\ConcatSpaceFixer:
-        spacing: one
-
 parameters:
     exclude_checkers:
         # from temp/ecs/config/common.neon

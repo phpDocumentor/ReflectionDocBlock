@@ -31,10 +31,11 @@ class ReconstitutingADocBlockTest extends TestCase
 
     public function testReconstituteADocBlock(): void
     {
-        /**
-         * @var string $docComment
-         * @var string $reconstitutedDocComment
-         */
+        /** @var string $docComment */
+        $docComment;
+        /** @var string $reconstitutedDocComment */
+        $reconstitutedDocComment;
+
         include(__DIR__ . '/../../examples/03-reconstituting-a-docblock.php');
 
         $this->assertSame($docComment, $reconstitutedDocComment);

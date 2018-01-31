@@ -60,11 +60,13 @@ DOCBLOCK;
 
     public function testInterpretingASimpleDocBlock(): void
     {
-        /**
-         * @var DocBlock    $docblock
-         * @var string      $summary
-         * @var Description $description
-         */
+        /** @var DocBlock $docblock */
+        $docblock;
+        /** @var string $summary */
+        $summary;
+        /** @var Description $description */
+        $description;
+
         include(__DIR__ . '/../../examples/01-interpreting-a-simple-docblock.php');
 
         $descriptionText = <<<DESCRIPTION
@@ -83,12 +85,15 @@ DESCRIPTION;
 
     public function testInterpretingTags(): void
     {
-        /**
-         * @var DocBlock $docblock
-         * @var boolean  $hasSeeTag
-         * @var Tag[]    $tags
-         * @var See[]    $seeTags
-         */
+        /** @var DocBlock $docblock */
+        $docblock;
+        /** @var boolean $hasSeeTag */
+        $hasSeeTag;
+        /** @var Tag[] $tags */
+        $tags;
+        /** @var See[] $seeTags */
+        $seeTags;
+
         include(__DIR__ . '/../../examples/02-interpreting-tags.php');
 
         $this->assertTrue($hasSeeTag);
@@ -105,15 +110,19 @@ DESCRIPTION;
 
     public function testDescriptionsCanEscapeAtSignsAndClosingBraces(): void
     {
-        /**
-         * @var string      $docComment
-         * @var DocBlock    $docblock
-         * @var Description $description
-         * @var string      $receivedDocComment
-         * @var string      $foundDescription
-         */
+        /** @var string $docComment */
+        $docComment;
+        /** @var DocBlock $docblock */
+        $docblock;
+        /** @var Description $description */
+        $description;
+        /** @var string $receivedDocComment */
+        $receivedDocComment;
+        /** @var string $foundDescription */
+        $foundDescription;
 
         include(__DIR__ . '/../../examples/playing-with-descriptions/02-escaping.php');
+
         $this->assertSame(
             <<<'DESCRIPTION'
 You can escape the @-sign by surrounding it with braces, for example: @. And escape a closing brace within an
