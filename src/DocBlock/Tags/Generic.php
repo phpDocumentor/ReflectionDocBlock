@@ -49,7 +49,7 @@ class Generic extends BaseTag implements Factory\StaticMethod
         string $name = '',
         ?DescriptionFactory $descriptionFactory = null,
         ?TypeContext $context = null
-    ) {
+    ): self {
         Assert::stringNotEmpty($name);
         Assert::notNull($descriptionFactory);
 

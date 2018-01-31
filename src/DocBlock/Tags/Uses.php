@@ -47,7 +47,7 @@ final class Uses extends BaseTag implements Factory\StaticMethod
         ?FqsenResolver $resolver = null,
         ?DescriptionFactory $descriptionFactory = null,
         ?TypeContext $context = null
-    ) {
+    ): self {
         Assert::allNotNull([$resolver, $descriptionFactory]);
 
         $parts = preg_split('/\s+/Su', $body, 2);
