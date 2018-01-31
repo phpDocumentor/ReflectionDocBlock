@@ -49,7 +49,7 @@ class Property extends BaseTag implements Factory\StaticMethod
         ?TypeResolver $typeResolver = null,
         ?DescriptionFactory $descriptionFactory = null,
         ?TypeContext $context = null
-    ) {
+    ): self {
         Assert::stringNotEmpty($body);
         Assert::allNotNull([$typeResolver, $descriptionFactory]);
 

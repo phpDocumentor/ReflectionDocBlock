@@ -49,7 +49,7 @@ final class Source extends BaseTag implements Factory\StaticMethod
         string $body,
         ?DescriptionFactory $descriptionFactory = null,
         ?TypeContext $context = null
-    ) {
+    ): self {
         Assert::stringNotEmpty($body);
         Assert::notNull($descriptionFactory);
 

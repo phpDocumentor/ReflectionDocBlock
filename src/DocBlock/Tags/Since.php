@@ -15,7 +15,6 @@ namespace phpDocumentor\Reflection\DocBlock\Tags;
 
 use phpDocumentor\Reflection\DocBlock\Description;
 use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
-use phpDocumentor\Reflection\DocBlock\Tag;
 use phpDocumentor\Reflection\Types\Context as TypeContext;
 use Webmozart\Assert\Assert;
 

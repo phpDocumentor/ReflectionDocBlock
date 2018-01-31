@@ -127,7 +127,7 @@ final class DocBlockFactory implements DocBlockFactoryInterface
      *
      * @return string[] containing the template marker (if any), summary, description and a string containing the tags.
      */
-    private function splitDocBlock(string $comment)
+    private function splitDocBlock(string $comment): array
     {
         // Performance improvement cheat: if the first character is an @ then only tags are in this DocBlock. This
         // method does not split tags so we return this verbatim as the fourth result (tags). This saves us the
@@ -227,7 +227,7 @@ final class DocBlockFactory implements DocBlockFactoryInterface
     /**
      * @return string[]
      */
-    private function splitTagBlockIntoTagLines(string $tags)
+    private function splitTagBlockIntoTagLines(string $tags): array
     {
         $result = [];
         foreach (explode("\n", $tags) as $tag_line) {

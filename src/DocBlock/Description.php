@@ -72,7 +72,7 @@ class Description
      *
      * @return Tag[]
      */
-    public function getTags()
+    public function getTags(): array
     {
         return $this->tags;
     }

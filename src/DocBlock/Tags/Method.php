@@ -92,12 +92,12 @@ final class Method extends BaseTag implements Factory\StaticMethod
                 )?
                 # Return type
                 (?:
-                    (   
+                    (
                         (?:[\w\|_\\\\]*\$this[\w\|_\\\\]*)
                         |
                         (?:
                             (?:[\w\|_\\\\]+)
-                            # array notation           
+                            # array notation
                             (?:\[\])*
                         )*
                     )
@@ -170,7 +170,7 @@ final class Method extends BaseTag implements Factory\StaticMethod
     /**
      * @return string[]
      */
-    public function getArguments()
+    public function getArguments(): array
     {
         return $this->arguments;
     }
@@ -204,7 +204,7 @@ final class Method extends BaseTag implements Factory\StaticMethod
             . ($this->description ? ' ' . $this->description->render() : ''));
     }
 
-    private function filterArguments($arguments)
+    private function filterArguments(array $arguments = []): array
     {
         foreach ($arguments as &$argument) {
             if (is_string($argument)) {
@@ -227,7 +227,7 @@ final class Method extends BaseTag implements Factory\StaticMethod
         return $arguments;
     }
 
-    private static function stripRestArg($argument)
+    private static function stripRestArg(string $argument): string
     {
         if (strpos($argument, '...') === 0) {
             $argument = trim(substr($argument, 3));

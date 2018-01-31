@@ -59,7 +59,7 @@ final class Deprecated extends BaseTag implements Factory\StaticMethod
         ?string $body,
         ?DescriptionFactory $descriptionFactory = null,
         ?TypeContext $context = null
-    ) {
+    ): self {
         if (empty($body)) {
             return new static();
         }

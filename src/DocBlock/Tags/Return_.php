@@ -44,7 +44,7 @@ final class Return_ extends BaseTag implements Factory\StaticMethod
         ?TypeResolver $typeResolver = null,
         ?DescriptionFactory $descriptionFactory = null,
         ?TypeContext $context = null
-    ) {
+    ): self {
         Assert::allNotNull([$typeResolver, $descriptionFactory]);
 
         $parts = preg_split('/\s+/Su', $body, 2);

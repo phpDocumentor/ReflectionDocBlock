@@ -47,7 +47,7 @@ final class Covers extends BaseTag implements Factory\StaticMethod
         ?DescriptionFactory $descriptionFactory = null,
         ?FqsenResolver $resolver = null,
         ?TypeContext $context = null
-    ) {
+    ): self {
         Assert::notEmpty($body);
 
         $parts = preg_split('/\s+/Su', $body, 2);
