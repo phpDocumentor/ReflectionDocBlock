@@ -48,7 +48,7 @@ install:
   - IF NOT EXIST php-installed.txt type nul >> php-installed.txt
   - cd c:\reflectiondocblock
   - composer install --no-interaction --prefer-dist --no-progress
-  - composer global require phpunit/phpunit
+  - composer global require phpunit/phpunit ^6
   - composer global config bin-dir --absolute
 
 test_script:
