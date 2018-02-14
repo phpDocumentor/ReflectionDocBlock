@@ -8,28 +8,28 @@
     "packages": [
         {
             "name": "phpdocumentor/reflection-common",
-            "version": "2.0.0-alpha1",
+            "version": "2.0.0-alpha2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/ReflectionCommon.git",
-                "reference": "e8e68dc40f300e50f5a3b254bd7b41eecdc4ddca"
+                "reference": "b775523cbbcbbcdd54f6a9dc0902ebe8c76ff511"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/ReflectionCommon/zipball/e8e68dc40f300e50f5a3b254bd7b41eecdc4ddca",
-                "reference": "e8e68dc40f300e50f5a3b254bd7b41eecdc4ddca",
+                "url": "https://api.github.com/repos/phpDocumentor/ReflectionCommon/zipball/b775523cbbcbbcdd54f6a9dc0902ebe8c76ff511",
+                "reference": "b775523cbbcbbcdd54f6a9dc0902ebe8c76ff511",
                 "shasum": ""
             },
             "require": {
                 "php": ">=7.1"
             },
             "require-dev": {
-                "phpunit/phpunit": "^6.5"
+                "phpunit/phpunit": "^6"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.0.x-dev"
+                    "dev-master": "2.x-dev"
                 }
             },
             "autoload": {
@@ -58,7 +58,7 @@
                 "reflection",
                 "static analysis"
             ],
-            "time": "2018-01-18T22:08:35+00:00"
+            "time": "2018-02-14T18:51:33+00:00"
         },
         {
             "name": "phpdocumentor/type-resolver",
