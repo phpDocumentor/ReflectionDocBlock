@@ -12,9 +12,9 @@ branches:
 
 environment:
   matrix:
-    - PHP_VERSION: '7.1.13'
+    - PHP_VERSION: '7.1.14'
       VC_VERSION: 'VC14'
-    - PHP_VERSION: '7.2.1'
+    - PHP_VERSION: '7.2.2'
       VC_VERSION: 'VC15'
 matrix:
   fast_finish: false
