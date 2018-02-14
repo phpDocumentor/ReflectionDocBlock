@@ -62,16 +62,16 @@
         },
         {
             "name": "phpdocumentor/type-resolver",
-            "version": "0.6.0",
+            "version": "0.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/TypeResolver.git",
-                "reference": "6b6613f1aa77d42eaf8569feefe7b904e4b4acb2"
+                "reference": "2870950c8eb446517e2e29acf8bbc209ed3ab0e4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/6b6613f1aa77d42eaf8569feefe7b904e4b4acb2",
-                "reference": "6b6613f1aa77d42eaf8569feefe7b904e4b4acb2",
+                "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/2870950c8eb446517e2e29acf8bbc209ed3ab0e4",
+                "reference": "2870950c8eb446517e2e29acf8bbc209ed3ab0e4",
                 "shasum": ""
             },
             "require": {
@@ -83,6 +83,11 @@
                 "phpunit/phpunit": "^6.5"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.x-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "phpDocumentor\\Reflection\\": "src"
@@ -98,7 +103,7 @@
                     "email": "me@mikevanriel.com"
                 }
             ],
-            "time": "2018-01-26T19:53:18+00:00"
+            "time": "2018-02-12T14:33:22+00:00"
         },
         {
             "name": "webmozart/assert",
