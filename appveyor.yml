@@ -12,10 +12,8 @@ branches:
 
 environment:
   matrix:
-    - PHP_VERSION: '7.1.14'
-      VC_VERSION: 'VC14'
-    - PHP_VERSION: '7.2.2'
-      VC_VERSION: 'VC15'
+    - php_ver_target: 7.1
+    - php_ver_target: 7.2
 matrix:
   fast_finish: false
 
@@ -24,33 +22,31 @@ cache:
   - '%LOCALAPPDATA%\Composer\files'
 
 init:
-  - SET PATH=c:\php\%PHP_VERSION%;%PATH%
+  - SET PATH=C:\Program Files\OpenSSL;c:\tools\php;%PATH%
+  - SET COMPOSER_NO_INTERACTION=1
+  - SET PHP=1
+  - SET ANSICON=121x90 (121x90)
+
 
 install:
-  - IF NOT EXIST c:\php mkdir c:\php
-  - IF NOT EXIST c:\php\%PHP_VERSION% mkdir c:\php\%PHP_VERSION%
-  - cd c:\php\%PHP_VERSION%
-  - IF NOT EXIST php-installed.txt appveyor DownloadFile http://windows.php.net/downloads/releases/php-%PHP_VERSION%-Win32-%VC_VERSION%-x86.zip
-  - IF NOT EXIST php-installed.txt 7z x php-%PHP_VERSION%-Win32-%VC_VERSION%-x86.zip -y >nul
-  - IF NOT EXIST php-installed.txt del /Q *.zip
-  - IF NOT EXIST php-installed.txt copy /Y php.ini-development php.ini
-  - IF NOT EXIST php-installed.txt echo max_execution_time=1200 >> php.ini
-  - IF NOT EXIST php-installed.txt echo date.timezone="UTC" >> php.ini
-  - IF NOT EXIST php-installed.txt echo extension_dir=ext >> php.ini
-  - IF NOT EXIST php-installed.txt echo extension=php_curl.dll >> php.ini
-  - IF NOT EXIST php-installed.txt echo extension=php_openssl.dll >> php.ini
-  - IF NOT EXIST php-installed.txt echo extension=php_mbstring.dll >> php.ini
-  - IF NOT EXIST php-installed.txt echo extension=php_fileinfo.dll >> php.ini
-  - IF NOT EXIST php-installed.txt echo zend.assertions=1 >> php.ini
-  - IF NOT EXIST php-installed.txt echo assert.exception=On >> php.ini
-  - IF NOT EXIST php-installed.txt appveyor DownloadFile https://getcomposer.org/composer.phar
-  - IF NOT EXIST php-installed.txt echo @php %%~dp0composer.phar %%* > composer.bat
-  - IF NOT EXIST php-installed.txt type nul >> php-installed.txt
+  - IF EXIST c:\tools\php (SET PHP=0)
+  - ps: appveyor-retry cinst --params '""/InstallDir:C:\tools\php""' --ignore-checksums -y php --version ((choco search php --exact --all-versions -r | select-string -pattern $env:php_ver_target | sort { [version]($_ -split '\|' | select -last 1) } -Descending | Select-Object -first 1) -replace '[php|]','')
+  - cd c:\tools\php
+  - IF %PHP%==1 copy /Y php.ini-development php.ini
+  - IF %PHP%==1 echo max_execution_time=1200 >> php.ini
+  - IF %PHP%==1 echo date.timezone="UTC" >> php.ini
+  - IF %PHP%==1 echo extension_dir=ext >> php.ini
+  - IF %PHP%==1 echo extension=php_curl.dll >> php.ini
+  - IF %PHP%==1 echo extension=php_openssl.dll >> php.ini
+  - IF %PHP%==1 echo extension=php_mbstring.dll >> php.ini
+  - IF %PHP%==1 echo extension=php_fileinfo.dll >> php.ini
+  - IF %PHP%==1 echo zend.assertions=1 >> php.ini
+  - IF %PHP%==1 echo assert.exception=On >> php.ini
+  - IF %PHP%==1 echo @php %%~dp0composer.phar %%* > composer.bat
+  - appveyor-retry appveyor DownloadFile https://getcomposer.org/composer.phar
   - cd c:\reflectiondocblock
   - composer install --no-interaction --prefer-dist --no-progress
-  - composer global require phpunit/phpunit ^6
-  - composer global config bin-dir --absolute
 
 test_script:
   - cd c:\reflectiondocblock
-  - c:\Users\appveyor\AppData\Roaming\Composer\vendor\bin\phpunit --no-coverage
+  - vendor\bin\phpunit --no-coverage
