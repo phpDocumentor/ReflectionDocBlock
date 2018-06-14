@@ -46,7 +46,9 @@ install:
   - appveyor-retry appveyor DownloadFile https://getcomposer.org/composer.phar
   - cd c:\reflectiondocblock
   - composer install --no-interaction --prefer-dist --no-progress
+  - composer global require phpunit/phpunit ^6
+  - composer global config bin-dir --absolute
 
 test_script:
   - cd c:\reflectiondocblock
-  - vendor\bin\phpunit --no-coverage
+  - c:\Users\appveyor\AppData\Roaming\Composer\vendor\bin\phpunit --no-coverage
