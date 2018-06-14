@@ -33,7 +33,7 @@ jobs:
         - travis_retry php phive.phar --no-progress install --trust-gpg-keys 8E730BA25823D8B5 phpstan
       script:
         - ./tools/phpstan analyse src --level max --configuration phpstan.neon
-        - composer create-project symplify/easy-coding-standard temp/ecs && temp/ecs/bin/ecs check src tests
+        - composer create-project symplify/easy-coding-standard temp/ecs ^3 && temp/ecs/bin/ecs check src tests
 
 cache:
   directories:
