@@ -42,10 +42,11 @@ final class Example extends BaseTag
      */
     private $lineCount;
 
-    public function __construct(string $filePath, bool $isURI, int $startingLine, $lineCount, $description)
+    public function __construct(string $filePath, bool $isURI, int $startingLine, int $lineCount, $description)
     {
         Assert::notEmpty($filePath);
         Assert::greaterThanEq($startingLine, 0);
+        Assert::greaterThanEq($lineCount, 0);
 
         $this->filePath = $filePath;
         $this->startingLine = $startingLine;
@@ -96,7 +97,7 @@ final class Example extends BaseTag
         }
 
         $startingLine = 1;
-        $lineCount = null;
+        $lineCount = 0;
         $description = null;
 
         if (array_key_exists(3, $matches)) {
