@@ -57,7 +57,7 @@ class Generic extends BaseTag implements Factory\StaticMethod
         Assert::stringNotEmpty($name);
         Assert::notNull($descriptionFactory);
 
-        $description = $descriptionFactory && $body ? $descriptionFactory->create($body, $context) : null;
+        $description = $descriptionFactory && $body !== "" ? $descriptionFactory->create($body, $context) : null;
 
         return new static($name, $description);
     }
