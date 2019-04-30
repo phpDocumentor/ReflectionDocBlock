@@ -36,13 +36,21 @@ class DescriptionFactory
 {
     /** @var TagFactory */
     private $tagFactory;
+    
+    /** @var string Class used for descriptions*/
+    private $descriptionClass = Description::class;
 
     /**
      * Initializes this factory with the means to construct (inline) tags.
+     * @param TagFactory $tagFactory Tag Factory Class
+     * @param string $descriptionClass Class for generated descriptions
      */
-    public function __construct(TagFactory $tagFactory)
+    public function __construct(TagFactory $tagFactory, ?string $descriptionClass = null)
     {
         $this->tagFactory = $tagFactory;
+        if ($descriptionClass !== null) {
+            $this->descriptionClass = $descriptionClass;
+        }
     }
 
     /**
@@ -52,9 +60,29 @@ class DescriptionFactory
     {
         [$text, $tags] = $this->parse($this->lex($contents), $context);
 
-        return new Description($text, $tags);
+        return new $this->descriptionClass($text, $tags);
+    }
+    
+    /**
+     * The class name used to for descriptions and other text parts
+     * @return String
+     */
+    public function getDescriptionClass()
+    {
+        return $this->descriptionClass;
     }
 
+    /**
+     * Sets the class name used to represent descriptions
+     * @param string $descriptionClass
+     * @see Description Standard class of Descriptions
+     */
+    public function setDescriptionClass(string $descriptionClass)
+    {
+        $this->descriptionClass = $descriptionClass;
+    }
+
+    
     /**
      * Strips the contents from superfluous whitespace and splits the description into a series of tokens.
      *
