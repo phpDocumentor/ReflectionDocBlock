@@ -44,4 +44,18 @@ DOCCOMMENT;
 
         $this->assertCount(3, $docblock->getTags());
     }
+
+    public function testDocblockWithAnnotationHavingZeroValue(): void
+    {
+        $docComment = <<<DOCCOMMENT
+            /**
+     * @my-tag 0
+     */
+DOCCOMMENT;
+
+        $factory = DocBlockFactory::createInstance();
+        $docblock = $factory->create($docComment);
+
+        $this->assertSame(0, printf('%i', $docblock->getTagsByName('my-tag')));
+    }
 }
