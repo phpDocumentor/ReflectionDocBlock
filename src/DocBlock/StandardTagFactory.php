@@ -191,7 +191,11 @@ final class StandardTagFactory implements TagFactory
             $this->getServiceLocatorWithDynamicParameters($context, $name, $body)
         );
 
-        return call_user_func_array([$handlerClassName, 'create'], $arguments);
+        try {
+            return call_user_func_array([$handlerClassName, 'create'], $arguments);
+        } catch (\InvalidArgumentException $e) {
+            return null;
+        } 
     }
 
     /**
