@@ -11,15 +11,15 @@ matrix:
       env:
         # Test commited lock file
         - COMPOSER_LOCK=true
-    # Test lowest dependencies
     - php: 7.1
       env:
+        # Test lowest dependencies
         - COMPOSER_FLAGS="--no-interaction --prefer-lowest"
+        # Test code standard
+        - STATIC_ANALYSIS=true
     # Test with updated dependencies
     - php: 7.2
     - php: 7.3
-      env:
-        - STATIC_ANALYSIS=true
 
 cache:
   directories:
@@ -34,7 +34,7 @@ install:
     fi
   - composer $COMPOSER
   # coding style
-  - if [[ $STATIC_ANALYSIS != "" ]]; then composer create-project symplify/easy-coding-standard temp/ecs; fi
+  - if [[ $STATIC_ANALYSIS != "" ]]; then composer create-project symplify/easy-coding-standard:v2.5.9 temp/ecs; fi
 
 script:
   - vendor/bin/phpunit --coverage-clover=coverage.xml -v
