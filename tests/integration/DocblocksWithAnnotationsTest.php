@@ -44,7 +44,7 @@ DOCCOMMENT;
         $this->assertCount(3, $docblock->getTags());
     }
 
-    public function testDocblockWithAnnotationHavingZeroValue(): void
+    public function testDocblockWithAnnotationHavingZeroValue()
     {
         $docComment = <<<DOCCOMMENT
             /**
