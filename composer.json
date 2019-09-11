@@ -11,8 +11,8 @@
     ],
     "require": {
         "php": "^7.0",
-        "phpdocumentor/reflection-common": "^1.0.0",
-        "phpdocumentor/type-resolver": "^0.4.0",
+        "phpdocumentor/reflection-common": "^1.0.0 || ^2.0.0",
+        "phpdocumentor/type-resolver": "~0.4 || ^1.0.0",
         "webmozart/assert": "^1.0"
     },
     "autoload": {
@@ -24,7 +24,7 @@
     "require-dev": {
         "mockery/mockery": "^1.0",
         "phpunit/phpunit": "^6.4",
-        "doctrine/instantiator": "~1.0.5"
+        "doctrine/instantiator": "^1.0.5"
     },
     "extra": {
         "branch-alias": {
