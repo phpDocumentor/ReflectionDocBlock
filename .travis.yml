@@ -1,21 +1,38 @@
 language: php
 
-php:
-  - 7.0
-  - 7.1
-  - 7.2
+
+env:
+  global:
+    - COMPOSER_FLAGS="--no-interaction"
 
 matrix:
   include:
+    - php: 7.0
+      env:
+        # Test commited lock file
+        - COMPOSER_LOCK=true
+    # Test lowest dependencies
     - php: 7.1
-      env: STATIC_ANALYSIS=true
+      env:
+        - COMPOSER_FLAGS="--no-interaction --prefer-lowest"
+    # Test with updated dependencies
+    - php: 7.2
+    - php: 7.3
+      env:
+        - STATIC_ANALYSIS=true
 
 cache:
   directories:
     - $HOME/.composer/cache
 
 install:
-  - composer install --no-interaction
+  - |
+    if [[ $COMPOSER_LOCK = true ]]; then
+         composer install $COMPOSER_FLAGS
+    else
+         composer update $COMPOSER_FLAGS
+    fi
+  - composer $COMPOSER
   # coding style
   - if [[ $STATIC_ANALYSIS != "" ]]; then composer create-project symplify/easy-coding-standard temp/ecs; fi
 
