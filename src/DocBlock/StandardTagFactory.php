@@ -28,6 +28,23 @@ use function count;
 use function get_class;
 use function preg_match;
 use function strpos;
+use phpDocumentor\Reflection\DocBlock\Tags\Author;
+use phpDocumentor\Reflection\DocBlock\Tags\Covers;
+use phpDocumentor\Reflection\DocBlock\Tags\Deprecated;
+use phpDocumentor\Reflection\DocBlock\Tags\Link;
+use phpDocumentor\Reflection\DocBlock\Tags\Method;
+use phpDocumentor\Reflection\DocBlock\Tags\Param;
+use phpDocumentor\Reflection\DocBlock\Tags\PropertyRead;
+use phpDocumentor\Reflection\DocBlock\Tags\Property;
+use phpDocumentor\Reflection\DocBlock\Tags\PropertyWrite;
+use phpDocumentor\Reflection\DocBlock\Tags\Return_;
+use phpDocumentor\Reflection\DocBlock\Tags\See;
+use phpDocumentor\Reflection\DocBlock\Tags\Since;
+use phpDocumentor\Reflection\DocBlock\Tags\Source;
+use phpDocumentor\Reflection\DocBlock\Tags\Throws;
+use phpDocumentor\Reflection\DocBlock\Tags\Uses;
+use phpDocumentor\Reflection\DocBlock\Tags\Var_;
+use phpDocumentor\Reflection\DocBlock\Tags\Version;
 
 /**
  * Creates a Tag object given the contents of a tag.
@@ -56,25 +73,25 @@ final class StandardTagFactory implements TagFactory
      *      FQCN to a class that handles it as an array value.
      */
     private $tagHandlerMappings = [
-        'author' => '\phpDocumentor\Reflection\DocBlock\Tags\Author',
-        'covers' => '\phpDocumentor\Reflection\DocBlock\Tags\Covers',
-        'deprecated' => '\phpDocumentor\Reflection\DocBlock\Tags\Deprecated',
+        'author' => Author::class,
+        'covers' => Covers::class,
+        'deprecated' => Deprecated::class,
         // 'example'        => '\phpDocumentor\Reflection\DocBlock\Tags\Example',
-        'link' => '\phpDocumentor\Reflection\DocBlock\Tags\Link',
-        'method' => '\phpDocumentor\Reflection\DocBlock\Tags\Method',
-        'param' => '\phpDocumentor\Reflection\DocBlock\Tags\Param',
-        'property-read' => '\phpDocumentor\Reflection\DocBlock\Tags\PropertyRead',
-        'property' => '\phpDocumentor\Reflection\DocBlock\Tags\Property',
-        'property-write' => '\phpDocumentor\Reflection\DocBlock\Tags\PropertyWrite',
-        'return' => '\phpDocumentor\Reflection\DocBlock\Tags\Return_',
-        'see' => '\phpDocumentor\Reflection\DocBlock\Tags\See',
-        'since' => '\phpDocumentor\Reflection\DocBlock\Tags\Since',
-        'source' => '\phpDocumentor\Reflection\DocBlock\Tags\Source',
-        'throw' => '\phpDocumentor\Reflection\DocBlock\Tags\Throws',
-        'throws' => '\phpDocumentor\Reflection\DocBlock\Tags\Throws',
-        'uses' => '\phpDocumentor\Reflection\DocBlock\Tags\Uses',
-        'var' => '\phpDocumentor\Reflection\DocBlock\Tags\Var_',
-        'version' => '\phpDocumentor\Reflection\DocBlock\Tags\Version',
+        'link' => Link::class,
+        'method' => Method::class,
+        'param' => Param::class,
+        'property-read' => PropertyRead::class,
+        'property' => Property::class,
+        'property-write' => PropertyWrite::class,
+        'return' => Return_::class,
+        'see' => See::class,
+        'since' => Since::class,
+        'source' => Source::class,
+        'throw' => Throws::class,
+        'throws' => Throws::class,
+        'uses' => Uses::class,
+        'var' => Var_::class,
+        'version' => Version::class,
     ];
 
     /**
@@ -149,7 +166,7 @@ final class StandardTagFactory implements TagFactory
     /**
      * {@inheritDoc}
      */
-    public function addService($service, $alias = null) : void
+    public function addService(object $service, $alias = null) : void
     {
         $this->serviceLocator[$alias ?: get_class($service)] = $service;
     }
@@ -215,6 +232,8 @@ final class StandardTagFactory implements TagFactory
 
     /**
      * Determines the Fully Qualified Class Name of the Factory or Tag (containing a Factory Method `create`).
+     *
+     * @return
      */
     private function findHandlerClassName(string $tagName, TypeContext $context) : string
     {
@@ -245,7 +264,7 @@ final class StandardTagFactory implements TagFactory
     {
         $arguments = [];
         foreach ($parameters as $parameter) {
-            $typeHint = $parameter->getClass() ? $parameter->getClass()->getName() : null;
+            $typeHint = $parameter->getClass() !== null ? $parameter->getClass()->getName() : null;
             if (isset($locator[$typeHint])) {
                 $arguments[] = $locator[$typeHint];
                 continue;

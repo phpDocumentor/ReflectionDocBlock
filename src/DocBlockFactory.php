@@ -230,7 +230,7 @@ final class DocBlockFactory implements DocBlockFactoryInterface
      * @param string        $tags    Tag block to parse.
      * @param Types\Context $context Context of the parsed Tag
      *
-     * @return DocBlock\Tag[]|string[]|null[]
+     * @return DocBlock\Tag[]
      */
     private function parseTagBlock(string $tags, Types\Context $context) : array
     {
@@ -239,9 +239,13 @@ final class DocBlockFactory implements DocBlockFactoryInterface
             return [];
         }
 
-        $result = $this->splitTagBlockIntoTagLines($tags);
-        foreach ($result as $key => $tagLine) {
-            $result[$key] = $this->tagFactory->create(trim($tagLine), $context);
+        $result = [];
+        $lines = $this->splitTagBlockIntoTagLines($tags);
+        foreach ($lines as $key => $tagLine) {
+            $tag = $this->tagFactory->create(trim($tagLine), $context);
+            if ($tag instanceof Tag) {
+                $result[$key] = $tag;
+            }
         }
 
         return $result;

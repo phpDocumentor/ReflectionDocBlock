@@ -96,8 +96,10 @@ class ExampleFinder
      * 2. Checks the source folder for the given filename
      * 3. Checks the 'examples' folder in the current working directory for examples
      * 4. Checks the path relative to the current working directory for the given filename
+     *
+     * @return string[] all lines of the example file
      */
-    private function getExampleFileContents(string $filename) : ?string
+    private function getExampleFileContents(string $filename) : ?array
     {
         $normalizedPath = null;
 
@@ -119,7 +121,8 @@ class ExampleFinder
             }
         }
 
-        return $normalizedPath && is_readable($normalizedPath) ? file($normalizedPath) : null;
+        $lines = $normalizedPath && is_readable($normalizedPath) ? file($normalizedPath) : false;
+        return  $lines !== false ? $lines : null;
     }
 
     /**

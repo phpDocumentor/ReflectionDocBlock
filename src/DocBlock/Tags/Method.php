@@ -44,7 +44,7 @@ final class Method extends BaseTag implements Factory\StaticMethod
     /** @var string */
     private $methodName = '';
 
-    /** @var string[] */
+    /** @var string[][] */
     private $arguments = [];
 
     /** @var bool */
@@ -87,7 +87,8 @@ final class Method extends BaseTag implements Factory\StaticMethod
         ?TypeContext $context = null
     ) : ?self {
         Assert::stringNotEmpty($body);
-        Assert::allNotNull([$typeResolver, $descriptionFactory]);
+        Assert::notNull($typeResolver);
+        Assert::notNull($descriptionFactory);
 
         // 1. none or more whitespace
         // 2. optionally the keyword "static" followed by whitespace
@@ -184,7 +185,7 @@ final class Method extends BaseTag implements Factory\StaticMethod
     }
 
     /**
-     * @return string[]
+     * @return string[][]
      */
     public function getArguments() : array
     {
@@ -221,7 +222,7 @@ final class Method extends BaseTag implements Factory\StaticMethod
     }
 
     /**
-     * @param mixed[][] $arguments
+     * @param array<string|mixed[]> $arguments
      *
      * @return mixed[][]
      */

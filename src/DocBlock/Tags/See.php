@@ -49,13 +49,15 @@ class See extends BaseTag implements Factory\StaticMethod
      */
     public static function create(
         string $body,
-        ?FqsenResolver $resolver = null,
+        ?FqsenResolver $typeResolver = null,
         ?DescriptionFactory $descriptionFactory = null,
         ?TypeContext $context = null
     ) : self {
-        Assert::allNotNull([$resolver, $descriptionFactory]);
+        Assert::notNull($typeResolver);
+        Assert::notNull($descriptionFactory);
 
         $parts       = preg_split('/\s+/Su', $body, 2);
+        Assert::isArray($parts);
         $description = isset($parts[1]) ? $descriptionFactory->create($parts[1], $context) : null;
 
         // https://tools.ietf.org/html/rfc2396#section-3
@@ -63,7 +65,7 @@ class See extends BaseTag implements Factory\StaticMethod
             return new static(new Url($parts[0]), $description);
         }
 
-        return new static(new FqsenRef($resolver->resolve($parts[0], $context)), $description);
+        return new static(new FqsenRef($typeResolver->resolve($parts[0], $context)), $description);
     }
 
     /**

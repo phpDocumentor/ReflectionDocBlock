@@ -43,7 +43,7 @@ final class Version extends BaseTag implements Factory\StaticMethod
         [^\s\:]+\:\s*\$[^\$]+\$
     )';
 
-    /** @var string The version vector. */
+    /** @var string|null The version vector. */
     private $version = '';
 
     public function __construct(?string $version = null, ?Description $description = null)
@@ -68,9 +68,14 @@ final class Version extends BaseTag implements Factory\StaticMethod
             return null;
         }
 
+        $description = null;
+        if ($descriptionFactory !== null) {
+            $description = $descriptionFactory->create($matches[2] ?? '', $context);
+        }
+
         return new static(
             $matches[1],
-            $descriptionFactory->create($matches[2] ?? '', $context)
+            $description
         );
     }
 

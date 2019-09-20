@@ -57,24 +57,26 @@ class PropertyRead extends BaseTag implements Factory\StaticMethod
         ?TypeContext $context = null
     ) : self {
         Assert::stringNotEmpty($body);
-        Assert::allNotNull([$typeResolver, $descriptionFactory]);
+        Assert::notNull($typeResolver);
+        Assert::notNull($descriptionFactory);
 
         $parts        = preg_split('/(\s+)/Su', $body, 3, PREG_SPLIT_DELIM_CAPTURE);
+        Assert::isArray($parts);
         $type         = null;
         $variableName = '';
 
         // if the first item that is encountered is not a variable; it is a type
-        if (isset($parts[0]) && (strlen($parts[0]) > 0) && ($parts[0][0] !== '$')) {
+        if (isset($parts[0]) && ($parts[0] !== '') && ($parts[0][0] !== '$')) {
             $type = $typeResolver->resolve(array_shift($parts), $context);
             array_shift($parts);
         }
 
         // if the next item starts with a $ or ...$ it must be the variable name
-        if (isset($parts[0]) && (strlen($parts[0]) > 0) && ($parts[0][0] === '$')) {
+        if (isset($parts[0]) && ($parts[0] !== '') && (strpos($parts[0], '$') === 0)) {
             $variableName = array_shift($parts);
             array_shift($parts);
 
-            if (substr($variableName, 0, 1) === '$') {
+            if ($variableName !== null && strpos($variableName, '$') === 0) {
                 $variableName = substr($variableName, 1);
             }
         }

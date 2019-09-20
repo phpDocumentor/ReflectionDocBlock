@@ -47,9 +47,11 @@ final class Throws extends BaseTag implements Factory\StaticMethod
         ?DescriptionFactory $descriptionFactory = null,
         ?TypeContext $context = null
     ) : self {
-        Assert::allNotNull([$typeResolver, $descriptionFactory]);
+        Assert::notNull($typeResolver);
+        Assert::notNull($descriptionFactory);
 
         $parts = preg_split('/\s+/Su', $body, 2);
+        Assert::isArray($parts);
 
         $type        = $typeResolver->resolve($parts[0] ?? '', $context);
         $description = $descriptionFactory->create($parts[1] ?? '', $context);

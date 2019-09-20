@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace phpDocumentor\Reflection\DocBlock;
 
 use phpDocumentor\Reflection\Types\Context as TypeContext;
+use Webmozart\Assert\Assert;
 use const PREG_SPLIT_DELIM_CAPTURE;
 use function count;
 use function explode;
@@ -62,9 +63,28 @@ class DescriptionFactory
      */
     public function create(string $contents, ?TypeContext $context = null) : Description
     {
-        [$text, $tags] = $this->parse($this->lex($contents), $context);
+        $tokens   = $this->lex($contents);
+        $count    = count($tokens);
+        $tagCount = 0;
+        $tags     = [];
 
-        return new Description($text, $tags);
+        for ($i = 1; $i < $count; $i += 2) {
+            $tag = $this->tagFactory->create($tokens[$i], $context);
+            if ($tag !== null) {
+                $tags[] = $tag;
+            }
+            $tokens[$i] = '%' . ++$tagCount . '$s';
+        }
+
+        //In order to allow "literal" inline tags, the otherwise invalid
+        //sequence "{@}" is changed to "@", and "{}" is changed to "}".
+        //"%" is escaped to "%%" because of vsprintf.
+        //See unit tests for examples.
+        for ($i = 0; $i < $count; $i += 2) {
+            $tokens[$i] = str_replace(['{@}', '{}', '%'], ['@', '}', '%%'], $tokens[$i]);
+        }
+
+        return new Description(implode('', $tokens), $tags);
     }
 
     /**
@@ -81,7 +101,7 @@ class DescriptionFactory
             return [$contents];
         }
 
-        return preg_split(
+        $parts =  preg_split(
             '/\{
                 # "{@}" is not a valid inline tag. This ensures that we do not treat it as one, but treat it literally.
                 (?!@\})
@@ -110,35 +130,8 @@ class DescriptionFactory
             0,
             PREG_SPLIT_DELIM_CAPTURE
         );
-    }
-
-    /**
-     * Parses the stream of tokens in to a new set of tokens containing Tags.
-     *
-     * @param string[] $tokens
-     *
-     * @return string[]|Tag[]
-     */
-    private function parse(array $tokens, ?TypeContext $context = null) : array
-    {
-        $count    = count($tokens);
-        $tagCount = 0;
-        $tags     = [];
-
-        for ($i = 1; $i < $count; $i += 2) {
-            $tags[]     = $this->tagFactory->create($tokens[$i], $context);
-            $tokens[$i] = '%' . ++$tagCount . '$s';
-        }
-
-        //In order to allow "literal" inline tags, the otherwise invalid
-        //sequence "{@}" is changed to "@", and "{}" is changed to "}".
-        //"%" is escaped to "%%" because of vsprintf.
-        //See unit tests for examples.
-        for ($i = 0; $i < $count; $i += 2) {
-            $tokens[$i] = str_replace(['{@}', '{}', '%'], ['@', '}', '%%'], $tokens[$i]);
-        }
-
-        return [implode('', $tokens), $tags];
+        Assert::isArray($parts);
+        return $parts;
     }
 
     /**
