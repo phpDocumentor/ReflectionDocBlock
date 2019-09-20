@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /**
  * This file is part of phpDocumentor.
@@ -6,8 +8,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @copyright 2010-2018 Mike van Riel<mike@phpdoc.org>
- * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      http://phpdoc.org
  */
 
@@ -32,7 +32,7 @@ class SeeTest extends TestCase
     /**
      * Call Mockery::close after each test.
      */
-    public function tearDown(): void
+    public function tearDown() : void
     {
         m::close();
     }
@@ -42,9 +42,10 @@ class SeeTest extends TestCase
      * @uses   \phpDocumentor\Reflection\DocBlock\Description
      * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Reference\Fqsen
      * @uses   \phpDocumentor\Reflection\Fqsen
+     *
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getName
      */
-    public function testIfCorrectTagNameIsReturned(): void
+    public function testIfCorrectTagNameIsReturned() : void
     {
         $fixture = new See(new FqsenRef(new Fqsen('\DateTime')), new Description('Description'));
 
@@ -57,10 +58,11 @@ class SeeTest extends TestCase
      * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Formatter\PassthroughFormatter
      * @uses   \phpDocumentor\Reflection\DocBlock\Description
      * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Reference\Fqsen
+     *
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::render
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getName
      */
-    public function testIfTagCanBeRenderedUsingDefaultFormatter(): void
+    public function testIfTagCanBeRenderedUsingDefaultFormatter() : void
     {
         $fixture = new See(new FqsenRef(new Fqsen('\DateTime')), new Description('Description'));
 
@@ -72,9 +74,10 @@ class SeeTest extends TestCase
      * @uses   \phpDocumentor\Reflection\DocBlock\Description
      * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Reference\Fqsen
      * @uses   \phpDocumentor\Reflection\Fqsen
+     *
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::render
      */
-    public function testIfTagCanBeRenderedUsingSpecificFormatter(): void
+    public function testIfTagCanBeRenderedUsingSpecificFormatter() : void
     {
         $fixture = new See(new FqsenRef(new Fqsen('\DateTime')), new Description('Description'));
 
@@ -87,10 +90,11 @@ class SeeTest extends TestCase
     /**
      * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Reference\Fqsen
      * @uses   \phpDocumentor\Reflection\Fqsen
+     *
      * @covers ::__construct
      * @covers ::getReference
      */
-    public function testHasReferenceToFqsen(): void
+    public function testHasReferenceToFqsen() : void
     {
         $expected = new FqsenRef(new Fqsen('\DateTime'));
 
@@ -100,13 +104,14 @@ class SeeTest extends TestCase
     }
 
     /**
-     * @covers ::__construct
-     * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getDescription
      * @uses   \phpDocumentor\Reflection\DocBlock\Description
      * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Reference\Fqsen
      * @uses   \phpDocumentor\Reflection\Fqsen
+     *
+     * @covers ::__construct
+     * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getDescription
      */
-    public function testHasDescription(): void
+    public function testHasDescription() : void
     {
         $expected = new Description('Description');
 
@@ -116,13 +121,14 @@ class SeeTest extends TestCase
     }
 
     /**
-     * @covers ::__construct
-     * @covers ::__toString
      * @uses   \phpDocumentor\Reflection\DocBlock\Description
      * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Reference\Fqsen
      * @uses   \phpDocumentor\Reflection\Fqsen
+     *
+     * @covers ::__construct
+     * @covers ::__toString
      */
-    public function testStringRepresentationIsReturned(): void
+    public function testStringRepresentationIsReturned() : void
     {
         $fixture = new See(new FqsenRef(new Fqsen('\DateTime::format()')), new Description('Description'));
 
@@ -130,7 +136,6 @@ class SeeTest extends TestCase
     }
 
     /**
-     * @covers ::create
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\See::<public>
      * @uses \phpDocumentor\Reflection\DocBlock\DescriptionFactory
      * @uses \phpDocumentor\Reflection\FqsenResolver
@@ -138,14 +143,16 @@ class SeeTest extends TestCase
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\Reference\Fqsen
      * @uses \phpDocumentor\Reflection\Fqsen
      * @uses \phpDocumentor\Reflection\Types\Context
+     *
+     * @covers ::create
      */
-    public function testFactoryMethod(): void
+    public function testFactoryMethod() : void
     {
         $descriptionFactory = m::mock(DescriptionFactory::class);
-        $resolver = m::mock(FqsenResolver::class);
-        $context = new Context('');
+        $resolver           = m::mock(FqsenResolver::class);
+        $context            = new Context('');
 
-        $fqsen = new Fqsen('\DateTime');
+        $fqsen       = new Fqsen('\DateTime');
         $description = new Description('My Description');
 
         $descriptionFactory
@@ -161,19 +168,20 @@ class SeeTest extends TestCase
     }
 
     /**
-     * @covers ::create
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\See::<public>
      * @uses \phpDocumentor\Reflection\DocBlock\DescriptionFactory
      * @uses \phpDocumentor\Reflection\FqsenResolver
      * @uses \phpDocumentor\Reflection\DocBlock\Description
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\Reference\Url
      * @uses \phpDocumentor\Reflection\Types\Context
+     *
+     * @covers ::create
      */
-    public function testFactoryMethodWithUrl(): void
+    public function testFactoryMethodWithUrl() : void
     {
         $descriptionFactory = m::mock(DescriptionFactory::class);
-        $resolver = m::mock(FqsenResolver::class);
-        $context = new Context('');
+        $resolver           = m::mock(FqsenResolver::class);
+        $context            = new Context('');
 
         $description = new Description('My Description');
 
@@ -193,7 +201,7 @@ class SeeTest extends TestCase
     /**
      * @covers ::create
      */
-    public function testFactoryMethodFailsIfBodyIsNotEmpty(): void
+    public function testFactoryMethodFailsIfBodyIsNotEmpty() : void
     {
         $this->expectException('InvalidArgumentException');
         $this->assertNull(See::create(''));
@@ -202,7 +210,7 @@ class SeeTest extends TestCase
     /**
      * @covers ::create
      */
-    public function testFactoryMethodFailsIfResolverIsNull(): void
+    public function testFactoryMethodFailsIfResolverIsNull() : void
     {
         $this->expectException('InvalidArgumentException');
         See::create('body');
@@ -211,7 +219,7 @@ class SeeTest extends TestCase
     /**
      * @covers ::create
      */
-    public function testFactoryMethodFailsIfDescriptionFactoryIsNull(): void
+    public function testFactoryMethodFailsIfDescriptionFactoryIsNull() : void
     {
         $this->expectException('InvalidArgumentException');
         See::create('body', new FqsenResolver());

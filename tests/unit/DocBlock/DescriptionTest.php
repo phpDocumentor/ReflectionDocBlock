@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /**
  * This file is part of phpDocumentor.
@@ -6,8 +8,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @copyright 2010-2018 Mike van Riel<mike@phpdoc.org>
- * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      http://phpdoc.org
  */
 
@@ -26,23 +26,24 @@ class DescriptionTest extends TestCase
     /**
      * Call Mockery::close after each test.
      */
-    public function tearDown(): void
+    public function tearDown() : void
     {
         m::close();
     }
 
     /**
-     * @covers ::__construct
-     * @covers ::render
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\Generic
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\BaseTag
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\Formatter\PassthroughFormatter
+     *
+     * @covers ::__construct
+     * @covers ::render
      */
-    public function testDescriptionCanRenderUsingABodyWithPlaceholdersAndTags(): void
+    public function testDescriptionCanRenderUsingABodyWithPlaceholdersAndTags() : void
     {
-        $body = 'This is a %1$s body.';
+        $body     = 'This is a %1$s body.';
         $expected = 'This is a {@internal significant} body.';
-        $tags = [new Generic('internal', new Description('significant '))];
+        $tags     = [new Generic('internal', new Description('significant '))];
 
         $fixture = new Description($body, $tags);
 
@@ -56,18 +57,19 @@ class DescriptionTest extends TestCase
     }
 
     /**
-     * @covers ::__construct
-     * @covers ::render
-     * @covers ::__toString
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\Generic
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\BaseTag
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\Formatter\PassthroughFormatter
+     *
+     * @covers ::__construct
+     * @covers ::render
+     * @covers ::__toString
      */
-    public function testDescriptionCanBeCastToString(): void
+    public function testDescriptionCanBeCastToString() : void
     {
-        $body = 'This is a %1$s body.';
+        $body     = 'This is a %1$s body.';
         $expected = 'This is a {@internal significant} body.';
-        $tags = [new Generic('internal', new Description('significant '))];
+        $tags     = [new Generic('internal', new Description('significant '))];
 
         $fixture = new Description($body, $tags);
 
@@ -75,11 +77,12 @@ class DescriptionTest extends TestCase
     }
 
     /**
-     * @covers ::getTags
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\Generic
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\BaseTag
+     *
+     * @covers ::getTags
      */
-    public function testDescriptionTagsGetter(): void
+    public function testDescriptionTagsGetter() : void
     {
         $body = '@JoinTable(name="table", joinColumns=%1$s, inverseJoinColumns=%2$s)';
 
@@ -102,14 +105,15 @@ class DescriptionTest extends TestCase
     }
 
     /**
-     * @covers ::__construct
-     * @covers ::render
-     * @covers ::__toString
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\Generic
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\BaseTag
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\Formatter\PassthroughFormatter
+     *
+     * @covers ::__construct
+     * @covers ::render
+     * @covers ::__toString
      */
-    public function testDescriptionMultipleTagsCanBeCastToString(): void
+    public function testDescriptionMultipleTagsCanBeCastToString() : void
     {
         $body = '@JoinTable(name="table", joinColumns=%1$s, inverseJoinColumns=%2$s)';
 
@@ -121,8 +125,9 @@ class DescriptionTest extends TestCase
             $tag2,
         ];
 
-        $fixture = new Description($body, $tags);
-        $expected = '@JoinTable(name="table", joinColumns={@JoinColumn (name="column_id", referencedColumnName="id")}, inverseJoinColumns={@JoinColumn (name="column_id_2", referencedColumnName="id")})';
+        $fixture  = new Description($body, $tags);
+        $expected = '@JoinTable(name="table", joinColumns={@JoinColumn (name="column_id", referencedColumnName="id")}, '
+        . 'inverseJoinColumns={@JoinColumn (name="column_id_2", referencedColumnName="id")})';
         $this->assertSame($expected, (string) $fixture);
     }
 }

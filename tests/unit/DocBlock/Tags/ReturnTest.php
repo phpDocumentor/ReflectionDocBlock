@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /**
  * This file is part of phpDocumentor.
@@ -6,8 +8,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @copyright 2010-2018 Mike van Riel<mike@phpdoc.org>
- * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      http://phpdoc.org
  */
 
@@ -30,7 +30,7 @@ class ReturnTest extends TestCase
     /**
      * Call Mockery::close after each test.
      */
-    public function tearDown(): void
+    public function tearDown() : void
     {
         m::close();
     }
@@ -38,9 +38,10 @@ class ReturnTest extends TestCase
     /**
      * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Return_::__construct
      * @uses   \phpDocumentor\Reflection\DocBlock\Description
+     *
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getName
      */
-    public function testIfCorrectTagNameIsReturned(): void
+    public function testIfCorrectTagNameIsReturned() : void
     {
         $fixture = new Return_(new String_(), new Description('Description'));
 
@@ -52,10 +53,11 @@ class ReturnTest extends TestCase
      * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Return_::__toString
      * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Formatter\PassthroughFormatter
      * @uses   \phpDocumentor\Reflection\DocBlock\Description
+     *
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::render
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getName
      */
-    public function testIfTagCanBeRenderedUsingDefaultFormatter(): void
+    public function testIfTagCanBeRenderedUsingDefaultFormatter() : void
     {
         $fixture = new Return_(new String_(), new Description('Description'));
 
@@ -65,9 +67,10 @@ class ReturnTest extends TestCase
     /**
      * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Return_::__construct
      * @uses   \phpDocumentor\Reflection\DocBlock\Description
+     *
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::render
      */
-    public function testIfTagCanBeRenderedUsingSpecificFormatter(): void
+    public function testIfTagCanBeRenderedUsingSpecificFormatter() : void
     {
         $fixture = new Return_(new String_(), new Description('Description'));
 
@@ -81,7 +84,7 @@ class ReturnTest extends TestCase
      * @covers ::__construct
      * @covers ::getType
      */
-    public function testHasType(): void
+    public function testHasType() : void
     {
         $expected = new String_();
 
@@ -91,11 +94,12 @@ class ReturnTest extends TestCase
     }
 
     /**
+     * @uses   \phpDocumentor\Reflection\DocBlock\Description
+     *
      * @covers ::__construct
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getDescription
-     * @uses   \phpDocumentor\Reflection\DocBlock\Description
      */
-    public function testHasDescription(): void
+    public function testHasDescription() : void
     {
         $expected = new Description('Description');
 
@@ -105,11 +109,12 @@ class ReturnTest extends TestCase
     }
 
     /**
+     * @uses   \phpDocumentor\Reflection\DocBlock\Description
+     *
      * @covers ::__construct
      * @covers ::__toString
-     * @uses   \phpDocumentor\Reflection\DocBlock\Description
      */
-    public function testStringRepresentationIsReturned(): void
+    public function testStringRepresentationIsReturned() : void
     {
         $fixture = new Return_(new String_(), new Description('Description'));
 
@@ -117,21 +122,22 @@ class ReturnTest extends TestCase
     }
 
     /**
-     * @covers ::create
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\Return_::<public>
      * @uses \phpDocumentor\Reflection\DocBlock\DescriptionFactory
      * @uses \phpDocumentor\Reflection\TypeResolver
      * @uses \phpDocumentor\Reflection\DocBlock\Description
      * @uses \phpDocumentor\Reflection\Types\String_
      * @uses \phpDocumentor\Reflection\Types\Context
+     *
+     * @covers ::create
      */
-    public function testFactoryMethod(): void
+    public function testFactoryMethod() : void
     {
         $descriptionFactory = m::mock(DescriptionFactory::class);
-        $resolver = new TypeResolver();
-        $context = new Context('');
+        $resolver           = new TypeResolver();
+        $context            = new Context('');
 
-        $type = new String_();
+        $type        = new String_();
         $description = new Description('My Description');
         $descriptionFactory->shouldReceive('create')->with('My Description', $context)->andReturn($description);
 
@@ -145,7 +151,7 @@ class ReturnTest extends TestCase
     /**
      * @covers ::create
      */
-    public function testFactoryMethodFailsIfBodyIsNotEmpty(): void
+    public function testFactoryMethodFailsIfBodyIsNotEmpty() : void
     {
         $this->expectException('InvalidArgumentException');
         $this->assertNull(Return_::create(''));
@@ -154,7 +160,7 @@ class ReturnTest extends TestCase
     /**
      * @covers ::create
      */
-    public function testFactoryMethodFailsIfResolverIsNull(): void
+    public function testFactoryMethodFailsIfResolverIsNull() : void
     {
         $this->expectException('InvalidArgumentException');
         Return_::create('body');
@@ -163,7 +169,7 @@ class ReturnTest extends TestCase
     /**
      * @covers ::create
      */
-    public function testFactoryMethodFailsIfDescriptionFactoryIsNull(): void
+    public function testFactoryMethodFailsIfDescriptionFactoryIsNull() : void
     {
         $this->expectException('InvalidArgumentException');
         Return_::create('body', new TypeResolver());

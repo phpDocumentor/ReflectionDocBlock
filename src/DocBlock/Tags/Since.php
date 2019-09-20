@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /**
  * This file is part of phpDocumentor.
@@ -6,8 +8,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @copyright 2010-2018 Mike van Riel<mike@phpdoc.org>
- * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      http://phpdoc.org
  */
 
@@ -17,12 +17,14 @@ use phpDocumentor\Reflection\DocBlock\Description;
 use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
 use phpDocumentor\Reflection\Types\Context as TypeContext;
 use Webmozart\Assert\Assert;
+use function preg_match;
 
 /**
  * Reflection class for a {@}since tag in a Docblock.
  */
 final class Since extends BaseTag implements Factory\StaticMethod
 {
+    /** @var string */
     protected $name = 'since';
 
     /**
@@ -44,11 +46,11 @@ final class Since extends BaseTag implements Factory\StaticMethod
     /** @var string The version vector. */
     private $version = '';
 
-    public function __construct($version = null, ?Description $description = null)
+    public function __construct(?string $version = null, ?Description $description = null)
     {
         Assert::nullOrStringNotEmpty($version);
 
-        $this->version = $version;
+        $this->version     = $version;
         $this->description = $description;
     }
 
@@ -56,13 +58,13 @@ final class Since extends BaseTag implements Factory\StaticMethod
         ?string $body,
         ?DescriptionFactory $descriptionFactory = null,
         ?TypeContext $context = null
-    ): ?self {
+    ) : ?self {
         if (empty($body)) {
             return new static();
         }
 
         $matches = [];
-        if (! preg_match('/^(' . self::REGEX_VECTOR . ')\s*(.+)?$/sux', $body, $matches)) {
+        if (!preg_match('/^(' . self::REGEX_VECTOR . ')\s*(.+)?$/sux', $body, $matches)) {
             return null;
         }
 
@@ -75,7 +77,7 @@ final class Since extends BaseTag implements Factory\StaticMethod
     /**
      * Gets the version section of the tag.
      */
-    public function getVersion(): ?string
+    public function getVersion() : ?string
     {
         return $this->version;
     }
@@ -83,7 +85,7 @@ final class Since extends BaseTag implements Factory\StaticMethod
     /**
      * Returns a string representation for this tag.
      */
-    public function __toString(): string
+    public function __toString() : string
     {
         return $this->version . ($this->description ? ' ' . $this->description->render() : '');
     }

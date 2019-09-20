@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /**
  * This file is part of phpDocumentor.
@@ -6,8 +8,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @copyright 2010-2018 Mike van Riel<mike@phpdoc.org>
- * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      http://phpdoc.org
  */
 
@@ -30,7 +30,7 @@ class PropertyTest extends TestCase
     /**
      * Call Mockery::close after each test.
      */
-    public function tearDown(): void
+    public function tearDown() : void
     {
         m::close();
     }
@@ -38,9 +38,10 @@ class PropertyTest extends TestCase
     /**
      * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Property::__construct
      * @uses   \phpDocumentor\Reflection\DocBlock\Description
+     *
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getName
      */
-    public function testIfCorrectTagNameIsReturned(): void
+    public function testIfCorrectTagNameIsReturned() : void
     {
         $fixture = new Property('myProperty', null, new Description('Description'));
 
@@ -52,10 +53,11 @@ class PropertyTest extends TestCase
      * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Property::__toString
      * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Formatter\PassthroughFormatter
      * @uses   \phpDocumentor\Reflection\DocBlock\Description
+     *
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::render
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getName
      */
-    public function testIfTagCanBeRenderedUsingDefaultFormatter(): void
+    public function testIfTagCanBeRenderedUsingDefaultFormatter() : void
     {
         $fixture = new Property('myProperty', new String_(), new Description('Description'));
         $this->assertSame('@property string $myProperty Description', $fixture->render());
@@ -69,9 +71,10 @@ class PropertyTest extends TestCase
 
     /**
      * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Property::__construct
+     *
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::render
      */
-    public function testIfTagCanBeRenderedUsingSpecificFormatter(): void
+    public function testIfTagCanBeRenderedUsingSpecificFormatter() : void
     {
         $fixture = new Property('myProperty');
 
@@ -85,7 +88,7 @@ class PropertyTest extends TestCase
      * @covers ::__construct
      * @covers ::getVariableName
      */
-    public function testHasVariableName(): void
+    public function testHasVariableName() : void
     {
         $expected = 'myProperty';
 
@@ -98,7 +101,7 @@ class PropertyTest extends TestCase
      * @covers ::__construct
      * @covers ::getType
      */
-    public function testHasType(): void
+    public function testHasType() : void
     {
         $expected = new String_();
 
@@ -108,11 +111,12 @@ class PropertyTest extends TestCase
     }
 
     /**
+     * @uses   \phpDocumentor\Reflection\DocBlock\Description
+     *
      * @covers ::__construct
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getDescription
-     * @uses   \phpDocumentor\Reflection\DocBlock\Description
      */
-    public function testHasDescription(): void
+    public function testHasDescription() : void
     {
         $expected = new Description('Description');
 
@@ -122,12 +126,13 @@ class PropertyTest extends TestCase
     }
 
     /**
-     * @covers ::__construct
-     * @covers ::__toString
      * @uses   \phpDocumentor\Reflection\DocBlock\Description
      * @uses   \phpDocumentor\Reflection\Types\String_
+     *
+     * @covers ::__construct
+     * @covers ::__toString
      */
-    public function testStringRepresentationIsReturned(): void
+    public function testStringRepresentationIsReturned() : void
     {
         $fixture = new Property('myProperty', new String_(), new Description('Description'));
 
@@ -135,17 +140,18 @@ class PropertyTest extends TestCase
     }
 
     /**
-     * @covers ::create
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\Property::<public>
      * @uses \phpDocumentor\Reflection\DocBlock\DescriptionFactory
      * @uses \phpDocumentor\Reflection\DocBlock\Description
      * @uses \phpDocumentor\Reflection\Types\Context
+     *
+     * @covers ::create
      */
-    public function testFactoryMethod(): void
+    public function testFactoryMethod() : void
     {
-        $typeResolver = new TypeResolver();
+        $typeResolver       = new TypeResolver();
         $descriptionFactory = m::mock(DescriptionFactory::class);
-        $context = new Context('');
+        $context            = new Context('');
 
         $description = new Description('My Description');
         $descriptionFactory->shouldReceive('create')->with('My Description', $context)->andReturn($description);
@@ -159,12 +165,13 @@ class PropertyTest extends TestCase
     }
 
     /**
-     * @covers ::create
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\Property::<public>
      * @uses \phpDocumentor\Reflection\TypeResolver
      * @uses \phpDocumentor\Reflection\DocBlock\DescriptionFactory
+     *
+     * @covers ::create
      */
-    public function testFactoryMethodFailsIfEmptyBodyIsGiven(): void
+    public function testFactoryMethodFailsIfEmptyBodyIsGiven() : void
     {
         $this->expectException('InvalidArgumentException');
         $descriptionFactory = m::mock(DescriptionFactory::class);
@@ -174,17 +181,18 @@ class PropertyTest extends TestCase
     /**
      * @covers ::create
      */
-    public function testFactoryMethodFailsIfResolverIsNull(): void
+    public function testFactoryMethodFailsIfResolverIsNull() : void
     {
         $this->expectException('InvalidArgumentException');
         Property::create('body');
     }
 
     /**
-     * @covers ::create
      * @uses \phpDocumentor\Reflection\TypeResolver
+     *
+     * @covers ::create
      */
-    public function testFactoryMethodFailsIfDescriptionFactoryIsNull(): void
+    public function testFactoryMethodFailsIfDescriptionFactoryIsNull() : void
     {
         $this->expectException('InvalidArgumentException');
         Property::create('body', new TypeResolver());

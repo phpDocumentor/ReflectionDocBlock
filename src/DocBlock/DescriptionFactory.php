@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /**
  * This file is part of phpDocumentor.
@@ -6,14 +8,24 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @copyright 2010-2018 Mike van Riel<mike@phpdoc.org>
- * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      http://phpdoc.org
  */
 
 namespace phpDocumentor\Reflection\DocBlock;
 
 use phpDocumentor\Reflection\Types\Context as TypeContext;
+use const PREG_SPLIT_DELIM_CAPTURE;
+use function count;
+use function explode;
+use function implode;
+use function ltrim;
+use function min;
+use function preg_split;
+use function str_replace;
+use function strlen;
+use function strpos;
+use function substr;
+use function trim;
 
 /**
  * Creates a new Description object given a body of text.
@@ -48,7 +60,7 @@ class DescriptionFactory
     /**
      * Returns the parsed text of this description.
      */
-    public function create(string $contents, ?TypeContext $context = null): Description
+    public function create(string $contents, ?TypeContext $context = null) : Description
     {
         [$text, $tags] = $this->parse($this->lex($contents), $context);
 
@@ -58,10 +70,9 @@ class DescriptionFactory
     /**
      * Strips the contents from superfluous whitespace and splits the description into a series of tokens.
      *
-     *
      * @return string[] A series of tokens of which the description text is composed.
      */
-    private function lex(string $contents): array
+    private function lex(string $contents) : array
     {
         $contents = $this->removeSuperfluousStartingWhitespace($contents);
 
@@ -108,14 +119,14 @@ class DescriptionFactory
      *
      * @return string[]|Tag[]
      */
-    private function parse($tokens, ?TypeContext $context = null): array
+    private function parse(array $tokens, ?TypeContext $context = null) : array
     {
-        $count = count($tokens);
+        $count    = count($tokens);
         $tagCount = 0;
-        $tags = [];
+        $tags     = [];
 
         for ($i = 1; $i < $count; $i += 2) {
-            $tags[] = $this->tagFactory->create($tokens[$i], $context);
+            $tags[]     = $this->tagFactory->create($tokens[$i], $context);
             $tokens[$i] = '%' . ++$tagCount . '$s';
         }
 
@@ -144,7 +155,7 @@ class DescriptionFactory
      * If we do not normalize the indentation then we have superfluous whitespace on the second and subsequent
      * lines and this may cause rendering issues when, for example, using a Markdown converter.
      */
-    private function removeSuperfluousStartingWhitespace(string $contents): string
+    private function removeSuperfluousStartingWhitespace(string $contents) : string
     {
         $lines = explode("\n", $contents);
 

@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /**
  * This file is part of phpDocumentor.
@@ -6,17 +8,14 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @author    Jan Schneider <jan@horde.org>
- * @copyright 2018 Mike van Riel<mike@phpdoc.org>
- * @license   http://www.opensource.org/licenses/mit-license.php MIT
- * @link      http://phpdoc.org
+ * @link http://phpdoc.org
  */
 
 namespace phpDocumentor\Reflection\DocBlock\Tags\Formatter;
 
 use Mockery as m;
 use phpDocumentor\Reflection\DocBlock\Description;
-use phpDocumentor\Reflection\DocBlock\Tags\Link;
+use phpDocumentor\Reflection\DocBlock\Tags\Link as LinkTag;
 use phpDocumentor\Reflection\DocBlock\Tags\Param;
 use phpDocumentor\Reflection\DocBlock\Tags\Version;
 use phpDocumentor\Reflection\Types\String_;
@@ -30,27 +29,28 @@ class AlignFormatterTest extends TestCase
     /**
      * Call Mockery::close after each test.
      */
-    public function tearDown(): void
+    public function tearDown() : void
     {
         m::close();
     }
 
     /**
+     * @uses   \phpDocumentor\Reflection\DocBlock\Description
+     * @uses   \phpDocumentor\Reflection\DocBlock\Tags\BaseTag
+     * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Link
+     * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Param
+     * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Version
+     * @uses   \phpDocumentor\Reflection\Types\String_
+     *
      * @covers ::format
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\Formatter\AlignFormatter::__construct
-     * @uses \phpDocumentor\Reflection\DocBlock\Description
-     * @uses \phpDocumentor\Reflection\DocBlock\Tags\BaseTag
-     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Link
-     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Param
-     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Version
-     * @uses \phpDocumentor\Reflection\Types\String_
      */
-    public function testFormatterCallsToStringAndReturnsAStandardRepresentation(): void
+    public function testFormatterCallsToStringAndReturnsAStandardRepresentation() : void
     {
-        $tags = [
+        $tags    = [
             new Param('foobar', new String_()),
             new Version('1.2.0'),
-            new Link('http://www.example.com', new Description('Examples')),
+            new LinkTag('http://www.example.com', new Description('Examples')),
         ];
         $fixture = new AlignFormatter($tags);
 

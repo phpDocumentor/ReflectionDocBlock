@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /**
  * This file is part of phpDocumentor.
@@ -6,8 +8,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @copyright 2010-2018 Mike van Riel<mike@phpdoc.org>
- * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @generic      http://phpdoc.org
  */
 
@@ -28,7 +28,7 @@ class GenericTest extends TestCase
     /**
      * Call Mockery::close after each test.
      */
-    public function tearDown(): void
+    public function tearDown() : void
     {
         m::close();
     }
@@ -36,9 +36,10 @@ class GenericTest extends TestCase
     /**
      * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Generic::__construct
      * @uses   \phpDocumentor\Reflection\DocBlock\Description
+     *
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getName
      */
-    public function testIfCorrectTagNameIsReturned(): void
+    public function testIfCorrectTagNameIsReturned() : void
     {
         $fixture = new Generic('generic', new Description('Description'));
 
@@ -51,9 +52,10 @@ class GenericTest extends TestCase
      * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Formatter\PassthroughFormatter
      * @uses   \phpDocumentor\Reflection\DocBlock\Description
      * @uses   \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getName
+     *
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::render
      */
-    public function testIfTagCanBeRenderedUsingDefaultFormatter(): void
+    public function testIfTagCanBeRenderedUsingDefaultFormatter() : void
     {
         $fixture = new Generic('generic', new Description('Description'));
 
@@ -63,9 +65,10 @@ class GenericTest extends TestCase
     /**
      * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Generic::__construct
      * @uses   \phpDocumentor\Reflection\DocBlock\Description
+     *
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::render
      */
-    public function testIfTagCanBeRenderedUsingSpecificFormatter(): void
+    public function testIfTagCanBeRenderedUsingSpecificFormatter() : void
     {
         $fixture = new Generic('generic', new Description('Description'));
 
@@ -76,11 +79,12 @@ class GenericTest extends TestCase
     }
 
     /**
+     * @uses   \phpDocumentor\Reflection\DocBlock\Description
+     *
      * @covers ::__construct
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getDescription
-     * @uses   \phpDocumentor\Reflection\DocBlock\Description
      */
-    public function testHasDescription(): void
+    public function testHasDescription() : void
     {
         $expected = new Description('Description');
 
@@ -90,12 +94,13 @@ class GenericTest extends TestCase
     }
 
     /**
-     * @covers ::__construct
-     * @covers ::__toString
      * @uses   \phpDocumentor\Reflection\DocBlock\Description
      * @uses   \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getName
+     *
+     * @covers ::__construct
+     * @covers ::__toString
      */
-    public function testStringRepresentationIsReturned(): void
+    public function testStringRepresentationIsReturned() : void
     {
         $fixture = new Generic('generic', new Description('Description'));
 
@@ -103,18 +108,19 @@ class GenericTest extends TestCase
     }
 
     /**
-     * @covers ::create
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\Generic::<public>
      * @uses \phpDocumentor\Reflection\DocBlock\DescriptionFactory
      * @uses \phpDocumentor\Reflection\DocBlock\Description
      * @uses \phpDocumentor\Reflection\Types\Context
+     *
+     * @covers ::create
      */
-    public function testFactoryMethod(): void
+    public function testFactoryMethod() : void
     {
         $descriptionFactory = m::mock(DescriptionFactory::class);
-        $context = new Context('');
+        $context            = new Context('');
 
-        $generics = 'generic';
+        $generics    = 'generic';
         $description = new Description('My Description');
 
         $descriptionFactory->shouldReceive('create')->with('My Description', $context)->andReturn($description);
@@ -129,7 +135,7 @@ class GenericTest extends TestCase
     /**
      * @covers ::create
      */
-    public function testFactoryMethodFailsIfNameIsNotEmpty(): void
+    public function testFactoryMethodFailsIfNameIsNotEmpty() : void
     {
         $this->expectException('InvalidArgumentException');
         Generic::create('', '');
@@ -139,7 +145,7 @@ class GenericTest extends TestCase
      * @covers ::create
      * @covers ::__construct
      */
-    public function testFactoryMethodFailsIfNameContainsIllegalCharacters(): void
+    public function testFactoryMethodFailsIfNameContainsIllegalCharacters() : void
     {
         $this->expectException('InvalidArgumentException');
         Generic::create('', 'name/myname');

@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /**
  * This file is part of phpDocumentor.
@@ -6,8 +8,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @copyright 2010-2018 Mike van Riel<mike@phpdoc.org>
- * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      http://phpdoc.org
  */
 
@@ -30,7 +30,7 @@ class ParamTest extends TestCase
     /**
      * Call Mockery::close after each test.
      */
-    public function tearDown(): void
+    public function tearDown() : void
     {
         m::close();
     }
@@ -38,9 +38,10 @@ class ParamTest extends TestCase
     /**
      * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Param::__construct
      * @uses   \phpDocumentor\Reflection\DocBlock\Description
+     *
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getName
      */
-    public function testIfCorrectTagNameIsReturned(): void
+    public function testIfCorrectTagNameIsReturned() : void
     {
         $fixture = new Param('myParameter', null, false, new Description('Description'));
 
@@ -53,10 +54,11 @@ class ParamTest extends TestCase
      * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Param::__toString
      * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Formatter\PassthroughFormatter
      * @uses   \phpDocumentor\Reflection\DocBlock\Description
+     *
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::render
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getName
      */
-    public function testIfTagCanBeRenderedUsingDefaultFormatter(): void
+    public function testIfTagCanBeRenderedUsingDefaultFormatter() : void
     {
         $fixture = new Param('myParameter', new String_(), true, new Description('Description'));
         $this->assertSame('@param string ...$myParameter Description', $fixture->render());
@@ -73,9 +75,10 @@ class ParamTest extends TestCase
 
     /**
      * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Param::__construct
+     *
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::render
      */
-    public function testIfTagCanBeRenderedUsingSpecificFormatter(): void
+    public function testIfTagCanBeRenderedUsingSpecificFormatter() : void
     {
         $fixture = new Param('myParameter');
 
@@ -89,7 +92,7 @@ class ParamTest extends TestCase
      * @covers ::__construct
      * @covers ::getVariableName
      */
-    public function testHasVariableName(): void
+    public function testHasVariableName() : void
     {
         $expected = 'myParameter';
 
@@ -102,7 +105,7 @@ class ParamTest extends TestCase
      * @covers ::__construct
      * @covers ::getType
      */
-    public function testHasType(): void
+    public function testHasType() : void
     {
         $expected = new String_();
 
@@ -115,7 +118,7 @@ class ParamTest extends TestCase
      * @covers ::__construct
      * @covers ::isVariadic
      */
-    public function testIfParameterIsVariadic(): void
+    public function testIfParameterIsVariadic() : void
     {
         $fixture = new Param('myParameter', new String_(), false);
         $this->assertFalse($fixture->isVariadic());
@@ -125,11 +128,12 @@ class ParamTest extends TestCase
     }
 
     /**
+     * @uses   \phpDocumentor\Reflection\DocBlock\Description
+     *
      * @covers ::__construct
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getDescription
-     * @uses   \phpDocumentor\Reflection\DocBlock\Description
      */
-    public function testHasDescription(): void
+    public function testHasDescription() : void
     {
         $expected = new Description('Description');
 
@@ -139,13 +143,14 @@ class ParamTest extends TestCase
     }
 
     /**
+     * @uses   \phpDocumentor\Reflection\DocBlock\Description
+     * @uses   \phpDocumentor\Reflection\Types\String_
+     *
      * @covers ::__construct
      * @covers ::isVariadic
      * @covers ::__toString
-     * @uses   \phpDocumentor\Reflection\DocBlock\Description
-     * @uses   \phpDocumentor\Reflection\Types\String_
      */
-    public function testStringRepresentationIsReturned(): void
+    public function testStringRepresentationIsReturned() : void
     {
         $fixture = new Param('myParameter', new String_(), true, new Description('Description'));
 
@@ -153,17 +158,18 @@ class ParamTest extends TestCase
     }
 
     /**
-     * @covers ::create
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\Param::<public>
      * @uses \phpDocumentor\Reflection\DocBlock\DescriptionFactory
      * @uses \phpDocumentor\Reflection\DocBlock\Description
      * @uses \phpDocumentor\Reflection\Types\Context
+     *
+     * @covers ::create
      */
-    public function testFactoryMethod(): void
+    public function testFactoryMethod() : void
     {
-        $typeResolver = new TypeResolver();
+        $typeResolver       = new TypeResolver();
         $descriptionFactory = m::mock(DescriptionFactory::class);
-        $context = new Context('');
+        $context            = new Context('');
 
         $description = new Description('My Description');
         $descriptionFactory->shouldReceive('create')->with('My Description', $context)->andReturn($description);
@@ -178,12 +184,13 @@ class ParamTest extends TestCase
     }
 
     /**
-     * @covers ::create
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\Param::<public>
      * @uses \phpDocumentor\Reflection\TypeResolver
      * @uses \phpDocumentor\Reflection\DocBlock\DescriptionFactory
+     *
+     * @covers ::create
      */
-    public function testFactoryMethodFailsIfEmptyBodyIsGiven(): void
+    public function testFactoryMethodFailsIfEmptyBodyIsGiven() : void
     {
         $this->expectException('InvalidArgumentException');
         $descriptionFactory = m::mock(DescriptionFactory::class);
@@ -193,17 +200,18 @@ class ParamTest extends TestCase
     /**
      * @covers ::create
      */
-    public function testFactoryMethodFailsIfResolverIsNull(): void
+    public function testFactoryMethodFailsIfResolverIsNull() : void
     {
         $this->expectException('InvalidArgumentException');
         Param::create('body');
     }
 
     /**
-     * @covers ::create
      * @uses \phpDocumentor\Reflection\TypeResolver
+     *
+     * @covers ::create
      */
-    public function testFactoryMethodFailsIfDescriptionFactoryIsNull(): void
+    public function testFactoryMethodFailsIfDescriptionFactoryIsNull() : void
     {
         $this->expectException('InvalidArgumentException');
         Param::create('body', new TypeResolver());
