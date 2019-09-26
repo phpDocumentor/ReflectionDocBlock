@@ -122,7 +122,7 @@ class ExampleFinder
         }
 
         $lines = $normalizedPath && is_readable($normalizedPath) ? file($normalizedPath) : false;
-        return  $lines !== false ? $lines : null;
+        return $lines !== false ? $lines : null;
     }
 
     /**

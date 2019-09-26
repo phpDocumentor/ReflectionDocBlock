@@ -222,7 +222,7 @@ final class Method extends BaseTag implements Factory\StaticMethod
     }
 
     /**
-     * @param array<string|mixed[]> $arguments
+     * @param mixed[][] $arguments
      *
      * @return mixed[][]
      */

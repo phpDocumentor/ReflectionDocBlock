@@ -20,7 +20,6 @@ use phpDocumentor\Reflection\DocBlock\StandardTagFactory;
 use phpDocumentor\Reflection\DocBlock\Tag;
 use phpDocumentor\Reflection\DocBlock\TagFactory;
 use Webmozart\Assert\Assert;
-use function array_filter;
 use function array_shift;
 use function count;
 use function explode;
@@ -100,12 +99,7 @@ final class DocBlockFactory implements DocBlockFactoryInterface
         return new DocBlock(
             $summary,
             $description ? $this->descriptionFactory->create($description, $context) : null,
-            array_filter(
-                $this->parseTagBlock($tags, $context),
-                static function ($tag) {
-                    return $tag instanceof Tag;
-                }
-            ),
+            $this->parseTagBlock($tags, $context),
             $context,
             $location,
             $templateMarker === '#@+',
@@ -240,12 +234,14 @@ final class DocBlockFactory implements DocBlockFactoryInterface
         }
 
         $result = [];
-        $lines = $this->splitTagBlockIntoTagLines($tags);
+        $lines  = $this->splitTagBlockIntoTagLines($tags);
         foreach ($lines as $key => $tagLine) {
             $tag = $this->tagFactory->create(trim($tagLine), $context);
-            if ($tag instanceof Tag) {
-                $result[$key] = $tag;
+            if (!($tag instanceof Tag)) {
+                continue;
             }
+
+            $result[$key] = $tag;
         }
 
         return $result;

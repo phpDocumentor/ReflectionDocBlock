@@ -7,13 +7,18 @@
         {
             "name": "Mike van Riel",
             "email": "me@mikevanriel.com"
+        },
+        {
+            "name": "Jaap van Otterdijk",
+            "email": "account@ijaap.nl"
         }
     ],
-    "minimum-stability": "alpha",
     "require": {
-        "php": ">=7.1",
-        "phpdocumentor/type-resolver": "^0",
-        "webmozart/assert": "^1"
+        "php": "^7.1",
+        "phpdocumentor/type-resolver": "^1.0",
+        "webmozart/assert": "^1",
+        "phpdocumentor/reflection-common": "^2.0",
+        "ext-filter": "^7.1"
     },
     "require-dev": {
         "mockery/mockery": "^1",

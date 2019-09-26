@@ -23,7 +23,7 @@ use const PREG_SPLIT_DELIM_CAPTURE;
 use function array_shift;
 use function implode;
 use function preg_split;
-use function strlen;
+use function strpos;
 use function substr;
 
 /**
@@ -60,7 +60,7 @@ class Var_ extends BaseTag implements Factory\StaticMethod
         Assert::notNull($typeResolver);
         Assert::notNull($descriptionFactory);
 
-        $parts        = preg_split('/(\s+)/Su', $body, 3, PREG_SPLIT_DELIM_CAPTURE);
+        $parts = preg_split('/(\s+)/Su', $body, 3, PREG_SPLIT_DELIM_CAPTURE);
         Assert::isArray($parts);
         Assert::allString($parts);
         $type         = null;
@@ -111,7 +111,7 @@ class Var_ extends BaseTag implements Factory\StaticMethod
     public function __toString() : string
     {
         return ($this->type ? $this->type . ' ' : '')
-            . (empty($this->variableName) ? null : ('$' . $this->variableName))
+            . (empty($this->variableName) ? '' : ('$' . $this->variableName))
             . ($this->description ? ' ' . $this->description : '');
     }
 }

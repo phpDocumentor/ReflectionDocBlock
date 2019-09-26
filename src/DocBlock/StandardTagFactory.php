@@ -8,14 +8,31 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @link      http://phpdoc.org
+ * @link http://phpdoc.org
  */
 
 namespace phpDocumentor\Reflection\DocBlock;
 
 use InvalidArgumentException;
+use phpDocumentor\Reflection\DocBlock\Tags\Author;
+use phpDocumentor\Reflection\DocBlock\Tags\Covers;
+use phpDocumentor\Reflection\DocBlock\Tags\Deprecated;
 use phpDocumentor\Reflection\DocBlock\Tags\Factory\StaticMethod;
 use phpDocumentor\Reflection\DocBlock\Tags\Generic;
+use phpDocumentor\Reflection\DocBlock\Tags\Link as LinkTag;
+use phpDocumentor\Reflection\DocBlock\Tags\Method;
+use phpDocumentor\Reflection\DocBlock\Tags\Param;
+use phpDocumentor\Reflection\DocBlock\Tags\Property;
+use phpDocumentor\Reflection\DocBlock\Tags\PropertyRead;
+use phpDocumentor\Reflection\DocBlock\Tags\PropertyWrite;
+use phpDocumentor\Reflection\DocBlock\Tags\Return_;
+use phpDocumentor\Reflection\DocBlock\Tags\See as SeeTag;
+use phpDocumentor\Reflection\DocBlock\Tags\Since;
+use phpDocumentor\Reflection\DocBlock\Tags\Source;
+use phpDocumentor\Reflection\DocBlock\Tags\Throws;
+use phpDocumentor\Reflection\DocBlock\Tags\Uses;
+use phpDocumentor\Reflection\DocBlock\Tags\Var_;
+use phpDocumentor\Reflection\DocBlock\Tags\Version;
 use phpDocumentor\Reflection\FqsenResolver;
 use phpDocumentor\Reflection\Types\Context as TypeContext;
 use ReflectionMethod;
@@ -28,23 +45,6 @@ use function count;
 use function get_class;
 use function preg_match;
 use function strpos;
-use phpDocumentor\Reflection\DocBlock\Tags\Author;
-use phpDocumentor\Reflection\DocBlock\Tags\Covers;
-use phpDocumentor\Reflection\DocBlock\Tags\Deprecated;
-use phpDocumentor\Reflection\DocBlock\Tags\Link;
-use phpDocumentor\Reflection\DocBlock\Tags\Method;
-use phpDocumentor\Reflection\DocBlock\Tags\Param;
-use phpDocumentor\Reflection\DocBlock\Tags\PropertyRead;
-use phpDocumentor\Reflection\DocBlock\Tags\Property;
-use phpDocumentor\Reflection\DocBlock\Tags\PropertyWrite;
-use phpDocumentor\Reflection\DocBlock\Tags\Return_;
-use phpDocumentor\Reflection\DocBlock\Tags\See;
-use phpDocumentor\Reflection\DocBlock\Tags\Since;
-use phpDocumentor\Reflection\DocBlock\Tags\Source;
-use phpDocumentor\Reflection\DocBlock\Tags\Throws;
-use phpDocumentor\Reflection\DocBlock\Tags\Uses;
-use phpDocumentor\Reflection\DocBlock\Tags\Var_;
-use phpDocumentor\Reflection\DocBlock\Tags\Version;
 
 /**
  * Creates a Tag object given the contents of a tag.
@@ -77,14 +77,14 @@ final class StandardTagFactory implements TagFactory
         'covers' => Covers::class,
         'deprecated' => Deprecated::class,
         // 'example'        => '\phpDocumentor\Reflection\DocBlock\Tags\Example',
-        'link' => Link::class,
+        'link' => LinkTag::class,
         'method' => Method::class,
         'param' => Param::class,
         'property-read' => PropertyRead::class,
         'property' => Property::class,
         'property-write' => PropertyWrite::class,
         'return' => Return_::class,
-        'see' => See::class,
+        'see' => SeeTag::class,
         'since' => Since::class,
         'source' => Source::class,
         'throw' => Throws::class,
@@ -166,7 +166,7 @@ final class StandardTagFactory implements TagFactory
     /**
      * {@inheritDoc}
      */
-    public function addService(object $service, $alias = null) : void
+    public function addService(object $service, ?string $alias = null) : void
     {
         $this->serviceLocator[$alias ?: get_class($service)] = $service;
     }
@@ -232,8 +232,6 @@ final class StandardTagFactory implements TagFactory
 
     /**
      * Determines the Fully Qualified Class Name of the Factory or Tag (containing a Factory Method `create`).
-     *
-     * @return
      */
     private function findHandlerClassName(string $tagName, TypeContext $context) : string
     {
@@ -264,7 +262,12 @@ final class StandardTagFactory implements TagFactory
     {
         $arguments = [];
         foreach ($parameters as $parameter) {
-            $typeHint = $parameter->getClass() !== null ? $parameter->getClass()->getName() : null;
+            $class    = $parameter->getClass();
+            $typeHint = null;
+            if ($class !== null) {
+                $typeHint = $class->getName();
+            }
+
             if (isset($locator[$typeHint])) {
                 $arguments[] = $locator[$typeHint];
                 continue;

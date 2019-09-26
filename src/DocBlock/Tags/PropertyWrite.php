@@ -61,7 +61,7 @@ class PropertyWrite extends BaseTag implements Factory\StaticMethod
         Assert::notNull($typeResolver);
         Assert::notNull($descriptionFactory);
 
-        $parts        = preg_split('/(\s+)/Su', $body, 3, PREG_SPLIT_DELIM_CAPTURE);
+        $parts = preg_split('/(\s+)/Su', $body, 3, PREG_SPLIT_DELIM_CAPTURE);
         Assert::isArray($parts);
         $type         = null;
         $variableName = '';
