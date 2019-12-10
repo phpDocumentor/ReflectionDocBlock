@@ -27,7 +27,6 @@ use function implode;
 use function is_string;
 use function preg_match;
 use function sort;
-use function strlen;
 use function strpos;
 use function substr;
 use function trim;
@@ -54,7 +53,9 @@ final class Method extends BaseTag implements Factory\StaticMethod
     private $returnType;
 
     /**
-     * @param mixed[][] $arguments $arguments
+     * @param mixed[][] $arguments
+     *
+     * @psalm-param array<int, array<string, string|Type>|string> $arguments
      */
     public function __construct(
         string $methodName,
@@ -64,7 +65,6 @@ final class Method extends BaseTag implements Factory\StaticMethod
         ?Description $description = null
     ) {
         Assert::stringNotEmpty($methodName);
-        Assert::boolean($static);
 
         if ($returnType === null) {
             $returnType = new Void_();
@@ -151,7 +151,7 @@ final class Method extends BaseTag implements Factory\StaticMethod
         $returnType  = $typeResolver->resolve($returnType, $context);
         $description = $descriptionFactory->create($description, $context);
 
-        if (is_string($arguments) && strlen($arguments) > 0) {
+        if ($arguments !== '') {
             $arguments = explode(',', $arguments);
             foreach ($arguments as &$argument) {
                 $argument = explode(' ', self::stripRestArg(trim($argument)), 2);
@@ -222,13 +222,17 @@ final class Method extends BaseTag implements Factory\StaticMethod
     }
 
     /**
-     * @param mixed[][] $arguments
+     * @param mixed[][]|string[] $arguments
      *
      * @return mixed[][]
+     *
+     * @psalm-param array<int, array<string, string|Type>|string> $arguments
+     * @psalm-return array<int, array<string, string|Type>> $arguments
      */
     private function filterArguments(array $arguments = []) : array
     {
-        foreach ($arguments as &$argument) {
+        $result = [];
+        foreach ($arguments as $argument) {
             if (is_string($argument)) {
                 $argument = ['name' => $argument];
             }
@@ -244,9 +248,11 @@ final class Method extends BaseTag implements Factory\StaticMethod
                     'Arguments can only have the "name" and "type" fields, found: ' . var_export($keys, true)
                 );
             }
+
+            $result[] = $argument;
         }
 
-        return $arguments;
+        return $result;
     }
 
     private static function stripRestArg(string $argument) : string

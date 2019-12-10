@@ -39,7 +39,7 @@ class ExampleFinderTest extends TestCase
      */
     public function testFileNotFound() : void
     {
-        $example = new Example('./example.php', false, 1, 0, new Description('Test'));
+        $example = new Example('./example.php', false, 1, 0, 'Test');
         $this->assertSame('** File not found : ./example.php **', $this->fixture->find($example));
     }
 }

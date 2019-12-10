@@ -221,7 +221,8 @@ DOCBLOCK;
                 <<<DOCBLOCK
 This is a DocBlock.
 This should be a Description.
-DOCBLOCK,
+DOCBLOCK
+,
                 'This is a DocBlock.',
                 'This should be a Description.',
             ],
@@ -230,7 +231,8 @@ DOCBLOCK,
 This is a
 multiline Summary.
 This should be a Description.
-DOCBLOCK,
+DOCBLOCK
+,
                 "This is a\nmultiline Summary.",
                 'This should be a Description.',
             ],
@@ -239,7 +241,8 @@ DOCBLOCK,
 This is a Summary without dot but with a whiteline
 
 This should be a Description.
-DOCBLOCK,
+DOCBLOCK
+,
                 'This is a Summary without dot but with a whiteline',
                 'This should be a Description.',
             ],
@@ -248,7 +251,8 @@ DOCBLOCK,
 This is a Summary with dot and with a whiteline.
 
 This should be a Description.
-DOCBLOCK,
+DOCBLOCK
+,
                 'This is a Summary with dot and with a whiteline.',
                 'This should be a Description.',
             ],

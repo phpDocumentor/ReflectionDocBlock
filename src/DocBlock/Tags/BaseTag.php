@@ -24,7 +24,7 @@ abstract class BaseTag implements DocBlock\Tag
     /** @var string Name of the tag */
     protected $name = '';
 
-    /** @var Description|string|null Description of the tag. */
+    /** @var Description|null Description of the tag. */
     protected $description;
 
     /**
@@ -37,10 +37,7 @@ abstract class BaseTag implements DocBlock\Tag
         return $this->name;
     }
 
-    /**
-     * @return Description|string|null
-     */
-    public function getDescription()
+    public function getDescription() : ?Description
     {
         return $this->description;
     }

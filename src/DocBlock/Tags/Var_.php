@@ -29,7 +29,7 @@ use function substr;
 /**
  * Reflection class for a {@}var tag in a Docblock.
  */
-class Var_ extends BaseTag implements Factory\StaticMethod
+final class Var_ extends BaseTag implements Factory\StaticMethod
 {
     /** @var string */
     protected $name = 'var';
@@ -37,10 +37,10 @@ class Var_ extends BaseTag implements Factory\StaticMethod
     /** @var Type|null */
     private $type;
 
-    /** @var string */
+    /** @var string|null */
     protected $variableName = '';
 
-    public function __construct(string $variableName, ?Type $type = null, ?Description $description = null)
+    public function __construct(?string $variableName, ?Type $type = null, ?Description $description = null)
     {
         $this->variableName = $variableName;
         $this->type         = $type;
@@ -68,9 +68,7 @@ class Var_ extends BaseTag implements Factory\StaticMethod
 
         // if the first item that is encountered is not a variable; it is a type
         if (isset($parts[0]) && ($parts[0] !== '') && ($parts[0][0] !== '$')) {
-            if ($typeResolver !== null) {
-                $type = $typeResolver->resolve(array_shift($parts), $context);
-            }
+            $type = $typeResolver->resolve(array_shift($parts), $context);
             array_shift($parts);
         }
 
@@ -92,7 +90,7 @@ class Var_ extends BaseTag implements Factory\StaticMethod
     /**
      * Returns the variable's name.
      */
-    public function getVariableName() : string
+    public function getVariableName() : ?string
     {
         return $this->variableName;
     }

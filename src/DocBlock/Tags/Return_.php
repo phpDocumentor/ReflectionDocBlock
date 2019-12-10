@@ -69,6 +69,6 @@ final class Return_ extends BaseTag implements Factory\StaticMethod
 
     public function __toString() : string
     {
-        return $this->type . ' ' . $this->description;
+        return $this->type . ' ' . (string) $this->description;
     }
 }

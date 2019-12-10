@@ -27,7 +27,7 @@ use function preg_split;
 /**
  * Reflection class for an {@}see tag in a Docblock.
  */
-class See extends BaseTag implements Factory\StaticMethod
+final class See extends BaseTag implements Factory\StaticMethod
 {
     /** @var string */
     protected $name = 'see';

@@ -76,6 +76,6 @@ final class Uses extends BaseTag implements Factory\StaticMethod
      */
     public function __toString() : string
     {
-        return $this->refers . ' ' . $this->description->render();
+        return $this->refers . ' ' . (string) $this->description;
     }
 }

@@ -69,6 +69,6 @@ final class Throws extends BaseTag implements Factory\StaticMethod
 
     public function __toString() : string
     {
-        return $this->type . ' ' . $this->description;
+        return (string) $this->type . ' ' . (string) $this->description;
     }
 }

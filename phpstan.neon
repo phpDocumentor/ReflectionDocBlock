@@ -6,5 +6,3 @@ parameters:
     ignoreErrors:
         # false positive
         - '#Method phpDocumentor\Reflection\DocBlock\Tags\Method::filterArguments() should return array<array> but returns array<array|string>#'
-        - "~Parameter #1 $function of function call_user_func_array expects callable(): mixed, array(string, 'create') given.~"
-        - '#Cannot call method render\(\) on phpDocumentor\\Reflection\\DocBlock\\Description\|string#'

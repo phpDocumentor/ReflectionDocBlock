@@ -177,8 +177,8 @@ final class StandardTagFactory implements TagFactory
     public function registerTagHandler(string $tagName, string $handler) : void
     {
         Assert::stringNotEmpty($tagName);
-        Assert::stringNotEmpty($handler);
         Assert::classExists($handler);
+        /** @var object $handler stupid hack to make phpstan happy.  */
         Assert::implementsInterface($handler, StaticMethod::class);
 
         if (strpos($tagName, '\\') && $tagName[0] !== '\\') {
@@ -224,7 +224,9 @@ final class StandardTagFactory implements TagFactory
         );
 
         try {
-            return call_user_func_array([$handlerClassName, 'create'], $arguments);
+            /** @var callable $callable */
+            $callable = [$handlerClassName, 'create'];
+            return call_user_func_array($callable, $arguments);
         } catch (InvalidArgumentException $e) {
             return null;
         }

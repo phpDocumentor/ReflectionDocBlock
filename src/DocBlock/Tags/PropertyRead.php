@@ -29,7 +29,7 @@ use function substr;
 /**
  * Reflection class for a {@}property-read tag in a Docblock.
  */
-class PropertyRead extends BaseTag implements Factory\StaticMethod
+final class PropertyRead extends BaseTag implements Factory\StaticMethod
 {
     /** @var string */
     protected $name = 'property-read';
@@ -37,10 +37,10 @@ class PropertyRead extends BaseTag implements Factory\StaticMethod
     /** @var Type|null */
     private $type;
 
-    /** @var string */
+    /** @var string|null */
     protected $variableName = '';
 
-    public function __construct(string $variableName, ?Type $type = null, ?Description $description = null)
+    public function __construct(?string $variableName, ?Type $type = null, ?Description $description = null)
     {
         $this->variableName = $variableName;
         $this->type         = $type;
@@ -89,7 +89,7 @@ class PropertyRead extends BaseTag implements Factory\StaticMethod
     /**
      * Returns the variable's name.
      */
-    public function getVariableName() : string
+    public function getVariableName() : ?string
     {
         return $this->variableName;
     }
@@ -108,7 +108,7 @@ class PropertyRead extends BaseTag implements Factory\StaticMethod
     public function __toString() : string
     {
         return ($this->type ? $this->type . ' ' : '')
-            . '$' . $this->variableName
+            . ($this->variableName ? '$' . $this->variableName : '')
             . ($this->description ? ' ' . $this->description : '');
     }
 }
