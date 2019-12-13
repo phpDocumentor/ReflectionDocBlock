@@ -194,20 +194,3 @@ jobs:
         uses: docker://mickaelandrieu/psalm-ga
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-  bc_check:
-    name: BC Check
-    runs-on: ubuntu-latest
-    needs: [setup, phpunit]
-    steps:
-      - uses: actions/checkout@master
-      - name: Restore/cache vendor folder
-        uses: actions/cache@v1
-        with:
-          path: vendor
-          key: all-build-${{ hashFiles('**/composer.lock') }}
-          restore-keys: |
-            all-build-${{ hashFiles('**/composer.lock') }}
-            all-build-
-      - name: Roave BC Check
-        uses: docker://nyholm/roave-bc-check-ga
