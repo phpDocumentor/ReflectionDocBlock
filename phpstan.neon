@@ -1,10 +1,8 @@
+includes:
+    - /composer/vendor/phpstan/phpstan-mockery/extension.neon
+    - /composer/vendor/phpstan/phpstan-webmozart-assert/extension.neon
+
 parameters:
     ignoreErrors:
         # false positive
-        - '#Call to an undefined method object::getDocComment\(\)#'
-        - '#Cannot call method render\(\) on phpDocumentor\\Reflection\\DocBlock\\Description\|string#'
-        - '#Calling method create\(\) on possibly null value of type phpDocumentor\\Reflection\\DocBlock\\DescriptionFactory\|null#'
-        - '#Calling method resolve\(\) on possibly null value of type phpDocumentor\\Reflection\\(TypeResolver|FqsenResolver)\|null#'
-
-        # nested parents
-        - '#Calling method render\(\) on possibly null value of type phpDocumentor\\Reflection\\DocBlock\\Description\|string\|null#'
+        - '#Method phpDocumentor\Reflection\DocBlock\Tags\Method::filterArguments() should return array<array> but returns array<array|string>#'

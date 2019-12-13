@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /**
  * This file is part of phpDocumentor.
@@ -6,8 +8,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @copyright 2010-2018 Mike van Riel<mike@phpdoc.org>
- * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      http://phpdoc.org
  */
 
@@ -25,16 +25,17 @@ class AuthorTest extends TestCase
     /**
      * Call Mockery::close after each test.
      */
-    public function tearDown(): void
+    public function tearDown() : void
     {
         m::close();
     }
 
     /**
      * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Author::__construct
+     *
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getName
      */
-    public function testIfCorrectTagNameIsReturned(): void
+    public function testIfCorrectTagNameIsReturned() : void
     {
         $fixture = new Author('Mike van Riel', 'mike@phpdoc.org');
 
@@ -45,10 +46,11 @@ class AuthorTest extends TestCase
      * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Author::__construct
      * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Author::__toString
      * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Formatter\PassthroughFormatter
+     *
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::render
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getName
      */
-    public function testIfTagCanBeRenderedUsingDefaultFormatter(): void
+    public function testIfTagCanBeRenderedUsingDefaultFormatter() : void
     {
         $fixture = new Author('Mike van Riel', 'mike@phpdoc.org');
 
@@ -57,9 +59,10 @@ class AuthorTest extends TestCase
 
     /**
      * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Author::__construct
+     *
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::render
      */
-    public function testIfTagCanBeRenderedUsingSpecificFormatter(): void
+    public function testIfTagCanBeRenderedUsingSpecificFormatter() : void
     {
         $fixture = new Author('Mike van Riel', 'mike@phpdoc.org');
 
@@ -73,7 +76,7 @@ class AuthorTest extends TestCase
      * @covers ::__construct
      * @covers ::getAuthorName
      */
-    public function testHasTheAuthorName(): void
+    public function testHasTheAuthorName() : void
     {
         $expected = 'Mike van Riel';
 
@@ -86,7 +89,7 @@ class AuthorTest extends TestCase
      * @covers ::__construct
      * @covers ::getEmail
      */
-    public function testHasTheAuthorMailAddress(): void
+    public function testHasTheAuthorMailAddress() : void
     {
         $expected = 'mike@phpdoc.org';
 
@@ -98,7 +101,7 @@ class AuthorTest extends TestCase
     /**
      * @covers ::__construct
      */
-    public function testInitializationFailsIfEmailIsNotValid(): void
+    public function testInitializationFailsIfEmailIsNotValid() : void
     {
         $this->expectException('InvalidArgumentException');
         new Author('Mike van Riel', 'mike');
@@ -108,7 +111,7 @@ class AuthorTest extends TestCase
      * @covers ::__construct
      * @covers ::__toString
      */
-    public function testStringRepresentationIsReturned(): void
+    public function testStringRepresentationIsReturned() : void
     {
         $fixture = new Author('Mike van Riel', 'mike@phpdoc.org');
 
@@ -119,7 +122,7 @@ class AuthorTest extends TestCase
      * @covers ::__construct
      * @covers ::__toString
      */
-    public function testStringRepresentationWithEmtpyEmail(): void
+    public function testStringRepresentationWithEmtpyEmail() : void
     {
         $fixture = new Author('Mike van Riel', '');
 
@@ -127,10 +130,11 @@ class AuthorTest extends TestCase
     }
 
     /**
-     * @covers ::create
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\Author::<public>
+     *
+     * @covers ::create
      */
-    public function testFactoryMethod(): void
+    public function testFactoryMethod() : void
     {
         $fixture = Author::create('Mike van Riel <mike@phpdoc.org>');
 
@@ -140,10 +144,11 @@ class AuthorTest extends TestCase
     }
 
     /**
-     * @covers ::create
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\Author::<public>
+     *
+     * @covers ::create
      */
-    public function testFactoryMethodReturnsNullIfItCouldNotReadBody(): void
+    public function testFactoryMethodReturnsNullIfItCouldNotReadBody() : void
     {
         $this->assertNull(Author::create('dfgr<'));
     }

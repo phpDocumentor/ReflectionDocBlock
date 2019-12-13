@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /**
  * This file is part of phpDocumentor.
@@ -6,8 +8,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @copyright 2010-2018 Mike van Riel<mike@phpdoc.org>
- * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      http://phpdoc.org
  */
 
@@ -15,6 +15,7 @@ namespace phpDocumentor\Reflection\DocBlock;
 
 use phpDocumentor\Reflection\DocBlock\Tags\Formatter;
 use phpDocumentor\Reflection\DocBlock\Tags\Formatter\PassthroughFormatter;
+use function vsprintf;
 
 /**
  * Object representing to description for a DocBlock.
@@ -64,7 +65,7 @@ class Description
     public function __construct(string $bodyTemplate, array $tags = [])
     {
         $this->bodyTemplate = $bodyTemplate;
-        $this->tags = $tags;
+        $this->tags         = $tags;
     }
 
     /**
@@ -72,7 +73,7 @@ class Description
      *
      * @return Tag[]
      */
-    public function getTags(): array
+    public function getTags() : array
     {
         return $this->tags;
     }
@@ -81,7 +82,7 @@ class Description
      * Renders this description as a string where the provided formatter will format the tags in the expected string
      * format.
      */
-    public function render(?Formatter $formatter = null): string
+    public function render(?Formatter $formatter = null) : string
     {
         if ($formatter === null) {
             $formatter = new PassthroughFormatter();
@@ -98,7 +99,7 @@ class Description
     /**
      * Returns a plain string representation of this description.
      */
-    public function __toString(): string
+    public function __toString() : string
     {
         return $this->render();
     }

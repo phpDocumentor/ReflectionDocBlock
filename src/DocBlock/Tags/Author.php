@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /**
  * This file is part of phpDocumentor.
@@ -6,12 +8,17 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @copyright 2010-2018 Mike van Riel<mike@phpdoc.org>
- * @license   http://www.opensource.org/licenses/mit-license.php MIT
- * @link      http://phpdoc.org
+ * @link http://phpdoc.org
  */
 
 namespace phpDocumentor\Reflection\DocBlock\Tags;
+
+use InvalidArgumentException;
+use const FILTER_VALIDATE_EMAIL;
+use function filter_var;
+use function preg_match;
+use function strlen;
+use function trim;
 
 /**
  * Reflection class for an {@}author tag in a Docblock.
@@ -33,10 +40,10 @@ final class Author extends BaseTag implements Factory\StaticMethod
     public function __construct(string $authorName, string $authorEmail)
     {
         if ($authorEmail && !filter_var($authorEmail, FILTER_VALIDATE_EMAIL)) {
-            throw new \InvalidArgumentException('The author tag does not have a valid e-mail address');
+            throw new InvalidArgumentException('The author tag does not have a valid e-mail address');
         }
 
-        $this->authorName = $authorName;
+        $this->authorName  = $authorName;
         $this->authorEmail = $authorEmail;
     }
 
@@ -45,7 +52,7 @@ final class Author extends BaseTag implements Factory\StaticMethod
      *
      * @return string The author's name.
      */
-    public function getAuthorName(): string
+    public function getAuthorName() : string
     {
         return $this->authorName;
     }
@@ -55,7 +62,7 @@ final class Author extends BaseTag implements Factory\StaticMethod
      *
      * @return string The author's email.
      */
-    public function getEmail(): string
+    public function getEmail() : string
     {
         return $this->authorEmail;
     }
@@ -63,7 +70,7 @@ final class Author extends BaseTag implements Factory\StaticMethod
     /**
      * Returns this tag in string form.
      */
-    public function __toString(): string
+    public function __toString() : string
     {
         return $this->authorName . (strlen($this->authorEmail) ? ' <' . $this->authorEmail . '>' : '');
     }
@@ -71,7 +78,7 @@ final class Author extends BaseTag implements Factory\StaticMethod
     /**
      * Attempts to create a new Author object based on †he tag body.
      */
-    public static function create(string $body): ?self
+    public static function create(string $body) : ?self
     {
         $splitTagContent = preg_match('/^([^\<]*)(?:\<([^\>]*)\>)?$/u', $body, $matches);
         if (!$splitTagContent) {
@@ -79,7 +86,7 @@ final class Author extends BaseTag implements Factory\StaticMethod
         }
 
         $authorName = trim($matches[1]);
-        $email = isset($matches[2]) ? trim($matches[2]) : '';
+        $email      = isset($matches[2]) ? trim($matches[2]) : '';
 
         return new static($authorName, $email);
     }

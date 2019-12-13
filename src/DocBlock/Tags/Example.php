@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /**
  * This file is part of phpDocumentor.
@@ -6,8 +8,6 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @copyright 2010-2018 Mike van Riel<mike@phpdoc.org>
- * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      http://phpdoc.org
  */
 
@@ -15,15 +15,19 @@ namespace phpDocumentor\Reflection\DocBlock\Tags;
 
 use phpDocumentor\Reflection\DocBlock\Tag;
 use Webmozart\Assert\Assert;
+use function array_key_exists;
+use function preg_match;
+use function rawurlencode;
+use function str_replace;
+use function strpos;
+use function trim;
 
 /**
  * Reflection class for a {@}example tag in a Docblock.
  */
-final class Example extends BaseTag
+final class Example implements Tag
 {
-    /**
-     * @var string Path to a file to use as an example. May also be an absolute URI.
-     */
+    /** @var string Path to a file to use as an example. May also be an absolute URI. */
     private $filePath;
 
     /**
@@ -32,39 +36,34 @@ final class Example extends BaseTag
      */
     private $isURI = false;
 
-    /**
-     * @var int
-     */
+    /** @var int */
     private $startingLine;
 
-    /**
-     * @var int
-     */
+    /** @var int */
     private $lineCount;
 
-    public function __construct(string $filePath, bool $isURI, int $startingLine, int $lineCount, $description)
+    /** @var string|null */
+    private $content;
+
+    public function __construct(string $filePath, bool $isURI, int $startingLine, int $lineCount, ?string $content)
     {
         Assert::notEmpty($filePath);
         Assert::greaterThanEq($startingLine, 0);
         Assert::greaterThanEq($lineCount, 0);
 
-        $this->filePath = $filePath;
+        $this->filePath     = $filePath;
         $this->startingLine = $startingLine;
-        $this->lineCount = $lineCount;
-        $this->name = 'example';
-        if ($description !== null) {
-            $this->description = trim((string) $description);
+        $this->lineCount    = $lineCount;
+        if ($content !== null) {
+            $this->content = trim((string) $content);
         }
 
         $this->isURI = $isURI;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getContent()
+    public function getContent() : string
     {
-        if (null === $this->description) {
+        if ($this->content === null) {
             $filePath = '"' . $this->filePath . '"';
             if ($this->isURI) {
                 $filePath = $this->isUriRelative($this->filePath)
@@ -72,33 +71,38 @@ final class Example extends BaseTag
                     : $this->filePath;
             }
 
-            return trim($filePath . ' ' . parent::getDescription());
+            return trim($filePath);
         }
 
-        return $this->description;
+        return $this->content;
+    }
+
+    public function getDescription() : ?string
+    {
+        return $this->content;
     }
 
     /**
      * {@inheritdoc}
      */
-    public static function create(string $body): ?Tag
+    public static function create(string $body) : ?Tag
     {
         // File component: File path in quotes or File URI / Source information
-        if (! preg_match('/^(?:\"([^\"]+)\"|(\S+))(?:\s+(.*))?$/sux', $body, $matches)) {
+        if (!preg_match('/^(?:\"([^\"]+)\"|(\S+))(?:\s+(.*))?$/sux', $body, $matches)) {
             return null;
         }
 
         $filePath = null;
-        $fileUri = null;
-        if ('' !== $matches[1]) {
+        $fileUri  = null;
+        if ($matches[1] !== '') {
             $filePath = $matches[1];
         } else {
             $fileUri = $matches[2];
         }
 
         $startingLine = 1;
-        $lineCount = 0;
-        $description = null;
+        $lineCount    = 0;
+        $description  = null;
 
         if (array_key_exists(3, $matches)) {
             $description = $matches[3];
@@ -117,7 +121,7 @@ final class Example extends BaseTag
         }
 
         return new static(
-            $filePath !== null ? $filePath : $fileUri,
+            $filePath ?? ($fileUri ?? ''),
             $fileUri !== null,
             $startingLine,
             $lineCount,
@@ -131,7 +135,7 @@ final class Example extends BaseTag
      * @return string Path to a file to use as an example.
      *     May also be an absolute URI.
      */
-    public function getFilePath(): string
+    public function getFilePath() : string
     {
         return $this->filePath;
     }
@@ -139,26 +143,40 @@ final class Example extends BaseTag
     /**
      * Returns a string representation for this tag.
      */
-    public function __toString(): string
+    public function __toString() : string
     {
-        return $this->filePath . ($this->description ? ' ' . $this->description : '');
+        return $this->filePath . ($this->content ? ' ' . $this->content : '');
     }
 
     /**
      * Returns true if the provided URI is relative or contains a complete scheme (and thus is absolute).
      */
-    private function isUriRelative(string $uri): bool
+    private function isUriRelative(string $uri) : bool
     {
-        return false === strpos($uri, ':');
+        return strpos($uri, ':') === false;
     }
 
-    public function getStartingLine(): int
+    public function getStartingLine() : int
     {
         return $this->startingLine;
     }
 
-    public function getLineCount(): int
+    public function getLineCount() : int
     {
         return $this->lineCount;
+    }
+
+    public function getName() : string
+    {
+        return 'example';
+    }
+
+    public function render(?Formatter $formatter = null) : string
+    {
+        if ($formatter === null) {
+            $formatter = new Formatter\PassthroughFormatter();
+        }
+
+        return $formatter->format($this);
     }
 }
