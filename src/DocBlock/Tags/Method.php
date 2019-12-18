@@ -102,12 +102,8 @@ final class Method extends BaseTag implements Factory\StaticMethod
                     )
                     \s+
                 )?
-                # Legacy method name (not captured)
-                (?:
-                    [\w_]+\(\)\s+
-                )?
                 # Method name
-                ([\w\|_\\\\]+)
+                ([\w_]+)
                 # Arguments
                 (?:
                     \(([^\)]*)\)
