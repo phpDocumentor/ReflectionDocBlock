@@ -479,6 +479,40 @@ class MethodTest extends TestCase
      * @uses \phpDocumentor\Reflection\DocBlock\Description
      * @uses \phpDocumentor\Reflection\Fqsen
      * @uses \phpDocumentor\Reflection\Types\Context
+     *
+     * @covers ::create
+     */
+    public function testCreateMethodEmptyArguments() : void
+    {
+        $descriptionFactory = m::mock(DescriptionFactory::class);
+        $resolver           = new TypeResolver();
+        $context            = new Context('');
+
+        $description = new Description('My Description');
+
+        $descriptionFactory->shouldReceive('create')->with('My Description', $context)->andReturn($description);
+
+        $fixture = Method::create(
+            'static void myMethod() My Description',
+            $resolver,
+            $descriptionFactory,
+            $context
+        );
+
+        $this->assertSame('static void myMethod() My Description', (string) $fixture);
+        $this->assertSame('myMethod', $fixture->getMethodName());
+        $this->assertEquals([], $fixture->getArguments());
+        $this->assertInstanceOf(Void_::class, $fixture->getReturnType());
+        $this->assertSame($description, $fixture->getDescription());
+    }
+
+    /**
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Method::<public>
+     * @uses \phpDocumentor\Reflection\DocBlock\DescriptionFactory
+     * @uses \phpDocumentor\Reflection\TypeResolver
+     * @uses \phpDocumentor\Reflection\DocBlock\Description
+     * @uses \phpDocumentor\Reflection\Fqsen
+     * @uses \phpDocumentor\Reflection\Types\Context
      * @uses \phpDocumentor\Reflection\Types\Void_
      *
      * @covers ::create
