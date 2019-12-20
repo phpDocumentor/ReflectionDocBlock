@@ -1,6 +1,5 @@
 language: php
 
-
 env:
   global:
     - COMPOSER_FLAGS="--no-interaction"
@@ -20,6 +19,7 @@ matrix:
     # Test with updated dependencies
     - php: 7.2
     - php: 7.3
+    - php: 7.4
 
 cache:
   directories:
