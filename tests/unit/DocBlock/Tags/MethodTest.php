@@ -491,7 +491,7 @@ class MethodTest extends TestCase
      *
      * @covers ::create
      */
-    public function testCreateMethodEmptyArguments() : void
+    public function testCreateMethodEmptyArguments()
     {
         $descriptionFactory = m::mock(DescriptionFactory::class);
         $resolver           = new TypeResolver();
