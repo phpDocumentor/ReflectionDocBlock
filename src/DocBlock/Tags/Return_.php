@@ -47,10 +47,10 @@ final class Return_ extends BaseTag implements Factory\StaticMethod
         Assert::string($body);
         Assert::allNotNull([$typeResolver, $descriptionFactory]);
 
-        $parts = preg_split('/\s+/Su', $body, 2);
+        list($type, $description) = self::splitBodyIntoTypeAndTheRest($body);
 
-        $type = $typeResolver->resolve(isset($parts[0]) ? $parts[0] : '', $context);
-        $description = $descriptionFactory->create(isset($parts[1]) ? $parts[1] : '', $context);
+        $type = $typeResolver->resolve($type, $context);
+        $description = $descriptionFactory->create($description, $context);
 
         return new static($type, $description);
     }
@@ -68,5 +68,30 @@ final class Return_ extends BaseTag implements Factory\StaticMethod
     public function __toString()
     {
         return $this->type . ' ' . $this->description;
+    }
+
+    private static function splitBodyIntoTypeAndTheRest(string $body) : array
+    {
+        $type = '';
+        $nestingLevel = 0;
+        for ($i = 0; $i < strlen($body); $i++) {
+            $character = $body[$i];
+
+            if (trim($character) === '' && $nestingLevel === 0) {
+                break;
+            }
+
+            $type .= $character;
+            if (in_array($character, ['<', '(', '[', '{'])) {
+                $nestingLevel++;
+            }
+            if (in_array($character, ['>', ')', ']', '}'])) {
+                $nestingLevel--;
+            }
+        }
+
+        $description = trim(substr($body, strlen($type)));
+
+        return [$type, $description];
     }
 }
