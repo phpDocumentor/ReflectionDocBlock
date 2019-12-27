@@ -23,7 +23,6 @@ install:
     else
          composer update
     fi
-  - composer $COMPOSER
   # coding style
   - if [[ $STATIC_ANALYSIS != "" ]]; then composer create-project symplify/easy-coding-standard:v2.5.12 temp/ecs; fi
 
