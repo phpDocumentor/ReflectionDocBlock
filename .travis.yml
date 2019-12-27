@@ -1,9 +1,5 @@
 language: php
 
-env:
-  global:
-    - COMPOSER_FLAGS="--no-interaction"
-
 matrix:
   include:
     - php: 7.0
@@ -12,8 +8,6 @@ matrix:
         - COMPOSER_LOCK=true
     - php: 7.1
       env:
-        # Test lowest dependencies
-        - COMPOSER_FLAGS="--no-interaction --prefer-lowest"
         # Test code standard
         - STATIC_ANALYSIS=true
     # Test with updated dependencies
@@ -25,13 +19,13 @@ matrix:
 install:
   - |
     if [[ $COMPOSER_LOCK = true ]]; then
-         composer install $COMPOSER_FLAGS
+         composer install
     else
-         composer update $COMPOSER_FLAGS
+         composer update
     fi
   - composer $COMPOSER
   # coding style
-  - if [[ $STATIC_ANALYSIS != "" ]]; then composer create-project symplify/easy-coding-standard:v2.5.9 temp/ecs; fi
+  - if [[ $STATIC_ANALYSIS != "" ]]; then composer create-project symplify/easy-coding-standard:v2.5.12 temp/ecs; fi
 
 script:
   - vendor/bin/phpunit --coverage-clover=coverage.xml -v
@@ -39,7 +33,7 @@ script:
   - if [[ $STATIC_ANALYSIS != "" ]]; then temp/ecs/bin/ecs check src tests; fi
 
 after_script:
-  - wget https://github.com/satooshi/php-coveralls/releases/download/v1.0.1/coveralls.phar;
+  - wget https://github.com/satooshi/php-coveralls/releases/download/v1.1.0/coveralls.phar;
   - php coveralls.phar --verbose;
 
 notifications:
