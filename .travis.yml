@@ -22,10 +22,6 @@ matrix:
     - php: 7.4
   fast_finish: true
 
-cache:
-  directories:
-    - $HOME/.composer/cache
-
 install:
   - |
     if [[ $COMPOSER_LOCK = true ]]; then
