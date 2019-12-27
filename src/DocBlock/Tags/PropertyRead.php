@@ -29,19 +29,16 @@ use function substr;
 /**
  * Reflection class for a {@}property-read tag in a Docblock.
  */
-final class PropertyRead extends BaseTag implements Factory\StaticMethod
+final class PropertyRead extends TagWithType implements Factory\StaticMethod
 {
-    /** @var string */
-    protected $name = 'property-read';
-
-    /** @var Type|null */
-    private $type;
-
     /** @var string|null */
     protected $variableName = '';
 
     public function __construct(?string $variableName, ?Type $type = null, ?Description $description = null)
     {
+        Assert::string($variableName);
+
+        $this->name = 'property-read';
         $this->variableName = $variableName;
         $this->type         = $type;
         $this->description  = $description;
@@ -60,15 +57,17 @@ final class PropertyRead extends BaseTag implements Factory\StaticMethod
         Assert::notNull($typeResolver);
         Assert::notNull($descriptionFactory);
 
-        $parts = preg_split('/(\s+)/Su', $body, 3, PREG_SPLIT_DELIM_CAPTURE);
-        Assert::isArray($parts);
-        $type         = null;
+        list($firstPart, $body) = self::extractTypeFromBody($body);
+        $type = null;
+        $parts = preg_split('/(\s+)/Su', $body, 2, PREG_SPLIT_DELIM_CAPTURE);
         $variableName = '';
 
         // if the first item that is encountered is not a variable; it is a type
-        if (isset($parts[0]) && ($parts[0] !== '') && ($parts[0][0] !== '$')) {
-            $type = $typeResolver->resolve(array_shift($parts), $context);
-            array_shift($parts);
+        if ($firstPart && (strlen($firstPart) > 0) && ($firstPart[0] !== '$')) {
+            $type = $typeResolver->resolve($firstPart, $context);
+        } else {
+            // first part is not a type; we should prepend it to the parts array for further processing
+            array_unshift($parts, $firstPart);
         }
 
         // if the next item starts with a $ or ...$ it must be the variable name
@@ -92,14 +91,6 @@ final class PropertyRead extends BaseTag implements Factory\StaticMethod
     public function getVariableName() : ?string
     {
         return $this->variableName;
-    }
-
-    /**
-     * Returns the variable's type or null if unknown.
-     */
-    public function getType() : ?Type
-    {
-        return $this->type;
     }
 
     /**
