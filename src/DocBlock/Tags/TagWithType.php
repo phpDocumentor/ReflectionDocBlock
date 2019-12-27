@@ -47,6 +47,7 @@ abstract class TagWithType extends BaseTag
             if (in_array($character, ['<', '(', '[', '{'])) {
                 $nestingLevel++;
             }
+
             if (in_array($character, ['>', ')', ']', '}'])) {
                 $nestingLevel--;
             }
