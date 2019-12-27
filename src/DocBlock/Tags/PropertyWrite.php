@@ -21,6 +21,7 @@ use phpDocumentor\Reflection\Types\Context as TypeContext;
 use Webmozart\Assert\Assert;
 use const PREG_SPLIT_DELIM_CAPTURE;
 use function array_shift;
+use function array_unshift;
 use function implode;
 use function preg_split;
 use function strlen;
@@ -39,7 +40,7 @@ final class PropertyWrite extends TagWithType implements Factory\StaticMethod
     {
         Assert::string($variableName);
 
-        $this->name = 'property-write';
+        $this->name         = 'property-write';
         $this->variableName = $variableName;
         $this->type         = $type;
         $this->description  = $description;
@@ -58,10 +59,10 @@ final class PropertyWrite extends TagWithType implements Factory\StaticMethod
         Assert::notNull($typeResolver);
         Assert::notNull($descriptionFactory);
 
-        list($firstPart, $body) = self::extractTypeFromBody($body);
-        $type = null;
-        $parts = preg_split('/(\s+)/Su', $body, 2, PREG_SPLIT_DELIM_CAPTURE);
-        $variableName = '';
+        [$firstPart, $body] = self::extractTypeFromBody($body);
+        $type               = null;
+        $parts              = preg_split('/(\s+)/Su', $body, 2, PREG_SPLIT_DELIM_CAPTURE);
+        $variableName       = '';
 
         // if the first item that is encountered is not a variable; it is a type
         if ($firstPart && (strlen($firstPart) > 0) && ($firstPart[0] !== '$')) {

@@ -19,17 +19,16 @@ use phpDocumentor\Reflection\Type;
 use phpDocumentor\Reflection\TypeResolver;
 use phpDocumentor\Reflection\Types\Context as TypeContext;
 use Webmozart\Assert\Assert;
-use function preg_split;
 
 /**
  * Reflection class for a {@}throws tag in a Docblock.
  */
 final class Throws extends TagWithType implements Factory\StaticMethod
 {
-    public function __construct(Type $type, Description $description = null)
+    public function __construct(Type $type, ?Description $description = null)
     {
-        $this->name = 'throws';
-        $this->type = $type;
+        $this->name        = 'throws';
+        $this->type        = $type;
         $this->description = $description;
     }
 
@@ -45,9 +44,9 @@ final class Throws extends TagWithType implements Factory\StaticMethod
         Assert::notNull($typeResolver);
         Assert::notNull($descriptionFactory);
 
-        list($type, $description) = self::extractTypeFromBody($body);
+        [$type, $description] = self::extractTypeFromBody($body);
 
-        $type = $typeResolver->resolve($type, $context);
+        $type        = $typeResolver->resolve($type, $context);
         $description = $descriptionFactory->create($description, $context);
 
         return new static($type, $description);

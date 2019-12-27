@@ -21,8 +21,10 @@ use phpDocumentor\Reflection\Types\Context as TypeContext;
 use Webmozart\Assert\Assert;
 use const PREG_SPLIT_DELIM_CAPTURE;
 use function array_shift;
+use function array_unshift;
 use function implode;
 use function preg_split;
+use function strlen;
 use function strpos;
 use function substr;
 
@@ -38,10 +40,10 @@ final class Var_ extends TagWithType implements Factory\StaticMethod
     {
         Assert::string($variableName);
 
-        $this->name = 'var';
+        $this->name         = 'var';
         $this->variableName = $variableName;
-        $this->type = $type;
-        $this->description = $description;
+        $this->type         = $type;
+        $this->description  = $description;
     }
 
     /**
@@ -57,9 +59,10 @@ final class Var_ extends TagWithType implements Factory\StaticMethod
         Assert::notNull($typeResolver);
         Assert::notNull($descriptionFactory);
 
-        list($firstPart, $body) = self::extractTypeFromBody($body);
-        $parts = preg_split('/(\s+)/Su', $body, 2, PREG_SPLIT_DELIM_CAPTURE);
-        $type = null;
+        [$firstPart, $body] = self::extractTypeFromBody($body);
+
+        $parts        = preg_split('/(\s+)/Su', $body, 2, PREG_SPLIT_DELIM_CAPTURE);
+        $type         = null;
         $variableName = '';
 
         // if the first item that is encountered is not a variable; it is a type

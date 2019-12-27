@@ -21,8 +21,10 @@ use phpDocumentor\Reflection\Types\Context as TypeContext;
 use Webmozart\Assert\Assert;
 use const PREG_SPLIT_DELIM_CAPTURE;
 use function array_shift;
+use function array_unshift;
 use function implode;
 use function preg_split;
+use function strlen;
 use function strpos;
 use function substr;
 
@@ -43,7 +45,7 @@ final class Param extends TagWithType implements Factory\StaticMethod
         bool $isVariadic = false,
         ?Description $description = null
     ) {
-        $this->name = 'param';
+        $this->name         = 'param';
         $this->variableName = $variableName;
         $this->type         = $type;
         $this->isVariadic   = $isVariadic;
@@ -63,9 +65,10 @@ final class Param extends TagWithType implements Factory\StaticMethod
         Assert::notNull($typeResolver);
         Assert::notNull($descriptionFactory);
 
-        list($firstPart, $body) = self::extractTypeFromBody($body);
-        $type = null;
-        $parts = preg_split('/(\s+)/Su', $body, 2, PREG_SPLIT_DELIM_CAPTURE);
+        [$firstPart, $body] = self::extractTypeFromBody($body);
+
+        $type         = null;
+        $parts        = preg_split('/(\s+)/Su', $body, 2, PREG_SPLIT_DELIM_CAPTURE);
         $variableName = '';
         $isVariadic   = false;
 

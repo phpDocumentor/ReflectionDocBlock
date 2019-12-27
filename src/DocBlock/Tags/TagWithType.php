@@ -8,33 +8,36 @@ declare(strict_types=1);
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @copyright 2010-2015 Mike van Riel<mike@phpdoc.org>
- * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      http://phpdoc.org
  */
 
 namespace phpDocumentor\Reflection\DocBlock\Tags;
 
 use phpDocumentor\Reflection\Type;
+use function in_array;
+use function strlen;
+use function substr;
+use function trim;
 
 abstract class TagWithType extends BaseTag
 {
-    /** @var Type */
+    /** @var ?Type */
     protected $type;
 
     /**
      * Returns the type section of the variable.
-     *
-     * @return Type
      */
-    public function getType()
+    public function getType() : ?Type
     {
         return $this->type;
     }
 
+    /**
+     * @return string[]
+     */
     protected static function extractTypeFromBody(string $body) : array
     {
-        $type = '';
+        $type         = '';
         $nestingLevel = 0;
         for ($i = 0; $i < strlen($body); $i++) {
             $character = $body[$i];
@@ -46,9 +49,12 @@ abstract class TagWithType extends BaseTag
             $type .= $character;
             if (in_array($character, ['<', '(', '[', '{'])) {
                 $nestingLevel++;
+                continue;
             }
+
             if (in_array($character, ['>', ')', ']', '}'])) {
                 $nestingLevel--;
+                continue;
             }
         }
 
