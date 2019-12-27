@@ -24,17 +24,12 @@ use function preg_split;
 /**
  * Reflection class for a {@}throws tag in a Docblock.
  */
-final class Throws extends BaseTag implements Factory\StaticMethod
+final class Throws extends TagWithType implements Factory\StaticMethod
 {
-    /** @var string */
-    protected $name = 'throws';
-
-    /** @var Type */
-    private $type;
-
-    public function __construct(Type $type, ?Description $description = null)
+    public function __construct(Type $type, Description $description = null)
     {
-        $this->type        = $type;
+        $this->name = 'throws';
+        $this->type = $type;
         $this->description = $description;
     }
 
@@ -50,21 +45,12 @@ final class Throws extends BaseTag implements Factory\StaticMethod
         Assert::notNull($typeResolver);
         Assert::notNull($descriptionFactory);
 
-        $parts = preg_split('/\s+/Su', $body, 2);
-        Assert::isArray($parts);
+        list($type, $description) = self::extractTypeFromBody($body);
 
-        $type        = $typeResolver->resolve($parts[0] ?? '', $context);
-        $description = $descriptionFactory->create($parts[1] ?? '', $context);
+        $type = $typeResolver->resolve($type, $context);
+        $description = $descriptionFactory->create($description, $context);
 
         return new static($type, $description);
-    }
-
-    /**
-     * Returns the type section of the variable.
-     */
-    public function getType() : Type
-    {
-        return $this->type;
     }
 
     public function __toString() : string

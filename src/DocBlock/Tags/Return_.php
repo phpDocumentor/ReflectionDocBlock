@@ -24,17 +24,12 @@ use function preg_split;
 /**
  * Reflection class for a {@}return tag in a Docblock.
  */
-final class Return_ extends BaseTag implements Factory\StaticMethod
+final class Return_ extends TagWithType implements Factory\StaticMethod
 {
-    /** @var string */
-    protected $name = 'return';
-
-    /** @var Type */
-    private $type;
-
-    public function __construct(Type $type, ?Description $description = null)
+    public function __construct(Type $type, Description $description = null)
     {
-        $this->type        = $type;
+        $this->name = 'return';
+        $this->type = $type;
         $this->description = $description;
     }
 
@@ -50,7 +45,7 @@ final class Return_ extends BaseTag implements Factory\StaticMethod
         Assert::notNull($typeResolver);
         Assert::notNull($descriptionFactory);
 
-        list($type, $description) = self::splitBodyIntoTypeAndTheRest($body);
+        list($type, $description) = self::extractTypeFromBody($body);
 
         $type = $typeResolver->resolve($type, $context);
         $description = $descriptionFactory->create($description, $context);
@@ -58,41 +53,8 @@ final class Return_ extends BaseTag implements Factory\StaticMethod
         return new static($type, $description);
     }
 
-    /**
-     * Returns the type section of the variable.
-     */
-    public function getType() : Type
-    {
-        return $this->type;
-    }
-
-    public function __toString() : string
+    public function __toString()  :string
     {
         return $this->type . ' ' . (string) $this->description;
-    }
-
-    private static function splitBodyIntoTypeAndTheRest(string $body) : array
-    {
-        $type = '';
-        $nestingLevel = 0;
-        for ($i = 0; $i < strlen($body); $i++) {
-            $character = $body[$i];
-
-            if (trim($character) === '' && $nestingLevel === 0) {
-                break;
-            }
-
-            $type .= $character;
-            if (in_array($character, ['<', '(', '[', '{'])) {
-                $nestingLevel++;
-            }
-            if (in_array($character, ['>', ')', ']', '}'])) {
-                $nestingLevel--;
-            }
-        }
-
-        $description = trim(substr($body, strlen($type)));
-
-        return [$type, $description];
     }
 }
