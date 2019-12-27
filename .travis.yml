@@ -14,8 +14,7 @@ matrix:
   fast_finish: true
 
 install:
-  - make install-phive
-  - ./tools/phive.phar --no-progress install --copy --trust-gpg-keys 4AA394086372C20A,D2CCAC42F6295E7D,E82B2FB314E9906E,8E730BA25823D8B5 --force-accept-unsigned
+  - make setup
   - composer install
   # coding style
   - if [[ $STATIC_ANALYSIS != "" ]]; then composer create-project symplify/easy-coding-standard:v2.5.12 temp/ecs; fi
