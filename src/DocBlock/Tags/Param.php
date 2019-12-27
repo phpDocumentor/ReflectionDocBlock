@@ -29,14 +29,8 @@ use function substr;
 /**
  * Reflection class for the {@}param tag in a Docblock.
  */
-final class Param extends BaseTag implements Factory\StaticMethod
+final class Param extends TagWithType implements Factory\StaticMethod
 {
-    /** @var string */
-    protected $name = 'param';
-
-    /** @var Type|null */
-    private $type;
-
     /** @var string|null */
     private $variableName;
 
@@ -49,6 +43,7 @@ final class Param extends BaseTag implements Factory\StaticMethod
         bool $isVariadic = false,
         ?Description $description = null
     ) {
+        $this->name = 'param';
         $this->variableName = $variableName;
         $this->type         = $type;
         $this->isVariadic   = $isVariadic;
@@ -68,21 +63,24 @@ final class Param extends BaseTag implements Factory\StaticMethod
         Assert::notNull($typeResolver);
         Assert::notNull($descriptionFactory);
 
-        $parts = preg_split('/(\s+)/Su', $body, 3, PREG_SPLIT_DELIM_CAPTURE);
-        Assert::isArray($parts);
-        $type         = null;
+        list($firstPart, $body) = self::extractTypeFromBody($body);
+        $type = null;
+        $parts = preg_split('/(\s+)/Su', $body, 2, PREG_SPLIT_DELIM_CAPTURE);
         $variableName = '';
         $isVariadic   = false;
 
         // if the first item that is encountered is not a variable; it is a type
-        if (isset($parts[0]) && ($parts[0] !== '') && ($parts[0][0] !== '$')) {
-            $type = $typeResolver->resolve(array_shift($parts), $context);
-            array_shift($parts);
+        if ($firstPart && (strlen($firstPart) > 0) && ($firstPart[0] !== '$')) {
+            $type = $typeResolver->resolve($firstPart, $context);
+        } else {
+            // first part is not a type; we should prepend it to the parts array for further processing
+            array_unshift($parts, $firstPart);
         }
 
         // if the next item starts with a $ or ...$ it must be the variable name
-        if (isset($parts[0]) && ($parts[0] !== '') &&
-            (strpos($parts[0], '$') === 0 || strpos($parts[0], '...$') === 0)
+        if (isset($parts[0])
+            && (strlen($parts[0]) > 0)
+            && ($parts[0][0] === '$' || substr($parts[0], 0, 4) === '...$')
         ) {
             $variableName = array_shift($parts);
             array_shift($parts);
@@ -108,14 +106,6 @@ final class Param extends BaseTag implements Factory\StaticMethod
     public function getVariableName() : ?string
     {
         return $this->variableName;
-    }
-
-    /**
-     * Returns the variable's type or null if unknown.
-     */
-    public function getType() : ?Type
-    {
-        return $this->type;
     }
 
     /**
