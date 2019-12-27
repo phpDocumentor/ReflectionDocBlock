@@ -1,26 +1,34 @@
 language: php
-services:
-  - docker
 
 matrix:
   include:
     - php: 7.0
+      env:
+        # Test commited lock file
+        - COMPOSER_LOCK=true
     - php: 7.1
       env:
+        # Test code standard
         - STATIC_ANALYSIS=true
+    # Test with updated dependencies
     - php: 7.2
     - php: 7.3
     - php: 7.4
   fast_finish: true
 
 install:
-  - make setup
-  - composer install
+  - |
+    if [[ $COMPOSER_LOCK = true ]]; then
+         composer install
+    else
+         composer update
+    fi
+  - composer $COMPOSER
   # coding style
   - if [[ $STATIC_ANALYSIS != "" ]]; then composer create-project symplify/easy-coding-standard:v2.5.12 temp/ecs; fi
 
 script:
-  - ./tools/phpunit --coverage-clover=coverage.xml -v
+  - vendor/bin/phpunit --coverage-clover=coverage.xml -v
   # coding style
   - if [[ $STATIC_ANALYSIS != "" ]]; then temp/ecs/bin/ecs check src tests; fi
 
@@ -29,6 +37,8 @@ after_script:
   - php coveralls.phar --verbose;
 
 notifications:
+  irc: "irc.freenode.org#phpdocumentor"
   email:
-    - me@mikevanriel.com
+    - mike.vanriel@naenius.com
     - ashnazg@php.net
+    - boen.robot@gmail.com
