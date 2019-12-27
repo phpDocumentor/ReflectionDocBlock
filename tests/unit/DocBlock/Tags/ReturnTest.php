@@ -169,6 +169,34 @@ class ReturnTest extends TestCase
     public function testFactoryMethodWithGenericWithSpace()
     {
         $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('"\array<string, string>" is not a valid Fqsen.');
+
+        $descriptionFactory = m::mock(DescriptionFactory::class);
+        $resolver = new TypeResolver();
+        $context = new Context('');
+
+        $description = new Description('My Description');
+        $descriptionFactory->shouldReceive('create')
+            ->with('My Description', $context)
+            ->andReturn($description);
+
+        Return_::create('array<string, string> My Description', $resolver, $descriptionFactory, $context);
+    }
+
+    /**
+     * @see self::testFactoryMethodWithGenericWithSpace()
+     *
+     * @covers ::create
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Return_::<public>
+     * @uses \phpDocumentor\Reflection\DocBlock\DescriptionFactory
+     * @uses \phpDocumentor\Reflection\TypeResolver
+     * @uses \phpDocumentor\Reflection\DocBlock\Description
+     * @uses \phpDocumentor\Reflection\Types\String_
+     * @uses \phpDocumentor\Reflection\Types\Context
+     */
+    public function testFactoryMethodWithGenericWithSpaceAndAddedEmojisToVerifyMultiByteBehaviour()
+    {
+        $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('"\array😁<string,😁 😁string>" is not a valid Fqsen.');
 
         $descriptionFactory = m::mock(DescriptionFactory::class);
@@ -180,7 +208,34 @@ class ReturnTest extends TestCase
             ->with('My Description', $context)
             ->andReturn($description);
 
-        Return_::create('array😁<string,😁 string> My Description', $resolver, $descriptionFactory, $context);
+        Return_::create('array😁<string,😁 😁string> My Description', $resolver, $descriptionFactory, $context);
+    }
+
+    /**
+     * @covers ::create
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Return_::<public>
+     * @uses \phpDocumentor\Reflection\DocBlock\DescriptionFactory
+     * @uses \phpDocumentor\Reflection\TypeResolver
+     * @uses \phpDocumentor\Reflection\DocBlock\Description
+     * @uses \phpDocumentor\Reflection\Types\String_
+     * @uses \phpDocumentor\Reflection\Types\Context
+     */
+    public function testFactoryMethodWithEmojisToVerifyMultiByteBehaviour()
+    {
+        $descriptionFactory = m::mock(DescriptionFactory::class);
+        $resolver = new TypeResolver();
+        $context = new Context('');
+
+        $description = new Description('My Description');
+        $descriptionFactory->shouldReceive('create')
+            ->with('My Description', $context)
+            ->andReturn($description);
+
+        $fixture = Return_::create('\My😁Class My Description', $resolver, $descriptionFactory, $context);
+
+        $this->assertSame('\My😁Class My Description', (string) $fixture);
+        $this->assertEquals('\My😁Class', $fixture->getType());
+        $this->assertSame($description, $fixture->getDescription());
     }
 
     /**
