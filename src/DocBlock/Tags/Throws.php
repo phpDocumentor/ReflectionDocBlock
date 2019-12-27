@@ -22,16 +22,12 @@ use Webmozart\Assert\Assert;
 /**
  * Reflection class for a {@}throws tag in a Docblock.
  */
-final class Throws extends BaseTag implements Factory\StaticMethod
+final class Throws extends TagWithType implements Factory\StaticMethod
 {
-    protected $name = 'throws';
-
-    /** @var Type */
-    private $type;
-
     public function __construct(Type $type, Description $description = null)
     {
-        $this->type        = $type;
+        $this->name = 'throws';
+        $this->type = $type;
         $this->description = $description;
     }
 
@@ -47,22 +43,12 @@ final class Throws extends BaseTag implements Factory\StaticMethod
         Assert::string($body);
         Assert::allNotNull([$typeResolver, $descriptionFactory]);
 
-        $parts = preg_split('/\s+/Su', $body, 2);
+        list($type, $description) = self::extractTypeFromBody($body);
 
-        $type        = $typeResolver->resolve(isset($parts[0]) ? $parts[0] : '', $context);
-        $description = $descriptionFactory->create(isset($parts[1]) ? $parts[1] : '', $context);
+        $type = $typeResolver->resolve($type, $context);
+        $description = $descriptionFactory->create($description, $context);
 
         return new static($type, $description);
-    }
-
-    /**
-     * Returns the type section of the variable.
-     *
-     * @return Type
-     */
-    public function getType()
-    {
-        return $this->type;
     }
 
     public function __toString()
