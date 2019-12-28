@@ -19,9 +19,9 @@ matrix:
 install:
   - |
     if [[ $COMPOSER_LOCK = true ]]; then
-         composer install
+         COMPOSER_ROOT_VERSION=4.x-dev composer install
     else
-         composer update
+         COMPOSER_ROOT_VERSION=4.x-dev composer update
     fi
   # coding style
   - if [[ $STATIC_ANALYSIS != "" ]]; then composer create-project symplify/easy-coding-standard:v2.5.12 temp/ecs; fi
