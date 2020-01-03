@@ -13,7 +13,9 @@ declare(strict_types=1);
 
 namespace phpDocumentor\Reflection\DocBlock;
 
+use Exception;
 use Mockery as m;
+use phpDocumentor\Reflection\DocBlock\Tags\InvalidTag;
 use phpDocumentor\Reflection\DocBlock\Tags\Link as LinkTag;
 use phpDocumentor\Reflection\Types\Context;
 use PHPUnit\Framework\TestCase;
@@ -160,6 +162,31 @@ DESCRIPTION;
         $description = $factory->create($descriptionText, new Context(''));
 
         $this->assertSame($expectedDescription, $description->render());
+    }
+
+    /**
+     * @uses \phpDocumentor\Reflection\DocBlock\Description
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\InvalidTag
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Formatter\PassthroughFormatter
+     * @uses \phpDocumentor\Reflection\Types\Context
+     *
+     * @covers ::__construct
+     * @covers ::create
+     */
+    public function testDescriptionWithBrokenInlineTags() : void
+    {
+        $contents   = 'This {@see $name} is a broken use case, but used in real life.';
+        $context    = new Context('');
+        $tagFactory = m::mock(TagFactory::class);
+        $tagFactory->shouldReceive('create')
+            ->once()
+            ->with('@see $name', $context)
+            ->andReturn(InvalidTag::create('$name', 'see', new Exception()));
+
+        $factory     = new DescriptionFactory($tagFactory);
+        $description = $factory->create($contents, $context);
+
+        $this->assertSame($contents, $description->render());
     }
 
     /**

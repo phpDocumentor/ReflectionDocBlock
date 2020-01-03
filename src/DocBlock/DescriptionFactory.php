@@ -69,10 +69,7 @@ class DescriptionFactory
         $tags     = [];
 
         for ($i = 1; $i < $count; $i += 2) {
-            $tag = $this->tagFactory->create($tokens[$i], $context);
-            if ($tag !== null) {
-                $tags[] = $tag;
-            }
+            $tags[]     = $this->tagFactory->create($tokens[$i], $context);
             $tokens[$i] = '%' . ++$tagCount . '$s';
         }
 
