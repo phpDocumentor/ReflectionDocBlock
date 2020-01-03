@@ -18,6 +18,7 @@ use phpDocumentor\Reflection\DocBlock\Tags\Author;
 use phpDocumentor\Reflection\DocBlock\Tags\Formatter;
 use phpDocumentor\Reflection\DocBlock\Tags\Formatter\PassthroughFormatter;
 use phpDocumentor\Reflection\DocBlock\Tags\Generic;
+use phpDocumentor\Reflection\DocBlock\Tags\InvalidTag;
 use phpDocumentor\Reflection\DocBlock\Tags\Return_;
 use phpDocumentor\Reflection\DocBlock\Tags\See;
 use phpDocumentor\Reflection\Fqsen;
@@ -329,5 +330,15 @@ class StandardTagFactoryTest extends TestCase
 
         $this->assertInstanceOf(Return_::class, $tag);
         $this->assertSame('return', $tag->getName());
+    }
+
+    public function testInvalidTagIsReturnedOnFailure()
+    {
+        $tagFactory = new StandardTagFactory(m::mock(FqsenResolver::class));
+
+        /** @var InvalidTag $tag */
+        $tag = $tagFactory->create('@see $name some invalid tag');
+
+        $this->assertInstanceOf(InvalidTag::class, $tag);
     }
 }
