@@ -332,7 +332,7 @@ class StandardTagFactoryTest extends TestCase
         $this->assertSame('return', $tag->getName());
     }
 
-    public function testInvalidTagIsReturnedOnFailure()
+    public function testInvalidTagIsReturnedOnFailure() : void
     {
         $tagFactory = new StandardTagFactory(m::mock(FqsenResolver::class));
 
