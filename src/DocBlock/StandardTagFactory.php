@@ -19,6 +19,7 @@ use phpDocumentor\Reflection\DocBlock\Tags\Covers;
 use phpDocumentor\Reflection\DocBlock\Tags\Deprecated;
 use phpDocumentor\Reflection\DocBlock\Tags\Factory\StaticMethod;
 use phpDocumentor\Reflection\DocBlock\Tags\Generic;
+use phpDocumentor\Reflection\DocBlock\Tags\InvalidTag;
 use phpDocumentor\Reflection\DocBlock\Tags\Link as LinkTag;
 use phpDocumentor\Reflection\DocBlock\Tags\Method;
 use phpDocumentor\Reflection\DocBlock\Tags\Param;
@@ -138,7 +139,7 @@ final class StandardTagFactory implements TagFactory
     /**
      * {@inheritDoc}
      */
-    public function create(string $tagLine, ?TypeContext $context = null) : ?Tag
+    public function create(string $tagLine, ?TypeContext $context = null) : Tag
     {
         if (!$context) {
             $context = new TypeContext('');
@@ -215,7 +216,7 @@ final class StandardTagFactory implements TagFactory
      * Creates a new tag object with the given name and body or returns null if the tag name was recognized but the
      * body was invalid.
      */
-    private function createTag(string $body, string $name, TypeContext $context) : ?Tag
+    private function createTag(string $body, string $name, TypeContext $context) : Tag
     {
         $handlerClassName = $this->findHandlerClassName($name, $context);
         $arguments        = $this->getArgumentsForParametersFromWiring(
@@ -228,7 +229,7 @@ final class StandardTagFactory implements TagFactory
             $callable = [$handlerClassName, 'create'];
             return call_user_func_array($callable, $arguments);
         } catch (InvalidArgumentException $e) {
-            return null;
+            return InvalidTag::create($body, $name)->withError($e);
         }
     }
 

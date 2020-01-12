@@ -17,7 +17,6 @@ use InvalidArgumentException;
 use LogicException;
 use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
 use phpDocumentor\Reflection\DocBlock\StandardTagFactory;
-use phpDocumentor\Reflection\DocBlock\Tag;
 use phpDocumentor\Reflection\DocBlock\TagFactory;
 use Webmozart\Assert\Assert;
 use function array_shift;
@@ -236,12 +235,7 @@ final class DocBlockFactory implements DocBlockFactoryInterface
         $result = [];
         $lines  = $this->splitTagBlockIntoTagLines($tags);
         foreach ($lines as $key => $tagLine) {
-            $tag = $this->tagFactory->create(trim($tagLine), $context);
-            if (!($tag instanceof Tag)) {
-                continue;
-            }
-
-            $result[$key] = $tag;
+            $result[$key] = $this->tagFactory->create(trim($tagLine), $context);
         }
 
         return $result;

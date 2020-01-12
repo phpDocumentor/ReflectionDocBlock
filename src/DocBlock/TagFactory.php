@@ -49,7 +49,7 @@ interface TagFactory
      *
      * @throws InvalidArgumentException If an invalid tag line was presented.
      */
-    public function create(string $tagLine, ?TypeContext $context = null) : ?Tag;
+    public function create(string $tagLine, ?TypeContext $context = null) : Tag;
 
     /**
      * Registers a service with the Service Locator using the FQCN of the class or the alias, if provided.

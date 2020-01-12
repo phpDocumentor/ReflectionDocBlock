@@ -279,37 +279,4 @@ DOCBLOCK
 
         $this->assertInstanceOf(DocBlock::class, $docblock);
     }
-
-    /**
-     * @uses \phpDocumentor\Reflection\DocBlock\DescriptionFactory
-     * @uses \phpDocumentor\Reflection\DocBlock\Description
-     *
-     * @covers ::__construct
-     * @covers ::create
-     */
-    public function testTagsAreFilteredForNullValues() : void
-    {
-        $tagString = <<<TAG
-@author Mike van Riel <me@mikevanriel.com> This is with
-  multiline description.
-TAG;
-
-        $tagFactory = m::mock(TagFactory::class);
-        $tagFactory->shouldReceive('create')->with($tagString, m::any())->andReturn(null);
-
-        $fixture = new DocBlockFactory(new DescriptionFactory($tagFactory), $tagFactory);
-
-        $given = <<<DOCBLOCK
-/**
- * This is a summary.
- *
- * @author Mike van Riel <me@mikevanriel.com> This is with
- *   multiline description.
- */
-DOCBLOCK;
-
-        $docblock = $fixture->create($given, new Context(''));
-
-        $this->assertEquals([], $docblock->getTags());
-    }
 }
