@@ -7,6 +7,10 @@ namespace phpDocumentor\Reflection\DocBlock\Tags;
 use Exception;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
+use Throwable;
+use function fopen;
+use function serialize;
+use function unserialize;
 
 /**
  * @coversDefaultClass \phpDocumentor\Reflection\DocBlock\Tags\InvalidTag
@@ -38,7 +42,7 @@ final class InvalidTagTest extends TestCase
 
         self::assertSame('name', $tag->getName());
         self::assertSame('@name Body', $tag->render());
-        self::assertSame('Body', (string)$tag);
+        self::assertSame('Body', (string) $tag);
         self::assertSame($exception, $tag->getException());
     }
 
@@ -46,9 +50,9 @@ final class InvalidTagTest extends TestCase
     {
         try {
             $this->throwExceptionFromClosureWithClosureArgument();
-        } catch (Exception $e) {
+        } catch (Throwable $e) {
             $parentException = new Exception('test', 0, $e);
-            $tag       = InvalidTag::create('Body', 'name')->withError($parentException);
+            $tag             = InvalidTag::create('Body', 'name')->withError($parentException);
             self::assertSame('name', $tag->getName());
             self::assertSame('@name Body', $tag->render());
             self::assertSame($parentException, $tag->getException());
@@ -58,36 +62,36 @@ final class InvalidTagTest extends TestCase
         }
     }
 
-    private function throwExceptionFromClosureWithClosureArgument()
+    private function throwExceptionFromClosureWithClosureArgument() : void
     {
-        $function = function() {
+        $function = static function () : void {
             throw new InvalidArgumentException();
         };
 
         $function($function);
     }
 
-    public function testCreationWithErrorContainingResource()
+    public function testCreationWithErrorContainingResource() : void
     {
         try {
             $this->throwExceptionWithResourceArgument();
-        } catch (Exception $e) {
+        } catch (Throwable $e) {
             $parentException = new Exception('test', 0, $e);
-            $tag       = InvalidTag::create('Body', 'name')->withError($parentException);
+            $tag             = InvalidTag::create('Body', 'name')->withError($parentException);
             self::assertSame('name', $tag->getName());
             self::assertSame('@name Body', $tag->render());
             self::assertSame($parentException, $tag->getException());
             self::assertStringStartsWith(
                 'resource(stream)',
-                $tag->getException()->getPrevious()->getTrace()[0]['args'][0])
-            ;
+                $tag->getException()->getPrevious()->getTrace()[0]['args'][0]
+            );
             self::assertEquals($parentException, unserialize(serialize($parentException)));
         }
     }
 
-    private function throwExceptionWithResourceArgument()
+    private function throwExceptionWithResourceArgument() : void
     {
-        $function = function() {
+        $function = static function () : void {
             throw new InvalidArgumentException();
         };
 

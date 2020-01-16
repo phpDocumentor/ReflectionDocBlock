@@ -9,6 +9,13 @@ use phpDocumentor\Reflection\DocBlock\Tag;
 use ReflectionClass;
 use ReflectionFunction;
 use Throwable;
+use function array_map;
+use function array_walk_recursive;
+use function get_class;
+use function get_resource_type;
+use function is_object;
+use function is_resource;
+use function sprintf;
 
 /**
  * This class represents an exception during the tag creation
@@ -77,24 +84,26 @@ final class InvalidTag implements Tag
         $traceProperty = (new ReflectionClass('Exception'))->getProperty('trace');
         $traceProperty->setAccessible(true);
 
-        $flatten = static function (&$value) {
-            if ($value instanceof Closure) {
-                $closureReflection = new ReflectionFunction($value);
-                $value             = sprintf(
-                    '(Closure at %s:%s)',
-                    $closureReflection->getFileName(),
-                    $closureReflection->getStartLine()
-                );
-            } elseif (is_object($value)) {
-                $value = sprintf('object(%s)', get_class($value));
-            } elseif (is_resource($value)) {
-                $value = sprintf('resource(%s)', get_resource_type($value));
-            }
-        };
+        $flatten =
+            /** @param mixed $value */
+            static function (&$value) : void {
+                if ($value instanceof Closure) {
+                    $closureReflection = new ReflectionFunction($value);
+                    $value             = sprintf(
+                        '(Closure at %s:%s)',
+                        $closureReflection->getFileName(),
+                        $closureReflection->getStartLine()
+                    );
+                } elseif (is_object($value)) {
+                    $value = sprintf('object(%s)', get_class($value));
+                } elseif (is_resource($value)) {
+                    $value = sprintf('resource(%s)', get_resource_type($value));
+                }
+            };
 
         do {
             $trace = array_map(
-                static function($call) use ($flatten) {
+                static function (array $call) use ($flatten) : array {
                     array_walk_recursive($call['args'], $flatten);
 
                     return $call;
@@ -102,7 +111,8 @@ final class InvalidTag implements Tag
                 $exception->getTrace()
             );
             $traceProperty->setValue($exception, $trace);
-        } while ($exception = $exception->getPrevious());
+            $exception = $exception->getPrevious();
+        } while ($exception !== null);
 
         $traceProperty->setAccessible(false);
     }
