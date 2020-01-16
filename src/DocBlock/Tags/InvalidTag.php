@@ -4,7 +4,10 @@ declare(strict_types=1);
 
 namespace phpDocumentor\Reflection\DocBlock\Tags;
 
+use Closure;
 use phpDocumentor\Reflection\DocBlock\Tag;
+use ReflectionClass;
+use ReflectionFunction;
 use Throwable;
 
 /**
@@ -56,10 +59,52 @@ final class InvalidTag implements Tag
 
     public function withError(Throwable $exception) : self
     {
+        $this->flattenExceptionBacktrace($exception);
         $tag            = new self($this->name, $this->body);
         $tag->throwable = $exception;
 
         return $tag;
+    }
+
+    /**
+     * Removes all complex types from backtrace
+     *
+     * Not all objects are serializable. So we need to remove them from the
+     * stored exception to be sure that we do not break existing library usage.
+     */
+    private function flattenExceptionBacktrace(Throwable $exception) : void
+    {
+        $traceProperty = (new ReflectionClass('Exception'))->getProperty('trace');
+        $traceProperty->setAccessible(true);
+
+        $flatten = static function (&$value) {
+            if ($value instanceof Closure) {
+                $closureReflection = new ReflectionFunction($value);
+                $value             = sprintf(
+                    '(Closure at %s:%s)',
+                    $closureReflection->getFileName(),
+                    $closureReflection->getStartLine()
+                );
+            } elseif (is_object($value)) {
+                $value = sprintf('object(%s)', get_class($value));
+            } elseif (is_resource($value)) {
+                $value = sprintf('resource(%s)', get_resource_type($value));
+            }
+        };
+
+        do {
+            $trace = array_map(
+                static function($call) use ($flatten) {
+                    array_walk_recursive($call['args'], $flatten);
+
+                    return $call;
+                },
+                $exception->getTrace()
+            );
+            $traceProperty->setValue($exception, $trace);
+        } while ($exception = $exception->getPrevious());
+
+        $traceProperty->setAccessible(false);
     }
 
     public function render(?Formatter $formatter = null) : string
