@@ -227,7 +227,8 @@ final class StandardTagFactory implements TagFactory
         try {
             /** @var callable $callable */
             $callable = [$handlerClassName, 'create'];
-            return call_user_func_array($callable, $arguments);
+            $tag = call_user_func_array($callable, $arguments);
+            return $tag ?? InvalidTag::create($body, $name);
         } catch (InvalidArgumentException $e) {
             return InvalidTag::create($body, $name)->withError($e);
         }
