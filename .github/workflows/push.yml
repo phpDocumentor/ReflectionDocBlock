@@ -136,6 +136,8 @@ jobs:
             all-tools-
       - name: Code style check
         uses: phpDocumentor/coding-standard@v1.0.0
+        with:
+          args: -s
 
   phpstan:
     runs-on: ubuntu-latest
