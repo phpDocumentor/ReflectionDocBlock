@@ -13,7 +13,11 @@ setup: install-phive
 
 .PHONY: phpcs
 phpcs:
-	docker run -it --rm -v${PWD}:/opt/project -w /opt/project phpdoc/phpcs-ga:latest -d memory_limit=1024M
+	docker run -it --rm -v${PWD}:/opt/project -w /opt/project phpdoc/phpcs-ga:v1.0.0 -s
+
+.PHONY: phpcbf
+phpcbf:
+	docker run -it --rm -v${PWD}:/opt/project -w /opt/project phpdoc/phpcs-ga:v1.0.0 phpcbf
 
 .PHONY: phpstan
 phpstan:
@@ -25,7 +29,7 @@ psalm:
 
 .PHONY: test
 test:
-	docker run -it --rm -v${PWD}:/opt/project -w /opt/project php:7.2 tools/phpunit
+	docker run -it --rm -v${PWD}:/opt/project -w /opt/project php:7.4-pcov tools/phpunit
 
 .PHONY: pre-commit-test
 pre-commit-test: test phpcs phpstan psalm
