@@ -3,6 +3,6 @@ includes:
     - /composer/vendor/phpstan/phpstan-webmozart-assert/extension.neon
 
 parameters:
+    level: max
     ignoreErrors:
-        # false positive
-        - '#Method phpDocumentor\Reflection\DocBlock\Tags\Method::filterArguments() should return array<array> but returns array<array|string>#'
+        - '#Call to static method Webmozart\\Assert\\Assert::implementsInterface\(\) with class-string#'

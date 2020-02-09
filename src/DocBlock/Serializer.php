@@ -94,6 +94,7 @@ class Serializer
         }
 
         $comment = $this->addTagBlock($docblock, $wrapLength, $indent, $comment);
+
         return $comment . $indent . ' */';
     }
 
@@ -127,6 +128,7 @@ class Serializer
                 : '');
         if ($wrapLength !== null) {
             $text = wordwrap($text, $wrapLength);
+
             return $text;
         }
 

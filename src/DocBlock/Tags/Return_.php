@@ -32,9 +32,6 @@ final class Return_ extends TagWithType implements Factory\StaticMethod
         $this->description = $description;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function create(
         string $body,
         ?TypeResolver $typeResolver = null,

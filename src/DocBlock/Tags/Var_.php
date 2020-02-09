@@ -19,7 +19,6 @@ use phpDocumentor\Reflection\Type;
 use phpDocumentor\Reflection\TypeResolver;
 use phpDocumentor\Reflection\Types\Context as TypeContext;
 use Webmozart\Assert\Assert;
-use const PREG_SPLIT_DELIM_CAPTURE;
 use function array_shift;
 use function array_unshift;
 use function implode;
@@ -27,6 +26,7 @@ use function preg_split;
 use function strlen;
 use function strpos;
 use function substr;
+use const PREG_SPLIT_DELIM_CAPTURE;
 
 /**
  * Reflection class for a {@}var tag in a Docblock.
@@ -46,9 +46,6 @@ final class Var_ extends TagWithType implements Factory\StaticMethod
         $this->description  = $description;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function create(
         string $body,
         ?TypeResolver $typeResolver = null,
@@ -61,7 +58,8 @@ final class Var_ extends TagWithType implements Factory\StaticMethod
 
         [$firstPart, $body] = self::extractTypeFromBody($body);
 
-        $parts        = preg_split('/(\s+)/Su', $body, 2, PREG_SPLIT_DELIM_CAPTURE);
+        $parts = preg_split('/(\s+)/Su', $body, 2, PREG_SPLIT_DELIM_CAPTURE);
+        Assert::isArray($parts);
         $type         = null;
         $variableName = '';
 
@@ -102,7 +100,7 @@ final class Var_ extends TagWithType implements Factory\StaticMethod
     public function __toString() : string
     {
         return ($this->type ? $this->type . ' ' : '')
-            . (empty($this->variableName) ? '' : ('$' . $this->variableName))
+            . (empty($this->variableName) ? '' : '$' . $this->variableName)
             . ($this->description ? ' ' . $this->description : '');
     }
 }

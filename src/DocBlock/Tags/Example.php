@@ -82,9 +82,6 @@ final class Example implements Tag, Factory\StaticMethod
         return $this->content;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function create(string $body) : ?Tag
     {
         // File component: File path in quotes or File URI / Source information

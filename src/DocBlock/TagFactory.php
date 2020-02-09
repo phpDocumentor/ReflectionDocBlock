@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace phpDocumentor\Reflection\DocBlock;
 
 use InvalidArgumentException;
+use phpDocumentor\Reflection\DocBlock\Tags\Factory\StaticMethod;
 use phpDocumentor\Reflection\Types\Context as TypeContext;
 
 interface TagFactory
@@ -69,9 +70,9 @@ interface TagFactory
      * to register the name of a tag with the FQCN of a 'Tag Handler'. The Tag handler should implement
      * the {@see Tag} interface (and thus the create method).
      *
-     * @param string $tagName Name of tag to register a handler for. When registering a namespaced tag,
-     *                        the full name, along with a prefixing slash MUST be provided.
-     * @param string $handler FQCN of handler.
+     * @param string                     $tagName Name of tag to register a handler for. When registering a namespaced
+     *                                   tag, the full name, along with a prefixing slash MUST be provided.
+     * @param class-string<StaticMethod> $handler FQCN of handler.
      *
      * @throws InvalidArgumentException If the tag name is not a string.
      * @throws InvalidArgumentException If the tag name is namespaced (contains backslashes) but

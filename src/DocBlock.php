@@ -150,7 +150,6 @@ final class DocBlock
     {
         $result = [];
 
-        /** @var Tag $tag */
         foreach ($this->getTags() as $tag) {
             if ($tag->getName() !== $name) {
                 continue;
@@ -169,7 +168,6 @@ final class DocBlock
      */
     public function hasTag(string $name) : bool
     {
-        /** @var Tag $tag */
         foreach ($this->getTags() as $tag) {
             if ($tag->getName() === $name) {
                 return true;

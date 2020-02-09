@@ -4,13 +4,15 @@ declare(strict_types=1);
 
 namespace phpDocumentor\Reflection;
 
+use phpDocumentor\Reflection\DocBlock\Tags\Factory\StaticMethod;
+
 // phpcs:ignore SlevomatCodingStandard.Classes.SuperfluousInterfaceNaming.SuperfluousSuffix
 interface DocBlockFactoryInterface
 {
     /**
      * Factory method for easy instantiation.
      *
-     * @param string[] $additionalTags
+     * @param array<class-string<StaticMethod>> $additionalTags
      */
     public static function createInstance(array $additionalTags = []) : DocBlockFactory;
 
