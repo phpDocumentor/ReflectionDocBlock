@@ -68,7 +68,7 @@ use function trim;
 final class StandardTagFactory implements TagFactory
 {
     /** PCRE regular expression matching a tag name. */
-    public const REGEX_TAGNAME = '[\w\-\_\\\\]+';
+    public const REGEX_TAGNAME = '[\w\-\_\\\\:]+';
 
     /**
      * @var string[] An array with a tag as a key, and an
@@ -194,7 +194,7 @@ final class StandardTagFactory implements TagFactory
     private function extractTagParts(string $tagLine) : array
     {
         $matches = [];
-        if (!preg_match('/^@(' . self::REGEX_TAGNAME . ')((?:[\s\(\{:])\s*([^\s].*)|$)/us', $tagLine, $matches)) {
+        if (!preg_match('/^@(' . self::REGEX_TAGNAME . ')((?:[\s\(\{])\s*([^\s].*)|$)/us', $tagLine, $matches)) {
             throw new InvalidArgumentException(
                 'The tag "' . $tagLine . '" does not seem to be wellformed, please check it for errors'
             );

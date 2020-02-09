@@ -372,9 +372,14 @@ class StandardTagFactoryTest extends TestCase
                 '@tag',
             ],
             'tag specialization' => [
-                '@tag:some-spec',
-                'tag',
-                '@tag :some-spec',
+                '@tag:some-spec body',
+                'tag:some-spec',
+                '@tag:some-spec body',
+            ],
+            'tag specialization(a)' => [
+                '@tag:some-spec(body)',
+                'tag:some-spec',
+                '@tag:some-spec (body)',
             ],
             'tag with textual description' => [
                 '@tag some text',
