@@ -290,7 +290,9 @@ class MethodTest extends TestCase
             ['name' => 'argument2', 'type' => new Mixed_()],
         ];
 
-        $descriptionFactory->shouldReceive('create')->with('My Description', $context)->andReturn($description);
+        $descriptionFactory->shouldReceive('create')
+            ->with('My Description', $context)
+            ->andReturn($description);
 
         $fixture = Method::create(
             'static void myMethod(string $argument1, $argument2) My Description',
@@ -299,7 +301,10 @@ class MethodTest extends TestCase
             $context
         );
 
-        $this->assertSame('static void myMethod(string $argument1, mixed $argument2) My Description', (string) $fixture);
+        $this->assertSame(
+            'static void myMethod(string $argument1, mixed $argument2) My Description',
+            (string) $fixture
+        );
         $this->assertSame('myMethod', $fixture->getMethodName());
         $this->assertEquals($expectedArguments, $fixture->getArguments());
         $this->assertInstanceOf(Void_::class, $fixture->getReturnType());
@@ -371,7 +376,9 @@ class MethodTest extends TestCase
     ) : void {
         $resolver           = new TypeResolver();
         $descriptionFactory = m::mock(DescriptionFactory::class);
-        $descriptionFactory->shouldReceive('create')->with('', null)->andReturn(new Description(''));
+        $descriptionFactory->shouldReceive('create')
+            ->with('', null)
+            ->andReturn(new Description(''));
 
         $fixture    = Method::create("${returnType} myMethod(\$arg)", $resolver, $descriptionFactory);
         $returnType = $fixture->getReturnType();
@@ -457,7 +464,10 @@ class MethodTest extends TestCase
 
         $description = new Description('My Description');
 
-        $descriptionFactory->shouldReceive('create')->with('My Description', $context)->andReturn($description);
+        $descriptionFactory->shouldReceive('create')->with(
+            'My Description',
+            $context
+        )->andReturn($description);
 
         $fixture = Method::create(
             'static void myMethod My Description',
@@ -491,7 +501,9 @@ class MethodTest extends TestCase
 
         $description = new Description('My Description');
 
-        $descriptionFactory->shouldReceive('create')->with('My Description', $context)->andReturn($description);
+        $descriptionFactory->shouldReceive('create')
+            ->with('My Description', $context)
+            ->andReturn($description);
 
         $fixture = Method::create(
             'static void myMethod() My Description',
