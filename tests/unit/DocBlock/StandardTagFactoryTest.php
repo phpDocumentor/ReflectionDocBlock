@@ -376,7 +376,7 @@ class StandardTagFactoryTest extends TestCase
                 'tag:some-spec',
                 '@tag:some-spec body',
             ],
-            'tag specialization(a)' => [
+            'tag specialization followed by parenthesis' => [
                 '@tag:some-spec(body)',
                 'tag:some-spec',
                 '@tag:some-spec (body)',
@@ -386,22 +386,22 @@ class StandardTagFactoryTest extends TestCase
                 'tag',
                 '@tag some text',
             ],
-            'tag [a]' => [
+            'tag body starting with sqare brackets is allowed' => [
                 '@tag [is valid]',
                 'tag',
                 '@tag [is valid]',
             ],
-            'tag {a}' => [
+            'tag body starting with curly brackets is allowed' => [
                 '@tag {is valid}',
                 'tag',
                 '@tag {is valid}',
             ],
-            'tag{a}' => [
+            'tag name followed by curly brackets directly is allowed' => [
                 '@tag{is valid}',
                 'tag',
                 '@tag {is valid}',
             ],
-            'tag(a)' => [
+            'parenthesis directly following a tag name is valid' => [
                 '@tag(is valid)',
                 'tag',
                 '@tag (is valid)',
