@@ -1,6 +1,5 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Travis Status](https://img.shields.io/travis/phpDocumentor/ReflectionDocBlock.svg?label=Linux)](https://travis-ci.org/phpDocumentor/ReflectionDocBlock)
-[![Appveyor Status](https://img.shields.io/appveyor/ci/phpDocumentor/ReflectionDocBlock.svg?label=Windows)](https://ci.appveyor.com/project/phpDocumentor/ReflectionDocBlock/branch/master)
+![Qa workflow](https://github.com/phpDocumentor/ReflectionDocBlock/workflows/Qa%20workflow/badge.svg)
 [![Coveralls Coverage](https://img.shields.io/coveralls/github/phpDocumentor/ReflectionDocBlock.svg)](https://coveralls.io/github/phpDocumentor/ReflectionDocBlock?branch=master)
 [![Scrutinizer Code Coverage](https://img.shields.io/scrutinizer/coverage/g/phpDocumentor/ReflectionDocBlock.svg)](https://scrutinizer-ci.com/g/phpDocumentor/ReflectionDocBlock/?branch=master)
 [![Scrutinizer Code Quality](https://img.shields.io/scrutinizer/g/phpDocumentor/ReflectionDocBlock.svg)](https://scrutinizer-ci.com/g/phpDocumentor/ReflectionDocBlock/?branch=master)
