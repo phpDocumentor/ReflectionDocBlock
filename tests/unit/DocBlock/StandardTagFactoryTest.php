@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace phpDocumentor\Reflection\DocBlock;
 
+use InvalidArgumentException;
 use Mockery as m;
 use phpDocumentor\Reflection\DocBlock\Tags\Author;
 use phpDocumentor\Reflection\DocBlock\Tags\Formatter;
@@ -340,5 +341,96 @@ class StandardTagFactoryTest extends TestCase
         $tag = $tagFactory->create('@see $name some invalid tag');
 
         $this->assertInstanceOf(InvalidTag::class, $tag);
+    }
+
+    /**
+     * @dataProvider validTagProvider
+     */
+    public function testValidFormattedTags(string $input, string $tagName, string $render) : void
+    {
+        $fqsenResolver = $this->prophesize(FqsenResolver::class);
+        $tagFactory = new StandardTagFactory($fqsenResolver->reveal());
+        $tagFactory->registerTagHandler('tag', Generic::class);
+        $tag = $tagFactory->create($input);
+
+        self::assertSame($tagName, $tag->getName());
+        self::assertSame($render, $tag->render());
+    }
+
+    /**
+     * @return string[][]
+     *
+     * @phpstan-return array<string, array<int, string>>
+     */
+    public function validTagProvider() : array
+    {
+        //rendered result is adding a space, because the tags are not rendered properly.
+        return [
+            'tag without body' => [
+                '@tag',
+                'tag',
+                '@tag',
+            ],
+            'tag specialization' => [
+                '@tag:some-spec body',
+                'tag:some-spec',
+                '@tag:some-spec body',
+            ],
+            'tag specialization followed by parenthesis' => [
+                '@tag:some-spec(body)',
+                'tag:some-spec',
+                '@tag:some-spec (body)',
+            ],
+            'tag with textual description' => [
+                '@tag some text',
+                'tag',
+                '@tag some text',
+            ],
+            'tag body starting with sqare brackets is allowed' => [
+                '@tag [is valid]',
+                'tag',
+                '@tag [is valid]',
+            ],
+            'tag body starting with curly brackets is allowed' => [
+                '@tag {is valid}',
+                'tag',
+                '@tag {is valid}',
+            ],
+            'tag name followed by curly brackets directly is allowed' => [
+                '@tag{is valid}',
+                'tag',
+                '@tag {is valid}',
+            ],
+            'parenthesis directly following a tag name is valid' => [
+                '@tag(is valid)',
+                'tag',
+                '@tag (is valid)',
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider invalidTagProvider
+     */
+    public function testInValidFormattedTags(string $input) : void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $fqsenResolver = $this->prophesize(FqsenResolver::class);
+        $tagFactory = new StandardTagFactory($fqsenResolver->reveal());
+        $tagFactory->registerTagHandler('tag', Generic::class);
+        $tagFactory->create($input);
+    }
+
+    /**
+     * @return string[][]
+     *
+     * @phpstan-return list<array<int, string>>
+     */
+    public function invalidTagProvider() : array
+    {
+        return [
+            ['@tag[invalid]'],
+            ['@tag@invalid'],
+        ];
     }
 }
