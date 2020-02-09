@@ -46,6 +46,7 @@ use function count;
 use function get_class;
 use function preg_match;
 use function strpos;
+use function trim;
 
 /**
  * Creates a Tag object given the contents of a tag.
@@ -147,13 +148,7 @@ final class StandardTagFactory implements TagFactory
 
         [$tagName, $tagBody] = $this->extractTagParts($tagLine);
 
-        if ($tagBody !== '' && strpos($tagBody, '[') === 0) {
-            throw new InvalidArgumentException(
-                'The tag "' . $tagLine . '" does not seem to be wellformed, please check it for errors'
-            );
-        }
-
-        return $this->createTag($tagBody, $tagName, $context);
+        return $this->createTag(trim($tagBody), $tagName, $context);
     }
 
     /**
@@ -199,7 +194,7 @@ final class StandardTagFactory implements TagFactory
     private function extractTagParts(string $tagLine) : array
     {
         $matches = [];
-        if (!preg_match('/^@(' . self::REGEX_TAGNAME . ')(?:\s*([^\s].*)|$)/us', $tagLine, $matches)) {
+        if (!preg_match('/^@(' . self::REGEX_TAGNAME . ')((?:[\s\(\{:])\s*([^\s].*)|$)/us', $tagLine, $matches)) {
             throw new InvalidArgumentException(
                 'The tag "' . $tagLine . '" does not seem to be wellformed, please check it for errors'
             );

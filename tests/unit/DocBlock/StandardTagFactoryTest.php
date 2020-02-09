@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace phpDocumentor\Reflection\DocBlock;
 
+use InvalidArgumentException;
 use Mockery as m;
 use phpDocumentor\Reflection\DocBlock\Tags\Author;
 use phpDocumentor\Reflection\DocBlock\Tags\Formatter;
@@ -340,5 +341,91 @@ class StandardTagFactoryTest extends TestCase
         $tag = $tagFactory->create('@see $name some invalid tag');
 
         $this->assertInstanceOf(InvalidTag::class, $tag);
+    }
+
+    /**
+     * @dataProvider validTagProvider
+     */
+    public function testValidFormattedTags(string $input, string $tagName, string $render) : void
+    {
+        $fqsenResolver = $this->prophesize(FqsenResolver::class);
+        $tagFactory = new StandardTagFactory($fqsenResolver->reveal());
+        $tagFactory->registerTagHandler('tag', Generic::class);
+        $tag = $tagFactory->create($input);
+
+        self::assertSame($tagName, $tag->getName());
+        self::assertSame($render, $tag->render());
+    }
+
+    /**
+     * @return string[][]
+     *
+     * @phpstan-return array<string, array<int, string>>
+     */
+    public function validTagProvider() : array
+    {
+        //rendered result is adding a space, because the tags are not rendered properly.
+        return [
+            'tag without body' => [
+                '@tag',
+                'tag',
+                '@tag',
+            ],
+            'tag specialization' => [
+                '@tag:some-spec',
+                'tag',
+                '@tag :some-spec',
+            ],
+            'tag with textual description' => [
+                '@tag some text',
+                'tag',
+                '@tag some text',
+            ],
+            'tag [a]' => [
+                '@tag [is valid]',
+                'tag',
+                '@tag [is valid]',
+            ],
+            'tag {a}' => [
+                '@tag {is valid}',
+                'tag',
+                '@tag {is valid}',
+            ],
+            'tag{a}' => [
+                '@tag{is valid}',
+                'tag',
+                '@tag {is valid}',
+            ],
+            'tag(a)' => [
+                '@tag(is valid)',
+                'tag',
+                '@tag (is valid)',
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider invalidTagProvider
+     */
+    public function testInValidFormattedTags(string $input) : void
+    {
+        $this->expectException(InvalidArgumentException::class);
+        $fqsenResolver = $this->prophesize(FqsenResolver::class);
+        $tagFactory = new StandardTagFactory($fqsenResolver->reveal());
+        $tagFactory->registerTagHandler('tag', Generic::class);
+        $tagFactory->create($input);
+    }
+
+    /**
+     * @return string[][]
+     *
+     * @phpstan-return list<array<int, string>>
+     */
+    public function invalidTagProvider() : array
+    {
+        return [
+            ['@tag[invalid]'],
+            ['@tag@invalid'],
+        ];
     }
 }
