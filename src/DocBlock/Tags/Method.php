@@ -19,6 +19,7 @@ use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
 use phpDocumentor\Reflection\Type;
 use phpDocumentor\Reflection\TypeResolver;
 use phpDocumentor\Reflection\Types\Context as TypeContext;
+use phpDocumentor\Reflection\Types\Mixed_;
 use phpDocumentor\Reflection\Types\Void_;
 use Webmozart\Assert\Assert;
 use function array_keys;
@@ -153,7 +154,7 @@ final class Method extends BaseTag implements Factory\StaticMethod
                 $argument = explode(' ', self::stripRestArg(trim($argument)), 2);
                 if ($argument[0][0] === '$') {
                     $argumentName = substr($argument[0], 1);
-                    $argumentType = new Void_();
+                    $argumentType = new Mixed_();
                 } else {
                     $argumentType = $typeResolver->resolve($argument[0], $context);
                     $argumentName = '';
@@ -234,7 +235,7 @@ final class Method extends BaseTag implements Factory\StaticMethod
             }
 
             if (!isset($argument['type'])) {
-                $argument['type'] = new Void_();
+                $argument['type'] = new Mixed_();
             }
 
             $keys = array_keys($argument);

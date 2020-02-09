@@ -22,6 +22,7 @@ use phpDocumentor\Reflection\Types\Array_;
 use phpDocumentor\Reflection\Types\Compound;
 use phpDocumentor\Reflection\Types\Context;
 use phpDocumentor\Reflection\Types\Integer;
+use phpDocumentor\Reflection\Types\Mixed_;
 use phpDocumentor\Reflection\Types\Object_;
 use phpDocumentor\Reflection\Types\String_;
 use phpDocumentor\Reflection\Types\This;
@@ -137,7 +138,7 @@ class MethodTest extends TestCase
     {
         $arguments = ['argument1'];
         $expected  = [
-            ['name' => $arguments[0], 'type' => new Void_()],
+            ['name' => $arguments[0], 'type' => new Mixed_()],
         ];
 
         $fixture = new Method('myMethod', $arguments);
@@ -149,11 +150,11 @@ class MethodTest extends TestCase
      * @covers ::__construct
      * @covers ::getArguments
      */
-    public function testArgumentTypeCanBeInferredAsVoid() : void
+    public function testArgumentTypeCanBeInferredAsMixed() : void
     {
         $arguments = [['name' => 'argument1']];
         $expected  = [
-            ['name' => $arguments[0]['name'], 'type' => new Void_()],
+            ['name' => $arguments[0]['name'], 'type' => new Mixed_()],
         ];
 
         $fixture = new Method('myMethod', $arguments);
@@ -171,8 +172,8 @@ class MethodTest extends TestCase
     public function testRestArgumentIsParsedAsRegularArg() : void
     {
         $expected = [
-            ['name' => 'arg1', 'type' => new Void_()],
-            ['name' => 'rest', 'type' => new Void_()],
+            ['name' => 'arg1', 'type' => new Mixed_()],
+            ['name' => 'rest', 'type' => new Mixed_()],
             ['name' => 'rest2', 'type' => new Array_()],
         ];
 
@@ -286,7 +287,7 @@ class MethodTest extends TestCase
         $description       = new Description('My Description');
         $expectedArguments = [
             ['name' => 'argument1', 'type' => new String_()],
-            ['name' => 'argument2', 'type' => new Void_()],
+            ['name' => 'argument2', 'type' => new Mixed_()],
         ];
 
         $descriptionFactory->shouldReceive('create')->with('My Description', $context)->andReturn($description);
@@ -298,7 +299,7 @@ class MethodTest extends TestCase
             $context
         );
 
-        $this->assertSame('static void myMethod(string $argument1, void $argument2) My Description', (string) $fixture);
+        $this->assertSame('static void myMethod(string $argument1, mixed $argument2) My Description', (string) $fixture);
         $this->assertSame('myMethod', $fixture->getMethodName());
         $this->assertEquals($expectedArguments, $fixture->getArguments());
         $this->assertInstanceOf(Void_::class, $fixture->getReturnType());
