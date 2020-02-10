@@ -104,7 +104,9 @@ final class InvalidTag implements Tag
         do {
             $trace = array_map(
                 static function (array $call) use ($flatten) : array {
-                    array_walk_recursive($call['args'] ?? [], $flatten);
+                    $args = $call['args'] ?? [];
+
+                    array_walk_recursive($args, $flatten);
 
                     return $call;
                 },
