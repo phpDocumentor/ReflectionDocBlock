@@ -343,6 +343,37 @@ class MethodTest extends TestCase
     }
 
     /**
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Method::<public>
+     * @uses \phpDocumentor\Reflection\TypeResolver
+     * @uses \phpDocumentor\Reflection\DocBlock\Description
+     * @uses \phpDocumentor\Reflection\Types\Context
+     *
+     * @covers ::create
+     */
+    public function testReturnTypeNoneWithLongMethodName() : void
+    {
+        $descriptionFactory = m::mock(DescriptionFactory::class);
+        $resolver           = new TypeResolver();
+        $context            = new Context('');
+
+        $description = new Description('');
+
+        $descriptionFactory->shouldReceive('create')->with('', $context)->andReturn($description);
+
+        $fixture = Method::create(
+            'myVeryLongMethodName($node)',
+            $resolver,
+            $descriptionFactory,
+            $context
+        );
+
+        $this->assertFalse($fixture->isStatic());
+        $this->assertSame('void myVeryLongMethodName(mixed $node)', (string) $fixture);
+        $this->assertSame('myVeryLongMethodName', $fixture->getMethodName());
+        $this->assertInstanceOf(Void_::class, $fixture->getReturnType());
+    }
+
+    /**
      * @return string[][]
      */
     public function collectionReturnTypesProvider() : array
