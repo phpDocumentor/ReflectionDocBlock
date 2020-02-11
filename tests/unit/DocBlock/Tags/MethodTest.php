@@ -368,9 +368,9 @@ class MethodTest extends TestCase
         );
 
         $this->assertFalse($fixture->isStatic());
-        $this->assertSame('void myVeryLongMethodName()', (string) $fixture);
+        $this->assertSame('void myVeryLongMethodName(mixed $node)', (string) $fixture);
         $this->assertSame('myVeryLongMethodName', $fixture->getMethodName());
-        $this->assertInstanceOf(This::class, $fixture->getReturnType());
+        $this->assertInstanceOf(Void_::class, $fixture->getReturnType());
     }
 
     /**
