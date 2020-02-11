@@ -117,7 +117,7 @@ final class Method extends BaseTag implements Factory\StaticMethod
                             (?:[\w\|_\\\\]+)
                             # array notation
                             (?:\[\])*
-                        )*
+                        )*+
                     )
                     \s+
                 )?
