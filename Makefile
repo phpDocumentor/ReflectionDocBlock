@@ -29,7 +29,8 @@ psalm:
 
 .PHONY: test
 test:
-	docker run -it --rm -v${PWD}:/opt/project -w /opt/project php:7.4-pcov tools/phpunit
+	docker run -it --rm -v${CURDIR}:/github/workspace phpdoc/phpunit-ga
+	docker run -it --rm -v${CURDIR}:/data -w /data php:7.2 -f ./tests/coverage-checker.php 89
 
 .PHONY: pre-commit-test
 pre-commit-test: test phpcs phpstan psalm

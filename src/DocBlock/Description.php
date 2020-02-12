@@ -67,12 +67,11 @@ class Description
         $this->bodyTemplate = $bodyTemplate;
         $this->tags         = $tags;
     }
-    
+
     /**
-     * Returns the body template
-     * @return string
+     * Returns the body template.
      */
-    public function getBodyTemplate(): string
+    public function getBodyTemplate() : string
     {
         return $this->bodyTemplate;
     }

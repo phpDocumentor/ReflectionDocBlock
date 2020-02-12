@@ -64,16 +64,12 @@ jobs:
           restore-keys: |
             all-tools-${{ github.sha }}-
             all-tools-
-      - name: Setup PHP
-        uses: shivammathur/setup-php@master
-        with:
-          php-version: 7.2
-          extension-csv: mbstring, intl, iconv, libxml, dom, json, simplexml, zlib
-          ini-values-csv: memory_limit=2G, display_errors=On, error_reporting=-1
-          coverage: xdebug
-          pecl: false
-      - name: Run PHPUnit
-        run: php tools/phpunit
+      - name: PHPUnit
+        uses: docker://phpdoc/phpunit-ga:latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Quick check code coverage level
+        run: php tests/coverage-checker.php 89
 
   phpunit:
     runs-on: ${{ matrix.operating-system }}

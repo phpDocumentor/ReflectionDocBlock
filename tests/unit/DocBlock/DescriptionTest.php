@@ -105,6 +105,18 @@ class DescriptionTest extends TestCase
     }
 
     /**
+     * @covers ::getBodyTemplate
+     */
+    public function testDescriptionBodyTemplateGetter() : void
+    {
+        $body = 'See https://github.com/phpDocumentor/ReflectionDocBlock/pull/171 for more information';
+
+        $fixture = new Description($body, []);
+
+        $this->assertSame($body, $fixture->getBodyTemplate());
+    }
+
+    /**
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\Generic
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\BaseTag
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\Formatter\PassthroughFormatter

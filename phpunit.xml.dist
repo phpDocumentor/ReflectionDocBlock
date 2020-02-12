@@ -8,30 +8,31 @@
         forceCoversAnnotation="true"
         verbose="true"
         bootstrap="vendor/autoload.php"
-        >
-  <testsuites>
-    <testsuite name="unit">
-        <directory>./tests/unit</directory>
-    </testsuite>
-      <testsuite name="integration">
-          <directory>./tests/integration</directory>
-      </testsuite>
-  </testsuites>
-  <filter>
-    <whitelist>
-        <directory suffix=".php">./src/</directory>
-    </whitelist>
-  </filter>
-  <logging>
-    <log type="coverage-html"
-         target="build/coverage"
-         lowUpperBound="35"
-         highLowerBound="70"/>
-  </logging>
-  <listeners>
-    <listener
-            class="Mockery\Adapter\Phpunit\TestListener"
-            file="vendor/mockery/mockery/library/Mockery/Adapter/Phpunit/TestListener.php"
-            />
-  </listeners>
+>
+    <testsuites>
+        <testsuite name="unit">
+            <directory>./tests/unit</directory>
+        </testsuite>
+        <testsuite name="integration">
+            <directory>./tests/integration</directory>
+        </testsuite>
+    </testsuites>
+    <filter>
+        <whitelist>
+            <directory suffix=".php">./src/</directory>
+        </whitelist>
+    </filter>
+    <logging>
+        <log type="coverage-html"
+             target="build/coverage"
+             lowUpperBound="35"
+             highLowerBound="70"/>
+        <log type="coverage-clover" target="build/logs/clover.xml"/>
+    </logging>
+    <listeners>
+        <listener
+                class="Mockery\Adapter\Phpunit\TestListener"
+                file="vendor/mockery/mockery/library/Mockery/Adapter/Phpunit/TestListener.php"
+        />
+    </listeners>
 </phpunit>
