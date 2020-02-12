@@ -176,3 +176,12 @@ jobs:
         uses: docker://mickaelandrieu/psalm-ga
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    bc_check:
+      name: BC Check
+      runs-on: ubuntu-latest
+      needs: [setup, phpunit]
+      steps:
+        - uses: actions/checkout@master
+        - name: BC Check
+          uses: docker://nyholm/roave-bc-check-ga
