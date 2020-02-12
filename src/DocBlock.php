@@ -19,7 +19,7 @@ use Webmozart\Assert\Assert;
 final class DocBlock
 {
     /** @var string The opening line for this docblock. */
-    private $summary = '';
+    private $summary;
 
     /** @var DocBlock\Description The actual description for this docblock. */
     private $description;
@@ -34,10 +34,10 @@ final class DocBlock
     private $location;
 
     /** @var bool Is this DocBlock (the start of) a template? */
-    private $isTemplateStart = false;
+    private $isTemplateStart;
 
     /** @var bool Does this DocBlock signify the end of a DocBlock template? */
-    private $isTemplateEnd = false;
+    private $isTemplateEnd;
 
     /**
      * @param DocBlock\Tag[] $tags

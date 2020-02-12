@@ -212,6 +212,7 @@ final class StandardTagFactory implements TagFactory
         try {
             $callable = [$handlerClassName, 'create'];
             Assert::isCallable($callable);
+            /** @phpstan-var callable(string): ?Tag $callable */
             $tag = call_user_func_array($callable, $arguments);
 
             return $tag ?? InvalidTag::create($body, $name);
@@ -222,6 +223,8 @@ final class StandardTagFactory implements TagFactory
 
     /**
      * Determines the Fully Qualified Class Name of the Factory or Tag (containing a Factory Method `create`).
+     *
+     * @return class-string<StaticMethod>
      */
     private function findHandlerClassName(string $tagName, TypeContext $context) : string
     {

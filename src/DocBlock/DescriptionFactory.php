@@ -158,7 +158,7 @@ class DescriptionFactory
 
         // determine how many whitespace characters need to be stripped
         $startingSpaceCount = 9999999;
-        for ($i = 1; $i < count($lines); ++$i) {
+        for ($i = 1, $iMax = count($lines); $i < $iMax; ++$i) {
             // lines with a no length do not count as they are not indented at all
             if (strlen(trim($lines[$i])) === 0) {
                 continue;
@@ -171,7 +171,7 @@ class DescriptionFactory
 
         // strip the number of spaces from each line
         if ($startingSpaceCount > 0) {
-            for ($i = 1; $i < count($lines); ++$i) {
+            for ($i = 1, $iMax = count($lines); $i < $iMax; ++$i) {
                 $lines[$i] = substr($lines[$i], $startingSpaceCount);
             }
         }

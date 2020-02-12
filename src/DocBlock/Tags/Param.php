@@ -81,17 +81,19 @@ final class Param extends TagWithType implements Factory\StaticMethod
         // if the next item starts with a $ or ...$ it must be the variable name
         if (isset($parts[0])
             && (strlen($parts[0]) > 0)
-            && ($parts[0][0] === '$' || substr($parts[0], 0, 4) === '...$')
+            && (strpos($parts[0], '$') === 0 || strpos($parts[0], '...$') === 0)
         ) {
             $variableName = array_shift($parts);
             array_shift($parts);
 
-            if ($variableName !== null && strpos($variableName, '...') === 0) {
+            Assert::notNull($variableName);
+
+            if (strpos($variableName, '...') === 0) {
                 $isVariadic   = true;
                 $variableName = substr($variableName, 3);
             }
 
-            if ($variableName !== null && strpos($variableName, '$') === 0) {
+            if (strpos($variableName, '$') === 0) {
                 $variableName = substr($variableName, 1);
             }
         }

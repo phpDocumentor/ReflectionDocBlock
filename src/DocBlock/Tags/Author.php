@@ -29,10 +29,10 @@ final class Author extends BaseTag implements Factory\StaticMethod
     protected $name = 'author';
 
     /** @var string The name of the author */
-    private $authorName = '';
+    private $authorName;
 
     /** @var string The email of the author */
-    private $authorEmail = '';
+    private $authorEmail;
 
     /**
      * Initializes this tag with the author name and e-mail.

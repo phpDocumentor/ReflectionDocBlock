@@ -72,13 +72,13 @@ final class Var_ extends TagWithType implements Factory\StaticMethod
         }
 
         // if the next item starts with a $ or ...$ it must be the variable name
-        if (isset($parts[0]) && ($parts[0] !== '') && (strpos($parts[0], '$') === 0)) {
+        if (isset($parts[0]) && strpos($parts[0], '$') === 0) {
             $variableName = array_shift($parts);
             array_shift($parts);
 
-            if ($variableName !== null && strpos($variableName, '$') === 0) {
-                $variableName = substr($variableName, 1);
-            }
+            Assert::notNull($variableName);
+
+            $variableName = substr($variableName, 1);
         }
 
         $description = $descriptionFactory->create(implode('', $parts), $context);

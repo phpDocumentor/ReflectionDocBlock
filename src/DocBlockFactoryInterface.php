@@ -12,7 +12,7 @@ interface DocBlockFactoryInterface
     /**
      * Factory method for easy instantiation.
      *
-     * @param array<class-string<StaticMethod>> $additionalTags
+     * @param array<string, class-string<StaticMethod>> $additionalTags
      */
     public static function createInstance(array $additionalTags = []) : DocBlockFactory;
 
