@@ -102,16 +102,16 @@ final class InvalidTag implements Tag
             };
 
         do {
-            $trace = array_map(
-                static function (array $call) use ($flatten) : array {
-                    $call['args'] = $call['args'] ?? [];
-
-                    array_walk_recursive($call['args'], $flatten);
-
-                    return $call;
-                },
-                $exception->getTrace()
-            );
+            $trace = $exception->getTrace();
+            if (isset($trace[0]['args'])) {
+                $trace = array_map(
+                    static function (array $call) use ($flatten) : array {
+                        array_walk_recursive($call['args'], $flatten);
+                        return $call;
+                    },
+                    $trace
+                );
+            }
             $traceProperty->setValue($exception, $trace);
             $exception = $exception->getPrevious();
         } while ($exception !== null);
