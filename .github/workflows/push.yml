@@ -127,7 +127,7 @@ jobs:
             all-build-${{ hashFiles('**/composer.lock') }}
             all-build-
       - name: Code style check
-        uses: phpDocumentor/coding-standard@v1.0.0
+        uses: phpDocumentor/coding-standard@master
         with:
           args: -s
 
@@ -149,7 +149,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          args: analyse src --level max --configuration phpstan.neon
+          args: analyse src --configuration phpstan.neon
 
   psalm:
     runs-on: ubuntu-latest

@@ -75,6 +75,7 @@ final class Deprecated extends BaseTag implements Factory\StaticMethod
         }
 
         Assert::notNull($descriptionFactory);
+
         return new static(
             $matches[1],
             $descriptionFactory->create($matches[2] ?? '', $context)

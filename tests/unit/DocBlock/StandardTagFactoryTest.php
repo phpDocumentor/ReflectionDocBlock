@@ -68,7 +68,6 @@ class StandardTagFactoryTest extends TestCase
         $tagFactory = new StandardTagFactory(m::mock(FqsenResolver::class));
         $tagFactory->addService($descriptionFactory, DescriptionFactory::class);
 
-        /** @var Generic $tag */
         $tag = $tagFactory->create('@' . $expectedTagName . ' This is a description', $context);
 
         $this->assertInstanceOf(Generic::class, $tag);
@@ -89,7 +88,6 @@ class StandardTagFactoryTest extends TestCase
         $context    = new Context('');
         $tagFactory = new StandardTagFactory(m::mock(FqsenResolver::class));
 
-        /** @var Author $tag */
         $tag = $tagFactory->create('@author Mike van Riel <me@mikevanriel.com>', $context);
 
         $this->assertInstanceOf(Author::class, $tag);
@@ -120,7 +118,6 @@ class StandardTagFactoryTest extends TestCase
         $tagFactory = new StandardTagFactory($resolver);
         $tagFactory->addService($descriptionFactory, DescriptionFactory::class);
 
-        /** @var See $tag */
         $tag = $tagFactory->create('@see Tag');
 
         $this->assertInstanceOf(See::class, $tag);
@@ -140,7 +137,6 @@ class StandardTagFactoryTest extends TestCase
         $context    = new Context('');
         $tagFactory = new StandardTagFactory(m::mock(FqsenResolver::class), ['user' => Author::class]);
 
-        /** @var Author $tag */
         $tag = $tagFactory->create('@user Mike van Riel <me@mikevanriel.com>', $context);
 
         $this->assertInstanceOf(Author::class, $tag);
@@ -326,7 +322,6 @@ class StandardTagFactoryTest extends TestCase
         $tagFactory->addService($descriptionFactory, DescriptionFactory::class);
         $tagFactory->addService($typeResolver, TypeResolver::class);
 
-        /** @var Return_ $tag */
         $tag = $tagFactory->create('@return mixed', $context);
 
         $this->assertInstanceOf(Return_::class, $tag);
@@ -337,7 +332,6 @@ class StandardTagFactoryTest extends TestCase
     {
         $tagFactory = new StandardTagFactory(m::mock(FqsenResolver::class));
 
-        /** @var InvalidTag $tag */
         $tag = $tagFactory->create('@see $name some invalid tag');
 
         $this->assertInstanceOf(InvalidTag::class, $tag);

@@ -14,5 +14,12 @@
 
     <issueHandlers>
         <LessSpecificReturnType errorLevel="info" />
+        
+        <RedundantConditionGivenDocblockType>
+            <errorLevel type="info">
+                <!-- Psalm is very strict and believe that because we documented a type, it is redundant to assert it -->
+                <file name="src/DocBlock/StandardTagFactory.php"/>
+            </errorLevel>
+        </RedundantConditionGivenDocblockType>
     </issueHandlers>
 </psalm>

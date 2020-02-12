@@ -19,7 +19,6 @@ use phpDocumentor\Reflection\Type;
 use phpDocumentor\Reflection\TypeResolver;
 use phpDocumentor\Reflection\Types\Context as TypeContext;
 use Webmozart\Assert\Assert;
-use const PREG_SPLIT_DELIM_CAPTURE;
 use function array_shift;
 use function array_unshift;
 use function implode;
@@ -27,6 +26,7 @@ use function preg_split;
 use function strlen;
 use function strpos;
 use function substr;
+use const PREG_SPLIT_DELIM_CAPTURE;
 
 /**
  * Reflection class for the {@}param tag in a Docblock.
@@ -52,9 +52,6 @@ final class Param extends TagWithType implements Factory\StaticMethod
         $this->description  = $description;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public static function create(
         string $body,
         ?TypeResolver $typeResolver = null,
@@ -69,6 +66,7 @@ final class Param extends TagWithType implements Factory\StaticMethod
 
         $type         = null;
         $parts        = preg_split('/(\s+)/Su', $body, 2, PREG_SPLIT_DELIM_CAPTURE);
+        Assert::isArray($parts);
         $variableName = '';
         $isVariadic   = false;
 
