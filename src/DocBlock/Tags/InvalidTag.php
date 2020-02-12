@@ -107,11 +107,13 @@ final class InvalidTag implements Tag
                 $trace = array_map(
                     static function (array $call) use ($flatten) : array {
                         array_walk_recursive($call['args'], $flatten);
+
                         return $call;
                     },
                     $trace
                 );
             }
+
             $traceProperty->setValue($exception, $trace);
             $exception = $exception->getPrevious();
         } while ($exception !== null);

@@ -57,10 +57,12 @@ final class InvalidTagTest extends TestCase
             self::assertSame('@name Body', $tag->render());
             self::assertSame($parentException, $tag->getException());
             $trace = $tag->getException()->getPrevious()->getTrace();
+
             if (isset($trace[0]['args'])) { // Not set by default on 7.4
                 self::assertStringStartsWith('(Closure at', $trace[0]['args'][0]);
                 self::assertStringContainsString(__FILE__, $trace[0]['args'][0]);
             }
+
             self::assertEquals($parentException, unserialize(serialize($parentException)));
         }
     }
@@ -85,12 +87,14 @@ final class InvalidTagTest extends TestCase
             self::assertSame('@name Body', $tag->render());
             self::assertSame($parentException, $tag->getException());
             $trace = $tag->getException()->getPrevious()->getTrace();
+
             if (isset($trace[0]['args'])) { // Not set by default on 7.4
                 self::assertStringStartsWith(
                     'resource(stream)',
                     $trace[0]['args'][0]
                 );
             }
+
             self::assertEquals($parentException, unserialize(serialize($parentException)));
         }
     }
