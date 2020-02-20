@@ -55,9 +55,6 @@ final class InvalidTag implements Tag
         return $this->name;
     }
 
-    /**
-     * @return self
-     */
     public static function create(string $body, string $name = '') : self
     {
         return new self($name, $body);
