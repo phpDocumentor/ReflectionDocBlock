@@ -28,7 +28,7 @@ final class Source extends BaseTag implements Factory\StaticMethod
     protected $name = 'source';
 
     /** @var int The starting line, relative to the structural element's location. */
-    private $startingLine = 1;
+    private $startingLine;
 
     /** @var int|null The number of lines, relative to the starting line. NULL means "to the end". */
     private $lineCount;

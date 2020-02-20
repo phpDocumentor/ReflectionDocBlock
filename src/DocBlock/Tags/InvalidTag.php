@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace phpDocumentor\Reflection\DocBlock\Tags;
 
 use Closure;
+use Exception;
 use phpDocumentor\Reflection\DocBlock\Tag;
 use ReflectionClass;
 use ReflectionFunction;
@@ -54,12 +55,7 @@ final class InvalidTag implements Tag
         return $this->name;
     }
 
-    /**
-     * @return self
-     *
-     * @inheritDoc
-     */
-    public static function create(string $body, string $name = '')
+    public static function create(string $body, string $name = '') : self
     {
         return new self($name, $body);
     }
@@ -81,7 +77,7 @@ final class InvalidTag implements Tag
      */
     private function flattenExceptionBacktrace(Throwable $exception) : void
     {
-        $traceProperty = (new ReflectionClass('Exception'))->getProperty('trace');
+        $traceProperty = (new ReflectionClass(Exception::class))->getProperty('trace');
         $traceProperty->setAccessible(true);
 
         $flatten =

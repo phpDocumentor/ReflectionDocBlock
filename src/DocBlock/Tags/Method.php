@@ -42,16 +42,16 @@ final class Method extends BaseTag implements Factory\StaticMethod
     protected $name = 'method';
 
     /** @var string */
-    private $methodName = '';
+    private $methodName;
 
     /**
      * @phpstan-var array<int, array{name: string, type: Type}>
      * @var array<int, array<string, Type|string>>
      */
-    private $arguments = [];
+    private $arguments;
 
     /** @var bool */
-    private $isStatic = false;
+    private $isStatic;
 
     /** @var Type */
     private $returnType;

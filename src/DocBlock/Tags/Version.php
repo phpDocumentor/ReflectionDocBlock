@@ -44,7 +44,7 @@ final class Version extends BaseTag implements Factory\StaticMethod
     )';
 
     /** @var string|null The version vector. */
-    private $version = '';
+    private $version;
 
     public function __construct(?string $version = null, ?Description $description = null)
     {

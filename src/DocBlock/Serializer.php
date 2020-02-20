@@ -98,10 +98,7 @@ class Serializer
         return $comment . $indent . ' */';
     }
 
-    /**
-     * @return mixed
-     */
-    private function removeTrailingSpaces(string $indent, string $text)
+    private function removeTrailingSpaces(string $indent, string $text) : string
     {
         return str_replace(
             sprintf("\n%s * \n", $indent),
@@ -110,10 +107,7 @@ class Serializer
         );
     }
 
-    /**
-     * @return mixed
-     */
-    private function addAsterisksForEachLine(string $indent, string $text)
+    private function addAsterisksForEachLine(string $indent, string $text) : string
     {
         return str_replace(
             "\n",

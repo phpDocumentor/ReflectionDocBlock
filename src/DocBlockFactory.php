@@ -52,7 +52,7 @@ final class DocBlockFactory implements DocBlockFactoryInterface
     /**
      * Factory method for easy instantiation.
      *
-     * @param array<class-string<StaticMethod>> $additionalTags
+     * @param array<string, class-string<StaticMethod>> $additionalTags
      */
     public static function createInstance(array $additionalTags = []) : self
     {
@@ -85,6 +85,7 @@ final class DocBlockFactory implements DocBlockFactoryInterface
             }
 
             $docblock = $docblock->getDocComment();
+            Assert::string($docblock);
         }
 
         Assert::stringNotEmpty($docblock);
