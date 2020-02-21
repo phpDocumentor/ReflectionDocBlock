@@ -17,8 +17,8 @@ use InvalidArgumentException;
 use LogicException;
 use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
 use phpDocumentor\Reflection\DocBlock\StandardTagFactory;
+use phpDocumentor\Reflection\DocBlock\Tag;
 use phpDocumentor\Reflection\DocBlock\TagFactory;
-use phpDocumentor\Reflection\DocBlock\Tags\Factory\StaticMethod;
 use Webmozart\Assert\Assert;
 use function array_shift;
 use function count;
@@ -52,7 +52,7 @@ final class DocBlockFactory implements DocBlockFactoryInterface
     /**
      * Factory method for easy instantiation.
      *
-     * @param array<string, class-string<StaticMethod>> $additionalTags
+     * @param array<string, class-string<Tag>> $additionalTags
      */
     public static function createInstance(array $additionalTags = []) : self
     {
@@ -110,7 +110,7 @@ final class DocBlockFactory implements DocBlockFactoryInterface
     }
 
     /**
-     * @param class-string<StaticMethod> $handler
+     * @param class-string<Tag> $handler
      */
     public function registerTagHandler(string $tagName, string $handler) : void
     {
@@ -124,7 +124,7 @@ final class DocBlockFactory implements DocBlockFactoryInterface
      */
     private function stripDocComment(string $comment) : string
     {
-        $comment = preg_replace('#[ \t]*(?:\/\*\*|\*\/|\*)?[ \t]{0,1}(.*)?#u', '$1', $comment);
+        $comment = preg_replace('#[ \t]*(?:\/\*\*|\*\/|\*)?[ \t]?(.*)?#u', '$1', $comment);
         Assert::string($comment);
         $comment = trim($comment);
 
@@ -254,7 +254,7 @@ final class DocBlockFactory implements DocBlockFactoryInterface
     {
         $result = [];
         foreach (explode("\n", $tags) as $tagLine) {
-            if (isset($tagLine[0]) && ($tagLine[0] === '@')) {
+            if ($tagLine !== '' && strpos($tagLine, '@') === 0) {
                 $result[] = $tagLine;
             } else {
                 $result[count($result) - 1] .= "\n" . $tagLine;

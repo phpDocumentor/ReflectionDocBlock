@@ -160,7 +160,7 @@ class DescriptionFactory
         $startingSpaceCount = 9999999;
         for ($i = 1, $iMax = count($lines); $i < $iMax; ++$i) {
             // lines with a no length do not count as they are not indented at all
-            if (strlen(trim($lines[$i])) === 0) {
+            if (trim($lines[$i]) === '') {
                 continue;
             }
 

@@ -71,8 +71,8 @@ final class StandardTagFactory implements TagFactory
     public const REGEX_TAGNAME = '[\w\-\_\\\\:]+';
 
     /**
-     * @var array<class-string<StaticMethod>> An array with a tag as a key, and an
-     *                                        FQCN to a class that handles it as an array value.
+     * @var array<class-string<Tag>> An array with a tag as a key, and an
+     *                               FQCN to a class that handles it as an array value.
      */
     private $tagHandlerMappings = [
         'author' => Author::class,
@@ -97,7 +97,7 @@ final class StandardTagFactory implements TagFactory
     ];
 
     /**
-     * @var array<class-string<StaticMethod>> An array with a anotation s a key, and an
+     * @var array<class-string<Tag>> An array with a anotation s a key, and an
      *      FQCN to a class that handles it as an array value.
      */
     private $annotationMappings = [];
@@ -125,7 +125,7 @@ final class StandardTagFactory implements TagFactory
      *
      * @see self::registerTagHandler() to add a new tag handler to the existing default list.
      *
-     * @param array<class-string<StaticMethod>> $tagHandlers
+     * @param array<class-string<Tag>> $tagHandlers
      */
     public function __construct(FqsenResolver $fqsenResolver, ?array $tagHandlers = null)
     {
@@ -224,7 +224,7 @@ final class StandardTagFactory implements TagFactory
     /**
      * Determines the Fully Qualified Class Name of the Factory or Tag (containing a Factory Method `create`).
      *
-     * @return class-string<StaticMethod>
+     * @return class-string<Tag>
      */
     private function findHandlerClassName(string $tagName, TypeContext $context) : string
     {

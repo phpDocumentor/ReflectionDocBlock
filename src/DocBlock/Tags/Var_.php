@@ -23,7 +23,6 @@ use function array_shift;
 use function array_unshift;
 use function implode;
 use function preg_split;
-use function strlen;
 use function strpos;
 use function substr;
 use const PREG_SPLIT_DELIM_CAPTURE;
@@ -64,7 +63,7 @@ final class Var_ extends TagWithType implements Factory\StaticMethod
         $variableName = '';
 
         // if the first item that is encountered is not a variable; it is a type
-        if ($firstPart && (strlen($firstPart) > 0) && ($firstPart[0] !== '$')) {
+        if ($firstPart && $firstPart[0] !== '$') {
             $type = $typeResolver->resolve($firstPart, $context);
         } else {
             // first part is not a type; we should prepend it to the parts array for further processing

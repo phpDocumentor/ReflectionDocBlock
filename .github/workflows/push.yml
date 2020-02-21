@@ -180,7 +180,7 @@ jobs:
           args: analyse src --configuration phpstan.neon
 
   psalm:
-    name: Psaml
+    name: Psalm
     runs-on: ${{ matrix.operating-system }}
     strategy:
       matrix:
