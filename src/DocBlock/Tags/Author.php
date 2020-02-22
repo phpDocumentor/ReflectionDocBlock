@@ -16,7 +16,6 @@ namespace phpDocumentor\Reflection\DocBlock\Tags;
 use InvalidArgumentException;
 use function filter_var;
 use function preg_match;
-use function strlen;
 use function trim;
 use const FILTER_VALIDATE_EMAIL;
 
@@ -72,7 +71,7 @@ final class Author extends BaseTag implements Factory\StaticMethod
      */
     public function __toString() : string
     {
-        return $this->authorName . (strlen($this->authorEmail) ? ' <' . $this->authorEmail . '>' : '');
+        return $this->authorName . ($this->authorEmail !== '' ? ' <' . $this->authorEmail . '>' : '');
     }
 
     /**

@@ -13,6 +13,9 @@ declare(strict_types=1);
 
 namespace phpDocumentor\Reflection\DocBlock\Tags\Factory;
 
+/**
+ * @deprecated This contract is totally covered by Tag contract. Every class using StaticMethod also use Tag
+ */
 interface StaticMethod
 {
     /**

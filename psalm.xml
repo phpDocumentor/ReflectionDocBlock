@@ -26,5 +26,20 @@
                 <file name="src/DocBlock/StandardTagFactory.php"/>
             </errorLevel>
         </PossiblyNullArrayOffset>
+
+        <DeprecatedInterface>
+            <errorLevel type="info">
+                <!-- Will be removed in 6.0.0 issues/211 -->
+                <referencedClass name="phpDocumentor\Reflection\DocBlock\Tags\Factory\StaticMethod"/>
+            </errorLevel>
+        </DeprecatedInterface>
+
+        <RedundantConditionGivenDocblockType>
+            <errorLevel type="info">
+                <!-- Psalm manage to infer a more precise type than PHPStan. notNull assert is needed for PHPStan but
+                Psalm sees it as redundant -->
+                <directory name="src/DocBlock/Tags/"/>
+            </errorLevel>
+        </RedundantConditionGivenDocblockType>
     </issueHandlers>
 </psalm>
