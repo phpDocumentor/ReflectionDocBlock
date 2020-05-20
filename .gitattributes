@@ -7,3 +7,5 @@
 /phpmd.xml.dist export-ignore
 /phpunit.xml.dist export-ignore
 /tests/ export-ignore
+/bin/ export-ignore
+/grammar/ export-ignore

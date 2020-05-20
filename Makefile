@@ -35,3 +35,6 @@ test:
 .PHONY: pre-commit-test
 pre-commit-test: test phpcs phpstan psalm
 
+.PHONY: build
+build:
+	docker run -it --rm -v${CURDIR}:/data -w /data php:7.2 ./bin/build.php -v
