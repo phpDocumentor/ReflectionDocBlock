@@ -18,11 +18,13 @@
         "phpdocumentor/type-resolver": "^1.0",
         "webmozart/assert": "^1",
         "phpdocumentor/reflection-common": "^2.0",
-        "ext-filter": "^7.1"
+        "ext-filter": "^7.1",
+        "doctrine/lexer": "^1.2"
     },
     "require-dev": {
         "mockery/mockery": "^1",
-        "doctrine/instantiator": "^1"
+        "doctrine/instantiator": "^1",
+        "ircmaxell/php-yacc": "^0.0.5"
     },
     "autoload": {
         "psr-4": {
