@@ -11,7 +11,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Restore/cache tools folder
-        uses: actions/cache@v1
+        uses: actions/cache@v2
         with:
           path: tools
           key: all-tools-${{ github.sha }}
@@ -91,7 +91,7 @@ jobs:
           key: ${{ env.key }}
 
       - name: Cache extensions
-        uses: actions/cache@v1
+        uses: actions/cache@v2
         with:
           path: ${{ steps.cache-env.outputs.dir }}
           key: ${{ steps.cache-env.outputs.key }}
@@ -104,7 +104,7 @@ jobs:
           ini-values: memory_limit=2G, display_errors=On, error_reporting=-1
 
       - name: Restore/cache tools folder
-        uses: actions/cache@v1
+        uses: actions/cache@v2
         with:
           path: tools
           key: all-tools-${{ github.sha }}
@@ -117,7 +117,7 @@ jobs:
         run: echo "::set-output name=dir::$(composer config cache-files-dir)"
 
       - name: Cache dependencies
-        uses: actions/cache@v1
+        uses: actions/cache@v2
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
@@ -136,7 +136,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Restore/cache vendor folder
-        uses: actions/cache@v1
+        uses: actions/cache@v2
         with:
           path: vendor
           key: all-build-${{ hashFiles('**/composer.lock') }}
@@ -195,7 +195,7 @@ jobs:
           key: ${{ env.key }}
 
       - name: Cache extensions
-        uses: actions/cache@v1
+        uses: actions/cache@v2
         with:
           path: ${{ steps.cache-env.outputs.dir }}
           key: ${{ steps.cache-env.outputs.key }}
@@ -213,7 +213,7 @@ jobs:
         run: echo "::set-output name=dir::$(composer config cache-files-dir)"
 
       - name: Cache dependencies
-        uses: actions/cache@v1
+        uses: actions/cache@v2
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
