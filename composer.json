@@ -18,7 +18,7 @@
         "phpdocumentor/type-resolver": "^1.0",
         "webmozart/assert": "^1",
         "phpdocumentor/reflection-common": "^2.0",
-        "ext-filter": "^7.1"
+        "ext-filter": "*"
     },
     "require-dev": {
         "mockery/mockery": "^1",
