@@ -21,8 +21,7 @@
         "ext-filter": "*"
     },
     "require-dev": {
-        "mockery/mockery": "^1",
-        "doctrine/instantiator": "^1"
+        "mockery/mockery": "^1"
     },
     "autoload": {
         "psr-4": {
