@@ -5,6 +5,7 @@
     <file>src</file>
     <file>tests/unit</file>
     <exclude-pattern>*/tests/unit/Types/ContextFactoryTest.php</exclude-pattern>
+    <exclude-pattern>*/tests/unit/Assets/*</exclude-pattern>
     <arg value="p"/>
 
     <rule ref="phpDocumentor">

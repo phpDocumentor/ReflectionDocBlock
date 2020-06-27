@@ -17,7 +17,6 @@ use InvalidArgumentException;
 use phpDocumentor\Reflection\DocBlock\Tags\Author;
 use phpDocumentor\Reflection\DocBlock\Tags\Covers;
 use phpDocumentor\Reflection\DocBlock\Tags\Deprecated;
-use phpDocumentor\Reflection\DocBlock\Tags\Factory\StaticMethod;
 use phpDocumentor\Reflection\DocBlock\Tags\Generic;
 use phpDocumentor\Reflection\DocBlock\Tags\InvalidTag;
 use phpDocumentor\Reflection\DocBlock\Tags\Link as LinkTag;
@@ -165,7 +164,7 @@ final class StandardTagFactory implements TagFactory
     {
         Assert::stringNotEmpty($tagName);
         Assert::classExists($handler);
-        Assert::implementsInterface($handler, StaticMethod::class);
+        Assert::implementsInterface($handler, Tag::class);
 
         if (strpos($tagName, '\\') && $tagName[0] !== '\\') {
             throw new InvalidArgumentException(

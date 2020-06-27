@@ -15,6 +15,9 @@ namespace phpDocumentor\Reflection\DocBlock;
 
 use InvalidArgumentException;
 use Mockery as m;
+use phpDocumentor\Reflection\Assets\CustomParam;
+use phpDocumentor\Reflection\Assets\CustomServiceClass;
+use phpDocumentor\Reflection\Assets\CustomServiceInterface;
 use phpDocumentor\Reflection\DocBlock\Tags\Author;
 use phpDocumentor\Reflection\DocBlock\Tags\Formatter;
 use phpDocumentor\Reflection\DocBlock\Tags\Formatter\PassthroughFormatter;
@@ -169,13 +172,13 @@ class StandardTagFactoryTest extends TestCase
     {
         $resolver   = m::mock(FqsenResolver::class);
         $tagFactory = new StandardTagFactory($resolver);
-        $tagFactory->addParameter('myParam', 'myValue');
+        $tagFactory->registerTagHandler('spy', CustomParam::class);
 
-        $this->assertAttributeSame(
-            [FqsenResolver::class => $resolver, 'myParam' => 'myValue'],
-            'serviceLocator',
-            $tagFactory
-        );
+        $tagFactory->addParameter('myParam', 'myValue');
+        $spy = $tagFactory->create('@spy');
+
+        $this->assertSame($resolver, $spy->fqsenResolver);
+        $this->assertSame('myValue', $spy->myParam);
     }
 
     /**
@@ -190,12 +193,11 @@ class StandardTagFactoryTest extends TestCase
         $resolver   = m::mock(FqsenResolver::class);
         $tagFactory = new StandardTagFactory($resolver);
         $tagFactory->addService($service);
+        $tagFactory->registerTagHandler('spy', CustomServiceClass::class);
 
-        $this->assertAttributeSame(
-            [FqsenResolver::class => $resolver, PassthroughFormatter::class => $service],
-            'serviceLocator',
-            $tagFactory
-        );
+        $spy = $tagFactory->create('@spy');
+
+        $this->assertSame($service, $spy->formatter);
     }
 
     /**
@@ -211,12 +213,11 @@ class StandardTagFactoryTest extends TestCase
         $resolver   = m::mock(FqsenResolver::class);
         $tagFactory = new StandardTagFactory($resolver);
         $tagFactory->addService($service, $interfaceName);
+        $tagFactory->registerTagHandler('spy', CustomServiceInterface::class);
 
-        $this->assertAttributeSame(
-            [FqsenResolver::class => $resolver, $interfaceName => $service],
-            'serviceLocator',
-            $tagFactory
-        );
+        $spy = $tagFactory->create('@spy');
+
+        $this->assertSame($service, $spy->formatter);
     }
 
     /**
