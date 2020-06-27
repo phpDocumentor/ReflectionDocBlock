@@ -282,6 +282,8 @@ final class StandardTagFactory implements TagFactory
      * Retrieves a series of ReflectionParameter objects for the static 'create' method of the given
      * tag handler class name.
      *
+     * @param class-string $handlerClassName
+     *
      * @return ReflectionParameter[]
      */
     private function fetchParametersForHandlerFactoryMethod(string $handlerClassName) : array
