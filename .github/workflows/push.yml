@@ -64,6 +64,7 @@ jobs:
   phpunit:
     name: Unit tests for PHP version ${{ matrix.php-versions }} on ${{ matrix.operating-system }}
     runs-on: ${{ matrix.operating-system }}
+    continue-on-error: ${{ matrix.php-versions == '8.0' }}
     strategy:
       matrix:
         operating-system:
@@ -71,6 +72,9 @@ jobs:
           - windows-latest
           - macOS-latest
         php-versions: ['7.2', '7.3', '7.4']
+        include:
+          - operating-system: ubuntu-latest
+            php-versions: '8.0'
     env:
       extensions: mbstring
       key: cache-v1 # can be any string, change to clear the extension cache.
@@ -100,7 +104,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-versions }}
-          extension: ${{ env.extensions }}
+          extensions: ${{ env.extensions }}
           ini-values: memory_limit=2G, display_errors=On, error_reporting=-1
 
       - name: Restore/cache tools folder
