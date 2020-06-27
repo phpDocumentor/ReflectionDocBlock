@@ -24,7 +24,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          args: install --no-interaction --prefer-dist --optimize-autoloader
+          args: update --no-interaction --prefer-dist --optimize-autoloader
 
       - name: composer-require-checker
         uses: docker://phpga/composer-require-checker-ga
@@ -128,7 +128,7 @@ jobs:
           restore-keys: ${{ runner.os }}-composer-
 
       - name: Install dependencies
-        run: composer install --no-interaction --prefer-dist --optimize-autoloader
+        run: composer update --no-interaction --prefer-dist --optimize-autoloader
 
       - name: Run PHPUnit
         continue-on-error: true
@@ -162,7 +162,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          args: install --no-interaction --prefer-dist --optimize-autoloader
+          args: update --no-interaction --prefer-dist --optimize-autoloader
 
       - name: PHPStan
         uses: phpDocumentor/phpstan-ga@0.12.9
@@ -224,7 +224,7 @@ jobs:
           restore-keys: ${{ runner.os }}-composer-
 
       - name: Install dependencies
-        run: composer install --no-interaction --prefer-dist --optimize-autoloader
+        run: composer update --no-interaction --prefer-dist --optimize-autoloader
 
       - name: Run psalm
         run: psalm --output-format=github
