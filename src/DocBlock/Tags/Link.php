@@ -20,7 +20,7 @@ use Webmozart\Assert\Assert;
 use function preg_split;
 
 /**
- * Reflection class for a @link tag in a Docblock.
+ * Reflection class for a {@}link tag in a Docblock.
  */
 final class Link extends BaseTag implements Factory\StaticMethod
 {
