@@ -36,6 +36,7 @@ use phpDocumentor\Reflection\DocBlock\Tags\Version;
 use phpDocumentor\Reflection\FqsenResolver;
 use phpDocumentor\Reflection\Types\Context as TypeContext;
 use ReflectionMethod;
+use ReflectionNamedType;
 use ReflectionParameter;
 use Webmozart\Assert\Assert;
 use function array_merge;
@@ -254,10 +255,16 @@ final class StandardTagFactory implements TagFactory
     {
         $arguments = [];
         foreach ($parameters as $parameter) {
-            $class    = $parameter->getClass();
+            $type     = $parameter->getType();
             $typeHint = null;
-            if ($class !== null) {
-                $typeHint = $class->getName();
+            if ($type instanceof ReflectionNamedType) {
+                $typeHint = $type->getName();
+                if ($typeHint === 'self') {
+                    $declaringClass = $parameter->getDeclaringClass();
+                    if ($declaringClass !== null) {
+                        $typeHint = $declaringClass->getName();
+                    }
+                }
             }
 
             if (isset($locator[$typeHint])) {
