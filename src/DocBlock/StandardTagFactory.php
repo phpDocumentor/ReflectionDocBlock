@@ -254,10 +254,10 @@ final class StandardTagFactory implements TagFactory
     {
         $arguments = [];
         foreach ($parameters as $parameter) {
-            $type     = $parameter->getType();
+            $class    = $parameter->getClass();
             $typeHint = null;
-            if ($type instanceof \ReflectionNamedType) {
-                $typeHint = $type->getName();
+            if ($class !== null) {
+                $typeHint = $class->getName();
             }
 
             if (isset($locator[$typeHint])) {
