@@ -128,7 +128,7 @@ jobs:
           restore-keys: ${{ runner.os }}-composer-
 
       - name: Install dependencies
-        run: composer install --no-interaction --prefer-dist --optimize-autoloader --ignore-platform-reqs
+        run: composer install --no-interaction --prefer-dist --optimize-autoloader
 
       - name: Run PHPUnit
         continue-on-error: true
