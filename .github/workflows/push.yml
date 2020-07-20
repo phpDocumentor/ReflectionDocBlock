@@ -4,20 +4,13 @@ on:
       - master
   pull_request:
 name: Qa workflow
+env:
+  phiveGPGKeys: 4AA394086372C20A,D2CCAC42F6295E7D,E82B2FB314E9906E,8A03EA3B385DBAA1
 jobs:
   setup:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-
-      - name: Restore/cache tools folder
-        uses: actions/cache@v2
-        with:
-          path: tools
-          key: all-tools-${{ github.sha }}
-          restore-keys: |
-            all-tools-${{ github.sha }}-
-            all-tools-
 
       - name: composer
         uses: docker://composer
@@ -32,12 +25,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           args: check --config-file ./composer-require-config.json composer.json
-
-      - name: Install phive
-        run: make install-phive
-
-      - name: Install PHAR dependencies
-        run: tools/phive.phar --no-progress install --copy --trust-gpg-keys 4AA394086372C20A,D2CCAC42F6295E7D,E82B2FB314E9906E,8E730BA25823D8B5,8A03EA3B385DBAA1 --force-accept-unsigned
 
   phpunit-with-coverage:
     runs-on: ubuntu-latest
@@ -102,15 +89,12 @@ jobs:
           php-version: ${{ matrix.php-versions }}
           extensions: ${{ env.extensions }}
           ini-values: memory_limit=2G, display_errors=On, error_reporting=-1
+          tools: phive
 
-      - name: Restore/cache tools folder
-        uses: actions/cache@v2
-        with:
-          path: tools
-          key: all-tools-${{ github.sha }}
-          restore-keys: |
-            all-tools-${{ github.sha }}-
-            all-tools-
+      - name: Install PHAR dependencies
+        env:
+          GITHUB_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: phive --no-progress install --copy --trust-gpg-keys ${{ env.phiveGPGKeys }} --force-accept-unsigned
 
       - name: Get composer cache directory
         id: composer-cache
@@ -204,7 +188,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-versions }}
-          extension: ${{ env.extensions }}
+          extensions: ${{ env.extensions }}
           tools: psalm
           ini-values: memory_limit=2G, display_errors=On, error_reporting=-1
 
