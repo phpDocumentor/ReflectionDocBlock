@@ -96,6 +96,12 @@ jobs:
           GITHUB_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: phive --no-progress install --copy --trust-gpg-keys ${{ env.phiveGPGKeys }} --force-accept-unsigned
 
+      - name: Install phpunit 8 for php 7.2
+        if: matrix.php-versions == '7.2'
+        env:
+          GITHUB_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: phive --no-progress install --copy --trust-gpg-keys ${{ env.phiveGPGKeys }} phpunit:^8.5
+
       - name: Get composer cache directory
         id: composer-cache
         run: echo "::set-output name=dir::$(composer config cache-files-dir)"
