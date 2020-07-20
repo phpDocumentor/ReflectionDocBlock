@@ -56,6 +56,6 @@ DOCCOMMENT;
         $factory = DocBlockFactory::createInstance();
         $docblock = $factory->create($docComment);
 
-        $this->assertSame(0, printf('%i', $docblock->getTagsByName('my-tag')));
+        $this->assertSame(0, (int) $docblock->getTagsByName('my-tag')[0]->render());
     }
 }

@@ -343,8 +343,8 @@ class StandardTagFactoryTest extends TestCase
      */
     public function testValidFormattedTags(string $input, string $tagName, string $render) : void
     {
-        $fqsenResolver = $this->prophesize(FqsenResolver::class);
-        $tagFactory = new StandardTagFactory($fqsenResolver->reveal());
+        $fqsenResolver = m::mock(FqsenResolver::class);
+        $tagFactory = new StandardTagFactory($fqsenResolver);
         $tagFactory->registerTagHandler('tag', Generic::class);
         $tag = $tagFactory->create($input);
 
@@ -410,8 +410,8 @@ class StandardTagFactoryTest extends TestCase
     public function testInValidFormattedTags(string $input) : void
     {
         $this->expectException(InvalidArgumentException::class);
-        $fqsenResolver = $this->prophesize(FqsenResolver::class);
-        $tagFactory = new StandardTagFactory($fqsenResolver->reveal());
+        $fqsenResolver = m::mock(FqsenResolver::class);
+        $tagFactory = new StandardTagFactory($fqsenResolver);
         $tagFactory->registerTagHandler('tag', Generic::class);
         $tagFactory->create($input);
     }
