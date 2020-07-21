@@ -198,6 +198,21 @@ class DocBlockTest extends TestCase
      *
      * @covers ::__construct
      * @covers ::isTemplateStart
+     * @covers ::isTemplateEnd
+     */
+    public function testDocBlockIsNotATemplateByDefault() : void
+    {
+        $fixture = new DocBlock('', null, [], null, null);
+
+        $this->assertFalse($fixture->isTemplateStart());
+        $this->assertFalse($fixture->isTemplateEnd());
+    }
+
+    /**
+     * @uses \phpDocumentor\Reflection\DocBlock\Description
+     *
+     * @covers ::__construct
+     * @covers ::isTemplateStart
      */
     public function testDocBlockKnowsIfItIsTheStartOfADocBlockTemplate() : void
     {
