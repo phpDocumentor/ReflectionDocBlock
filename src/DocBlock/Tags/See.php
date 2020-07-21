@@ -20,9 +20,9 @@ use phpDocumentor\Reflection\DocBlock\Tags\Reference\Reference;
 use phpDocumentor\Reflection\DocBlock\Tags\Reference\Url;
 use phpDocumentor\Reflection\FqsenResolver;
 use phpDocumentor\Reflection\Types\Context as TypeContext;
+use phpDocumentor\Reflection\Utils;
 use Webmozart\Assert\Assert;
 use function preg_match;
-use function preg_split;
 
 /**
  * Reflection class for an {@}see tag in a Docblock.
@@ -53,8 +53,7 @@ final class See extends BaseTag implements Factory\StaticMethod
         Assert::notNull($typeResolver);
         Assert::notNull($descriptionFactory);
 
-        $parts = preg_split('/\s+/Su', $body, 2);
-        Assert::isArray($parts);
+        $parts = Utils::pregSplit('/\s+/Su', $body, 2);
         $description = isset($parts[1]) ? $descriptionFactory->create($parts[1], $context) : null;
 
         // https://tools.ietf.org/html/rfc2396#section-3
