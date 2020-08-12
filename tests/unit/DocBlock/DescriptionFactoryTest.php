@@ -124,6 +124,37 @@ class DescriptionFactoryTest extends TestCase
 
     /**
      * @uses \phpDocumentor\Reflection\DocBlock\Description
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Link
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\BaseTag
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Formatter\PassthroughFormatter
+     * @uses \phpDocumentor\Reflection\Types\Context
+     *
+     * @covers ::__construct
+     * @covers ::create
+     */
+    public function testDescriptionCanParseAStringContainingMultipleTags() : void
+    {
+        $contents   = 'This description has a {@link http://phpdoc.org/ This} another {@link http://phpdoc.org/ This2}';
+        $context    = new Context('');
+        $tagFactory = m::mock(TagFactory::class);
+        $tagFactory->shouldReceive('create')
+            ->twice()
+            ->andReturnValues(
+                [
+                    new LinkTag('http://phpdoc.org/', new Description('This')),
+                    new LinkTag('http://phpdoc.org/', new Description('This2')),
+                ]
+            );
+
+        $factory     = new DescriptionFactory($tagFactory);
+        $description = $factory->create($contents, $context);
+
+        $this->assertSame($contents, $description->render());
+        $this->assertSame('This description has a %1$s another %2$s', $description->getBodyTemplate());
+    }
+
+    /**
+     * @uses \phpDocumentor\Reflection\DocBlock\Description
      *
      * @covers ::__construct
      * @covers ::create
