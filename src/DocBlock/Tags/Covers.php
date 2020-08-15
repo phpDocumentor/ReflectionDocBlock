@@ -18,8 +18,8 @@ use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
 use phpDocumentor\Reflection\Fqsen;
 use phpDocumentor\Reflection\FqsenResolver;
 use phpDocumentor\Reflection\Types\Context as TypeContext;
+use phpDocumentor\Reflection\Utils;
 use Webmozart\Assert\Assert;
-use function preg_split;
 
 /**
  * Reflection class for a @covers tag in a Docblock.
@@ -51,8 +51,7 @@ final class Covers extends BaseTag implements Factory\StaticMethod
         Assert::notNull($descriptionFactory);
         Assert::notNull($resolver);
 
-        $parts = preg_split('/\s+/Su', $body, 2);
-        Assert::isArray($parts);
+        $parts = Utils::pregSplit('/\s+/Su', $body, 2);
 
         return new static(
             $resolver->resolve($parts[0], $context),

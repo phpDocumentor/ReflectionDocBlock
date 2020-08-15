@@ -18,11 +18,11 @@ use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
 use phpDocumentor\Reflection\Type;
 use phpDocumentor\Reflection\TypeResolver;
 use phpDocumentor\Reflection\Types\Context as TypeContext;
+use phpDocumentor\Reflection\Utils;
 use Webmozart\Assert\Assert;
 use function array_shift;
 use function array_unshift;
 use function implode;
-use function preg_split;
 use function strpos;
 use function substr;
 use const PREG_SPLIT_DELIM_CAPTURE;
@@ -64,8 +64,7 @@ final class Param extends TagWithType implements Factory\StaticMethod
         [$firstPart, $body] = self::extractTypeFromBody($body);
 
         $type         = null;
-        $parts        = preg_split('/(\s+)/Su', $body, 2, PREG_SPLIT_DELIM_CAPTURE);
-        Assert::isArray($parts);
+        $parts        = Utils::pregSplit('/(\s+)/Su', $body, 2, PREG_SPLIT_DELIM_CAPTURE);
         $variableName = '';
         $isVariadic   = false;
 
