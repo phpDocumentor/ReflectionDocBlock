@@ -8,12 +8,13 @@ use Closure;
 use Exception;
 use phpDocumentor\Reflection\DocBlock\Tag;
 use ReflectionClass;
+use ReflectionException;
 use ReflectionFunction;
 use Throwable;
 use function array_map;
-use function array_walk_recursive;
 use function get_class;
 use function get_resource_type;
+use function is_array;
 use function is_object;
 use function is_resource;
 use function sprintf;
@@ -80,29 +81,12 @@ final class InvalidTag implements Tag
         $traceProperty = (new ReflectionClass(Exception::class))->getProperty('trace');
         $traceProperty->setAccessible(true);
 
-        $flatten =
-            /** @param mixed $value */
-            static function (&$value) : void {
-                if ($value instanceof Closure) {
-                    $closureReflection = new ReflectionFunction($value);
-                    $value             = sprintf(
-                        '(Closure at %s:%s)',
-                        $closureReflection->getFileName(),
-                        $closureReflection->getStartLine()
-                    );
-                } elseif (is_object($value)) {
-                    $value = sprintf('object(%s)', get_class($value));
-                } elseif (is_resource($value)) {
-                    $value = sprintf('resource(%s)', get_resource_type($value));
-                }
-            };
-
         do {
             $trace = $exception->getTrace();
             if (isset($trace[0]['args'])) {
                 $trace = array_map(
-                    static function (array $call) use ($flatten) : array {
-                        array_walk_recursive($call['args'], $flatten);
+                    function (array $call) : array {
+                        $call['args'] = array_map([$this, 'flattenArguments'], $call['args']);
 
                         return $call;
                     },
@@ -115,6 +99,33 @@ final class InvalidTag implements Tag
         } while ($exception !== null);
 
         $traceProperty->setAccessible(false);
+    }
+
+    /**
+     * @param mixed $value
+     *
+     * @return mixed
+     *
+     * @throws ReflectionException
+     */
+    private function flattenArguments($value)
+    {
+        if ($value instanceof Closure) {
+            $closureReflection = new ReflectionFunction($value);
+            $value             = sprintf(
+                '(Closure at %s:%s)',
+                $closureReflection->getFileName(),
+                $closureReflection->getStartLine()
+            );
+        } elseif (is_object($value)) {
+            $value = sprintf('object(%s)', get_class($value));
+        } elseif (is_resource($value)) {
+            $value = sprintf('resource(%s)', get_resource_type($value));
+        } elseif (is_array($value)) {
+            $value = array_map([$this, 'flattenArguments'], $value);
+        }
+
+        return $value;
     }
 
     public function render(?Formatter $formatter = null) : string

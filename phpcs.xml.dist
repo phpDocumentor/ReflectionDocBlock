@@ -15,4 +15,8 @@
     <rule ref="SlevomatCodingStandard.Classes.SuperfluousAbstractClassNaming.SuperfluousPrefix">
         <exclude-pattern>*/src/*/Abstract*.php</exclude-pattern>
     </rule>
+
+    <rule ref="SlevomatCodingStandard.Classes.UnusedPrivateElements.UnusedMethod">
+        <exclude-pattern>*/src/DocBlock/Tags/InvalidTag.php</exclude-pattern>
+    </rule>
 </ruleset>
