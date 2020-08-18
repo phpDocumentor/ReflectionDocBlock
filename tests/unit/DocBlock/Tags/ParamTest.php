@@ -255,7 +255,12 @@ class ParamTest extends TestCase
         $description = new Description('My Description');
         $descriptionFactory->shouldReceive('create')->with('My Description', $context)->andReturn($description);
 
-        $fixture = Param::create('string &...$myParameter My Description', $typeResolver, $descriptionFactory, $context);
+        $fixture = Param::create(
+            'string &...$myParameter My Description',
+            $typeResolver,
+            $descriptionFactory,
+            $context
+        );
 
         $this->assertSame('string &...$myParameter My Description', (string) $fixture);
         $this->assertSame('myParameter', $fixture->getVariableName());
