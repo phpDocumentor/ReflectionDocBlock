@@ -83,8 +83,7 @@ final class Param extends TagWithType implements Factory\StaticMethod
         }
 
         // if the next item starts with a $ or ...$ or &$ or &...$ it must be the variable name
-        if (
-            isset($parts[0])
+        if (isset($parts[0])
             &&
             (
                 strpos($parts[0], '$') === 0
@@ -103,7 +102,7 @@ final class Param extends TagWithType implements Factory\StaticMethod
 
             if (strpos($variableName, '$') === 0) {
                 $variableName = substr($variableName, 1);
-            } elseif(strpos($variableName, '&$') === 0) {
+            } elseif (strpos($variableName, '&$') === 0) {
                 $isReference = true;
                 $variableName = substr($variableName, 2);
             } elseif (strpos($variableName, '...$') === 0) {
