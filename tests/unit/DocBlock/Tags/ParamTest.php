@@ -174,12 +174,99 @@ class ParamTest extends TestCase
         $description = new Description('My Description');
         $descriptionFactory->shouldReceive('create')->with('My Description', $context)->andReturn($description);
 
+        $fixture = Param::create('string $myParameter My Description', $typeResolver, $descriptionFactory, $context);
+
+        $this->assertSame('string $myParameter My Description', (string) $fixture);
+        $this->assertSame('myParameter', $fixture->getVariableName());
+        $this->assertInstanceOf(String_::class, $fixture->getType());
+        $this->assertFalse($fixture->isVariadic());
+        $this->assertFalse($fixture->isReference());
+        $this->assertSame($description, $fixture->getDescription());
+    }
+
+    /**
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Param::<public>
+     * @uses \phpDocumentor\Reflection\DocBlock\DescriptionFactory
+     * @uses \phpDocumentor\Reflection\DocBlock\Description
+     * @uses \phpDocumentor\Reflection\Types\Context
+     *
+     * @covers ::create
+     */
+    public function testFactoryMethodWithVariadic() : void
+    {
+        $typeResolver       = new TypeResolver();
+        $descriptionFactory = m::mock(DescriptionFactory::class);
+        $context            = new Context('');
+
+        $description = new Description('My Description');
+        $descriptionFactory->shouldReceive('create')->with('My Description', $context)->andReturn($description);
+
         $fixture = Param::create('string ...$myParameter My Description', $typeResolver, $descriptionFactory, $context);
 
         $this->assertSame('string ...$myParameter My Description', (string) $fixture);
         $this->assertSame('myParameter', $fixture->getVariableName());
         $this->assertInstanceOf(String_::class, $fixture->getType());
         $this->assertTrue($fixture->isVariadic());
+        $this->assertFalse($fixture->isReference());
+        $this->assertSame($description, $fixture->getDescription());
+    }
+
+    /**
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Param::<public>
+     * @uses \phpDocumentor\Reflection\DocBlock\DescriptionFactory
+     * @uses \phpDocumentor\Reflection\DocBlock\Description
+     * @uses \phpDocumentor\Reflection\Types\Context
+     *
+     * @covers ::create
+     */
+    public function testFactoryMethodWithReference() : void
+    {
+        $typeResolver       = new TypeResolver();
+        $descriptionFactory = m::mock(DescriptionFactory::class);
+        $context            = new Context('');
+
+        $description = new Description('My Description');
+        $descriptionFactory->shouldReceive('create')->with('My Description', $context)->andReturn($description);
+
+        $fixture = Param::create('string &$myParameter My Description', $typeResolver, $descriptionFactory, $context);
+
+        $this->assertSame('string &$myParameter My Description', (string) $fixture);
+        $this->assertSame('myParameter', $fixture->getVariableName());
+        $this->assertInstanceOf(String_::class, $fixture->getType());
+        $this->assertFalse($fixture->isVariadic());
+        $this->assertTrue($fixture->isReference());
+        $this->assertSame($description, $fixture->getDescription());
+    }
+
+    /**
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Param::<public>
+     * @uses \phpDocumentor\Reflection\DocBlock\DescriptionFactory
+     * @uses \phpDocumentor\Reflection\DocBlock\Description
+     * @uses \phpDocumentor\Reflection\Types\Context
+     *
+     * @covers ::create
+     */
+    public function testFactoryMethodWithVariadicReference() : void
+    {
+        $typeResolver       = new TypeResolver();
+        $descriptionFactory = m::mock(DescriptionFactory::class);
+        $context            = new Context('');
+
+        $description = new Description('My Description');
+        $descriptionFactory->shouldReceive('create')->with('My Description', $context)->andReturn($description);
+
+        $fixture = Param::create(
+            'string &...$myParameter My Description',
+            $typeResolver,
+            $descriptionFactory,
+            $context
+        );
+
+        $this->assertSame('string &...$myParameter My Description', (string) $fixture);
+        $this->assertSame('myParameter', $fixture->getVariableName());
+        $this->assertInstanceOf(String_::class, $fixture->getType());
+        $this->assertTrue($fixture->isVariadic());
+        $this->assertTrue($fixture->isReference());
         $this->assertSame($description, $fixture->getDescription());
     }
 
