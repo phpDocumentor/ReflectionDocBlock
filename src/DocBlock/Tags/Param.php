@@ -145,12 +145,7 @@ final class Param extends TagWithType implements Factory\StaticMethod
             . ($this->description ? ' ' . $this->description : '');
     }
 
-    /**
-     * @param string $str
-     *
-     * @return bool
-     */
-    private static function strStartsWithVariable(string $str): bool
+    private static function strStartsWithVariable(string $str) : bool
     {
         return strpos($str, '$') === 0
                ||
