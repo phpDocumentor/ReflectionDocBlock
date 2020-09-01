@@ -75,7 +75,7 @@ final class Param extends TagWithType implements Factory\StaticMethod
         $isReference   = false;
 
         // if the first item that is encountered is not a variable; it is a type
-        if ($firstPart && $firstPart[0] !== '$') {
+        if ($firstPart && !self::strStartsWithVariable($firstPart)) {
             $type = $typeResolver->resolve($firstPart, $context);
         } else {
             // first part is not a type; we should prepend it to the parts array for further processing
@@ -83,18 +83,7 @@ final class Param extends TagWithType implements Factory\StaticMethod
         }
 
         // if the next item starts with a $ or ...$ or &$ or &...$ it must be the variable name
-        if (isset($parts[0])
-            &&
-            (
-                strpos($parts[0], '$') === 0
-                ||
-                strpos($parts[0], '...$') === 0
-                ||
-                strpos($parts[0], '&$') === 0
-                ||
-                strpos($parts[0], '&...$') === 0
-            )
-        ) {
+        if (isset($parts[0]) && self::strStartsWithVariable($parts[0])) {
             $variableName = array_shift($parts);
             array_shift($parts);
 
@@ -154,5 +143,21 @@ final class Param extends TagWithType implements Factory\StaticMethod
             . ($this->isVariadic() ? '...' : '')
             . ($this->variableName !== null ? '$' . $this->variableName : '')
             . ($this->description ? ' ' . $this->description : '');
+    }
+
+    /**
+     * @param string $str
+     *
+     * @return bool
+     */
+    private static function strStartsWithVariable(string $str): bool
+    {
+        return strpos($str, '$') === 0
+               ||
+               strpos($str, '...$') === 0
+               ||
+               strpos($str, '&$') === 0
+               ||
+               strpos($str, '&...$') === 0;
     }
 }
