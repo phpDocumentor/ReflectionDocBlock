@@ -4,23 +4,16 @@ declare(strict_types=1);
 
 namespace DocBlock\Tags;
 
-use Mockery as m;
+use InvalidArgumentException;
 use phpDocumentor\Reflection\DocBlock\Tags\Example;
 use PHPUnit\Framework\TestCase;
 
 /**
  * @coversDefaultClass \phpDocumentor\Reflection\DocBlock\Tags\Example
+ * @covers ::<private>
  */
 class ExampleTest extends TestCase
 {
-    /**
-     * Call Mockery::close after each test.
-     */
-    public function tearDown() : void
-    {
-        m::close();
-    }
-
     /**
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\BaseTag
      *
@@ -103,19 +96,147 @@ class ExampleTest extends TestCase
     /**
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\BaseTag
      *
+     * @dataProvider tagContentProvider
      * @covers ::create
      * @covers ::__construct
      * @covers ::getFilePath
      * @covers ::getStartingLine
      * @covers ::getLineCount
      * @covers ::getDescription
+     * @covers ::getContent
      */
-    public function testFullExample() : void
+    public function testFactoryMethod(
+        string $input,
+        string $filePath,
+        int $startLine,
+        int $lineCount,
+        ?string $description,
+        string $content
+    ) : void {
+        $tag = Example::create($input);
+        $this->assertSame($filePath, $tag->getFilePath());
+        $this->assertSame($startLine, $tag->getStartingLine());
+        $this->assertSame($lineCount, $tag->getLineCount());
+        $this->assertSame($description, $tag->getDescription());
+        $this->assertSame($content, $tag->getContent());
+    }
+
+    /** @return mixed[][] */
+    public function tagContentProvider() : array
     {
-        $tag = Example::create('"example1.php" 10 5 test text');
-        $this->assertEquals('example1.php', $tag->getFilePath());
-        $this->assertEquals(10, $tag->getStartingLine());
-        $this->assertEquals(5, $tag->getLineCount());
-        $this->assertEquals('test text', $tag->getDescription());
+        return [
+            [
+                '"example1.php" 10 5 test text ',
+                'example1.php',
+                10,
+                5,
+                'test text',
+                'test text',
+            ],
+            [
+                'example1.php 10 5 test text',
+                'example1.php',
+                10,
+                5,
+                'test text',
+                'test text',
+            ],
+            [
+                'example1.php 1 10 test text',
+                'example1.php',
+                1,
+                10,
+                'test text',
+                'test text',
+            ],
+            [
+                'example1.php',
+                'example1.php',
+                1,
+                0,
+                null,
+                'example1.php',
+            ],
+            [
+                'file://example1.php ',
+                'file://example1.php',
+                1,
+                0,
+                '',
+                'file://example1.php',
+            ],
+            [
+                '/example1.php',
+                '/example1.php',
+                1,
+                0,
+                null,
+                '/example1.php',
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider invalidExampleProvider
+     * @covers ::__construct
+     */
+    public function testValidatesArguments(
+        string $filePath,
+        bool $isUrl,
+        int $startLine,
+        int $lineCount,
+        string $description
+    ) : void {
+        $this->expectException(InvalidArgumentException::class);
+
+        new Example(
+            $filePath,
+            $isUrl,
+            $startLine,
+            $lineCount,
+            $description
+        );
+    }
+
+    /** @return mixed[][] */
+    public function invalidExampleProvider() : array
+    {
+        return [
+            'invalid start' => [
+                '/some/path',
+                false,
+                -1,
+                0,
+                'text',
+            ],
+            'invalid start 2' => [
+                '/some/path',
+                false,
+                -10,
+                0,
+                'text',
+            ],
+            'invalid length' => [
+                '/some/path',
+                false,
+                1,
+                -1,
+                'text',
+            ],
+            'invalid length 2' => [
+                '/some/path',
+                false,
+                1,
+                -10,
+                'text',
+            ],
+            'empty filepath' => [
+                '',
+                false,
+                1,
+                0,
+                'text',
+            ],
+        ];
     }
 }

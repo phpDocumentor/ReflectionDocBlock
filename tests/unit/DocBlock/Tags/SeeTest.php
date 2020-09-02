@@ -193,6 +193,38 @@ class SeeTest extends TestCase
      * @uses \phpDocumentor\Reflection\DocBlock\DescriptionFactory
      * @uses \phpDocumentor\Reflection\FqsenResolver
      * @uses \phpDocumentor\Reflection\DocBlock\Description
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Reference\Fqsen
+     * @uses \phpDocumentor\Reflection\Fqsen
+     * @uses \phpDocumentor\Reflection\Types\Context
+     *
+     * @covers ::create
+     */
+    public function testFactoryMethodWithNonClassFQSEN() : void
+    {
+        $descriptionFactory = m::mock(DescriptionFactory::class);
+        $resolver           = m::mock(FqsenResolver::class);
+        $context            = new Context('');
+
+        $fqsen       = new Fqsen('\DateTime');
+        $description = new Description('My Description');
+
+        $descriptionFactory
+            ->shouldReceive('create')->with('My Description', $context)->andReturn($description);
+        $resolver->shouldReceive('resolve')->with('DateTime', $context)->andReturn($fqsen);
+
+        $fixture = See::create('DateTime::createFromFormat() My Description', $resolver, $descriptionFactory, $context);
+
+        $this->assertSame('\DateTime::createFromFormat() My Description', (string) $fixture);
+        $this->assertInstanceOf(FqsenRef::class, $fixture->getReference());
+        $this->assertSame('\DateTime::createFromFormat()', (string) $fixture->getReference());
+        $this->assertSame($description, $fixture->getDescription());
+    }
+
+    /**
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\See::<public>
+     * @uses \phpDocumentor\Reflection\DocBlock\DescriptionFactory
+     * @uses \phpDocumentor\Reflection\FqsenResolver
+     * @uses \phpDocumentor\Reflection\DocBlock\Description
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\Reference\Url
      * @uses \phpDocumentor\Reflection\Types\Context
      *
