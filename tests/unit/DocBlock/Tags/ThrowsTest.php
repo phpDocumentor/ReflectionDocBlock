@@ -120,6 +120,31 @@ class ThrowsTest extends TestCase
         $fixture = new Throws(new String_(), new Description('Description'));
 
         $this->assertSame('string Description', (string) $fixture);
+
+        // ---
+
+        $fixture = new Throws(new String_(), new Description('My Description'));
+
+        $this->assertSame('string My Description', (string) $fixture);
+    }
+
+    /**
+     * @uses   \phpDocumentor\Reflection\DocBlock\Description
+     *
+     * @covers ::__construct
+     * @covers ::__toString
+     */
+    public function testStringRepresentationIsReturnedWithoutDescription() : void
+    {
+        $fixture = new Throws(new String_());
+
+        $this->assertSame('string', (string) $fixture);
+
+        // ---
+
+        $fixture = new Throws(new String_(), new Description(''));
+
+        $this->assertSame('string', (string) $fixture);
     }
 
     /**

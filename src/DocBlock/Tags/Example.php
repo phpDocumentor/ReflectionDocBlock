@@ -142,7 +142,10 @@ final class Example implements Tag, Factory\StaticMethod
      */
     public function __toString() : string
     {
-        return $this->filePath . ($this->content ? ' ' . $this->content : '');
+        $filePath = (string) $this->filePath;
+        $content = (string) $this->content;
+
+        return $filePath . ($content !== '' ? ($filePath !== '' ? ' ' : '') . $content : '');
     }
 
     /**

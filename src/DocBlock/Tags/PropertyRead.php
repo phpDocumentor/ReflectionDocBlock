@@ -98,8 +98,22 @@ final class PropertyRead extends TagWithType implements Factory\StaticMethod
      */
     public function __toString() : string
     {
-        return ($this->type ? $this->type . ($this->variableName ? ' ' : '') : '')
-            . ($this->variableName ? '$' . $this->variableName : '')
-            . (('' . $this->description) ? ' ' . $this->description : '');
+        if ($this->description) {
+            $description = $this->description->render();
+        } else {
+            $description = '';
+        }
+
+        if ($this->variableName) {
+            $variableName = ($this->variableName ? '$' . $this->variableName : '');
+        } else {
+            $variableName = '';
+        }
+
+        $type = (string) $this->type;
+
+        return $type
+            . ($variableName !== '' ? ($type !== '' ? ' ' : '') . $variableName : '')
+            . ($description !== '' ? ($type !== '' || $variableName !== '' ? ' ' : '') . $description : '');
     }
 }

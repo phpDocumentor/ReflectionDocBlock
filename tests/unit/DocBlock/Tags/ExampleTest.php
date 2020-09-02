@@ -22,7 +22,7 @@ class ExampleTest extends TestCase
     }
 
     /**
-     * @uses phpDocumentor\Reflection\DocBlock\Tags\BaseTag
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\BaseTag
      *
      * @covers ::create
      * @covers ::__construct
@@ -37,7 +37,7 @@ class ExampleTest extends TestCase
     }
 
     /**
-     * @uses phpDocumentor\Reflection\DocBlock\Tags\BaseTag
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\BaseTag
      *
      * @covers ::create
      * @covers ::__construct
@@ -52,7 +52,7 @@ class ExampleTest extends TestCase
     }
 
     /**
-     * @uses phpDocumentor\Reflection\DocBlock\Tags\BaseTag
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\BaseTag
      *
      * @covers ::create
      * @covers ::__construct
@@ -67,7 +67,7 @@ class ExampleTest extends TestCase
     }
 
     /**
-     * @uses phpDocumentor\Reflection\DocBlock\Tags\BaseTag
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\BaseTag
      *
      * @covers ::create
      * @covers ::__construct
@@ -84,7 +84,7 @@ class ExampleTest extends TestCase
     }
 
     /**
-     * @uses phpDocumentor\Reflection\DocBlock\Tags\BaseTag
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\BaseTag
      *
      * @covers ::create
      * @covers ::__construct
@@ -101,7 +101,7 @@ class ExampleTest extends TestCase
     }
 
     /**
-     * @uses phpDocumentor\Reflection\DocBlock\Tags\BaseTag
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\BaseTag
      *
      * @covers ::create
      * @covers ::__construct

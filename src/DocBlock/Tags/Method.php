@@ -212,12 +212,25 @@ final class Method extends BaseTag implements Factory\StaticMethod
         foreach ($this->arguments as $argument) {
             $arguments[] = $argument['type'] . ' $' . $argument['name'];
         }
+        $argumentStr = '(' . implode(', ', $arguments) . ')';
 
-        return trim(($this->isStatic() ? 'static ' : '')
-            . (string) $this->returnType . ' '
-            . $this->methodName
-            . '(' . implode(', ', $arguments) . ')'
-            . ($this->description ? ' ' . $this->description->render() : ''));
+        if ($this->description) {
+            $description = $this->description->render();
+        } else {
+            $description = '';
+        }
+
+        $static = $this->isStatic ? 'static' : '';
+
+        $returnType = (string) $this->returnType;
+
+        $methodName = (string) $this->methodName;
+
+        return $static
+            . ($returnType !== '' ? ($static !== '' ? ' ' : '') . $returnType : '')
+            . ($methodName !== '' ? ($static !== '' || $returnType !== '' ? ' ' : '') . $methodName : '')
+            . $argumentStr
+            . ($description !== '' ? ' ' . $description : '');
     }
 
     /**

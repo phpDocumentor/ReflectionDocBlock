@@ -155,6 +155,32 @@ class VarTest extends TestCase
     }
 
     /**
+     * @uses   \phpDocumentor\Reflection\DocBlock\Description
+     * @uses   \phpDocumentor\Reflection\Types\String_
+     *
+     * @covers ::__construct
+     * @covers ::__toString
+     */
+    public function testStringRepresentationIsReturnedWithoutDescription() : void
+    {
+        $fixture = new Var_('myVariable');
+
+        $this->assertSame('$myVariable', (string) $fixture);
+
+        // ---
+
+        $fixture = new Var_('myVariable', new String_());
+
+        $this->assertSame('string $myVariable', (string) $fixture);
+
+        // ---
+
+        $fixture = new Var_('myVariable', new String_(), new Description(''));
+
+        $this->assertSame('string $myVariable', (string) $fixture);
+    }
+
+    /**
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\Var_::<public>
      * @uses \phpDocumentor\Reflection\DocBlock\DescriptionFactory
      * @uses \phpDocumentor\Reflection\DocBlock\Description

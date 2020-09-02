@@ -136,6 +136,27 @@ class SeeTest extends TestCase
     }
 
     /**
+     * @uses   \phpDocumentor\Reflection\DocBlock\Description
+     * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Reference\Fqsen
+     * @uses   \phpDocumentor\Reflection\Fqsen
+     *
+     * @covers ::__construct
+     * @covers ::__toString
+     */
+    public function testStringRepresentationIsReturnedWithoutDescription() : void
+    {
+        $fixture = new See(new FqsenRef(new Fqsen('\DateTime::format()')));
+
+        $this->assertSame('\DateTime::format()', (string) $fixture);
+
+        // ---
+
+        $fixture = new See(new FqsenRef(new Fqsen('\DateTime::format()')), new Description(''));
+
+        $this->assertSame('\DateTime::format()', (string) $fixture);
+    }
+
+    /**
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\See::<public>
      * @uses \phpDocumentor\Reflection\DocBlock\DescriptionFactory
      * @uses \phpDocumentor\Reflection\FqsenResolver

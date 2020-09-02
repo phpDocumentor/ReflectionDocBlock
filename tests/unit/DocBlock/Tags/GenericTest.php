@@ -108,6 +108,26 @@ class GenericTest extends TestCase
     }
 
     /**
+     * @uses   \phpDocumentor\Reflection\DocBlock\Description
+     * @uses   \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getName
+     *
+     * @covers ::__construct
+     * @covers ::__toString
+     */
+    public function testStringRepresentationIsReturnedWithoutDescription() : void
+    {
+        $fixture = new Generic('generic');
+
+        $this->assertSame('', (string) $fixture);
+
+        // ---
+
+        $fixture = new Generic('generic', new Description(''));
+
+        $this->assertSame('', (string) $fixture);
+    }
+
+    /**
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\Generic::<public>
      * @uses \phpDocumentor\Reflection\DocBlock\DescriptionFactory
      * @uses \phpDocumentor\Reflection\DocBlock\Description

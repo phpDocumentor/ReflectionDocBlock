@@ -117,6 +117,37 @@ class DeprecatedTest extends TestCase
         $fixture = new Deprecated('1.0', new Description('Description'));
 
         $this->assertSame('1.0 Description', (string) $fixture);
+
+        // ---
+
+        $fixture = new Deprecated(null, new Description('My Description'));
+
+        $this->assertSame('My Description', (string) $fixture);
+    }
+
+    /**
+     * @uses   \phpDocumentor\Reflection\DocBlock\Description
+     *
+     * @covers ::__construct
+     * @covers ::__toString
+     */
+    public function testStringRepresentationIsReturnedWithoutDescription() : void
+    {
+        $fixture = new Deprecated(null, new Description(''));
+
+        $this->assertSame('', (string) $fixture);
+
+        // ---
+
+        $fixture = new Deprecated('1.0', new Description(''));
+
+        $this->assertSame('1.0', (string) $fixture);
+
+        // ---
+
+        $fixture = new Deprecated('1.0');
+
+        $this->assertSame('1.0', (string) $fixture);
     }
 
     /**

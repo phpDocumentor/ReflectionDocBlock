@@ -120,6 +120,25 @@ class VersionTest extends TestCase
     }
 
     /**
+     * @uses   \phpDocumentor\Reflection\DocBlock\Description
+     *
+     * @covers ::__construct
+     * @covers ::__toString
+     */
+    public function testStringRepresentationIsReturnedWithoutDescription() : void
+    {
+        $fixture = new Version('1.0');
+
+        $this->assertSame('1.0', (string) $fixture);
+
+        // ---
+
+        $fixture = new Version('1.0', new Description(''));
+
+        $this->assertSame('1.0', (string) $fixture);
+    }
+
+    /**
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\Version::<public>
      * @uses \phpDocumentor\Reflection\DocBlock\DescriptionFactory
      * @uses \phpDocumentor\Reflection\DocBlock\Description

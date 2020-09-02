@@ -120,6 +120,25 @@ class SinceTest extends TestCase
     }
 
     /**
+     * @uses   \phpDocumentor\Reflection\DocBlock\Description
+     *
+     * @covers ::__construct
+     * @covers ::__toString
+     */
+    public function testStringRepresentationIsReturnedWithoutDescription() : void
+    {
+        $fixture = new Since('1.0');
+
+        $this->assertSame('1.0', (string) $fixture);
+
+        // ---
+
+        $fixture = new Since('1.0', new Description(''));
+
+        $this->assertSame('1.0', (string) $fixture);
+    }
+
+    /**
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\Since::<public>
      * @uses \phpDocumentor\Reflection\DocBlock\DescriptionFactory
      * @uses \phpDocumentor\Reflection\DocBlock\Description
