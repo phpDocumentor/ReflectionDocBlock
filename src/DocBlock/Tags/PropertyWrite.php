@@ -71,7 +71,9 @@ final class PropertyWrite extends TagWithType implements Factory\StaticMethod
         // if the next item starts with a $ or ...$ it must be the variable name
         if (isset($parts[0]) && strpos($parts[0], '$') === 0) {
             $variableName = array_shift($parts);
-            array_shift($parts);
+            if ($type) {
+                array_shift($parts);
+            }
 
             Assert::notNull($variableName);
 
@@ -98,6 +100,6 @@ final class PropertyWrite extends TagWithType implements Factory\StaticMethod
     {
         return ($this->type ? $this->type . ' ' : '')
             . ($this->variableName ? '$' . $this->variableName : '')
-            . ($this->description ? ' ' . $this->description : '');
+            . ($this->description ? ($this->variableName ? ' ' : '') . $this->description : '');
     }
 }

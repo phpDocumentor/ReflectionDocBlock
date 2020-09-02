@@ -16,8 +16,11 @@ namespace phpDocumentor\Reflection\DocBlock\Tags;
 use Mockery as m;
 use phpDocumentor\Reflection\DocBlock\Description;
 use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
+use phpDocumentor\Reflection\DocBlock\StandardTagFactory;
+use phpDocumentor\Reflection\FqsenResolver;
 use phpDocumentor\Reflection\TypeResolver;
 use phpDocumentor\Reflection\Types\Context;
+use phpDocumentor\Reflection\Types\Integer;
 use phpDocumentor\Reflection\Types\String_;
 use PHPUnit\Framework\TestCase;
 
@@ -174,6 +177,64 @@ class VarTest extends TestCase
         $this->assertSame('myVariable', $fixture->getVariableName());
         $this->assertInstanceOf(String_::class, $fixture->getType());
         $this->assertSame($description, $fixture->getDescription());
+    }
+
+    /**
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Param::<public>
+     * @uses \phpDocumentor\Reflection\DocBlock\DescriptionFactory
+     * @uses \phpDocumentor\Reflection\DocBlock\Description
+     * @uses \phpDocumentor\Reflection\Types\Context
+     *
+     * @covers ::create
+     */
+    public function testFactoryMethodWithoutType() : void
+    {
+        $typeResolver       = new TypeResolver();
+        $fqsenResolver      = new FqsenResolver();
+        $tagFactory         = new StandardTagFactory($fqsenResolver);
+        $descriptionFactory = new DescriptionFactory($tagFactory);
+        $context            = new Context('');
+
+        $fixture = Var_::create(
+            '$myParameter My Description',
+            $typeResolver,
+            $descriptionFactory,
+            $context
+        );
+
+        $this->assertSame('$myParameter My Description', (string) $fixture);
+        $this->assertSame('myParameter', $fixture->getVariableName());
+        $this->assertNull($fixture->getType());
+        $this->assertSame('My Description', $fixture->getDescription() . '');
+    }
+
+    /**
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Param::<public>
+     * @uses \phpDocumentor\Reflection\DocBlock\DescriptionFactory
+     * @uses \phpDocumentor\Reflection\DocBlock\Description
+     * @uses \phpDocumentor\Reflection\Types\Context
+     *
+     * @covers ::create
+     */
+    public function testFactoryMethodWithType() : void
+    {
+        $typeResolver       = new TypeResolver();
+        $fqsenResolver      = new FqsenResolver();
+        $tagFactory         = new StandardTagFactory($fqsenResolver);
+        $descriptionFactory = new DescriptionFactory($tagFactory);
+        $context            = new Context('');
+
+        $fixture = Var_::create(
+            'int My Description',
+            $typeResolver,
+            $descriptionFactory,
+            $context
+        );
+
+        $this->assertSame('int My Description', (string) $fixture);
+        $this->assertSame('', $fixture->getVariableName());
+        $this->assertInstanceOf(Integer::class, $fixture->getType());
+        $this->assertSame('My Description', $fixture->getDescription() . '');
     }
 
     /**

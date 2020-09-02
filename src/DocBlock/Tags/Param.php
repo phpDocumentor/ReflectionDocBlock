@@ -85,7 +85,9 @@ final class Param extends TagWithType implements Factory\StaticMethod
         // if the next item starts with a $ or ...$ or &$ or &...$ it must be the variable name
         if (isset($parts[0]) && self::strStartsWithVariable($parts[0])) {
             $variableName = array_shift($parts);
-            array_shift($parts);
+            if ($type) {
+                array_shift($parts);
+            }
 
             Assert::notNull($variableName);
 
@@ -141,8 +143,8 @@ final class Param extends TagWithType implements Factory\StaticMethod
         return ($this->type ? $this->type . ' ' : '')
             . ($this->isReference() ? '&' : '')
             . ($this->isVariadic() ? '...' : '')
-            . ($this->variableName !== null ? '$' . $this->variableName : '')
-            . ($this->description ? ' ' . $this->description : '');
+            . ($this->variableName ? '$' . $this->variableName : '')
+            . ($this->description ? ($this->variableName ? ' ' : '') . $this->description : '');
     }
 
     private static function strStartsWithVariable(string $str) : bool
