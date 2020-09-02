@@ -238,6 +238,35 @@ class VarTest extends TestCase
     }
 
     /**
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Param::<public>
+     * @uses \phpDocumentor\Reflection\DocBlock\DescriptionFactory
+     * @uses \phpDocumentor\Reflection\DocBlock\Description
+     * @uses \phpDocumentor\Reflection\Types\Context
+     *
+     * @covers ::create
+     */
+    public function testFactoryMethodWithTypeWithoutComment() : void
+    {
+        $typeResolver       = new TypeResolver();
+        $fqsenResolver      = new FqsenResolver();
+        $tagFactory         = new StandardTagFactory($fqsenResolver);
+        $descriptionFactory = new DescriptionFactory($tagFactory);
+        $context            = new Context('');
+
+        $fixture = Var_::create(
+            'int',
+            $typeResolver,
+            $descriptionFactory,
+            $context
+        );
+
+        $this->assertSame('int', (string) $fixture);
+        $this->assertSame('', $fixture->getVariableName());
+        $this->assertInstanceOf(Integer::class, $fixture->getType());
+        $this->assertSame('', $fixture->getDescription() . '');
+    }
+
+    /**
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\Var_::<public>
      * @uses \phpDocumentor\Reflection\TypeResolver
      * @uses \phpDocumentor\Reflection\DocBlock\DescriptionFactory

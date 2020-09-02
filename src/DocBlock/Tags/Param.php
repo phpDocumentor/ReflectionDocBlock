@@ -140,11 +140,11 @@ final class Param extends TagWithType implements Factory\StaticMethod
      */
     public function __toString() : string
     {
-        return ($this->type ? $this->type . ' ' : '')
+        return ($this->type ? $this->type . ($this->variableName ? ' ' : '') : '')
             . ($this->isReference() ? '&' : '')
             . ($this->isVariadic() ? '...' : '')
             . ($this->variableName ? '$' . $this->variableName : '')
-            . ($this->description ? ($this->variableName ? ' ' : '') . $this->description : '');
+            . (('' . $this->description) ? ' ' . $this->description : '');
     }
 
     private static function strStartsWithVariable(string $str) : bool

@@ -98,8 +98,8 @@ final class Property extends TagWithType implements Factory\StaticMethod
      */
     public function __toString() : string
     {
-        return ($this->type ? $this->type . ' ' : '')
+        return ($this->type ? $this->type . ($this->variableName ? ' ' : '') : '')
             . ($this->variableName ? '$' . $this->variableName : '')
-            . ($this->description ? ($this->variableName ? ' ' : '') . $this->description : '');
+            . (('' . $this->description) ? ' ' . $this->description : '');
     }
 }
