@@ -68,7 +68,7 @@ final class PropertyRead extends TagWithType implements Factory\StaticMethod
             array_unshift($parts, $firstPart);
         }
 
-        // if the next item starts with a $ or ...$ it must be the variable name
+        // if the next item starts with a $ it must be the variable name
         if (isset($parts[0]) && strpos($parts[0], '$') === 0) {
             $variableName = array_shift($parts);
             if ($type) {
