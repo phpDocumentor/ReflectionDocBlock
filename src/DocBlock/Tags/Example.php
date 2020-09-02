@@ -48,7 +48,7 @@ final class Example implements Tag, Factory\StaticMethod
     public function __construct(string $filePath, bool $isURI, int $startingLine, int $lineCount, ?string $content)
     {
         Assert::notEmpty($filePath);
-        Assert::greaterThanEq($startingLine, 0);
+        Assert::greaterThanEq($startingLine, 1);
         Assert::greaterThanEq($lineCount, 0);
 
         $this->filePath     = $filePath;
@@ -63,7 +63,7 @@ final class Example implements Tag, Factory\StaticMethod
 
     public function getContent() : string
     {
-        if ($this->content === null) {
+        if ($this->content === null || $this->content === '') {
             $filePath = '"' . $this->filePath . '"';
             if ($this->isURI) {
                 $filePath = $this->isUriRelative($this->filePath)
@@ -107,7 +107,7 @@ final class Example implements Tag, Factory\StaticMethod
             // Starting line / Number of lines / Description
             if (preg_match('/^([1-9]\d*)(?:\s+((?1))\s*)?(.*)$/sux', $matches[3], $contentMatches)) {
                 $startingLine = (int) $contentMatches[1];
-                if (isset($contentMatches[2]) && $contentMatches[2] !== '') {
+                if (isset($contentMatches[2])) {
                     $lineCount = (int) $contentMatches[2];
                 }
 
