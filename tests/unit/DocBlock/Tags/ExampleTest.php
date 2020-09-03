@@ -94,6 +94,52 @@ class ExampleTest extends TestCase
     }
 
     /**
+     * @covers ::create
+     * @covers ::__toString
+     */
+    public function testStringRepresentationIsReturned() : void
+    {
+        $tag = Example::create('"example1.php" 10 5 test text');
+
+        $this->assertSame('"example1.php" 10 5 test text', (string) $tag);
+
+        // ---
+
+        $tag = Example::create('file://example1.php');
+
+        $this->assertSame('file://example1.php', (string) $tag);
+
+        // ---
+
+        $tag = Example::create('0 foo bar');
+
+        $this->assertSame('0 foo bar', (string) $tag);
+
+        // ---
+
+        $tag = Example::create('$redisCluster->pttl(\'key\');');
+
+        $this->assertSame('$redisCluster->pttl(\'key\');', (string) $tag);
+
+        // ---
+
+        $tag = Example::create(' "example1.php" 10 5 test text ');
+
+        $this->assertSame('"example1.php" 10 5 test text', (string) $tag);
+    }
+
+    /**
+     * @covers ::create
+     * @covers ::__toString
+     */
+    public function testStringRepresentationIsReturnedWithoutDescription() : void
+    {
+        $tag = Example::create('');
+
+        $this->assertSame('', (string) $tag);
+    }
+
+    /**
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\BaseTag
      *
      * @dataProvider tagContentProvider

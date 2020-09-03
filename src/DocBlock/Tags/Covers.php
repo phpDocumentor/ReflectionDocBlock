@@ -49,7 +49,7 @@ final class Covers extends BaseTag implements Factory\StaticMethod
         ?FqsenResolver $resolver = null,
         ?TypeContext $context = null
     ) : self {
-        Assert::notEmpty($body);
+        Assert::stringNotEmpty($body);
         Assert::notNull($descriptionFactory);
         Assert::notNull($resolver);
 
