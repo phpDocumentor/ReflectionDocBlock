@@ -154,9 +154,15 @@ final class Example implements Tag, Factory\StaticMethod
         $content = (string) $this->content;
 
         return $filePath
-            . ($startingLine !== '' ? ($filePath !== '' ? ' ' : '') . $startingLine : '')
-            . ($lineCount !== '' ? ($filePath !== '' || $startingLine !== '' ? ' ' : '') . $lineCount : '')
-            . ($content !== '' ? ($filePath !== '' || $startingLine !== '' || $lineCount !== '' ? ' ' : '') . $content : '');
+            . ($startingLine !== ''
+                ? ($filePath !== '' ? ' ' : '') . $startingLine
+                : '')
+            . ($lineCount !== ''
+                ? ($filePath !== '' || $startingLine !== '' ? ' ' : '') . $lineCount
+                : '')
+            . ($content !== ''
+                ? ($filePath !== '' || $startingLine !== '' || $lineCount !== '' ? ' ' : '') . $content
+                : '');
     }
 
     /**

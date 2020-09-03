@@ -149,7 +149,7 @@ final class Param extends TagWithType implements Factory\StaticMethod
         $variableName = '';
         if ($this->variableName) {
             $variableName .= ($this->isReference ? '&' : '') . ($this->isVariadic ? '...' : '');
-            $variableName .= ($this->variableName ? '$' . $this->variableName : '');
+            $variableName .= '$' . $this->variableName;
         }
 
         $type = (string) $this->type;

@@ -212,6 +212,7 @@ final class Method extends BaseTag implements Factory\StaticMethod
         foreach ($this->arguments as $argument) {
             $arguments[] = $argument['type'] . ' $' . $argument['name'];
         }
+
         $argumentStr = '(' . implode(', ', $arguments) . ')';
 
         if ($this->description) {

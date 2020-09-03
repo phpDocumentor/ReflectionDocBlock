@@ -105,7 +105,7 @@ final class PropertyRead extends TagWithType implements Factory\StaticMethod
         }
 
         if ($this->variableName) {
-            $variableName = ($this->variableName ? '$' . $this->variableName : '');
+            $variableName = '$' . $this->variableName;
         } else {
             $variableName = '';
         }

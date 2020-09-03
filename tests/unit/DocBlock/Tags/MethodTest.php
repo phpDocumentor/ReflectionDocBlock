@@ -277,7 +277,7 @@ class MethodTest extends TestCase
      */
     public function testStringRepresentationIsReturnedWithoutDescription() : void
     {
-        $fixture   = new Method('myMethod', [], null, false, new Description(''));
+        $fixture = new Method('myMethod', [], null, false, new Description(''));
 
         $this->assertSame(
             'void myMethod()',
