@@ -46,7 +46,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Quick check code coverage level
-        run: php tests/coverage-checker.php 89
+        run: php tests/coverage-checker.php 91
 
   phpunit:
     name: Unit tests for PHP version ${{ matrix.php-versions }} on ${{ matrix.operating-system }}

@@ -92,6 +92,14 @@ final class See extends BaseTag implements Factory\StaticMethod
      */
     public function __toString() : string
     {
-        return $this->refers . ($this->description ? ' ' . $this->description->render() : '');
+        if ($this->description) {
+            $description = $this->description->render();
+        } else {
+            $description = '';
+        }
+
+        $refers = (string) $this->refers;
+
+        return $refers . ($description !== '' ? ($refers !== '' ? ' ' : '') . $description : '');
     }
 }

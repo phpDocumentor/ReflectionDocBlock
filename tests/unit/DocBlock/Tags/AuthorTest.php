@@ -116,6 +116,23 @@ class AuthorTest extends TestCase
         $fixture = new Author('Mike van Riel', 'mike@phpdoc.org');
 
         $this->assertSame('Mike van Riel <mike@phpdoc.org>', (string) $fixture);
+
+        // ---
+
+        $fixture = new Author('0', 'zero@foo.bar');
+
+        $this->assertSame('0 <zero@foo.bar>', (string) $fixture);
+    }
+
+    /**
+     * @covers ::__construct
+     * @covers ::__toString
+     */
+    public function testStringRepresentationIsReturnedWithoutName() : void
+    {
+        $fixture = new Author('', 'mike@phpdoc.org');
+
+        $this->assertSame('<mike@phpdoc.org>', (string) $fixture);
     }
 
     /**

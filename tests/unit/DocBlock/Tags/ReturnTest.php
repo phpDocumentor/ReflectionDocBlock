@@ -123,6 +123,25 @@ class ReturnTest extends TestCase
     }
 
     /**
+     * @uses   \phpDocumentor\Reflection\DocBlock\Description
+     *
+     * @covers ::__construct
+     * @covers ::__toString
+     */
+    public function testStringRepresentationIsReturnedWithoutDescription() : void
+    {
+        $fixture = new Return_(new String_());
+
+        $this->assertSame('string', (string) $fixture);
+
+        // ---
+
+        $fixture = new Return_(new String_(), new Description(''));
+
+        $this->assertSame('string', (string) $fixture);
+    }
+
+    /**
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\Return_::<public>
      * @uses \phpDocumentor\Reflection\DocBlock\DescriptionFactory
      * @uses \phpDocumentor\Reflection\TypeResolver

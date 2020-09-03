@@ -120,6 +120,25 @@ class LinkTest extends TestCase
     }
 
     /**
+     * @uses   \phpDocumentor\Reflection\DocBlock\Description
+     *
+     * @covers ::__construct
+     * @covers ::__toString
+     */
+    public function testStringRepresentationIsReturnedWithoutDescription() : void
+    {
+        $fixture = new Link('http://this.is.my/link');
+
+        $this->assertSame('http://this.is.my/link', (string) $fixture);
+
+        // ---
+
+        $fixture = new Link('http://this.is.my/link', new Description(''));
+
+        $this->assertSame('http://this.is.my/link', (string) $fixture);
+    }
+
+    /**
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\Link::<public>
      * @uses \phpDocumentor\Reflection\DocBlock\DescriptionFactory
      * @uses \phpDocumentor\Reflection\DocBlock\Description

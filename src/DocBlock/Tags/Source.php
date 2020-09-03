@@ -96,8 +96,22 @@ final class Source extends BaseTag implements Factory\StaticMethod
 
     public function __toString() : string
     {
-        return $this->startingLine
-            . ($this->lineCount !== null ? ' ' . $this->lineCount : '')
-            . ($this->description ? ' ' . (string) $this->description : '');
+        if ($this->description) {
+            $description = $this->description->render();
+        } else {
+            $description = '';
+        }
+
+        $startingLine = (string) $this->startingLine;
+
+        $lineCount = $this->lineCount !== null ? '' . $this->lineCount : '';
+
+        return $startingLine
+            . ($lineCount !== ''
+                ? ($startingLine || $startingLine === '0' ? ' ' : '') . $lineCount
+                : '')
+            . ($description !== ''
+                ? ($startingLine || $startingLine === '0' || $lineCount !== '' ? ' ' : '') . $description
+                : '');
     }
 }

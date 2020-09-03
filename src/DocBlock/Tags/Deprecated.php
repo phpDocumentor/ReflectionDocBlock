@@ -95,6 +95,14 @@ final class Deprecated extends BaseTag implements Factory\StaticMethod
      */
     public function __toString() : string
     {
-        return ($this->version ?? '') . ($this->description ? ' ' . $this->description->render() : '');
+        if ($this->description) {
+            $description = $this->description->render();
+        } else {
+            $description = '';
+        }
+
+        $version = (string) $this->version;
+
+        return $version . ($description !== '' ? ($version !== '' ? ' ' : '') . $description : '');
     }
 }

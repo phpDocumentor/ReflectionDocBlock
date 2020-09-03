@@ -152,6 +152,40 @@ class CoversTest extends TestCase
     }
 
     /**
+     * @covers ::__construct
+     * @covers ::__toString
+     */
+    public function testStringRepresentationIsReturnedWithoutDescription() : void
+    {
+        $fixture = new Covers(new Fqsen('\\'));
+
+        $this->assertSame('\\', (string) $fixture);
+
+        // ---
+
+        $fixture = new Covers(new Fqsen('\DateTime'));
+
+        $this->assertSame('\DateTime', (string) $fixture);
+
+        // ---
+
+        $fixture = new Covers(new Fqsen('\DateTime'), new Description(''));
+
+        $this->assertSame('\DateTime', (string) $fixture);
+    }
+
+    /**
+     * @covers ::__construct
+     * @covers ::__toString
+     */
+    public function testStringRepresentationIsReturnedWithDescription() : void
+    {
+        $fixture = new Covers(new Fqsen('\DateTime'), new Description('My Description'));
+
+        $this->assertSame('\DateTime My Description', (string) $fixture);
+    }
+
+    /**
      * @covers ::create
      */
     public function testFactoryMethodFailsIfBodyIsNotEmpty() : void

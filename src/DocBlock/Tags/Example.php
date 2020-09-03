@@ -45,9 +45,14 @@ final class Example implements Tag, Factory\StaticMethod
     /** @var string|null */
     private $content;
 
-    public function __construct(string $filePath, bool $isURI, int $startingLine, int $lineCount, ?string $content)
-    {
-        Assert::notEmpty($filePath);
+    public function __construct(
+        string $filePath,
+        bool $isURI,
+        int $startingLine,
+        int $lineCount,
+        ?string $content
+    ) {
+        Assert::stringNotEmpty($filePath);
         Assert::greaterThanEq($startingLine, 1);
         Assert::greaterThanEq($lineCount, 0);
 
@@ -64,7 +69,7 @@ final class Example implements Tag, Factory\StaticMethod
     public function getContent() : string
     {
         if ($this->content === null || $this->content === '') {
-            $filePath = '"' . $this->filePath . '"';
+            $filePath = $this->filePath;
             if ($this->isURI) {
                 $filePath = $this->isUriRelative($this->filePath)
                     ? str_replace('%2F', '/', rawurlencode($this->filePath))
@@ -85,7 +90,7 @@ final class Example implements Tag, Factory\StaticMethod
     public static function create(string $body) : ?Tag
     {
         // File component: File path in quotes or File URI / Source information
-        if (!preg_match('/^(?:\"([^\"]+)\"|(\S+))(?:\s+(.*))?$/sux', $body, $matches)) {
+        if (!preg_match('/^\s*(?:(\"[^\"]+\")|(\S+))(?:\s+(.*))?$/sux', $body, $matches)) {
             return null;
         }
 
@@ -134,7 +139,7 @@ final class Example implements Tag, Factory\StaticMethod
      */
     public function getFilePath() : string
     {
-        return $this->filePath;
+        return trim($this->filePath, '"');
     }
 
     /**
@@ -142,7 +147,22 @@ final class Example implements Tag, Factory\StaticMethod
      */
     public function __toString() : string
     {
-        return $this->filePath . ($this->content ? ' ' . $this->content : '');
+        $filePath = (string) $this->filePath;
+        $isDefaultLine = $this->startingLine === 1 && $this->lineCount === 0;
+        $startingLine = !$isDefaultLine ? (string) $this->startingLine : '';
+        $lineCount = !$isDefaultLine ? (string) $this->lineCount : '';
+        $content = (string) $this->content;
+
+        return $filePath
+            . ($startingLine !== ''
+                ? ($filePath !== '' ? ' ' : '') . $startingLine
+                : '')
+            . ($lineCount !== ''
+                ? ($filePath !== '' || $startingLine !== '' ? ' ' : '') . $lineCount
+                : '')
+            . ($content !== ''
+                ? ($filePath !== '' || $startingLine !== '' || $lineCount !== '' ? ' ' : '') . $content
+                : '');
     }
 
     /**

@@ -69,10 +69,12 @@ final class Var_ extends TagWithType implements Factory\StaticMethod
             array_unshift($parts, $firstPart);
         }
 
-        // if the next item starts with a $ or ...$ it must be the variable name
+        // if the next item starts with a $ it must be the variable name
         if (isset($parts[0]) && strpos($parts[0], '$') === 0) {
             $variableName = array_shift($parts);
-            array_shift($parts);
+            if ($type) {
+                array_shift($parts);
+            }
 
             Assert::notNull($variableName);
 
@@ -97,8 +99,22 @@ final class Var_ extends TagWithType implements Factory\StaticMethod
      */
     public function __toString() : string
     {
-        return ($this->type ? $this->type . ' ' : '')
-            . (empty($this->variableName) ? '' : '$' . $this->variableName)
-            . ($this->description ? ' ' . $this->description : '');
+        if ($this->description) {
+            $description = $this->description->render();
+        } else {
+            $description = '';
+        }
+
+        if ($this->variableName) {
+            $variableName = '$' . $this->variableName;
+        } else {
+            $variableName = '';
+        }
+
+        $type = (string) $this->type;
+
+        return $type
+            . ($variableName !== '' ? ($type !== '' ? ' ' : '') . $variableName : '')
+            . ($description !== '' ? ($type !== '' || $variableName !== '' ? ' ' : '') . $description : '');
     }
 }

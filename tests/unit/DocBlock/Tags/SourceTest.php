@@ -138,6 +138,32 @@ class SourceTest extends TestCase
     }
 
     /**
+     * @uses   \phpDocumentor\Reflection\DocBlock\Description
+     * @uses   \phpDocumentor\Reflection\Types\String_
+     *
+     * @covers ::__construct
+     * @covers ::__toString
+     */
+    public function testStringRepresentationIsReturnedWithoutDescription() : void
+    {
+        $fixture = new Source(1);
+
+        $this->assertSame('1', (string) $fixture);
+
+        // ---
+
+        $fixture = new Source(1, 0);
+
+        $this->assertSame('1 0', (string) $fixture);
+
+        // ---
+
+        $fixture = new Source(1, 10, new Description(''));
+
+        $this->assertSame('1 10', (string) $fixture);
+    }
+
+    /**
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\Source::<public>
      * @uses \phpDocumentor\Reflection\DocBlock\DescriptionFactory
      * @uses \phpDocumentor\Reflection\DocBlock\Description

@@ -65,6 +65,14 @@ final class Link extends BaseTag implements Factory\StaticMethod
      */
     public function __toString() : string
     {
-        return $this->link . ($this->description ? ' ' . $this->description->render() : '');
+        if ($this->description) {
+            $description = $this->description->render();
+        } else {
+            $description = '';
+        }
+
+        $link = (string) $this->link;
+
+        return $link . ($description !== '' ? ($link !== '' ? ' ' : '') . $description : '');
     }
 }

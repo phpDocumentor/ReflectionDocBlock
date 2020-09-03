@@ -269,6 +269,36 @@ class MethodTest extends TestCase
     }
 
     /**
+     * @uses   \phpDocumentor\Reflection\DocBlock\Description
+     * @uses   \phpDocumentor\Reflection\DocBlock\Tags\Method::isStatic
+     *
+     * @covers ::__construct
+     * @covers ::__toString
+     */
+    public function testStringRepresentationIsReturnedWithoutDescription() : void
+    {
+        $fixture = new Method('myMethod', [], null, false, new Description(''));
+
+        $this->assertSame(
+            'void myMethod()',
+            (string) $fixture
+        );
+
+        // ---
+
+        $arguments = [
+            ['name' => 'argument1', 'type' => new String_()],
+            ['name' => 'argument2', 'type' => new Object_()],
+        ];
+        $fixture   = new Method('myMethod', $arguments, new Void_(), true);
+
+        $this->assertSame(
+            'static void myMethod(string $argument1, object $argument2)',
+            (string) $fixture
+        );
+    }
+
+    /**
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\Method::<public>
      * @uses \phpDocumentor\Reflection\DocBlock\DescriptionFactory
      * @uses \phpDocumentor\Reflection\TypeResolver

@@ -122,6 +122,25 @@ class UsesTest extends TestCase
     }
 
     /**
+     * @uses   \phpDocumentor\Reflection\DocBlock\Description
+     *
+     * @covers ::__construct
+     * @covers ::__toString
+     */
+    public function testStringRepresentationIsReturnedWithoutDescription() : void
+    {
+        $fixture = new Uses(new Fqsen('\DateTime'));
+
+        $this->assertSame('\DateTime', (string) $fixture);
+
+        // ---
+
+        $fixture = new Uses(new Fqsen('\DateTime'), new Description(''));
+
+        $this->assertSame('\DateTime', (string) $fixture);
+    }
+
+    /**
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\Uses::<public>
      * @uses \phpDocumentor\Reflection\DocBlock\DescriptionFactory
      * @uses \phpDocumentor\Reflection\FqsenResolver
