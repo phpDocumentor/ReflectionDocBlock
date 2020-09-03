@@ -107,7 +107,11 @@ final class Source extends BaseTag implements Factory\StaticMethod
         $lineCount = $this->lineCount !== null ? '' . $this->lineCount : '';
 
         return $startingLine
-            . ($lineCount !== '' ? ($startingLine || $startingLine === '0' ? ' ' : '') . $lineCount : '')
-            . ($description !== '' ? ($startingLine || $startingLine === '0' || $lineCount !== '' ? ' ' : '') . $description : '');
+            . ($lineCount !== ''
+                ? ($startingLine || $startingLine === '0' ? ' ' : '') . $lineCount
+                : '')
+            . ($description !== ''
+                ? ($startingLine || $startingLine === '0' || $lineCount !== '' ? ' ' : '') . $description
+                : '');
     }
 }
