@@ -80,6 +80,30 @@ class StandardTagFactoryTest extends TestCase
 
     /**
      * @uses \phpDocumentor\Reflection\DocBlock\StandardTagFactory::addService
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Generic
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\BaseTag
+     * @uses \phpDocumentor\Reflection\DocBlock\Description
+     *
+     * @covers ::__construct
+     * @covers ::create
+     */
+    public function testCreatingAGenericTagWithDescriptionText() : void
+    {
+        $expectedTagName         = 'unknown-tag';
+        $expectedDescriptionText = ' foo Bar 123 ';
+        $context                 = new Context('');
+
+        $tagFactory = new StandardTagFactory(new FqsenResolver());
+        $tagFactory->addService(new DescriptionFactory($tagFactory), DescriptionFactory::class);
+
+        $tag = $tagFactory->create('@' . $expectedTagName . $expectedDescriptionText, $context);
+
+        $this->assertInstanceOf(Generic::class, $tag);
+        $this->assertSame('foo Bar 123', $tag . '');
+    }
+
+    /**
+     * @uses \phpDocumentor\Reflection\DocBlock\StandardTagFactory::addService
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\Author
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\BaseTag
      *
@@ -144,6 +168,90 @@ class StandardTagFactoryTest extends TestCase
 
         $this->assertInstanceOf(Author::class, $tag);
         $this->assertSame('author', $tag->getName());
+    }
+
+    /**
+     * @uses \phpDocumentor\Reflection\DocBlock\StandardTagFactory::addService
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Author
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\BaseTag
+     *
+     * @covers ::__construct
+     * @covers ::create
+     */
+    public function testPassingYourOwnSetOfTagHandlersWithGermanChars() : void
+    {
+        $typeResolver       = new TypeResolver();
+        $fqsenResolver      = new FqsenResolver();
+        $tagFactory         = new StandardTagFactory($fqsenResolver);
+        $descriptionFactory = new DescriptionFactory($tagFactory);
+        $context            = new Context('');
+
+        $tagFactory = new StandardTagFactory(
+            $fqsenResolver,
+            ['my-täg' => Author::class]
+        );
+
+        $tag = $tagFactory->create('@my-täg foo bar ', $context);
+
+        $this->assertInstanceOf(Author::class, $tag);
+        $this->assertSame('author', $tag->getName());
+        $this->assertSame('foo bar', $tag . '');
+    }
+
+    /**
+     * @uses \phpDocumentor\Reflection\DocBlock\StandardTagFactory::addService
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Author
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\BaseTag
+     *
+     * @covers ::__construct
+     * @covers ::create
+     */
+    public function testPassingYourOwnSetOfTagHandlersWithoutComment() : void
+    {
+        $typeResolver       = new TypeResolver();
+        $fqsenResolver      = new FqsenResolver();
+        $tagFactory         = new StandardTagFactory($fqsenResolver);
+        $descriptionFactory = new DescriptionFactory($tagFactory);
+        $context            = new Context('');
+
+        $tagFactory = new StandardTagFactory(
+            $fqsenResolver,
+            ['my-täg' => Author::class]
+        );
+
+        $tag = $tagFactory->create('@my-täg', $context);
+
+        $this->assertInstanceOf(Author::class, $tag);
+        $this->assertSame('author', $tag->getName());
+    }
+
+    /**
+     * @uses \phpDocumentor\Reflection\DocBlock\StandardTagFactory::addService
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Author
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\BaseTag
+     *
+     * @covers ::__construct
+     * @covers ::create
+     */
+    public function testPassingYourOwnSetOfTagHandlersWithEmptyComment() : void
+    {
+        $this->expectException('InvalidArgumentException');
+        $this->expectExceptionMessage(
+            'The tag "@my-täg " does not seem to be wellformed, please check it for errors'
+        );
+
+        $typeResolver       = new TypeResolver();
+        $fqsenResolver      = new FqsenResolver();
+        $tagFactory         = new StandardTagFactory($fqsenResolver);
+        $descriptionFactory = new DescriptionFactory($tagFactory);
+        $context            = new Context('');
+
+        $tagFactory = new StandardTagFactory(
+            $fqsenResolver,
+            ['my-täg' => Author::class]
+        );
+
+        $tag = $tagFactory->create('@my-täg ', $context);
     }
 
     /**
