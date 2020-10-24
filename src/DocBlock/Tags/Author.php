@@ -87,8 +87,19 @@ final class Author extends BaseTag implements Factory\StaticMethod
      */
     public static function create(string $body) : ?self
     {
-        $splitTagContent = preg_match('/^([^\<]*)(?:\<([^\>]*)\>)?$/u', $body, $matches);
-        if (!$splitTagContent) {
+        $startExists = strpos($body, '<') !== false;
+
+        // we do not need the complex regex, if "<" and ">" is not present
+        if (
+            $startExists
+            &&
+            strpos($body, '>') !== false
+        ) {
+            preg_match('/^([^\<]*)(?:\<([^\>]*)\>)?$/u', $body, $matches);
+        } elseif (!$startExists) {
+            $matches = [];
+            $matches[1] = $body;
+        } else {
             return null;
         }
 
