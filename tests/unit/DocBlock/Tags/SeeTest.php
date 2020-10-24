@@ -16,7 +16,9 @@ namespace phpDocumentor\Reflection\DocBlock\Tags;
 use Mockery as m;
 use phpDocumentor\Reflection\DocBlock\Description;
 use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
+use phpDocumentor\Reflection\DocBlock\StandardTagFactory;
 use phpDocumentor\Reflection\DocBlock\Tags\Reference\Fqsen as FqsenRef;
+use phpDocumentor\Reflection\DocBlock\Tags\Reference\Fqsen as TagsFqsen;
 use phpDocumentor\Reflection\DocBlock\Tags\Reference\Url as UrlRef;
 use phpDocumentor\Reflection\Fqsen;
 use phpDocumentor\Reflection\FqsenResolver;
@@ -249,6 +251,36 @@ class SeeTest extends TestCase
         $this->assertInstanceOf(UrlRef::class, $fixture->getReference());
         $this->assertSame('https://test.org', (string) $fixture->getReference());
         $this->assertSame($description, $fixture->getDescription());
+    }
+
+    /**
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\See::<public>
+     * @uses \phpDocumentor\Reflection\DocBlock\DescriptionFactory
+     * @uses \phpDocumentor\Reflection\FqsenResolver
+     * @uses \phpDocumentor\Reflection\DocBlock\Description
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Reference\Url
+     * @uses \phpDocumentor\Reflection\Types\Context
+     *
+     * @covers ::create
+     */
+    public function testFactoryMethodWithoutUrl() : void
+    {
+        $fqsenResolver      = new FqsenResolver();
+        $tagFactory         = new StandardTagFactory($fqsenResolver);
+        $descriptionFactory = new DescriptionFactory($tagFactory);
+        $context            = new Context('');
+
+        $fixture = See::create(
+            'Foo My Description ',
+            $fqsenResolver,
+            $descriptionFactory,
+            $context
+        );
+
+        $this->assertSame('\Foo My Description ', (string) $fixture);
+        $this->assertInstanceOf(TagsFqsen::class, $fixture->getReference());
+        $this->assertSame('\Foo', (string) $fixture->getReference());
+        $this->assertSame('My Description ', $fixture->getDescription() . '');
     }
 
     /**
