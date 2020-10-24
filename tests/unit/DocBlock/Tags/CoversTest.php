@@ -17,8 +17,6 @@ use Mockery as m;
 use phpDocumentor\Reflection\DocBlock\Description;
 use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
 use phpDocumentor\Reflection\DocBlock\StandardTagFactory;
-use phpDocumentor\Reflection\DocBlock\Tags\Reference\Fqsen as FqsenRef;
-use phpDocumentor\Reflection\DocBlock\Tags\Reference\Fqsen as TagsFqsen;
 use phpDocumentor\Reflection\Fqsen;
 use phpDocumentor\Reflection\FqsenResolver;
 use phpDocumentor\Reflection\Types\Context;
