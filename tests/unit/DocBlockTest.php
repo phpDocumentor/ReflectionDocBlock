@@ -14,8 +14,10 @@ declare(strict_types=1);
 namespace phpDocumentor\Reflection;
 
 use Mockery as m;
+use phpDocumentor\Reflection\DocBlock\Tags\Author;
 use phpDocumentor\Reflection\DocBlock\Tags\Deprecated;
 use phpDocumentor\Reflection\Types\Context;
+use phpDocumentor\Reflection\Types\String_;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -136,6 +138,28 @@ class DocBlockTest extends TestCase
 
         $this->assertSame([$tag2, $tag4], $fixture->getTagsByName('abcd'));
         $this->assertSame([], $fixture->getTagsByName('Ebcd'));
+    }
+
+    /**
+     * @uses \phpDocumentor\Reflection\DocBlock::getTags
+     * @uses \phpDocumentor\Reflection\DocBlock\Description
+     * @uses \phpDocumentor\Reflection\DocBlock\Tag
+     *
+     * @covers ::__construct
+     * @covers ::getTagsWithTypeByName
+     */
+    public function testFindTagsWithTypeInDocBlockByName() : void
+    {
+        $tag1 = new DocBlock\Tags\Var_('foo', new String_());
+        $tag2 = new DocBlock\Tags\Var_('bar', new String_());
+        $tag3 = new DocBlock\Tags\Return_(new String_());
+        $tag4 = new DocBlock\Tags\Author('lall', '');
+
+        $fixture = new DocBlock('', null, [$tag1, $tag2, $tag3, $tag4]);
+
+        $this->assertSame([$tag1, $tag2], $fixture->getTagsWithTypeByName('var'));
+        $this->assertSame([$tag3], $fixture->getTagsWithTypeByName('return'));
+        $this->assertSame([], $fixture->getTagsWithTypeByName('author'));
     }
 
     /**
