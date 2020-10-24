@@ -175,9 +175,11 @@ final class DocBlock
         $result = [];
 
         foreach ($this->getTagsByName($name) as $tag) {
-            if ($tag instanceof TagWithType) {
-                $result[] = $tag;
+            if (!$tag instanceof TagWithType) {
+                continue;
             }
+
+            $result[] = $tag;
         }
 
         return $result;
