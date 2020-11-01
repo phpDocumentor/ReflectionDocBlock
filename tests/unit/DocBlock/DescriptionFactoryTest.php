@@ -15,9 +15,9 @@ namespace phpDocumentor\Reflection\DocBlock;
 
 use Exception;
 use Mockery as m;
+use phpDocumentor\Reflection\DocBlock\Tags\Formatter\AsisFormatter;
 use phpDocumentor\Reflection\DocBlock\Tags\InvalidTag;
 use phpDocumentor\Reflection\DocBlock\Tags\Link as LinkTag;
-use phpDocumentor\Reflection\DocBlock\Tags\Formatter\AsisFormatter;
 use phpDocumentor\Reflection\Types\Context;
 use PHPUnit\Framework\TestCase;
 
@@ -245,7 +245,7 @@ DESCRIPTION;
 
         $factory     = new DescriptionFactory($tagFactory);
         $description = $factory->create($contents, $context);
-        $formatter = new AsisFormatter;
+        $formatter = new AsisFormatter();
 
         $this->assertSame($contents, $description->render($formatter));
         $this->assertSame('This description has a %1$s', $description->getBodyTemplate());

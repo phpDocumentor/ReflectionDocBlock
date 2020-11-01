@@ -127,9 +127,9 @@ class LinkTest extends TestCase
      */
     public function testStringRepresentationIsReturnedWithBracesAndTrailingSpace() : void
     {
-        $fixture = new Link('http://this.is.my/link', new Description('Description with {braces} and {trailing space} '));
+        $fixture = new Link('http://this.is.my/link', new Description('Description has {braces} and trailing space '));
 
-        $this->assertSame('http://this.is.my/link Description with {braces} and {trailing space} ', (string) $fixture);
+        $this->assertSame('http://this.is.my/link Description has {braces} and trailing space ', (string) $fixture);
     }
 
     /**
