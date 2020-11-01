@@ -48,7 +48,6 @@ use function ltrim;
 use function preg_match;
 use function strpos;
 
-
 /**
  * Creates a Tag object given the contents of a tag.
  *
