@@ -17,6 +17,7 @@ use Exception;
 use Mockery as m;
 use phpDocumentor\Reflection\DocBlock\Tags\InvalidTag;
 use phpDocumentor\Reflection\DocBlock\Tags\Link as LinkTag;
+use phpDocumentor\Reflection\DocBlock\Tags\Formatter\AsisFormatter;
 use phpDocumentor\Reflection\Types\Context;
 use PHPUnit\Framework\TestCase;
 
@@ -224,7 +225,7 @@ DESCRIPTION;
      * @uses \phpDocumentor\Reflection\DocBlock\Description
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\Link
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\BaseTag
-     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Formatter\PassthroughFormatter
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Formatter\AsisFormatter
      * @uses \phpDocumentor\Reflection\Types\Context
      *
      * @covers ::__construct
@@ -236,17 +237,17 @@ DESCRIPTION;
         $context    = new Context('');
         $tagFactory = m::mock(TagFactory::class);
         $tagFactory->shouldReceive('create')
-            ->twice()
             ->andReturnValues(
                 [
-                    new LinkTag('http://phpdoc.org/', new Description('This contains {braces}')),
+                    new LinkTag('http://phpdoc.org/', new Description('This contains {braces} ')),
                 ]
             );
 
         $factory     = new DescriptionFactory($tagFactory);
         $description = $factory->create($contents, $context);
+        $formatter = new AsisFormatter;
 
-        $this->assertSame($contents, $description->render());
+        $this->assertSame($contents, $description->render($formatter));
         $this->assertSame('This description has a %1$s', $description->getBodyTemplate());
     }
 

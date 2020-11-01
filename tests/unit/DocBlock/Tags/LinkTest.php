@@ -125,6 +125,19 @@ class LinkTest extends TestCase
      * @covers ::__construct
      * @covers ::__toString
      */
+    public function testStringRepresentationIsReturnedWithBracesAndTrailingSpace() : void
+    {
+        $fixture = new Link('http://this.is.my/link', new Description('Description with {braces} and {trailing space} '));
+
+        $this->assertSame('http://this.is.my/link Description with {braces} and {trailing space} ', (string) $fixture);
+    }
+
+    /**
+     * @uses   \phpDocumentor\Reflection\DocBlock\Description
+     *
+     * @covers ::__construct
+     * @covers ::__toString
+     */
     public function testStringRepresentationIsReturnedWithoutDescription() : void
     {
         $fixture = new Link('http://this.is.my/link');

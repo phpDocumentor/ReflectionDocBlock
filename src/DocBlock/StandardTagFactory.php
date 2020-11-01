@@ -145,7 +145,7 @@ final class StandardTagFactory implements TagFactory
 
         [$tagName, $tagBody] = $this->extractTagParts($tagLine);
 
-        return $this->createTag(trim($tagBody), $tagName, $context);
+        return $this->createTag(ltrim($tagBody), $tagName, $context);
     }
 
     /**
