@@ -44,9 +44,10 @@ use function array_slice;
 use function call_user_func_array;
 use function count;
 use function get_class;
+use function ltrim;
 use function preg_match;
 use function strpos;
-use function ltrim;
+
 
 /**
  * Creates a Tag object given the contents of a tag.
