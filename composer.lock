@@ -181,12 +181,12 @@
             "version": "1.9.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/webmozart/assert.git",
+                "url": "https://github.com/webmozarts/assert.git",
                 "reference": "bafc69caeb4d49c39fd0779086c03a3738cbb389"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webmozart/assert/zipball/bafc69caeb4d49c39fd0779086c03a3738cbb389",
+                "url": "https://api.github.com/repos/webmozarts/assert/zipball/bafc69caeb4d49c39fd0779086c03a3738cbb389",
                 "reference": "bafc69caeb4d49c39fd0779086c03a3738cbb389",
                 "shasum": ""
             },
@@ -276,16 +276,16 @@
         },
         {
             "name": "mockery/mockery",
-            "version": "1.3.3",
+            "version": "1.3.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mockery/mockery.git",
-                "reference": "60fa2f67f6e4d3634bb4a45ff3171fa52215800d"
+                "reference": "31467aeb3ca3188158613322d66df81cedd86626"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mockery/mockery/zipball/60fa2f67f6e4d3634bb4a45ff3171fa52215800d",
-                "reference": "60fa2f67f6e4d3634bb4a45ff3171fa52215800d",
+                "url": "https://api.github.com/repos/mockery/mockery/zipball/31467aeb3ca3188158613322d66df81cedd86626",
+                "reference": "31467aeb3ca3188158613322d66df81cedd86626",
                 "shasum": ""
             },
             "require": {
@@ -337,7 +337,7 @@
                 "test double",
                 "testing"
             ],
-            "time": "2020-08-11T18:10:21+00:00"
+            "time": "2021-02-24T09:51:00+00:00"
         }
     ],
     "aliases": [],
