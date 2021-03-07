@@ -16,6 +16,8 @@ namespace phpDocumentor\Reflection\DocBlock\Tags;
 use Mockery as m;
 use phpDocumentor\Reflection\DocBlock\Description;
 use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
+use phpDocumentor\Reflection\DocBlock\StandardTagFactory;
+use phpDocumentor\Reflection\FqsenResolver;
 use phpDocumentor\Reflection\Types\Context;
 use PHPUnit\Framework\TestCase;
 
@@ -161,6 +163,60 @@ class LinkTest extends TestCase
         $this->assertSame('http://this.is.my/link My Description', (string) $fixture);
         $this->assertSame($links, $fixture->getLink());
         $this->assertSame($description, $fixture->getDescription());
+    }
+
+    /**
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\See::<public>
+     * @uses \phpDocumentor\Reflection\DocBlock\DescriptionFactory
+     * @uses \phpDocumentor\Reflection\FqsenResolver
+     * @uses \phpDocumentor\Reflection\DocBlock\Description
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Reference\Url
+     * @uses \phpDocumentor\Reflection\Types\Context
+     *
+     * @covers ::create
+     */
+    public function testFactoryMethodWithoutSpaceBeforeUrl() : void
+    {
+        $fqsenResolver      = new FqsenResolver();
+        $tagFactory         = new StandardTagFactory($fqsenResolver);
+        $descriptionFactory = new DescriptionFactory($tagFactory);
+        $context            = new Context('');
+
+        $fixture = Link::create(
+            'http://this.is.my/link My Description ',
+            $descriptionFactory,
+            $context
+        );
+
+        $this->assertSame('http://this.is.my/link My Description ', (string) $fixture);
+        $this->assertSame('My Description ', $fixture->getDescription() . '');
+    }
+
+    /**
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\See::<public>
+     * @uses \phpDocumentor\Reflection\DocBlock\DescriptionFactory
+     * @uses \phpDocumentor\Reflection\FqsenResolver
+     * @uses \phpDocumentor\Reflection\DocBlock\Description
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Reference\Url
+     * @uses \phpDocumentor\Reflection\Types\Context
+     *
+     * @covers ::create
+     */
+    public function testFactoryMethodWithSpaceBeforeUrl() : void
+    {
+        $fqsenResolver      = new FqsenResolver();
+        $tagFactory         = new StandardTagFactory($fqsenResolver);
+        $descriptionFactory = new DescriptionFactory($tagFactory);
+        $context            = new Context('');
+
+        $fixture = Link::create(
+            ' http://this.is.my/link My Description ',
+            $descriptionFactory,
+            $context
+        );
+
+        $this->assertSame('http://this.is.my/link My Description ', (string) $fixture);
+        $this->assertSame('http://this.is.my/link My Description ', $fixture->getDescription() . '');
     }
 
     /**

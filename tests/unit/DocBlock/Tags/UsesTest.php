@@ -16,6 +16,7 @@ namespace phpDocumentor\Reflection\DocBlock\Tags;
 use Mockery as m;
 use phpDocumentor\Reflection\DocBlock\Description;
 use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
+use phpDocumentor\Reflection\DocBlock\StandardTagFactory;
 use phpDocumentor\Reflection\Fqsen;
 use phpDocumentor\Reflection\FqsenResolver;
 use phpDocumentor\Reflection\Types\Context;
@@ -129,6 +130,12 @@ class UsesTest extends TestCase
      */
     public function testStringRepresentationIsReturnedWithoutDescription() : void
     {
+        $fixture = new Uses(new Fqsen('\\'));
+
+        $this->assertSame('\\', (string) $fixture);
+
+        // ---
+
         $fixture = new Uses(new Fqsen('\DateTime'));
 
         $this->assertSame('\DateTime', (string) $fixture);
@@ -168,6 +175,66 @@ class UsesTest extends TestCase
         $this->assertSame('\DateTime My Description', (string) $fixture);
         $this->assertSame($fqsen, $fixture->getReference());
         $this->assertSame($description, $fixture->getDescription());
+    }
+
+    /**
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\See::<public>
+     * @uses \phpDocumentor\Reflection\DocBlock\DescriptionFactory
+     * @uses \phpDocumentor\Reflection\FqsenResolver
+     * @uses \phpDocumentor\Reflection\DocBlock\Description
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Reference\Url
+     * @uses \phpDocumentor\Reflection\Types\Context
+     *
+     * @covers ::create
+     */
+    public function testFactoryMethodWithoutSpaceBeforeClass() : void
+    {
+        $fqsenResolver      = new FqsenResolver();
+        $tagFactory         = new StandardTagFactory($fqsenResolver);
+        $descriptionFactory = new DescriptionFactory($tagFactory);
+        $context            = new Context('');
+
+        $fixture = Uses::create(
+            'Foo My Description ',
+            $fqsenResolver,
+            $descriptionFactory,
+            $context
+        );
+
+        $this->assertSame('\Foo My Description ', (string) $fixture);
+        $this->assertInstanceOf(Fqsen::class, $fixture->getReference());
+        $this->assertSame('\\Foo', (string) $fixture->getReference());
+        $this->assertSame('My Description ', $fixture->getDescription() . '');
+    }
+
+    /**
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\See::<public>
+     * @uses \phpDocumentor\Reflection\DocBlock\DescriptionFactory
+     * @uses \phpDocumentor\Reflection\FqsenResolver
+     * @uses \phpDocumentor\Reflection\DocBlock\Description
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Reference\Url
+     * @uses \phpDocumentor\Reflection\Types\Context
+     *
+     * @covers ::create
+     */
+    public function testFactoryMethodWithSpaceBeforeClass() : void
+    {
+        $fqsenResolver      = new FqsenResolver();
+        $tagFactory         = new StandardTagFactory($fqsenResolver);
+        $descriptionFactory = new DescriptionFactory($tagFactory);
+        $context            = new Context('');
+
+        $fixture = Uses::create(
+            ' Foo My Description ',
+            $fqsenResolver,
+            $descriptionFactory,
+            $context
+        );
+
+        $this->assertSame('\ Foo My Description ', (string) $fixture);
+        $this->assertInstanceOf(Fqsen::class, $fixture->getReference());
+        $this->assertSame('\\', (string) $fixture->getReference());
+        $this->assertSame('Foo My Description ', $fixture->getDescription() . '');
     }
 
     /**

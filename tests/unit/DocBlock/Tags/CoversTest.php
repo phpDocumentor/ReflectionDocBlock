@@ -16,6 +16,7 @@ namespace phpDocumentor\Reflection\DocBlock\Tags;
 use Mockery as m;
 use phpDocumentor\Reflection\DocBlock\Description;
 use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
+use phpDocumentor\Reflection\DocBlock\StandardTagFactory;
 use phpDocumentor\Reflection\Fqsen;
 use phpDocumentor\Reflection\FqsenResolver;
 use phpDocumentor\Reflection\Types\Context;
@@ -172,6 +173,35 @@ class CoversTest extends TestCase
         $fixture = new Covers(new Fqsen('\DateTime'), new Description(''));
 
         $this->assertSame('\DateTime', (string) $fixture);
+    }
+
+    /**
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\See::<public>
+     * @uses \phpDocumentor\Reflection\DocBlock\DescriptionFactory
+     * @uses \phpDocumentor\Reflection\FqsenResolver
+     * @uses \phpDocumentor\Reflection\DocBlock\Description
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Reference\Url
+     * @uses \phpDocumentor\Reflection\Types\Context
+     *
+     * @covers ::create
+     */
+    public function testFactoryMethodWithSpaceBeforeClass() : void
+    {
+        $fqsenResolver      = new FqsenResolver();
+        $tagFactory         = new StandardTagFactory($fqsenResolver);
+        $descriptionFactory = new DescriptionFactory($tagFactory);
+        $context            = new Context('');
+
+        $fixture = Covers::create(
+            'Foo My Description ',
+            $descriptionFactory,
+            $fqsenResolver,
+            $context
+        );
+
+        $this->assertSame('\Foo My Description ', (string) $fixture);
+        $this->assertSame('\Foo', (string) $fixture->getReference());
+        $this->assertSame('My Description ', $fixture->getDescription() . '');
     }
 
     /**
