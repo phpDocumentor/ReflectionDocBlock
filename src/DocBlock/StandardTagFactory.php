@@ -44,9 +44,9 @@ use function array_slice;
 use function call_user_func_array;
 use function count;
 use function get_class;
+use function ltrim;
 use function preg_match;
 use function strpos;
-use function trim;
 
 /**
  * Creates a Tag object given the contents of a tag.
@@ -145,7 +145,7 @@ final class StandardTagFactory implements TagFactory
 
         [$tagName, $tagBody] = $this->extractTagParts($tagLine);
 
-        return $this->createTag(trim($tagBody), $tagName, $context);
+        return $this->createTag(ltrim($tagBody), $tagName, $context);
     }
 
     /**

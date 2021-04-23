@@ -15,6 +15,7 @@ namespace phpDocumentor\Reflection\DocBlock;
 
 use Exception;
 use Mockery as m;
+use phpDocumentor\Reflection\DocBlock\Tags\Formatter\AsisFormatter;
 use phpDocumentor\Reflection\DocBlock\Tags\InvalidTag;
 use phpDocumentor\Reflection\DocBlock\Tags\Link as LinkTag;
 use phpDocumentor\Reflection\Types\Context;
@@ -218,6 +219,36 @@ DESCRIPTION;
         $description = $factory->create($contents, $context);
 
         $this->assertSame($contents, $description->render());
+    }
+
+    /**
+     * @uses \phpDocumentor\Reflection\DocBlock\Description
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Link
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\BaseTag
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Formatter\AsisFormatter
+     * @uses \phpDocumentor\Reflection\Types\Context
+     *
+     * @covers ::__construct
+     * @covers ::create
+     */
+    public function testDescriptionCanParseStringWithInlineTagAndBraces() : void
+    {
+        $contents   = 'This description has a {@link http://phpdoc.org/ This contains {braces} }';
+        $context    = new Context('');
+        $tagFactory = m::mock(TagFactory::class);
+        $tagFactory->shouldReceive('create')
+            ->andReturnValues(
+                [
+                    new LinkTag('http://phpdoc.org/', new Description('This contains {braces} ')),
+                ]
+            );
+
+        $factory     = new DescriptionFactory($tagFactory);
+        $description = $factory->create($contents, $context);
+        $formatter = new AsisFormatter();
+
+        $this->assertSame($contents, $description->render($formatter));
+        $this->assertSame('This description has a %1$s', $description->getBodyTemplate());
     }
 
     /**

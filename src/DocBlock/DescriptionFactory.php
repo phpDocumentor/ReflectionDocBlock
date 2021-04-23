@@ -117,7 +117,7 @@ class DescriptionFactory
                             \{
                         )
                         # Match content after the nested inline tag.
-                        [^{}]*
+                        [^{]*
                     )* # If there are more inline tags, match them as well. We use "*" since there may not be any
                        # nested inline tags.
                 )
