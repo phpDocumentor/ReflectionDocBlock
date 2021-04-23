@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace phpDocumentor\Reflection;
 
 use phpDocumentor\Reflection\DocBlock\Tag;
+use phpDocumentor\Reflection\DocBlock\Tags\TagWithType;
 use Webmozart\Assert\Assert;
 
 final class DocBlock
@@ -152,6 +153,29 @@ final class DocBlock
 
         foreach ($this->getTags() as $tag) {
             if ($tag->getName() !== $name) {
+                continue;
+            }
+
+            $result[] = $tag;
+        }
+
+        return $result;
+    }
+
+    /**
+     * Returns an array of tags with type matching the given name. If no tags are found
+     * an empty array is returned.
+     *
+     * @param string $name String to search by.
+     *
+     * @return TagWithType[]
+     */
+    public function getTagsWithTypeByName(string $name) : array
+    {
+        $result = [];
+
+        foreach ($this->getTagsByName($name) as $tag) {
+            if (!$tag instanceof TagWithType) {
                 continue;
             }
 
