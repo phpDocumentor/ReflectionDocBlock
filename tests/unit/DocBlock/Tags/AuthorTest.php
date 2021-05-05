@@ -183,6 +183,18 @@ class AuthorTest extends TestCase
                 'Mike van Riel',
                 '',
             ],
+            [
+                '>Mike van Riel',
+                '>Mike van Riel',
+                '>Mike van Riel',
+                '',
+            ],
+            [
+                'Mike van Riel>',
+                'Mike van Riel>',
+                'Mike van Riel>',
+                '',
+            ],
         ];
     }
 
