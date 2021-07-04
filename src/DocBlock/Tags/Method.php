@@ -155,7 +155,7 @@ final class Method extends BaseTag implements Factory\StaticMethod
             foreach ($argumentsExploded as $argument) {
                 $argument = explode(' ', self::stripRestArg(trim($argument)), 2);
                 if (strpos($argument[0], '$') === 0) {
-                    $argumentName = substr($argument[0], 1);
+                    $argumentName = substr(implode(' ', $argument), 1);
                     $argumentType = new Mixed_();
                 } else {
                     $argumentType = $typeResolver->resolve($argument[0], $context);
