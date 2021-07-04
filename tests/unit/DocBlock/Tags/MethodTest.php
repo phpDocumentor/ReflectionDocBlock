@@ -193,6 +193,31 @@ class MethodTest extends TestCase
         $this->assertEquals($expected, $fixture->getArguments());
     }
 
+    public function testArgumentHasDefaultValue() : void
+    {
+        $expected = [
+            ['name' => "arg1 = ''", 'type' => new Mixed_()],
+            ['name' => "arg2 = ['value']", 'type' => new Mixed_()],
+            ['name' => "arg3 = 'test'", 'type' => new String_()],
+            ['name' => "arg4 = ['value']", 'type' => new Array_()],
+        ];
+
+        $descriptionFactory = m::mock(DescriptionFactory::class);
+        $resolver           = new TypeResolver();
+        $context            = new Context('');
+        $description        = new Description('');
+        $descriptionFactory->shouldReceive('create')->with('', $context)->andReturn($description);
+
+        $fixture = Method::create(
+            'void myMethod($arg1 = \'\', $arg2 = [\'value\'], string $arg3 = \'test\', array $arg4 = [\'value\'])',
+            $resolver,
+            $descriptionFactory,
+            $context
+        );
+
+        $this->assertEquals($expected, $fixture->getArguments());
+    }
+
     /**
      * @covers ::__construct
      * @covers ::getReturnType
