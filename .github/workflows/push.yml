@@ -3,6 +3,8 @@ on:
     branches:
       - master
   pull_request:
+  # Allow manually triggering the workflow.
+  workflow_dispatch:
 name: Qa workflow
 env:
   phiveGPGKeys: 4AA394086372C20A,D2CCAC42F6295E7D,E82B2FB314E9906E,8A03EA3B385DBAA1
