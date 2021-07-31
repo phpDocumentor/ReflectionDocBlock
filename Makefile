@@ -25,7 +25,7 @@ phpstan:
 
 .PHONY: psalm
 psalm:
-	docker run -it --rm -v${PWD}:/opt/project -w /opt/project php:7.2 tools/psalm
+	docker run -it --rm -v${PWD}:/opt/project -w /opt/project php:7.3 vendor/bin/psalm.phar
 
 .PHONY: test
 test:

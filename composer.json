@@ -21,7 +21,8 @@
         "ext-filter": "*"
     },
     "require-dev": {
-        "mockery/mockery": "~1.3.2"
+        "mockery/mockery": "~1.3.2",
+        "psalm/phar": "^4.8"
     },
     "autoload": {
         "psr-4": {
