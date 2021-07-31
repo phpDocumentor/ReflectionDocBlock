@@ -188,7 +188,6 @@ jobs:
         with:
           php-version: ${{ matrix.php-versions }}
           extensions: ${{ env.extensions }}
-          tools: psalm
           ini-values: memory_limit=2G, display_errors=On, error_reporting=-1
 
       - name: Install Composer dependencies & cache dependencies
@@ -197,7 +196,7 @@ jobs:
           composer-options: --optimize-autoloader
 
       - name: Run psalm
-        run: psalm --output-format=github
+        run: vendor/bin/psalm.phar --output-format=github
 
 
   bc_check:
