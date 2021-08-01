@@ -8,6 +8,9 @@ use phpDocumentor\Reflection\DocBlock\Tags\See;
 use phpDocumentor\Reflection\Types\Context;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @coversNothing
+ */
 class DocblockSeeTagResolvingTest extends TestCase
 {
     public function testResolvesSeeFQSENOfInlineTags()
