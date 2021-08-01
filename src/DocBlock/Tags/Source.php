@@ -104,14 +104,12 @@ final class Source extends BaseTag implements Factory\StaticMethod
 
         $startingLine = (string) $this->startingLine;
 
-        $lineCount = $this->lineCount !== null ? '' . $this->lineCount : '';
+        $lineCount = $this->lineCount !== null ? ' ' . $this->lineCount : '';
 
         return $startingLine
-            . ($lineCount !== ''
-                ? ($startingLine || $startingLine === '0' ? ' ' : '') . $lineCount
-                : '')
+            . $lineCount
             . ($description !== ''
-                ? ($startingLine || $startingLine === '0' || $lineCount !== '' ? ' ' : '') . $description
+                ? ' ' . $description
                 : '');
     }
 }
