@@ -2,10 +2,9 @@
 
 declare(strict_types=1);
 
-namespace DocBlock\Tags;
+namespace phpDocumentor\Reflection\DocBlock\Tags;
 
 use InvalidArgumentException;
-use phpDocumentor\Reflection\DocBlock\Tags\Example;
 use PHPUnit\Framework\TestCase;
 
 /**
