@@ -83,7 +83,7 @@ final class Author extends BaseTag implements Factory\StaticMethod
     }
 
     /**
-     * Attempts to create a new Author object based on †he tag body.
+     * Attempts to create a new Author object based on the tag body.
      */
     public static function create(string $body) : ?self
     {
