@@ -57,7 +57,7 @@ class PassthroughFormatterTest extends TestCase
      *
      * @covers ::format
      */
-    public function testFormatterToStringWitoutDescription() : void
+    public function testFormatterToStringWithoutDescription() : void
     {
         $expected = '@unknown-tag';
         $fixture  = new PassthroughFormatter();
