@@ -41,5 +41,17 @@
                 <directory name="src/DocBlock/Tags/"/>
             </errorLevel>
         </RedundantConditionGivenDocblockType>
+
+        <InvalidReturnType>
+            <errorLevel type="info">
+                <file name="src/Utils.php"/>
+            </errorLevel>
+        </InvalidReturnType>
+
+        <InvalidReturnStatement>
+            <errorLevel type="info">
+                <file name="src/Utils.php"/>
+            </errorLevel>
+        </InvalidReturnStatement>
     </issueHandlers>
 </psalm>
