@@ -12,6 +12,9 @@ use PHPUnit\Framework\TestCase;
  */
 class ModifyBackTraceSafeTest extends TestCase
 {
+    /**
+     * @doesNotPerformAssertions
+     */
     public function testBackTraceModificationDoesNotImpactFunctionArguments()
     {
         $traverser = new Traverser();
