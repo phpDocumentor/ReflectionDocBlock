@@ -59,6 +59,6 @@ final class Return_ extends TagWithType implements Factory\StaticMethod
 
         $type = $this->type ? '' . $this->type : 'mixed';
 
-        return $type . ($description !== '' ? ($type !== '' ? ' ' : '') . $description : '');
+        return $type . ($description !== '' ? ' ' . $description : '');
     }
 }
