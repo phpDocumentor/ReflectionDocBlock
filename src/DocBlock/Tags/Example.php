@@ -148,7 +148,7 @@ final class Example implements Tag, Factory\StaticMethod
      */
     public function __toString(): string
     {
-        $filePath = (string) $this->filePath;
+        $filePath = $this->filePath;
         $isDefaultLine = $this->startingLine === 1 && $this->lineCount === 0;
         $startingLine = !$isDefaultLine ? (string) $this->startingLine : '';
         $lineCount = !$isDefaultLine ? (string) $this->lineCount : '';

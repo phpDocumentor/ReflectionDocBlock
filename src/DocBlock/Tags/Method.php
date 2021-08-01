@@ -228,7 +228,7 @@ final class Method extends BaseTag implements Factory\StaticMethod
 
         $returnType = (string) $this->returnType;
 
-        $methodName = (string) $this->methodName;
+        $methodName = $this->methodName;
 
         return $static
             . ($returnType !== '' ? ($static !== '' ? ' ' : '') . $returnType : '')

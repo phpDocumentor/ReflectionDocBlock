@@ -79,7 +79,7 @@ final class Author extends BaseTag implements Factory\StaticMethod
             $authorEmail = '';
         }
 
-        $authorName = (string) $this->authorName;
+        $authorName = $this->authorName;
 
         return $authorName . ($authorEmail !== '' ? ($authorName !== '' ? ' ' : '') . $authorEmail : '');
     }

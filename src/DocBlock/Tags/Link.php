@@ -71,7 +71,7 @@ final class Link extends BaseTag implements Factory\StaticMethod
             $description = '';
         }
 
-        $link = (string) $this->link;
+        $link = $this->link;
 
         return $link . ($description !== '' ? ($link !== '' ? ' ' : '') . $description : '');
     }
