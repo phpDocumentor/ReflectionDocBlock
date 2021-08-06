@@ -53,5 +53,12 @@
                 <file name="src/Utils.php"/>
             </errorLevel>
         </InvalidReturnStatement>
+
+        <ArgumentTypeCoercion>
+            <errorLevel type="info">
+                <!-- PHP handles invalid preg_split flags just fine. -->
+                <file name="src/Utils.php"/>
+            </errorLevel>
+        </ArgumentTypeCoercion>
     </issueHandlers>
 </psalm>
