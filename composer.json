@@ -30,7 +30,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "phpDocumentor\\Reflection\\": "tests/unit"
+            "phpDocumentor\\Reflection\\": ["tests/unit", "tests/integration"]
         }
     },
     "extra": {
