@@ -42,18 +42,6 @@
             </errorLevel>
         </RedundantConditionGivenDocblockType>
 
-        <InvalidReturnType>
-            <errorLevel type="info">
-                <file name="src/Utils.php"/>
-            </errorLevel>
-        </InvalidReturnType>
-
-        <InvalidReturnStatement>
-            <errorLevel type="info">
-                <file name="src/Utils.php"/>
-            </errorLevel>
-        </InvalidReturnStatement>
-
         <ArgumentTypeCoercion>
             <errorLevel type="info">
                 <!-- PHP handles invalid preg_split flags just fine. -->
