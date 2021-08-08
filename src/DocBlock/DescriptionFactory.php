@@ -60,7 +60,7 @@ class DescriptionFactory
     /**
      * Returns the parsed text of this description.
      */
-    public function create(string $contents, ?TypeContext $context = null) : Description
+    public function create(string $contents, ?TypeContext $context = null): Description
     {
         $tokens   = $this->lex($contents);
         $count    = count($tokens);
@@ -88,7 +88,7 @@ class DescriptionFactory
      *
      * @return string[] A series of tokens of which the description text is composed.
      */
-    private function lex(string $contents) : array
+    private function lex(string $contents): array
     {
         $contents = $this->removeSuperfluousStartingWhitespace($contents);
 
@@ -142,7 +142,7 @@ class DescriptionFactory
      * If we do not normalize the indentation then we have superfluous whitespace on the second and subsequent
      * lines and this may cause rendering issues when, for example, using a Markdown converter.
      */
-    private function removeSuperfluousStartingWhitespace(string $contents) : string
+    private function removeSuperfluousStartingWhitespace(string $contents): string
     {
         $lines = explode("\n", $contents);
 

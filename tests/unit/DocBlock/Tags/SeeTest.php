@@ -34,7 +34,7 @@ class SeeTest extends TestCase
     /**
      * Call Mockery::close after each test.
      */
-    public function tearDown() : void
+    public function tearDown(): void
     {
         m::close();
     }
@@ -47,7 +47,7 @@ class SeeTest extends TestCase
      *
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getName
      */
-    public function testIfCorrectTagNameIsReturned() : void
+    public function testIfCorrectTagNameIsReturned(): void
     {
         $fixture = new See(new FqsenRef(new Fqsen('\DateTime')), new Description('Description'));
 
@@ -64,7 +64,7 @@ class SeeTest extends TestCase
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::render
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getName
      */
-    public function testIfTagCanBeRenderedUsingDefaultFormatter() : void
+    public function testIfTagCanBeRenderedUsingDefaultFormatter(): void
     {
         $fixture = new See(new FqsenRef(new Fqsen('\DateTime')), new Description('Description'));
 
@@ -79,7 +79,7 @@ class SeeTest extends TestCase
      *
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::render
      */
-    public function testIfTagCanBeRenderedUsingSpecificFormatter() : void
+    public function testIfTagCanBeRenderedUsingSpecificFormatter(): void
     {
         $fixture = new See(new FqsenRef(new Fqsen('\DateTime')), new Description('Description'));
 
@@ -96,7 +96,7 @@ class SeeTest extends TestCase
      * @covers ::__construct
      * @covers ::getReference
      */
-    public function testHasReferenceToFqsen() : void
+    public function testHasReferenceToFqsen(): void
     {
         $expected = new FqsenRef(new Fqsen('\DateTime'));
 
@@ -113,7 +113,7 @@ class SeeTest extends TestCase
      * @covers ::__construct
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getDescription
      */
-    public function testHasDescription() : void
+    public function testHasDescription(): void
     {
         $expected = new Description('Description');
 
@@ -130,7 +130,7 @@ class SeeTest extends TestCase
      * @covers ::__construct
      * @covers ::__toString
      */
-    public function testStringRepresentationIsReturned() : void
+    public function testStringRepresentationIsReturned(): void
     {
         $fixture = new See(new FqsenRef(new Fqsen('\DateTime::format()')), new Description('Description'));
 
@@ -145,7 +145,7 @@ class SeeTest extends TestCase
      * @covers ::__construct
      * @covers ::__toString
      */
-    public function testStringRepresentationIsReturnedWithoutDescription() : void
+    public function testStringRepresentationIsReturnedWithoutDescription(): void
     {
         $fixture = new See(new FqsenRef(new Fqsen('\DateTime::format()')));
 
@@ -169,7 +169,7 @@ class SeeTest extends TestCase
      *
      * @covers ::create
      */
-    public function testFactoryMethod() : void
+    public function testFactoryMethod(): void
     {
         $descriptionFactory = m::mock(DescriptionFactory::class);
         $resolver           = m::mock(FqsenResolver::class);
@@ -201,7 +201,7 @@ class SeeTest extends TestCase
      *
      * @covers ::create
      */
-    public function testFactoryMethodWithNonClassFQSEN() : void
+    public function testFactoryMethodWithNonClassFQSEN(): void
     {
         $descriptionFactory = m::mock(DescriptionFactory::class);
         $resolver           = m::mock(FqsenResolver::class);
@@ -232,7 +232,7 @@ class SeeTest extends TestCase
      *
      * @covers ::create
      */
-    public function testFactoryMethodWithUrl() : void
+    public function testFactoryMethodWithUrl(): void
     {
         $descriptionFactory = m::mock(DescriptionFactory::class);
         $resolver           = m::mock(FqsenResolver::class);
@@ -263,7 +263,7 @@ class SeeTest extends TestCase
      *
      * @covers ::create
      */
-    public function testFactoryMethodWithoutUrl() : void
+    public function testFactoryMethodWithoutUrl(): void
     {
         $fqsenResolver      = new FqsenResolver();
         $tagFactory         = new StandardTagFactory($fqsenResolver);
@@ -286,7 +286,7 @@ class SeeTest extends TestCase
     /**
      * @covers ::create
      */
-    public function testFactoryMethodFailsIfBodyIsNotEmpty() : void
+    public function testFactoryMethodFailsIfBodyIsNotEmpty(): void
     {
         $this->expectException('InvalidArgumentException');
         $this->assertNull(See::create(''));
@@ -295,7 +295,7 @@ class SeeTest extends TestCase
     /**
      * @covers ::create
      */
-    public function testFactoryMethodFailsIfResolverIsNull() : void
+    public function testFactoryMethodFailsIfResolverIsNull(): void
     {
         $this->expectException('InvalidArgumentException');
         See::create('body');
@@ -304,7 +304,7 @@ class SeeTest extends TestCase
     /**
      * @covers ::create
      */
-    public function testFactoryMethodFailsIfDescriptionFactoryIsNull() : void
+    public function testFactoryMethodFailsIfDescriptionFactoryIsNull(): void
     {
         $this->expectException('InvalidArgumentException');
         See::create('body', new FqsenResolver());

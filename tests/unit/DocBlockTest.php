@@ -30,7 +30,7 @@ class DocBlockTest extends TestCase
     /**
      * Call Mockery::close after each test.
      */
-    public function tearDown() : void
+    public function tearDown(): void
     {
         m::close();
     }
@@ -41,7 +41,7 @@ class DocBlockTest extends TestCase
      * @covers ::__construct
      * @covers ::getSummary
      */
-    public function testDocBlockCanHaveASummary() : void
+    public function testDocBlockCanHaveASummary(): void
     {
         $summary = 'This is a summary';
 
@@ -56,7 +56,7 @@ class DocBlockTest extends TestCase
      * @covers ::__construct
      * @covers ::getSummary
      */
-    public function testDocBlockCanHaveEllipsisInSummary() : void
+    public function testDocBlockCanHaveEllipsisInSummary(): void
     {
         $summary = 'This is a short (...) description.';
 
@@ -71,7 +71,7 @@ class DocBlockTest extends TestCase
      * @covers ::__construct
      * @covers ::getDescription
      */
-    public function testDocBlockCanHaveADescription() : void
+    public function testDocBlockCanHaveADescription(): void
     {
         $description = new DocBlock\Description('');
 
@@ -87,7 +87,7 @@ class DocBlockTest extends TestCase
      * @covers ::__construct
      * @covers ::getTags
      */
-    public function testDocBlockCanHaveTags() : void
+    public function testDocBlockCanHaveTags(): void
     {
         $tags = [
             m::mock(DocBlock\Tag::class),
@@ -105,7 +105,7 @@ class DocBlockTest extends TestCase
      * @covers ::__construct
      * @covers ::getTags
      */
-    public function testDocBlockAllowsOnlyTags() : void
+    public function testDocBlockAllowsOnlyTags(): void
     {
         $this->expectException('InvalidArgumentException');
         $tags    = [null];
@@ -120,7 +120,7 @@ class DocBlockTest extends TestCase
      * @covers ::__construct
      * @covers ::getTagsByName
      */
-    public function testFindTagsInDocBlockByName() : void
+    public function testFindTagsInDocBlockByName(): void
     {
         $tag1 = m::mock(DocBlock\Tag::class);
         $tag2 = m::mock(DocBlock\Tag::class);
@@ -147,7 +147,7 @@ class DocBlockTest extends TestCase
      * @covers ::__construct
      * @covers ::getTagsWithTypeByName
      */
-    public function testFindTagsWithTypeInDocBlockByName() : void
+    public function testFindTagsWithTypeInDocBlockByName(): void
     {
         $tag1 = new DocBlock\Tags\Var_('foo', new String_());
         $tag2 = new DocBlock\Tags\Var_('bar', new String_());
@@ -169,7 +169,7 @@ class DocBlockTest extends TestCase
      * @covers ::__construct
      * @covers ::hasTag
      */
-    public function testCheckIfThereAreTagsWithAGivenName() : void
+    public function testCheckIfThereAreTagsWithAGivenName(): void
     {
         $tag1 = m::mock(DocBlock\Tag::class);
         $tag2 = m::mock(DocBlock\Tag::class);
@@ -193,7 +193,7 @@ class DocBlockTest extends TestCase
      * @covers ::__construct
      * @covers ::getContext
      */
-    public function testDocBlockKnowsInWhichNamespaceItIsAndWhichAliasesThereAre() : void
+    public function testDocBlockKnowsInWhichNamespaceItIsAndWhichAliasesThereAre(): void
     {
         $context = new Context('');
 
@@ -209,7 +209,7 @@ class DocBlockTest extends TestCase
      * @covers ::__construct
      * @covers ::getLocation
      */
-    public function testDocBlockKnowsAtWhichLineItIs() : void
+    public function testDocBlockKnowsAtWhichLineItIs(): void
     {
         $location = new Location(10);
 
@@ -225,7 +225,7 @@ class DocBlockTest extends TestCase
      * @covers ::isTemplateStart
      * @covers ::isTemplateEnd
      */
-    public function testDocBlockIsNotATemplateByDefault() : void
+    public function testDocBlockIsNotATemplateByDefault(): void
     {
         $fixture = new DocBlock('', null, [], null, null);
 
@@ -239,7 +239,7 @@ class DocBlockTest extends TestCase
      * @covers ::__construct
      * @covers ::isTemplateStart
      */
-    public function testDocBlockKnowsIfItIsTheStartOfADocBlockTemplate() : void
+    public function testDocBlockKnowsIfItIsTheStartOfADocBlockTemplate(): void
     {
         $fixture = new DocBlock('', null, [], null, null, true);
 
@@ -252,7 +252,7 @@ class DocBlockTest extends TestCase
      * @covers ::__construct
      * @covers ::isTemplateEnd
      */
-    public function testDocBlockKnowsIfItIsTheEndOfADocBlockTemplate() : void
+    public function testDocBlockKnowsIfItIsTheEndOfADocBlockTemplate(): void
     {
         $fixture = new DocBlock('', null, [], null, null, false, true);
 
@@ -265,7 +265,7 @@ class DocBlockTest extends TestCase
      * @covers ::__construct
      * @covers ::removeTag
      */
-    public function testRemoveTag() : void
+    public function testRemoveTag(): void
     {
         $someTag    = new Deprecated();
         $anotherTag = new Deprecated();

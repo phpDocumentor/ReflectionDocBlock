@@ -28,7 +28,7 @@ class DeprecatedTest extends TestCase
     /**
      * Call Mockery::close after each test.
      */
-    public function tearDown() : void
+    public function tearDown(): void
     {
         m::close();
     }
@@ -39,7 +39,7 @@ class DeprecatedTest extends TestCase
      *
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getName
      */
-    public function testIfCorrectTagNameIsReturned() : void
+    public function testIfCorrectTagNameIsReturned(): void
     {
         $fixture = new Deprecated('1.0', new Description('Description'));
 
@@ -55,7 +55,7 @@ class DeprecatedTest extends TestCase
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::render
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getName
      */
-    public function testIfTagCanBeRenderedUsingDefaultFormatter() : void
+    public function testIfTagCanBeRenderedUsingDefaultFormatter(): void
     {
         $fixture = new Deprecated('1.0', new Description('Description'));
 
@@ -68,7 +68,7 @@ class DeprecatedTest extends TestCase
      *
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::render
      */
-    public function testIfTagCanBeRenderedUsingSpecificFormatter() : void
+    public function testIfTagCanBeRenderedUsingSpecificFormatter(): void
     {
         $fixture = new Deprecated('1.0', new Description('Description'));
 
@@ -82,7 +82,7 @@ class DeprecatedTest extends TestCase
      * @covers ::__construct
      * @covers ::getVersion
      */
-    public function testHasVersionNumber() : void
+    public function testHasVersionNumber(): void
     {
         $expected = '1.0';
 
@@ -97,7 +97,7 @@ class DeprecatedTest extends TestCase
      * @covers ::__construct
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getDescription
      */
-    public function testHasDescription() : void
+    public function testHasDescription(): void
     {
         $expected = new Description('Description');
 
@@ -112,7 +112,7 @@ class DeprecatedTest extends TestCase
      * @covers ::__construct
      * @covers ::__toString
      */
-    public function testStringRepresentationIsReturned() : void
+    public function testStringRepresentationIsReturned(): void
     {
         $fixture = new Deprecated('1.0', new Description('Description'));
 
@@ -131,7 +131,7 @@ class DeprecatedTest extends TestCase
      * @covers ::__construct
      * @covers ::__toString
      */
-    public function testStringRepresentationIsReturnedWithoutDescription() : void
+    public function testStringRepresentationIsReturnedWithoutDescription(): void
     {
         $fixture = new Deprecated(null, new Description(''));
 
@@ -158,7 +158,7 @@ class DeprecatedTest extends TestCase
      *
      * @covers ::create
      */
-    public function testFactoryMethod() : void
+    public function testFactoryMethod(): void
     {
         $descriptionFactory = m::mock(DescriptionFactory::class);
         $context            = new Context('');
@@ -183,7 +183,7 @@ class DeprecatedTest extends TestCase
      *
      * @covers ::create
      */
-    public function testFactoryMethodCreatesEmptyDeprecatedTag() : void
+    public function testFactoryMethodCreatesEmptyDeprecatedTag(): void
     {
         $descriptionFactory = m::mock(DescriptionFactory::class);
         $descriptionFactory->shouldReceive('create')->never();
@@ -200,7 +200,7 @@ class DeprecatedTest extends TestCase
      *
      * @covers ::create
      */
-    public function testFactoryMethodReturnsNullIfBodyDoesNotMatchRegex() : void
+    public function testFactoryMethodReturnsNullIfBodyDoesNotMatchRegex(): void
     {
         $this->assertEquals(new Deprecated(), Deprecated::create('dkhf<'));
     }

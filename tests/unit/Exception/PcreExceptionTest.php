@@ -22,7 +22,7 @@ final class PcreExceptionTest extends TestCase
      * @covers ::createFromPhpError
      * @dataProvider errorCodeProvider
      */
-    public function testErrorConversion(int $errorCode, string $message) : void
+    public function testErrorConversion(int $errorCode, string $message): void
     {
         $this->assertSame($message, PcreException::createFromPhpError($errorCode)->getMessage());
     }
@@ -30,7 +30,7 @@ final class PcreExceptionTest extends TestCase
     /**
      * @return array<int, (string|int)[]>
      */
-    public function errorCodeProvider() : array
+    public function errorCodeProvider(): array
     {
         return [
             [

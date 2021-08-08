@@ -31,7 +31,7 @@ class ThrowsTest extends TestCase
     /**
      * Call Mockery::close after each test.
      */
-    public function tearDown() : void
+    public function tearDown(): void
     {
         m::close();
     }
@@ -42,7 +42,7 @@ class ThrowsTest extends TestCase
      *
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getName
      */
-    public function testIfCorrectTagNameIsReturned() : void
+    public function testIfCorrectTagNameIsReturned(): void
     {
         $fixture = new Throws(new String_(), new Description('Description'));
 
@@ -58,7 +58,7 @@ class ThrowsTest extends TestCase
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::render
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getName
      */
-    public function testIfTagCanBeRenderedUsingDefaultFormatter() : void
+    public function testIfTagCanBeRenderedUsingDefaultFormatter(): void
     {
         $fixture = new Throws(new String_(), new Description('Description'));
 
@@ -71,7 +71,7 @@ class ThrowsTest extends TestCase
      *
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::render
      */
-    public function testIfTagCanBeRenderedUsingSpecificFormatter() : void
+    public function testIfTagCanBeRenderedUsingSpecificFormatter(): void
     {
         $fixture = new Throws(new String_(), new Description('Description'));
 
@@ -85,7 +85,7 @@ class ThrowsTest extends TestCase
      * @covers ::__construct
      * @covers ::getType
      */
-    public function testHasType() : void
+    public function testHasType(): void
     {
         $expected = new String_();
 
@@ -100,7 +100,7 @@ class ThrowsTest extends TestCase
      * @covers ::__construct
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getDescription
      */
-    public function testHasDescription() : void
+    public function testHasDescription(): void
     {
         $expected = new Description('Description');
 
@@ -115,7 +115,7 @@ class ThrowsTest extends TestCase
      * @covers ::__construct
      * @covers ::__toString
      */
-    public function testStringRepresentationIsReturned() : void
+    public function testStringRepresentationIsReturned(): void
     {
         $fixture = new Throws(new String_(), new Description('Description'));
 
@@ -134,7 +134,7 @@ class ThrowsTest extends TestCase
      * @covers ::__construct
      * @covers ::__toString
      */
-    public function testStringRepresentationIsReturnedWithoutDescription() : void
+    public function testStringRepresentationIsReturnedWithoutDescription(): void
     {
         $fixture = new Throws(new String_());
 
@@ -157,7 +157,7 @@ class ThrowsTest extends TestCase
      *
      * @covers ::create
      */
-    public function testFactoryMethod() : void
+    public function testFactoryMethod(): void
     {
         $descriptionFactory = m::mock(DescriptionFactory::class);
         $resolver           = new TypeResolver();
@@ -193,7 +193,7 @@ class ThrowsTest extends TestCase
      *
      * @covers ::create
      */
-    public function testFactoryMethodWithGenericWithSpace() : void
+    public function testFactoryMethodWithGenericWithSpace(): void
     {
         $descriptionFactory = m::mock(DescriptionFactory::class);
         $resolver           = new TypeResolver();
@@ -222,7 +222,7 @@ class ThrowsTest extends TestCase
      *
      * @covers ::create
      */
-    public function testFactoryMethodWithGenericWithSpaceAndAddedEmojisToVerifyMultiByteBehaviour() : void
+    public function testFactoryMethodWithGenericWithSpaceAndAddedEmojisToVerifyMultiByteBehaviour(): void
     {
         $this->markTestSkipped('A bug in the TypeResolver breaks this test');
         $this->expectException(InvalidArgumentException::class);
@@ -250,7 +250,7 @@ class ThrowsTest extends TestCase
      *
      * @covers ::create
      */
-    public function testFactoryMethodWithEmojisToVerifyMultiByteBehaviour() : void
+    public function testFactoryMethodWithEmojisToVerifyMultiByteBehaviour(): void
     {
         $descriptionFactory = m::mock(DescriptionFactory::class);
         $resolver           = new TypeResolver();
@@ -271,7 +271,7 @@ class ThrowsTest extends TestCase
     /**
      * @covers ::create
      */
-    public function testFactoryMethodFailsIfBodyIsNotEmpty() : void
+    public function testFactoryMethodFailsIfBodyIsNotEmpty(): void
     {
         $this->expectException('InvalidArgumentException');
         $this->assertNull(Throws::create(''));
@@ -280,7 +280,7 @@ class ThrowsTest extends TestCase
     /**
      * @covers ::create
      */
-    public function testFactoryMethodFailsIfResolverIsNull() : void
+    public function testFactoryMethodFailsIfResolverIsNull(): void
     {
         $this->expectException('InvalidArgumentException');
         Throws::create('body');
@@ -289,7 +289,7 @@ class ThrowsTest extends TestCase
     /**
      * @covers ::create
      */
-    public function testFactoryMethodFailsIfDescriptionFactoryIsNull() : void
+    public function testFactoryMethodFailsIfDescriptionFactoryIsNull(): void
     {
         $this->expectException('InvalidArgumentException');
         Throws::create('body', new TypeResolver());

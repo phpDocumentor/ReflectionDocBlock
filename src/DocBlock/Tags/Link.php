@@ -43,7 +43,7 @@ final class Link extends BaseTag implements Factory\StaticMethod
         string $body,
         ?DescriptionFactory $descriptionFactory = null,
         ?TypeContext $context = null
-    ) : self {
+    ): self {
         Assert::notNull($descriptionFactory);
 
         $parts = Utils::pregSplit('/\s+/Su', $body, 2);
@@ -55,7 +55,7 @@ final class Link extends BaseTag implements Factory\StaticMethod
     /**
      * Gets the link
      */
-    public function getLink() : string
+    public function getLink(): string
     {
         return $this->link;
     }
@@ -63,7 +63,7 @@ final class Link extends BaseTag implements Factory\StaticMethod
     /**
      * Returns a string representation for this tag.
      */
-    public function __toString() : string
+    public function __toString(): string
     {
         if ($this->description) {
             $description = $this->description->render();

@@ -29,7 +29,7 @@ class DescriptionFactoryTest extends TestCase
     /**
      * Call Mockery::close after each test.
      */
-    public function tearDown() : void
+    public function tearDown(): void
     {
         m::close();
     }
@@ -41,7 +41,7 @@ class DescriptionFactoryTest extends TestCase
      * @covers ::create
      * @dataProvider provideSimpleExampleDescriptions
      */
-    public function testDescriptionCanParseASimpleString(string $contents) : void
+    public function testDescriptionCanParseASimpleString(string $contents): void
     {
         $tagFactory = m::mock(TagFactory::class);
         $tagFactory->shouldReceive('create')->never();
@@ -59,7 +59,7 @@ class DescriptionFactoryTest extends TestCase
      * @covers ::create
      * @dataProvider provideEscapeSequences
      */
-    public function testEscapeSequences(string $contents, string $expected) : void
+    public function testEscapeSequences(string $contents, string $expected): void
     {
         $tagFactory = m::mock(TagFactory::class);
         $tagFactory->shouldReceive('create')->never();
@@ -80,7 +80,7 @@ class DescriptionFactoryTest extends TestCase
      * @covers ::__construct
      * @covers ::create
      */
-    public function testDescriptionCanParseAStringWithInlineTag() : void
+    public function testDescriptionCanParseAStringWithInlineTag(): void
     {
         $contents   = 'This is text for a {@link http://phpdoc.org/ description} that uses an inline tag.';
         $context    = new Context('');
@@ -106,7 +106,7 @@ class DescriptionFactoryTest extends TestCase
      * @covers ::__construct
      * @covers ::create
      */
-    public function testDescriptionCanParseAStringStartingWithInlineTag() : void
+    public function testDescriptionCanParseAStringStartingWithInlineTag(): void
     {
         $contents   = '{@link http://phpdoc.org/ This} is text for a description that starts with an inline tag.';
         $context    = new Context('');
@@ -132,7 +132,7 @@ class DescriptionFactoryTest extends TestCase
      * @covers ::__construct
      * @covers ::create
      */
-    public function testDescriptionCanParseAStringContainingMultipleTags() : void
+    public function testDescriptionCanParseAStringContainingMultipleTags(): void
     {
         $contents   = 'This description has a {@link http://phpdoc.org/ This} another {@link http://phpdoc.org/ This2}';
         $context    = new Context('');
@@ -159,7 +159,7 @@ class DescriptionFactoryTest extends TestCase
      * @covers ::__construct
      * @covers ::create
      */
-    public function testIfSuperfluousStartingSpacesAreRemoved() : void
+    public function testIfSuperfluousStartingSpacesAreRemoved(): void
     {
         $factory         = new DescriptionFactory(m::mock(TagFactory::class));
         $descriptionText = <<<DESCRIPTION
@@ -204,7 +204,7 @@ DESCRIPTION;
      * @covers ::__construct
      * @covers ::create
      */
-    public function testDescriptionWithBrokenInlineTags() : void
+    public function testDescriptionWithBrokenInlineTags(): void
     {
         $contents   = 'This {@see $name} is a broken use case, but used in real life.';
         $context    = new Context('');
@@ -225,7 +225,7 @@ DESCRIPTION;
      *
      * @return string[][]
      */
-    public function provideSimpleExampleDescriptions() : array
+    public function provideSimpleExampleDescriptions(): array
     {
         return [
             ['This is text for a description.'],
@@ -238,7 +238,7 @@ DESCRIPTION;
     /**
      * @return string[][]
      */
-    public function provideEscapeSequences() : array
+    public function provideEscapeSequences(): array
     {
         return [
             ['This is text for a description with a {@}.', 'This is text for a description with a @.'],

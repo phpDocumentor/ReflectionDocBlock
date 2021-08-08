@@ -54,7 +54,7 @@ final class DocBlockFactory implements DocBlockFactoryInterface
      *
      * @param array<string, class-string<Tag>> $additionalTags
      */
-    public static function createInstance(array $additionalTags = []) : self
+    public static function createInstance(array $additionalTags = []): self
     {
         $fqsenResolver      = new FqsenResolver();
         $tagFactory         = new StandardTagFactory($fqsenResolver);
@@ -75,7 +75,7 @@ final class DocBlockFactory implements DocBlockFactoryInterface
      * @param object|string $docblock A string containing the DocBlock to parse or an object supporting the
      *                                getDocComment method (such as a ReflectionClass object).
      */
-    public function create($docblock, ?Types\Context $context = null, ?Location $location = null) : DocBlock
+    public function create($docblock, ?Types\Context $context = null, ?Location $location = null): DocBlock
     {
         if (is_object($docblock)) {
             if (!method_exists($docblock, 'getDocComment')) {
@@ -112,7 +112,7 @@ final class DocBlockFactory implements DocBlockFactoryInterface
     /**
      * @param class-string<Tag> $handler
      */
-    public function registerTagHandler(string $tagName, string $handler) : void
+    public function registerTagHandler(string $tagName, string $handler): void
     {
         $this->tagFactory->registerTagHandler($tagName, $handler);
     }
@@ -122,7 +122,7 @@ final class DocBlockFactory implements DocBlockFactoryInterface
      *
      * @param string $comment String containing the comment text.
      */
-    private function stripDocComment(string $comment) : string
+    private function stripDocComment(string $comment): string
     {
         $comment = preg_replace('#[ \t]*(?:\/\*\*|\*\/|\*)?[ \t]?(.*)?#u', '$1', $comment);
         Assert::string($comment);
@@ -231,7 +231,7 @@ final class DocBlockFactory implements DocBlockFactoryInterface
      *
      * @return DocBlock\Tag[]
      */
-    private function parseTagBlock(string $tags, Types\Context $context) : array
+    private function parseTagBlock(string $tags, Types\Context $context): array
     {
         $tags = $this->filterTagBlock($tags);
         if ($tags === null) {
@@ -250,7 +250,7 @@ final class DocBlockFactory implements DocBlockFactoryInterface
     /**
      * @return string[]
      */
-    private function splitTagBlockIntoTagLines(string $tags) : array
+    private function splitTagBlockIntoTagLines(string $tags): array
     {
         $result = [];
         foreach (explode("\n", $tags) as $tagLine) {
@@ -264,7 +264,7 @@ final class DocBlockFactory implements DocBlockFactoryInterface
         return $result;
     }
 
-    private function filterTagBlock(string $tags) : ?string
+    private function filterTagBlock(string $tags): ?string
     {
         $tags = trim($tags);
         if (!$tags) {

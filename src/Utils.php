@@ -45,7 +45,7 @@ abstract class Utils
      *
      * @throws PcreException
      */
-    public static function pregSplit(string $pattern, string $subject, ?int $limit = -1, int $flags = 0) : array
+    public static function pregSplit(string $pattern, string $subject, ?int $limit = -1, int $flags = 0): array
     {
         $parts = php_preg_split($pattern, $subject, $limit, $flags);
         if ($parts === false) {

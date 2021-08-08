@@ -20,7 +20,7 @@ class ExampleTest extends TestCase
      * @covers ::__construct
      * @covers ::getContent
      */
-    public function testExampleWithoutContent() : void
+    public function testExampleWithoutContent(): void
     {
         $tag = Example::create('"example1.php"');
         $this->assertEquals('"example1.php"', $tag->getContent());
@@ -36,7 +36,7 @@ class ExampleTest extends TestCase
      * @covers ::getFilePath
      * @covers ::getDescription
      */
-    public function testWithDescription() : void
+    public function testWithDescription(): void
     {
         $tag = Example::create('"example1.php" some text');
         $this->assertEquals('example1.php', $tag->getFilePath());
@@ -51,7 +51,7 @@ class ExampleTest extends TestCase
      * @covers ::getFilePath
      * @covers ::getStartingLine
      */
-    public function testStartlineIsParsed() : void
+    public function testStartlineIsParsed(): void
     {
         $tag = Example::create('"example1.php" 10');
         $this->assertEquals('example1.php', $tag->getFilePath());
@@ -67,7 +67,7 @@ class ExampleTest extends TestCase
      * @covers ::getStartingLine
      * @covers ::getDescription
      */
-    public function testAllowOmitingLineCount() : void
+    public function testAllowOmitingLineCount(): void
     {
         $tag = Example::create('"example1.php" 10 some text');
         $this->assertEquals('example1.php', $tag->getFilePath());
@@ -84,7 +84,7 @@ class ExampleTest extends TestCase
      * @covers ::getStartingLine
      * @covers ::getLineCount
      */
-    public function testLengthIsParsed() : void
+    public function testLengthIsParsed(): void
     {
         $tag = Example::create('"example1.php" 10 5');
         $this->assertEquals('example1.php', $tag->getFilePath());
@@ -96,7 +96,7 @@ class ExampleTest extends TestCase
      * @covers ::create
      * @covers ::__toString
      */
-    public function testStringRepresentationIsReturned() : void
+    public function testStringRepresentationIsReturned(): void
     {
         $tag = Example::create('"example1.php" 10 5 test text');
 
@@ -131,7 +131,7 @@ class ExampleTest extends TestCase
      * @covers ::create
      * @covers ::__toString
      */
-    public function testStringRepresentationIsReturnedWithoutDescription() : void
+    public function testStringRepresentationIsReturnedWithoutDescription(): void
     {
         $tag = Example::create('');
 
@@ -157,7 +157,7 @@ class ExampleTest extends TestCase
         int $lineCount,
         ?string $description,
         string $content
-    ) : void {
+    ): void {
         $tag = Example::create($input);
         $this->assertSame($filePath, $tag->getFilePath());
         $this->assertSame($startLine, $tag->getStartingLine());
@@ -167,7 +167,7 @@ class ExampleTest extends TestCase
     }
 
     /** @return mixed[][] */
-    public function tagContentProvider() : array
+    public function tagContentProvider(): array
     {
         return [
             [
@@ -231,7 +231,7 @@ class ExampleTest extends TestCase
         int $startLine,
         int $lineCount,
         string $description
-    ) : void {
+    ): void {
         $this->expectException(InvalidArgumentException::class);
 
         new Example(
@@ -244,7 +244,7 @@ class ExampleTest extends TestCase
     }
 
     /** @return mixed[][] */
-    public function invalidExampleProvider() : array
+    public function invalidExampleProvider(): array
     {
         return [
             'invalid start' => [

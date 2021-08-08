@@ -30,7 +30,7 @@ class LinkTest extends TestCase
     /**
      * Call Mockery::close after each test.
      */
-    public function tearDown() : void
+    public function tearDown(): void
     {
         m::close();
     }
@@ -41,7 +41,7 @@ class LinkTest extends TestCase
      *
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getName
      */
-    public function testIfCorrectTagNameIsReturned() : void
+    public function testIfCorrectTagNameIsReturned(): void
     {
         $fixture = new Link('http://this.is.my/link', new Description('Description'));
 
@@ -57,7 +57,7 @@ class LinkTest extends TestCase
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::render
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getName
      */
-    public function testIfTagCanBeRenderedUsingDefaultFormatter() : void
+    public function testIfTagCanBeRenderedUsingDefaultFormatter(): void
     {
         $fixture = new Link('http://this.is.my/link', new Description('Description'));
 
@@ -70,7 +70,7 @@ class LinkTest extends TestCase
      *
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::render
      */
-    public function testIfTagCanBeRenderedUsingSpecificFormatter() : void
+    public function testIfTagCanBeRenderedUsingSpecificFormatter(): void
     {
         $fixture = new Link('http://this.is.my/link', new Description('Description'));
 
@@ -84,7 +84,7 @@ class LinkTest extends TestCase
      * @covers ::__construct
      * @covers ::getLink
      */
-    public function testHasLinkUrl() : void
+    public function testHasLinkUrl(): void
     {
         $expected = 'http://this.is.my/link';
 
@@ -99,7 +99,7 @@ class LinkTest extends TestCase
      * @covers ::__construct
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getDescription
      */
-    public function testHasDescription() : void
+    public function testHasDescription(): void
     {
         $expected = new Description('Description');
 
@@ -114,7 +114,7 @@ class LinkTest extends TestCase
      * @covers ::__construct
      * @covers ::__toString
      */
-    public function testStringRepresentationIsReturned() : void
+    public function testStringRepresentationIsReturned(): void
     {
         $fixture = new Link('http://this.is.my/link', new Description('Description'));
 
@@ -127,7 +127,7 @@ class LinkTest extends TestCase
      * @covers ::__construct
      * @covers ::__toString
      */
-    public function testStringRepresentationIsReturnedWithoutDescription() : void
+    public function testStringRepresentationIsReturnedWithoutDescription(): void
     {
         $fixture = new Link('http://this.is.my/link');
 
@@ -148,7 +148,7 @@ class LinkTest extends TestCase
      *
      * @covers ::create
      */
-    public function testFactoryMethod() : void
+    public function testFactoryMethod(): void
     {
         $descriptionFactory = m::mock(DescriptionFactory::class);
         $context            = new Context('');
@@ -175,7 +175,7 @@ class LinkTest extends TestCase
      *
      * @covers ::create
      */
-    public function testFactoryMethodWithoutSpaceBeforeUrl() : void
+    public function testFactoryMethodWithoutSpaceBeforeUrl(): void
     {
         $fqsenResolver      = new FqsenResolver();
         $tagFactory         = new StandardTagFactory($fqsenResolver);
@@ -202,7 +202,7 @@ class LinkTest extends TestCase
      *
      * @covers ::create
      */
-    public function testFactoryMethodWithSpaceBeforeUrl() : void
+    public function testFactoryMethodWithSpaceBeforeUrl(): void
     {
         $fqsenResolver      = new FqsenResolver();
         $tagFactory         = new StandardTagFactory($fqsenResolver);
@@ -227,7 +227,7 @@ class LinkTest extends TestCase
      *
      * @covers ::create
      */
-    public function testFactoryMethodCreatesEmptyLinkTag() : void
+    public function testFactoryMethodCreatesEmptyLinkTag(): void
     {
         $descriptionFactory = m::mock(DescriptionFactory::class);
         $descriptionFactory->shouldReceive('create')->never();

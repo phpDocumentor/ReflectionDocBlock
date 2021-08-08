@@ -37,7 +37,7 @@ class AlignFormatter implements Formatter
     /**
      * Formats the given tag to return a simple plain text version.
      */
-    public function format(Tag $tag) : string
+    public function format(Tag $tag): string
     {
         return '@' . $tag->getName() .
             str_repeat(

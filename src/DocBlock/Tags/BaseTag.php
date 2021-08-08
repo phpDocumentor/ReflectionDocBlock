@@ -32,17 +32,17 @@ abstract class BaseTag implements DocBlock\Tag
      *
      * @return string The name of this tag.
      */
-    public function getName() : string
+    public function getName(): string
     {
         return $this->name;
     }
 
-    public function getDescription() : ?Description
+    public function getDescription(): ?Description
     {
         return $this->description;
     }
 
-    public function render(?Formatter $formatter = null) : string
+    public function render(?Formatter $formatter = null): string
     {
         if ($formatter === null) {
             $formatter = new Formatter\PassthroughFormatter();

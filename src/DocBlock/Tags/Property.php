@@ -50,7 +50,7 @@ final class Property extends TagWithType implements Factory\StaticMethod
         ?TypeResolver $typeResolver = null,
         ?DescriptionFactory $descriptionFactory = null,
         ?TypeContext $context = null
-    ) : self {
+    ): self {
         Assert::stringNotEmpty($body);
         Assert::notNull($typeResolver);
         Assert::notNull($descriptionFactory);
@@ -88,7 +88,7 @@ final class Property extends TagWithType implements Factory\StaticMethod
     /**
      * Returns the variable's name.
      */
-    public function getVariableName() : ?string
+    public function getVariableName(): ?string
     {
         return $this->variableName;
     }
@@ -96,7 +96,7 @@ final class Property extends TagWithType implements Factory\StaticMethod
     /**
      * Returns a string representation for this tag.
      */
-    public function __toString() : string
+    public function __toString(): string
     {
         if ($this->description) {
             $description = $this->description->render();

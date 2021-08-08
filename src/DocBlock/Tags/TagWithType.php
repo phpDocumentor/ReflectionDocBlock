@@ -27,7 +27,7 @@ abstract class TagWithType extends BaseTag
     /**
      * Returns the type section of the variable.
      */
-    public function getType() : ?Type
+    public function getType(): ?Type
     {
         return $this->type;
     }
@@ -35,7 +35,7 @@ abstract class TagWithType extends BaseTag
     /**
      * @return string[]
      */
-    protected static function extractTypeFromBody(string $body) : array
+    protected static function extractTypeFromBody(string $body): array
     {
         $type         = '';
         $nestingLevel = 0;

@@ -25,7 +25,7 @@ class AuthorTest extends TestCase
     /**
      * Call Mockery::close after each test.
      */
-    public function tearDown() : void
+    public function tearDown(): void
     {
         m::close();
     }
@@ -35,7 +35,7 @@ class AuthorTest extends TestCase
      *
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getName
      */
-    public function testIfCorrectTagNameIsReturned() : void
+    public function testIfCorrectTagNameIsReturned(): void
     {
         $fixture = new Author('Mike van Riel', 'mike@phpdoc.org');
 
@@ -50,7 +50,7 @@ class AuthorTest extends TestCase
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::render
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getName
      */
-    public function testIfTagCanBeRenderedUsingDefaultFormatter() : void
+    public function testIfTagCanBeRenderedUsingDefaultFormatter(): void
     {
         $fixture = new Author('Mike van Riel', 'mike@phpdoc.org');
 
@@ -62,7 +62,7 @@ class AuthorTest extends TestCase
      *
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::render
      */
-    public function testIfTagCanBeRenderedUsingSpecificFormatter() : void
+    public function testIfTagCanBeRenderedUsingSpecificFormatter(): void
     {
         $fixture = new Author('Mike van Riel', 'mike@phpdoc.org');
 
@@ -76,7 +76,7 @@ class AuthorTest extends TestCase
      * @covers ::__construct
      * @covers ::getAuthorName
      */
-    public function testHasTheAuthorName() : void
+    public function testHasTheAuthorName(): void
     {
         $expected = 'Mike van Riel';
 
@@ -89,7 +89,7 @@ class AuthorTest extends TestCase
      * @covers ::__construct
      * @covers ::getEmail
      */
-    public function testHasTheAuthorMailAddress() : void
+    public function testHasTheAuthorMailAddress(): void
     {
         $expected = 'mike@phpdoc.org';
 
@@ -101,7 +101,7 @@ class AuthorTest extends TestCase
     /**
      * @covers ::__construct
      */
-    public function testInitializationFailsIfEmailIsNotValid() : void
+    public function testInitializationFailsIfEmailIsNotValid(): void
     {
         $this->expectException('InvalidArgumentException');
         new Author('Mike van Riel', 'mike');
@@ -111,7 +111,7 @@ class AuthorTest extends TestCase
      * @covers ::__construct
      * @covers ::__toString
      */
-    public function testStringRepresentationIsReturned() : void
+    public function testStringRepresentationIsReturned(): void
     {
         $fixture = new Author('Mike van Riel', 'mike@phpdoc.org');
 
@@ -128,7 +128,7 @@ class AuthorTest extends TestCase
      * @covers ::__construct
      * @covers ::__toString
      */
-    public function testStringRepresentationIsReturnedWithoutName() : void
+    public function testStringRepresentationIsReturnedWithoutName(): void
     {
         $fixture = new Author('', 'mike@phpdoc.org');
 
@@ -139,7 +139,7 @@ class AuthorTest extends TestCase
      * @covers ::__construct
      * @covers ::__toString
      */
-    public function testStringRepresentationWithEmtpyEmail() : void
+    public function testStringRepresentationWithEmtpyEmail(): void
     {
         $fixture = new Author('Mike van Riel', '');
 
@@ -152,7 +152,7 @@ class AuthorTest extends TestCase
      * @covers ::create
      * @dataProvider authorTagProvider
      */
-    public function testFactoryMethod(string $input, string $output, string $name, string $email) : void
+    public function testFactoryMethod(string $input, string $output, string $name, string $email): void
     {
         $fixture = Author::create($input);
 
@@ -162,7 +162,7 @@ class AuthorTest extends TestCase
     }
 
     /** @return mixed[][] */
-    public function authorTagProvider() : array
+    public function authorTagProvider(): array
     {
         return [
             [
@@ -191,7 +191,7 @@ class AuthorTest extends TestCase
      *
      * @covers ::create
      */
-    public function testFactoryMethodReturnsNullIfItCouldNotReadBody() : void
+    public function testFactoryMethodReturnsNullIfItCouldNotReadBody(): void
     {
         $this->assertNull(Author::create('dfgr<'));
     }

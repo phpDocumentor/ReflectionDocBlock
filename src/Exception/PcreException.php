@@ -15,7 +15,7 @@ use const PREG_RECURSION_LIMIT_ERROR;
 
 final class PcreException extends InvalidArgumentException
 {
-    public static function createFromPhpError(int $errorCode) : self
+    public static function createFromPhpError(int $errorCode): self
     {
         switch ($errorCode) {
             case PREG_BACKTRACK_LIMIT_ERROR:

@@ -14,10 +14,10 @@ interface DocBlockFactoryInterface
      *
      * @param array<string, class-string<Tag>> $additionalTags
      */
-    public static function createInstance(array $additionalTags = []) : DocBlockFactory;
+    public static function createInstance(array $additionalTags = []): DocBlockFactory;
 
     /**
      * @param string|object $docblock
      */
-    public function create($docblock, ?Types\Context $context = null, ?Location $location = null) : DocBlock;
+    public function create($docblock, ?Types\Context $context = null, ?Location $location = null): DocBlock;
 }

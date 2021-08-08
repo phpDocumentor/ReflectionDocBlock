@@ -71,7 +71,7 @@ class Description
     /**
      * Returns the body template.
      */
-    public function getBodyTemplate() : string
+    public function getBodyTemplate(): string
     {
         return $this->bodyTemplate;
     }
@@ -81,7 +81,7 @@ class Description
      *
      * @return Tag[]
      */
-    public function getTags() : array
+    public function getTags(): array
     {
         return $this->tags;
     }
@@ -90,7 +90,7 @@ class Description
      * Renders this description as a string where the provided formatter will format the tags in the expected string
      * format.
      */
-    public function render(?Formatter $formatter = null) : string
+    public function render(?Formatter $formatter = null): string
     {
         if ($formatter === null) {
             $formatter = new PassthroughFormatter();
@@ -107,7 +107,7 @@ class Description
     /**
      * Returns a plain string representation of this description.
      */
-    public function __toString() : string
+    public function __toString(): string
     {
         return $this->render();
     }
