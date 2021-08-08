@@ -15,6 +15,7 @@ namespace phpDocumentor\Reflection;
 
 use phpDocumentor\Reflection\Exception\PcreException;
 
+use Webmozart\Assert\Assert;
 use function preg_last_error;
 use function preg_split as php_preg_split;
 
@@ -42,7 +43,7 @@ abstract class Utils
      *      Note that this changes the return value in an array where every element is an array consisting of the
      *      matched string at offset 0 and its string offset into subject at offset 1.
      *
-     * @return array<int|string, array<int|string, string>> Returns an array containing substrings of subject
+     * @return string[] Returns an array containing substrings of subject
      *                                                      split along boundaries matched by pattern
      *
      * @throws PcreException
@@ -53,6 +54,8 @@ abstract class Utils
         if ($parts === false) {
             throw PcreException::createFromPhpError(preg_last_error());
         }
+
+        Assert::allString($parts);
 
         return $parts;
     }
