@@ -21,14 +21,19 @@ final class PcreException extends InvalidArgumentException
         switch ($errorCode) {
             case PREG_BACKTRACK_LIMIT_ERROR:
                 return new self('Backtrack limit error');
+
             case PREG_RECURSION_LIMIT_ERROR:
                 return new self('Recursion limit error');
+
             case PREG_BAD_UTF8_ERROR:
                 return new self('Bad UTF8 error');
+
             case PREG_BAD_UTF8_OFFSET_ERROR:
                 return new self('Bad UTF8 offset error');
+
             case PREG_JIT_STACKLIMIT_ERROR:
                 return new self('Jit stacklimit error');
+
             case PREG_NO_ERROR:
             case PREG_INTERNAL_ERROR:
             default:

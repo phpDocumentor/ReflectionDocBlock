@@ -101,8 +101,9 @@ final class Method extends BaseTag implements Factory\StaticMethod
         // 5. then a word with underscores, followed by ( and any character
         //    until a ) and whitespace : as method name with signature
         // 6. any remaining text : as description
-        if (!preg_match(
-            '/^
+        if (
+            !preg_match(
+                '/^
                 # Static keyword
                 # Declares a static method ONLY if type is also present
                 (?:
@@ -132,9 +133,10 @@ final class Method extends BaseTag implements Factory\StaticMethod
                 # Description
                 (.*)
             $/sux',
-            $body,
-            $matches
-        )) {
+                $body,
+                $matches
+            )
+        ) {
             return null;
         }
 

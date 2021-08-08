@@ -70,7 +70,7 @@ final class Source extends BaseTag implements Factory\StaticMethod
             $description = $matches[3];
         }
 
-        return new static($startingLine, $lineCount, $descriptionFactory->create($description??'', $context));
+        return new static($startingLine, $lineCount, $descriptionFactory->create($description ?? '', $context));
     }
 
     /**
