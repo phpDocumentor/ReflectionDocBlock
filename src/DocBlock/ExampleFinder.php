@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace phpDocumentor\Reflection\DocBlock;
 
 use phpDocumentor\Reflection\DocBlock\Tags\Example;
+
 use function array_slice;
 use function file;
 use function getcwd;
@@ -22,6 +23,7 @@ use function is_readable;
 use function rtrim;
 use function sprintf;
 use function trim;
+
 use const DIRECTORY_SEPARATOR;
 
 /**
@@ -38,7 +40,7 @@ class ExampleFinder
     /**
      * Attempts to find the example contents for the given descriptor.
      */
-    public function find(Example $example) : string
+    public function find(Example $example): string
     {
         $filename = $example->getFilePath();
 
@@ -53,7 +55,7 @@ class ExampleFinder
     /**
      * Registers the project's root directory where an 'examples' folder can be expected.
      */
-    public function setSourceDirectory(string $directory = '') : void
+    public function setSourceDirectory(string $directory = ''): void
     {
         $this->sourceDirectory = $directory;
     }
@@ -61,7 +63,7 @@ class ExampleFinder
     /**
      * Returns the project's root directory where an 'examples' folder can be expected.
      */
-    public function getSourceDirectory() : string
+    public function getSourceDirectory(): string
     {
         return $this->sourceDirectory;
     }
@@ -71,7 +73,7 @@ class ExampleFinder
      *
      * @param string[] $directories
      */
-    public function setExampleDirectories(array $directories) : void
+    public function setExampleDirectories(array $directories): void
     {
         $this->exampleDirectories = $directories;
     }
@@ -81,7 +83,7 @@ class ExampleFinder
      *
      * @return string[]
      */
-    public function getExampleDirectories() : array
+    public function getExampleDirectories(): array
     {
         return $this->exampleDirectories;
     }
@@ -99,7 +101,7 @@ class ExampleFinder
      *
      * @return string[] all lines of the example file
      */
-    private function getExampleFileContents(string $filename) : ?array
+    private function getExampleFileContents(string $filename): ?array
     {
         $normalizedPath = null;
 
@@ -129,7 +131,7 @@ class ExampleFinder
     /**
      * Get example filepath based on the example directory inside your project.
      */
-    private function getExamplePathFromExampleDirectory(string $file) : string
+    private function getExamplePathFromExampleDirectory(string $file): string
     {
         return getcwd() . DIRECTORY_SEPARATOR . 'examples' . DIRECTORY_SEPARATOR . $file;
     }
@@ -137,7 +139,7 @@ class ExampleFinder
     /**
      * Returns a path to the example file in the given directory..
      */
-    private function constructExamplePath(string $directory, string $file) : string
+    private function constructExamplePath(string $directory, string $file): string
     {
         return rtrim($directory, '\\/') . DIRECTORY_SEPARATOR . $file;
     }
@@ -145,7 +147,7 @@ class ExampleFinder
     /**
      * Get example filepath based on sourcecode.
      */
-    private function getExamplePathFromSource(string $file) : string
+    private function getExamplePathFromSource(string $file): string
     {
         return sprintf(
             '%s%s%s',

@@ -20,12 +20,12 @@ class ExampleFinderTest extends TestCase
     /**
      * Call Mockery::close after each test.
      */
-    public function tearDown() : void
+    public function tearDown(): void
     {
         m::close();
     }
 
-    public function setUp() : void
+    public function setUp(): void
     {
         $this->fixture = new ExampleFinder();
     }
@@ -37,7 +37,7 @@ class ExampleFinderTest extends TestCase
      * @covers ::find
      * @covers ::getSourceDirectory
      */
-    public function testFileNotFound() : void
+    public function testFileNotFound(): void
     {
         $example = new Example('./example.php', false, 1, 0, 'Test');
         $this->assertSame('** File not found : ./example.php **', $this->fixture->find($example));

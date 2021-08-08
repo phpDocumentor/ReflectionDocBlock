@@ -28,7 +28,7 @@ class SourceTest extends TestCase
     /**
      * Call Mockery::close after each test.
      */
-    public function tearDown() : void
+    public function tearDown(): void
     {
         m::close();
     }
@@ -39,7 +39,7 @@ class SourceTest extends TestCase
      *
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getName
      */
-    public function testIfCorrectTagNameIsReturned() : void
+    public function testIfCorrectTagNameIsReturned(): void
     {
         $fixture = new Source(1, null, new Description('Description'));
 
@@ -55,7 +55,7 @@ class SourceTest extends TestCase
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::render
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getName
      */
-    public function testIfTagCanBeRenderedUsingDefaultFormatter() : void
+    public function testIfTagCanBeRenderedUsingDefaultFormatter(): void
     {
         $fixture = new Source(1, 10, new Description('Description'));
         $this->assertSame('@source 1 10 Description', $fixture->render());
@@ -72,7 +72,7 @@ class SourceTest extends TestCase
      *
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::render
      */
-    public function testIfTagCanBeRenderedUsingSpecificFormatter() : void
+    public function testIfTagCanBeRenderedUsingSpecificFormatter(): void
     {
         $fixture = new Source(1);
 
@@ -86,7 +86,7 @@ class SourceTest extends TestCase
      * @covers ::__construct
      * @covers ::getStartingLine
      */
-    public function testHasStartingLine() : void
+    public function testHasStartingLine(): void
     {
         $expected = 1;
 
@@ -99,7 +99,7 @@ class SourceTest extends TestCase
      * @covers ::__construct
      * @covers ::getLineCount
      */
-    public function testHasLineCount() : void
+    public function testHasLineCount(): void
     {
         $expected = 2;
 
@@ -114,7 +114,7 @@ class SourceTest extends TestCase
      * @covers ::__construct
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getDescription
      */
-    public function testHasDescription() : void
+    public function testHasDescription(): void
     {
         $expected = new Description('Description');
 
@@ -130,7 +130,7 @@ class SourceTest extends TestCase
      * @covers ::__construct
      * @covers ::__toString
      */
-    public function testStringRepresentationIsReturned() : void
+    public function testStringRepresentationIsReturned(): void
     {
         $fixture = new Source(1, 10, new Description('Description'));
 
@@ -144,7 +144,7 @@ class SourceTest extends TestCase
      * @covers ::__construct
      * @covers ::__toString
      */
-    public function testStringRepresentationIsReturnedWithoutDescription() : void
+    public function testStringRepresentationIsReturnedWithoutDescription(): void
     {
         $fixture = new Source(1);
 
@@ -171,7 +171,7 @@ class SourceTest extends TestCase
      *
      * @covers ::create
      */
-    public function testFactoryMethod() : void
+    public function testFactoryMethod(): void
     {
         $descriptionFactory = m::mock(DescriptionFactory::class);
         $context            = new Context('');
@@ -194,7 +194,7 @@ class SourceTest extends TestCase
      *
      * @covers ::create
      */
-    public function testFactoryMethodFailsIfEmptyBodyIsGiven() : void
+    public function testFactoryMethodFailsIfEmptyBodyIsGiven(): void
     {
         $this->expectException('InvalidArgumentException');
         $descriptionFactory = m::mock(DescriptionFactory::class);
@@ -206,7 +206,7 @@ class SourceTest extends TestCase
      *
      * @covers ::create
      */
-    public function testFactoryMethodFailsIfDescriptionFactoryIsNull() : void
+    public function testFactoryMethodFailsIfDescriptionFactoryIsNull(): void
     {
         $this->expectException('InvalidArgumentException');
         Source::create('1');
@@ -215,7 +215,7 @@ class SourceTest extends TestCase
     /**
      * @covers ::__construct
      */
-    public function testExceptionIsThrownIfStartingLineIsNotInteger() : void
+    public function testExceptionIsThrownIfStartingLineIsNotInteger(): void
     {
         $this->expectException('InvalidArgumentException');
         new Source('blabla');
@@ -224,7 +224,7 @@ class SourceTest extends TestCase
     /**
      * @covers ::__construct
      */
-    public function testExceptionIsThrownIfLineCountIsNotIntegerOrNull() : void
+    public function testExceptionIsThrownIfLineCountIsNotIntegerOrNull(): void
     {
         $this->expectException('InvalidArgumentException');
         new Source('1', []);

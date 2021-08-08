@@ -31,7 +31,7 @@ final class Fqsen implements Reference
     /**
      * @return string string representation of the referenced fqsen
      */
-    public function __toString() : string
+    public function __toString(): string
     {
         return (string) $this->fqsen;
     }

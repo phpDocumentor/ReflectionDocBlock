@@ -6,7 +6,9 @@ namespace phpDocumentor\Reflection;
 
 use phpDocumentor\Reflection\Exception\PcreException;
 use PHPUnit\Framework\TestCase;
+
 use function set_error_handler;
+
 use const E_WARNING;
 
 final class PregSplitTest extends TestCase
@@ -14,7 +16,7 @@ final class PregSplitTest extends TestCase
     /** @var callable|null */
     private $errorHandler = null;
 
-    protected function tearDown() : void
+    protected function tearDown(): void
     {
         if ($this->errorHandler === null) {
             return;
@@ -26,7 +28,7 @@ final class PregSplitTest extends TestCase
     /**
      * @covers \phpDocumentor\Reflection\Utils::pregSplit
      */
-    public function testSimplePregSplit() : void
+    public function testSimplePregSplit(): void
     {
         $result = Utils::pregSplit('/\s/', 'word split');
 
@@ -36,10 +38,10 @@ final class PregSplitTest extends TestCase
     /**
      * @covers \phpDocumentor\Reflection\Utils::pregSplit
      */
-    public function testPregSplitThrowsOnError() : void
+    public function testPregSplitThrowsOnError(): void
     {
         //We need to disable the error handler for phpunit... because we expect some errors here
-        $this->errorHandler = set_error_handler(static function () : void {
+        $this->errorHandler = set_error_handler(static function (): void {
         }, E_WARNING);
 
         $this->expectException(PcreException::class);

@@ -33,7 +33,7 @@ class VarTest extends TestCase
     /**
      * Call Mockery::close after each test.
      */
-    public function tearDown() : void
+    public function tearDown(): void
     {
         m::close();
     }
@@ -44,7 +44,7 @@ class VarTest extends TestCase
      *
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getName
      */
-    public function testIfCorrectTagNameIsReturned() : void
+    public function testIfCorrectTagNameIsReturned(): void
     {
         $fixture = new Var_('myVariable', null, new Description('Description'));
 
@@ -56,7 +56,7 @@ class VarTest extends TestCase
      *
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::render
      */
-    public function testIfVariableNameIsOmmitedIfEmpty() : void
+    public function testIfVariableNameIsOmmitedIfEmpty(): void
     {
         $fixture = new Var_('', null, null);
 
@@ -72,7 +72,7 @@ class VarTest extends TestCase
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::render
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getName
      */
-    public function testIfTagCanBeRenderedUsingDefaultFormatter() : void
+    public function testIfTagCanBeRenderedUsingDefaultFormatter(): void
     {
         $fixture = new Var_('myVariable', new String_(), new Description('Description'));
         $this->assertSame('@var string $myVariable Description', $fixture->render());
@@ -89,7 +89,7 @@ class VarTest extends TestCase
      *
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::render
      */
-    public function testIfTagCanBeRenderedUsingSpecificFormatter() : void
+    public function testIfTagCanBeRenderedUsingSpecificFormatter(): void
     {
         $fixture = new Var_('myVariable');
 
@@ -103,7 +103,7 @@ class VarTest extends TestCase
      * @covers ::__construct
      * @covers ::getVariableName
      */
-    public function testHasVariableName() : void
+    public function testHasVariableName(): void
     {
         $expected = 'myVariable';
 
@@ -116,7 +116,7 @@ class VarTest extends TestCase
      * @covers ::__construct
      * @covers ::getType
      */
-    public function testHasType() : void
+    public function testHasType(): void
     {
         $expected = new String_();
 
@@ -131,7 +131,7 @@ class VarTest extends TestCase
      * @covers ::__construct
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getDescription
      */
-    public function testHasDescription() : void
+    public function testHasDescription(): void
     {
         $expected = new Description('Description');
 
@@ -147,7 +147,7 @@ class VarTest extends TestCase
      * @covers ::__construct
      * @covers ::__toString
      */
-    public function testStringRepresentationIsReturned() : void
+    public function testStringRepresentationIsReturned(): void
     {
         $fixture = new Var_('myVariable', new String_(), new Description('Description'));
 
@@ -161,7 +161,7 @@ class VarTest extends TestCase
      * @covers ::__construct
      * @covers ::__toString
      */
-    public function testStringRepresentationIsReturnedWithoutDescription() : void
+    public function testStringRepresentationIsReturnedWithoutDescription(): void
     {
         $fixture = new Var_('myVariable');
 
@@ -188,7 +188,7 @@ class VarTest extends TestCase
      *
      * @covers ::create
      */
-    public function testFactoryMethod() : void
+    public function testFactoryMethod(): void
     {
         $typeResolver       = new TypeResolver();
         $descriptionFactory = m::mock(DescriptionFactory::class);
@@ -213,7 +213,7 @@ class VarTest extends TestCase
      *
      * @covers ::create
      */
-    public function testFactoryMethodWithoutType() : void
+    public function testFactoryMethodWithoutType(): void
     {
         $typeResolver       = new TypeResolver();
         $fqsenResolver      = new FqsenResolver();
@@ -242,7 +242,7 @@ class VarTest extends TestCase
      *
      * @covers ::create
      */
-    public function testFactoryMethodWithType() : void
+    public function testFactoryMethodWithType(): void
     {
         $typeResolver       = new TypeResolver();
         $fqsenResolver      = new FqsenResolver();
@@ -271,7 +271,7 @@ class VarTest extends TestCase
      *
      * @covers ::create
      */
-    public function testFactoryMethodWithTypeWithoutComment() : void
+    public function testFactoryMethodWithTypeWithoutComment(): void
     {
         $typeResolver       = new TypeResolver();
         $fqsenResolver      = new FqsenResolver();
@@ -299,7 +299,7 @@ class VarTest extends TestCase
      *
      * @covers ::create
      */
-    public function testFactoryMethodFailsIfEmptyBodyIsGiven() : void
+    public function testFactoryMethodFailsIfEmptyBodyIsGiven(): void
     {
         $this->expectException('InvalidArgumentException');
         $descriptionFactory = m::mock(DescriptionFactory::class);
@@ -309,7 +309,7 @@ class VarTest extends TestCase
     /**
      * @covers ::create
      */
-    public function testFactoryMethodFailsIfResolverIsNull() : void
+    public function testFactoryMethodFailsIfResolverIsNull(): void
     {
         $this->expectException('InvalidArgumentException');
         Var_::create('body');
@@ -320,7 +320,7 @@ class VarTest extends TestCase
      *
      * @covers ::create
      */
-    public function testFactoryMethodFailsIfDescriptionFactoryIsNull() : void
+    public function testFactoryMethodFailsIfDescriptionFactoryIsNull(): void
     {
         $this->expectException('InvalidArgumentException');
         Var_::create('body', new TypeResolver());

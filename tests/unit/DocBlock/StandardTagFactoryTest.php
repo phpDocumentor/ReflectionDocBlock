@@ -40,7 +40,7 @@ class StandardTagFactoryTest extends TestCase
     /**
      * Call Mockery::close after each test.
      */
-    public function tearDown() : void
+    public function tearDown(): void
     {
         m::close();
     }
@@ -54,7 +54,7 @@ class StandardTagFactoryTest extends TestCase
      * @covers ::__construct
      * @covers ::create
      */
-    public function testCreatingAGenericTag() : void
+    public function testCreatingAGenericTag(): void
     {
         $expectedTagName         = 'unknown-tag';
         $expectedDescriptionText = 'This is a description';
@@ -87,7 +87,7 @@ class StandardTagFactoryTest extends TestCase
      * @covers ::__construct
      * @covers ::create
      */
-    public function testCreatingAGenericTagWithDescriptionText() : void
+    public function testCreatingAGenericTagWithDescriptionText(): void
     {
         $expectedTagName         = 'unknown-tag';
         $expectedDescriptionText = ' foo Bar 123 ';
@@ -110,7 +110,7 @@ class StandardTagFactoryTest extends TestCase
      * @covers ::__construct
      * @covers ::create
      */
-    public function testCreatingASpecificTag() : void
+    public function testCreatingASpecificTag(): void
     {
         $context    = new Context('');
         $tagFactory = new StandardTagFactory(m::mock(FqsenResolver::class));
@@ -131,7 +131,7 @@ class StandardTagFactoryTest extends TestCase
      * @covers ::__construct
      * @covers ::create
      */
-    public function testAnEmptyContextIsCreatedIfNoneIsProvided() : void
+    public function testAnEmptyContextIsCreatedIfNoneIsProvided(): void
     {
         $fqsen              = '\Tag';
         $resolver           = m::mock(FqsenResolver::class)
@@ -159,7 +159,7 @@ class StandardTagFactoryTest extends TestCase
      * @covers ::__construct
      * @covers ::create
      */
-    public function testPassingYourOwnSetOfTagHandlers() : void
+    public function testPassingYourOwnSetOfTagHandlers(): void
     {
         $context    = new Context('');
         $tagFactory = new StandardTagFactory(m::mock(FqsenResolver::class), ['user' => Author::class]);
@@ -178,7 +178,7 @@ class StandardTagFactoryTest extends TestCase
      * @covers ::__construct
      * @covers ::create
      */
-    public function testPassingYourOwnSetOfTagHandlersWithGermanChars() : void
+    public function testPassingYourOwnSetOfTagHandlersWithGermanChars(): void
     {
         $typeResolver       = new TypeResolver();
         $fqsenResolver      = new FqsenResolver();
@@ -206,7 +206,7 @@ class StandardTagFactoryTest extends TestCase
      * @covers ::__construct
      * @covers ::create
      */
-    public function testPassingYourOwnSetOfTagHandlersWithoutComment() : void
+    public function testPassingYourOwnSetOfTagHandlersWithoutComment(): void
     {
         $typeResolver       = new TypeResolver();
         $fqsenResolver      = new FqsenResolver();
@@ -233,7 +233,7 @@ class StandardTagFactoryTest extends TestCase
      * @covers ::__construct
      * @covers ::create
      */
-    public function testPassingYourOwnSetOfTagHandlersWithEmptyComment() : void
+    public function testPassingYourOwnSetOfTagHandlersWithEmptyComment(): void
     {
         $this->expectException('InvalidArgumentException');
         $this->expectExceptionMessage(
@@ -260,7 +260,7 @@ class StandardTagFactoryTest extends TestCase
      *
      * @covers ::create
      */
-    public function testExceptionIsThrownIfProvidedTagIsNotWellformed() : void
+    public function testExceptionIsThrownIfProvidedTagIsNotWellformed(): void
     {
         $this->expectException('InvalidArgumentException');
         $this->expectExceptionMessage(
@@ -276,7 +276,7 @@ class StandardTagFactoryTest extends TestCase
      * @covers ::__construct
      * @covers ::addParameter
      */
-    public function testAddParameterToServiceLocator() : void
+    public function testAddParameterToServiceLocator(): void
     {
         $resolver   = m::mock(FqsenResolver::class);
         $tagFactory = new StandardTagFactory($resolver);
@@ -294,7 +294,7 @@ class StandardTagFactoryTest extends TestCase
      *
      * @covers ::addService
      */
-    public function testAddServiceToServiceLocator() : void
+    public function testAddServiceToServiceLocator(): void
     {
         $service = new PassthroughFormatter();
 
@@ -313,7 +313,7 @@ class StandardTagFactoryTest extends TestCase
      *
      * @covers ::addService
      */
-    public function testInjectConcreteServiceForInterfaceToServiceLocator() : void
+    public function testInjectConcreteServiceForInterfaceToServiceLocator(): void
     {
         $interfaceName = Formatter::class;
         $service       = new PassthroughFormatter();
@@ -336,7 +336,7 @@ class StandardTagFactoryTest extends TestCase
      *
      * @covers ::registerTagHandler
      */
-    public function testRegisteringAHandlerForANewTag() : void
+    public function testRegisteringAHandlerForANewTag(): void
     {
         $resolver   = m::mock(FqsenResolver::class);
         $tagFactory = new StandardTagFactory($resolver);
@@ -354,7 +354,7 @@ class StandardTagFactoryTest extends TestCase
      *
      * @covers ::registerTagHandler
      */
-    public function testHandlerRegistrationFailsIfProvidedTagNameIsNamespaceButNotFullyQualified() : void
+    public function testHandlerRegistrationFailsIfProvidedTagNameIsNamespaceButNotFullyQualified(): void
     {
         $this->expectException('InvalidArgumentException');
         $resolver   = m::mock(FqsenResolver::class);
@@ -369,7 +369,7 @@ class StandardTagFactoryTest extends TestCase
      *
      * @covers ::registerTagHandler
      */
-    public function testHandlerRegistrationFailsIfProvidedHandlerIsEmpty() : void
+    public function testHandlerRegistrationFailsIfProvidedHandlerIsEmpty(): void
     {
         $this->expectException('InvalidArgumentException');
         $resolver   = m::mock(FqsenResolver::class);
@@ -383,7 +383,7 @@ class StandardTagFactoryTest extends TestCase
      *
      * @covers ::registerTagHandler
      */
-    public function testHandlerRegistrationFailsIfProvidedHandlerIsNotAnExistingClassName() : void
+    public function testHandlerRegistrationFailsIfProvidedHandlerIsNotAnExistingClassName(): void
     {
         $this->expectException('InvalidArgumentException');
         $resolver   = m::mock(FqsenResolver::class);
@@ -397,7 +397,7 @@ class StandardTagFactoryTest extends TestCase
      *
      * @covers ::registerTagHandler
      */
-    public function testHandlerRegistrationFailsIfProvidedHandlerDoesNotImplementTheTagInterface() : void
+    public function testHandlerRegistrationFailsIfProvidedHandlerDoesNotImplementTheTagInterface(): void
     {
         $this->expectException('InvalidArgumentException');
         $resolver   = m::mock(FqsenResolver::class);
@@ -414,7 +414,7 @@ class StandardTagFactoryTest extends TestCase
      *
      * @covers ::create
      */
-    public function testReturnTagIsMappedCorrectly() : void
+    public function testReturnTagIsMappedCorrectly(): void
     {
         $context = new Context('');
 
@@ -437,7 +437,7 @@ class StandardTagFactoryTest extends TestCase
         $this->assertSame('return', $tag->getName());
     }
 
-    public function testInvalidTagIsReturnedOnFailure() : void
+    public function testInvalidTagIsReturnedOnFailure(): void
     {
         $tagFactory = new StandardTagFactory(m::mock(FqsenResolver::class));
 
@@ -449,7 +449,7 @@ class StandardTagFactoryTest extends TestCase
     /**
      * @dataProvider validTagProvider
      */
-    public function testValidFormattedTags(string $input, string $tagName, string $render) : void
+    public function testValidFormattedTags(string $input, string $tagName, string $render): void
     {
         $fqsenResolver = m::mock(FqsenResolver::class);
         $tagFactory = new StandardTagFactory($fqsenResolver);
@@ -465,7 +465,7 @@ class StandardTagFactoryTest extends TestCase
      *
      * @phpstan-return array<string, array<int, string>>
      */
-    public function validTagProvider() : array
+    public function validTagProvider(): array
     {
         //rendered result is adding a space, because the tags are not rendered properly.
         return [
@@ -515,7 +515,7 @@ class StandardTagFactoryTest extends TestCase
     /**
      * @dataProvider invalidTagProvider
      */
-    public function testInValidFormattedTags(string $input) : void
+    public function testInValidFormattedTags(string $input): void
     {
         $this->expectException(InvalidArgumentException::class);
         $fqsenResolver = m::mock(FqsenResolver::class);
@@ -529,7 +529,7 @@ class StandardTagFactoryTest extends TestCase
      *
      * @phpstan-return list<array<int, string>>
      */
-    public function invalidTagProvider() : array
+    public function invalidTagProvider(): array
     {
         return [
             ['@tag[invalid]'],

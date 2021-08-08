@@ -31,7 +31,7 @@ class CoversTest extends TestCase
     /**
      * Call Mockery::close after each test.
      */
-    public function tearDown() : void
+    public function tearDown(): void
     {
         m::close();
     }
@@ -42,7 +42,7 @@ class CoversTest extends TestCase
      *
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getName
      */
-    public function testIfCorrectTagNameIsReturned() : void
+    public function testIfCorrectTagNameIsReturned(): void
     {
         $fixture = new Covers(new Fqsen('\DateTime'), new Description('Description'));
 
@@ -58,7 +58,7 @@ class CoversTest extends TestCase
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::render
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getName
      */
-    public function testIfTagCanBeRenderedUsingDefaultFormatter() : void
+    public function testIfTagCanBeRenderedUsingDefaultFormatter(): void
     {
         $fixture = new Covers(new Fqsen('\DateTime'), new Description('Description'));
 
@@ -71,7 +71,7 @@ class CoversTest extends TestCase
      *
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::render
      */
-    public function testIfTagCanBeRenderedUsingSpecificFormatter() : void
+    public function testIfTagCanBeRenderedUsingSpecificFormatter(): void
     {
         $fixture = new Covers(new Fqsen('\DateTime'), new Description('Description'));
 
@@ -85,7 +85,7 @@ class CoversTest extends TestCase
      * @covers ::__construct
      * @covers ::getReference
      */
-    public function testHasReferenceToFqsen() : void
+    public function testHasReferenceToFqsen(): void
     {
         $expected = new Fqsen('\DateTime');
 
@@ -100,7 +100,7 @@ class CoversTest extends TestCase
      * @covers ::__construct
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\BaseTag::getDescription
      */
-    public function testHasDescription() : void
+    public function testHasDescription(): void
     {
         $expected = new Description('Description');
 
@@ -115,7 +115,7 @@ class CoversTest extends TestCase
      * @covers ::__construct
      * @covers ::__toString
      */
-    public function testStringRepresentationIsReturned() : void
+    public function testStringRepresentationIsReturned(): void
     {
         $fixture = new Covers(new Fqsen('\DateTime'), new Description('Description'));
 
@@ -132,7 +132,7 @@ class CoversTest extends TestCase
      *
      * @covers ::create
      */
-    public function testFactoryMethod() : void
+    public function testFactoryMethod(): void
     {
         $descriptionFactory = m::mock(DescriptionFactory::class);
         $resolver           = m::mock(FqsenResolver::class);
@@ -156,7 +156,7 @@ class CoversTest extends TestCase
      * @covers ::__construct
      * @covers ::__toString
      */
-    public function testStringRepresentationIsReturnedWithoutDescription() : void
+    public function testStringRepresentationIsReturnedWithoutDescription(): void
     {
         $fixture = new Covers(new Fqsen('\\'));
 
@@ -185,7 +185,7 @@ class CoversTest extends TestCase
      *
      * @covers ::create
      */
-    public function testFactoryMethodWithSpaceBeforeClass() : void
+    public function testFactoryMethodWithSpaceBeforeClass(): void
     {
         $fqsenResolver      = new FqsenResolver();
         $tagFactory         = new StandardTagFactory($fqsenResolver);
@@ -208,7 +208,7 @@ class CoversTest extends TestCase
      * @covers ::__construct
      * @covers ::__toString
      */
-    public function testStringRepresentationIsReturnedWithDescription() : void
+    public function testStringRepresentationIsReturnedWithDescription(): void
     {
         $fixture = new Covers(new Fqsen('\DateTime'), new Description('My Description'));
 
@@ -218,7 +218,7 @@ class CoversTest extends TestCase
     /**
      * @covers ::create
      */
-    public function testFactoryMethodFailsIfBodyIsNotEmpty() : void
+    public function testFactoryMethodFailsIfBodyIsNotEmpty(): void
     {
         $this->expectException('InvalidArgumentException');
         $this->assertNull(Covers::create(''));

@@ -8,6 +8,7 @@ use Exception;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Throwable;
+
 use function fopen;
 use function serialize;
 use function unserialize;
@@ -22,7 +23,7 @@ use function unserialize;
  */
 final class InvalidTagTest extends TestCase
 {
-    public function testCreationWithoutError() : void
+    public function testCreationWithoutError(): void
     {
         $tag = InvalidTag::create('Body', 'name');
 
@@ -35,7 +36,7 @@ final class InvalidTagTest extends TestCase
      * @covers ::withError
      * @covers ::__toString
      */
-    public function testCreationWithError() : void
+    public function testCreationWithError(): void
     {
         $exception = new Exception();
         $tag       = InvalidTag::create('Body', 'name')->withError($exception);
@@ -46,7 +47,7 @@ final class InvalidTagTest extends TestCase
         self::assertSame($exception, $tag->getException());
     }
 
-    public function testCreationWithErrorContainingClosure() : void
+    public function testCreationWithErrorContainingClosure(): void
     {
         try {
             $this->throwExceptionFromClosureWithClosureArgument();
@@ -67,16 +68,16 @@ final class InvalidTagTest extends TestCase
         }
     }
 
-    private function throwExceptionFromClosureWithClosureArgument() : void
+    private function throwExceptionFromClosureWithClosureArgument(): void
     {
-        $function = static function () : void {
+        $function = static function (): void {
             throw new InvalidArgumentException();
         };
 
         $function($function);
     }
 
-    public function testCreationWithErrorContainingResource() : void
+    public function testCreationWithErrorContainingResource(): void
     {
         try {
             $this->throwExceptionWithResourceArgument();
@@ -99,9 +100,9 @@ final class InvalidTagTest extends TestCase
         }
     }
 
-    private function throwExceptionWithResourceArgument() : void
+    private function throwExceptionWithResourceArgument(): void
     {
-        $function = static function () : void {
+        $function = static function (): void {
             throw new InvalidArgumentException();
         };
 

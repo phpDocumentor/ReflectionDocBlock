@@ -20,11 +20,13 @@ use phpDocumentor\Reflection\TypeResolver;
 use phpDocumentor\Reflection\Types\Context as TypeContext;
 use phpDocumentor\Reflection\Utils;
 use Webmozart\Assert\Assert;
+
 use function array_shift;
 use function array_unshift;
 use function implode;
 use function strpos;
 use function substr;
+
 use const PREG_SPLIT_DELIM_CAPTURE;
 
 /**
@@ -61,7 +63,7 @@ final class Param extends TagWithType implements Factory\StaticMethod
         ?TypeResolver $typeResolver = null,
         ?DescriptionFactory $descriptionFactory = null,
         ?TypeContext $context = null
-    ) : self {
+    ): self {
         Assert::stringNotEmpty($body);
         Assert::notNull($typeResolver);
         Assert::notNull($descriptionFactory);
@@ -114,7 +116,7 @@ final class Param extends TagWithType implements Factory\StaticMethod
     /**
      * Returns the variable's name.
      */
-    public function getVariableName() : ?string
+    public function getVariableName(): ?string
     {
         return $this->variableName;
     }
@@ -122,7 +124,7 @@ final class Param extends TagWithType implements Factory\StaticMethod
     /**
      * Returns whether this tag is variadic.
      */
-    public function isVariadic() : bool
+    public function isVariadic(): bool
     {
         return $this->isVariadic;
     }
@@ -130,7 +132,7 @@ final class Param extends TagWithType implements Factory\StaticMethod
     /**
      * Returns whether this tag is passed by reference.
      */
-    public function isReference() : bool
+    public function isReference(): bool
     {
         return $this->isReference;
     }
@@ -138,7 +140,7 @@ final class Param extends TagWithType implements Factory\StaticMethod
     /**
      * Returns a string representation for this tag.
      */
-    public function __toString() : string
+    public function __toString(): string
     {
         if ($this->description) {
             $description = $this->description->render();
@@ -159,7 +161,7 @@ final class Param extends TagWithType implements Factory\StaticMethod
             . ($description !== '' ? ($type !== '' || $variableName !== '' ? ' ' : '') . $description : '');
     }
 
-    private static function strStartsWithVariable(string $str) : bool
+    private static function strStartsWithVariable(string $str): bool
     {
         return strpos($str, '$') === 0
                ||

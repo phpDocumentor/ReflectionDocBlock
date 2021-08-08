@@ -1,22 +1,29 @@
 <?xml version="1.0"?>
-<ruleset name="phpDocumentor">
- <description>The coding standard for phpDocumentor.</description>
+<ruleset name="ReflectionDocBlock">
+ <description>The coding standard for this library.</description>
 
     <file>src</file>
     <file>tests/unit</file>
-    <exclude-pattern>*/tests/unit/Types/ContextFactoryTest.php</exclude-pattern>
+    <exclude-pattern>*/tests/unit/Types/ContextFactoryTest\.php</exclude-pattern>
     <exclude-pattern>*/tests/unit/Assets/*</exclude-pattern>
     <arg value="p"/>
 
+    <!-- Set the minimum PHP version for PHPCompatibility.
+         This should be kept in sync with the requirements in the composer.json file. -->
+    <config name="testVersion" value="7.2-"/>
+
     <rule ref="phpDocumentor">
         <exclude name="SlevomatCodingStandard.Exceptions.ReferenceThrowableOnly.ReferencedGeneralException" />
+
+        <!-- Property type declarations are a PHP 7.4 feature. -->
+        <exclude name="SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint"/>
     </rule>
 
     <rule ref="SlevomatCodingStandard.Classes.SuperfluousAbstractClassNaming.SuperfluousPrefix">
-        <exclude-pattern>*/src/*/Abstract*.php</exclude-pattern>
+        <exclude-pattern>*/src/*/Abstract*\.php</exclude-pattern>
     </rule>
 
     <rule ref="SlevomatCodingStandard.Classes.UnusedPrivateElements.UnusedMethod">
-        <exclude-pattern>*/src/DocBlock/Tags/InvalidTag.php</exclude-pattern>
+        <exclude-pattern>*/src/DocBlock/Tags/InvalidTag\.php</exclude-pattern>
     </rule>
 </ruleset>

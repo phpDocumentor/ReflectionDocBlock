@@ -16,6 +16,7 @@ namespace phpDocumentor\Reflection\DocBlock;
 use phpDocumentor\Reflection\DocBlock;
 use phpDocumentor\Reflection\DocBlock\Tags\Formatter;
 use phpDocumentor\Reflection\DocBlock\Tags\Formatter\PassthroughFormatter;
+
 use function sprintf;
 use function str_repeat;
 use function str_replace;
@@ -72,7 +73,7 @@ class Serializer
      *
      * @return string The serialized doc block.
      */
-    public function getDocComment(DocBlock $docblock) : string
+    public function getDocComment(DocBlock $docblock): string
     {
         $indent      = str_repeat($this->indentString, $this->indent);
         $firstIndent = $this->isFirstLineIndented ? $indent : '';
@@ -98,7 +99,7 @@ class Serializer
         return $comment . $indent . ' */';
     }
 
-    private function removeTrailingSpaces(string $indent, string $text) : string
+    private function removeTrailingSpaces(string $indent, string $text): string
     {
         return str_replace(
             sprintf("\n%s * \n", $indent),
@@ -107,7 +108,7 @@ class Serializer
         );
     }
 
-    private function addAsterisksForEachLine(string $indent, string $text) : string
+    private function addAsterisksForEachLine(string $indent, string $text): string
     {
         return str_replace(
             "\n",
@@ -116,7 +117,7 @@ class Serializer
         );
     }
 
-    private function getSummaryAndDescriptionTextBlock(DocBlock $docblock, ?int $wrapLength) : string
+    private function getSummaryAndDescriptionTextBlock(DocBlock $docblock, ?int $wrapLength): string
     {
         $text = $docblock->getSummary() . ((string) $docblock->getDescription() ? "\n\n" . $docblock->getDescription()
                 : '');
@@ -129,7 +130,7 @@ class Serializer
         return $text;
     }
 
-    private function addTagBlock(DocBlock $docblock, ?int $wrapLength, string $indent, string $comment) : string
+    private function addTagBlock(DocBlock $docblock, ?int $wrapLength, string $indent, string $comment): string
     {
         foreach ($docblock->getTags() as $tag) {
             $tagText = $this->tagFormatter->format($tag);

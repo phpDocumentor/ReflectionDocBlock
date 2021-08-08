@@ -26,7 +26,7 @@ class SerializerTest extends TestCase
     /**
      * Call Mockery::close after each test.
      */
-    public function tearDown() : void
+    public function tearDown(): void
     {
         m::close();
     }
@@ -41,7 +41,7 @@ class SerializerTest extends TestCase
      * @covers ::__construct
      * @covers ::getDocComment
      */
-    public function testReconstructsADocCommentFromADocBlock() : void
+    public function testReconstructsADocCommentFromADocBlock(): void
     {
         $expected = <<<'DOCCOMMENT'
 /**
@@ -76,7 +76,7 @@ DOCCOMMENT;
      * @covers ::__construct
      * @covers ::getDocComment
      */
-    public function testAddPrefixToDocBlock() : void
+    public function testAddPrefixToDocBlock(): void
     {
         $expected = <<<'DOCCOMMENT'
 aa/**
@@ -111,7 +111,7 @@ DOCCOMMENT;
      * @covers ::__construct
      * @covers ::getDocComment
      */
-    public function testAddPrefixToDocBlockExceptFirstLine() : void
+    public function testAddPrefixToDocBlockExceptFirstLine(): void
     {
         $expected = <<<'DOCCOMMENT'
 /**
@@ -146,7 +146,7 @@ DOCCOMMENT;
      * @covers ::__construct
      * @covers ::getDocComment
      */
-    public function testWordwrapsAroundTheGivenAmountOfCharacters() : void
+    public function testWordwrapsAroundTheGivenAmountOfCharacters(): void
     {
         $expected = <<<'DOCCOMMENT'
 /**
@@ -181,7 +181,7 @@ DOCCOMMENT;
      * @covers ::__construct
      * @covers ::getDocComment
      */
-    public function testNoExtraSpacesAfterTagRemoval() : void
+    public function testNoExtraSpacesAfterTagRemoval(): void
     {
         $expected = <<<'DOCCOMMENT'
 /**
