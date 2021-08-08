@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace phpDocumentor\Reflection\DocBlock;
 
 use phpDocumentor\Reflection\DocBlock\Tags\Example;
+
 use function array_slice;
 use function file;
 use function getcwd;
@@ -22,6 +23,7 @@ use function is_readable;
 use function rtrim;
 use function sprintf;
 use function trim;
+
 use const DIRECTORY_SEPARATOR;
 
 /**

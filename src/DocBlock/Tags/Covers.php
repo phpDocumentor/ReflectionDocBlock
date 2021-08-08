@@ -20,6 +20,7 @@ use phpDocumentor\Reflection\FqsenResolver;
 use phpDocumentor\Reflection\Types\Context as TypeContext;
 use phpDocumentor\Reflection\Utils;
 use Webmozart\Assert\Assert;
+
 use function array_key_exists;
 use function explode;
 

@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace phpDocumentor\Reflection;
 
 use phpDocumentor\Reflection\Exception\PcreException;
+
 use function preg_last_error;
 use function preg_split as php_preg_split;
 

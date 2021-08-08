@@ -15,6 +15,7 @@ namespace phpDocumentor\Reflection\DocBlock;
 
 use phpDocumentor\Reflection\Types\Context as TypeContext;
 use phpDocumentor\Reflection\Utils;
+
 use function count;
 use function explode;
 use function implode;
@@ -25,6 +26,7 @@ use function strlen;
 use function strpos;
 use function substr;
 use function trim;
+
 use const PREG_SPLIT_DELIM_CAPTURE;
 
 /**

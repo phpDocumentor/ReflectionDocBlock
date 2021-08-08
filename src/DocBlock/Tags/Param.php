@@ -20,11 +20,13 @@ use phpDocumentor\Reflection\TypeResolver;
 use phpDocumentor\Reflection\Types\Context as TypeContext;
 use phpDocumentor\Reflection\Utils;
 use Webmozart\Assert\Assert;
+
 use function array_shift;
 use function array_unshift;
 use function implode;
 use function strpos;
 use function substr;
+
 use const PREG_SPLIT_DELIM_CAPTURE;
 
 /**

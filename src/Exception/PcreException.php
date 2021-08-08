@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace phpDocumentor\Reflection\Exception;
 
 use InvalidArgumentException;
+
 use const PREG_BACKTRACK_LIMIT_ERROR;
 use const PREG_BAD_UTF8_ERROR;
 use const PREG_BAD_UTF8_OFFSET_ERROR;

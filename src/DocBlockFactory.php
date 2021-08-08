@@ -20,6 +20,7 @@ use phpDocumentor\Reflection\DocBlock\StandardTagFactory;
 use phpDocumentor\Reflection\DocBlock\Tag;
 use phpDocumentor\Reflection\DocBlock\TagFactory;
 use Webmozart\Assert\Assert;
+
 use function array_shift;
 use function count;
 use function explode;

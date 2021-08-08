@@ -15,6 +15,7 @@ namespace phpDocumentor\Reflection\DocBlock\Tags;
 
 use phpDocumentor\Reflection\DocBlock\Tag;
 use Webmozart\Assert\Assert;
+
 use function array_key_exists;
 use function preg_match;
 use function rawurlencode;

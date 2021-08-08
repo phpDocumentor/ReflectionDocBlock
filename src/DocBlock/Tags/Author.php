@@ -14,9 +14,11 @@ declare(strict_types=1);
 namespace phpDocumentor\Reflection\DocBlock\Tags;
 
 use InvalidArgumentException;
+
 use function filter_var;
 use function preg_match;
 use function trim;
+
 use const FILTER_VALIDATE_EMAIL;
 
 /**

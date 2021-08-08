@@ -16,6 +16,7 @@ namespace phpDocumentor\Reflection\DocBlock;
 use phpDocumentor\Reflection\DocBlock;
 use phpDocumentor\Reflection\DocBlock\Tags\Formatter;
 use phpDocumentor\Reflection\DocBlock\Tags\Formatter\PassthroughFormatter;
+
 use function sprintf;
 use function str_repeat;
 use function str_replace;
