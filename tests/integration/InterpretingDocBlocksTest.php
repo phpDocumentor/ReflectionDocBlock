@@ -79,7 +79,14 @@ DESCRIPTION;
         $this->assertInstanceOf(DocBlock::class, $docblock);
         $this->assertSame('This is an example of a summary.', $summary);
         $this->assertInstanceOf(Description::class, $description);
-        $this->assertSame($descriptionText, $description->render());
+        $this->assertSame(
+            str_replace(
+                PHP_EOL,
+                "\n",
+            $descriptionText
+            ),
+            $description->render()
+        );
         $this->assertEmpty($docblock->getTags());
     }
 
@@ -124,6 +131,9 @@ DESCRIPTION;
         include(__DIR__ . '/../../examples/playing-with-descriptions/02-escaping.php');
 
         $this->assertSame(
+            str_replace(
+                PHP_EOL,
+                "\n",
             <<<'DESCRIPTION'
 You can escape the @-sign by surrounding it with braces, for example: @. And escape a closing brace within an
 inline tag by adding an opening brace in front of it like this: }.
@@ -135,7 +145,7 @@ Here are example texts where you can see how they could be used in a real life s
 
 Do note that an {@internal inline tag that has an opening brace ({) does not break out}.
 DESCRIPTION
-            ,
+            ),
             $foundDescription
         );
     }

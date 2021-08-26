@@ -146,7 +146,7 @@ class DescriptionFactory
      */
     private function removeSuperfluousStartingWhitespace(string $contents): string
     {
-        $lines = explode("\n", $contents);
+        $lines = Utils::pregSplit("/\r\n?|\n/", $contents);
 
         // if there is only one line then we don't have lines with superfluous whitespace and
         // can use the contents as-is
