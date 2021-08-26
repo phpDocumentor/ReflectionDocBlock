@@ -17,6 +17,10 @@ use Mockery as m;
 use phpDocumentor\Reflection\DocBlock;
 use PHPUnit\Framework\TestCase;
 
+use function str_replace;
+
+use const PHP_EOL;
+
 /**
  * @coversDefaultClass \phpDocumentor\Reflection\DocBlock\Serializer
  * @covers ::<private>

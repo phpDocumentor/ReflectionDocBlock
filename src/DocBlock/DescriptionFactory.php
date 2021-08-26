@@ -17,7 +17,6 @@ use phpDocumentor\Reflection\Types\Context as TypeContext;
 use phpDocumentor\Reflection\Utils;
 
 use function count;
-use function explode;
 use function implode;
 use function ltrim;
 use function min;

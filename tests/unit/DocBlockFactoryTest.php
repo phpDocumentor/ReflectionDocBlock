@@ -23,6 +23,10 @@ use phpDocumentor\Reflection\Types\Context;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 
+use function str_replace;
+
+use const PHP_EOL;
+
 /**
  * @uses               \Webmozart\Assert\Assert
  * @uses               \phpDocumentor\Reflection\DocBlock

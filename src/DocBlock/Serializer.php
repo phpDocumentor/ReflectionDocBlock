@@ -42,9 +42,7 @@ class Serializer
 
     /** @var Formatter A custom tag formatter. */
     protected $tagFormatter;
-    /**
-     * @var string
-     */
+    /** @var string */
     private $lineEnding;
 
     /**

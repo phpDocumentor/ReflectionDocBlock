@@ -462,7 +462,6 @@ class StandardTagFactoryTest extends TestCase
 
     /**
      * @return string[][]
-     *
      * @phpstan-return array<string, array<int, string>>
      */
     public function validTagProvider(): array
@@ -526,7 +525,6 @@ class StandardTagFactoryTest extends TestCase
 
     /**
      * @return string[][]
-     *
      * @phpstan-return list<array<int, string>>
      */
     public function invalidTagProvider(): array

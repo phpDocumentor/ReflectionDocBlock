@@ -22,6 +22,8 @@ use PHPUnit\Framework\TestCase;
 
 use function str_replace;
 
+use const PHP_EOL;
+
 /**
  * @coversDefaultClass \phpDocumentor\Reflection\DocBlock\DescriptionFactory
  * @covers ::<private>
