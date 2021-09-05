@@ -108,4 +108,19 @@ final class InvalidTagTest extends TestCase
 
         $function(fopen(__FILE__, 'r'));
     }
+
+    public function testCreationWithErrorFromEval(): void
+    {
+        $builder = static function (): InvalidArgumentException {
+            return new InvalidArgumentException();
+        };
+
+        $exception = eval('return $builder();');
+        $tag = InvalidTag::create('Body', 'name')->withError($exception);
+
+        self::assertSame('name', $tag->getName());
+        self::assertSame('@name Body', $tag->render());
+        self::assertSame('Body', (string) $tag);
+        self::assertSame($exception, $tag->getException());
+    }
 }
