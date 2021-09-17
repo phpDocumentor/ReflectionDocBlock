@@ -60,7 +60,7 @@ jobs:
           - ubuntu-latest
           - windows-latest
           - macOS-latest
-        php-versions: ['7.2', '7.3', '7.4', '8.0']
+        php-versions: ['7.2', '7.3', '7.4', '8.0', '8.1']
     env:
       extensions: mbstring
       key: cache-v1 # can be any string, change to clear the extension cache.
