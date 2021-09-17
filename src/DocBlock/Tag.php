@@ -21,7 +21,6 @@ interface Tag
 
     /**
      * @return Tag|mixed Class that implements Tag
-     *
      * @phpstan-return ?Tag
      */
     public static function create(string $body);

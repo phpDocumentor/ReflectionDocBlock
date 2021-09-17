@@ -20,6 +20,10 @@ use phpDocumentor\Reflection\DocBlock\Tags\Link as LinkTag;
 use phpDocumentor\Reflection\Types\Context;
 use PHPUnit\Framework\TestCase;
 
+use function str_replace;
+
+use const PHP_EOL;
+
 /**
  * @coversDefaultClass \phpDocumentor\Reflection\DocBlock\DescriptionFactory
  * @covers ::<private>
@@ -192,7 +196,7 @@ DESCRIPTION;
 
         $description = $factory->create($descriptionText, new Context(''));
 
-        $this->assertSame($expectedDescription, $description->render());
+        $this->assertSame(str_replace(PHP_EOL, "\n", $expectedDescription), $description->render());
     }
 
     /**

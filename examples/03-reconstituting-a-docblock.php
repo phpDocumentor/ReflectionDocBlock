@@ -20,7 +20,7 @@ $factory  = DocBlockFactory::createInstance();
 $docblock = $factory->create($docComment);
 
 // Create the serializer that will reconstitute the DocBlock back to its original form.
-$serializer = new Serializer();
+$serializer = new Serializer(0, '', true, null, null, PHP_EOL);
 
 // Reconstitution is performed by the `getDocComment()` method.
 $reconstitutedDocComment = $serializer->getDocComment($docblock);

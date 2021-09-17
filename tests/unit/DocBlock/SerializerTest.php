@@ -17,6 +17,10 @@ use Mockery as m;
 use phpDocumentor\Reflection\DocBlock;
 use PHPUnit\Framework\TestCase;
 
+use function str_replace;
+
+use const PHP_EOL;
+
 /**
  * @coversDefaultClass \phpDocumentor\Reflection\DocBlock\Serializer
  * @covers ::<private>
@@ -63,7 +67,7 @@ DOCCOMMENT;
             ]
         );
 
-        $this->assertSame($expected, $fixture->getDocComment($docBlock));
+        $this->assertSameString($expected, $fixture->getDocComment($docBlock));
     }
 
     /**
@@ -98,7 +102,7 @@ DOCCOMMENT;
             ]
         );
 
-        $this->assertSame($expected, $fixture->getDocComment($docBlock));
+        $this->assertSameString($expected, $fixture->getDocComment($docBlock));
     }
 
     /**
@@ -133,7 +137,7 @@ DOCCOMMENT;
             ]
         );
 
-        $this->assertSame($expected, $fixture->getDocComment($docBlock));
+        $this->assertSameString($expected, $fixture->getDocComment($docBlock));
     }
 
     /**
@@ -174,7 +178,7 @@ DOCCOMMENT;
             ]
         );
 
-        $this->assertSame($expected, $fixture->getDocComment($docBlock));
+        $this->assertSameString($expected, $fixture->getDocComment($docBlock));
     }
 
     /**
@@ -198,9 +202,16 @@ DOCCOMMENT_AFTER_REMOVE;
         $genericTag = new DocBlock\Tags\Generic('unknown-tag');
 
         $docBlock = new DocBlock('', null, [$genericTag]);
-        $this->assertSame($expected, $fixture->getDocComment($docBlock));
+        $this->assertSameString($expected, $fixture->getDocComment($docBlock));
 
         $docBlock->removeTag($genericTag);
-        $this->assertSame($expectedAfterRemove, $fixture->getDocComment($docBlock));
+        $this->assertSameString($expectedAfterRemove, $fixture->getDocComment($docBlock));
+    }
+
+    public function assertSameString(string $expected, string $actual): void
+    {
+        $expected = str_replace(PHP_EOL, "\n", $expected);
+
+        self::assertSame($expected, $actual);
     }
 }

@@ -59,7 +59,6 @@ final class Method extends BaseTag implements Factory\StaticMethod
 
     /**
      * @param array<int, array<string, Type|string>> $arguments
-     *
      * @phpstan-param array<int, array{name: string, type: Type}|string> $arguments
      */
     public function __construct(
@@ -186,7 +185,6 @@ final class Method extends BaseTag implements Factory\StaticMethod
 
     /**
      * @return array<int, array<string, Type|string>>
-     *
      * @phpstan-return array<int, array{name: string, type: Type}>
      */
     public function getArguments(): array
@@ -239,10 +237,9 @@ final class Method extends BaseTag implements Factory\StaticMethod
 
     /**
      * @param mixed[][]|string[] $arguments
+     * @phpstan-param array<int, array{name: string, type: Type}|string> $arguments
      *
      * @return mixed[][]
-     *
-     * @phpstan-param array<int, array{name: string, type: Type}|string> $arguments
      * @phpstan-return array<int, array{name: string, type: Type}>
      */
     private function filterArguments(array $arguments = []): array

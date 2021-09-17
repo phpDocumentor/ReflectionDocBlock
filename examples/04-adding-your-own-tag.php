@@ -126,5 +126,5 @@ $customTagObjects = $docblock->getTagsByName('my-tag');
 
 // As an experiment: let's reconstitute the DocBlock and observe that because we added a __toString() method
 // to the tag class that we can now also see it.
-$serializer              = new Serializer();
+$serializer              = new Serializer(0, '',true, null, null, PHP_EOL);
 $reconstitutedDocComment = $serializer->getDocComment($docblock);

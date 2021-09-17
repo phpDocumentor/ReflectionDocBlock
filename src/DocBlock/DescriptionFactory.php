@@ -17,7 +17,6 @@ use phpDocumentor\Reflection\Types\Context as TypeContext;
 use phpDocumentor\Reflection\Utils;
 
 use function count;
-use function explode;
 use function implode;
 use function ltrim;
 use function min;
@@ -146,7 +145,7 @@ class DescriptionFactory
      */
     private function removeSuperfluousStartingWhitespace(string $contents): string
     {
-        $lines = explode("\n", $contents);
+        $lines = Utils::pregSplit("/\r\n?|\n/", $contents);
 
         // if there is only one line then we don't have lines with superfluous whitespace and
         // can use the contents as-is
