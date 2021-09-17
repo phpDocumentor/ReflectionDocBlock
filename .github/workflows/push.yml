@@ -54,6 +54,7 @@ jobs:
     name: Unit tests for PHP version ${{ matrix.php-versions }} on ${{ matrix.operating-system }}
     runs-on: ${{ matrix.operating-system }}
     strategy:
+      fail-fast: false
       matrix:
         operating-system:
           - ubuntu-latest
@@ -110,7 +111,6 @@ jobs:
           composer-options: --optimize-autoloader
 
       - name: Run PHPUnit
-        continue-on-error: true
         run: php tools/phpunit
 
   codestyle:
