@@ -324,6 +324,10 @@ class MethodTest extends TestCase
             ->with('My Description', $context)
             ->andReturn($description);
 
+        $descriptionFactory->shouldReceive('create')
+            ->with('', $context)
+            ->andReturn(new Description(''));
+
         $fixture = Method::create(
             'static void myMethod(string $argument1, $argument2) My Description',
             $resolver,
@@ -655,5 +659,93 @@ class MethodTest extends TestCase
             ]),
             $fixture->getReturnType()
         );
+    }
+
+    /** @dataProvider parameterNotationProvider  */
+    public function testMethodWithParameters(string $body, array $parameters, array $arguments, string $expectedBody): void
+    {
+        $descriptionFactory = m::mock(DescriptionFactory::class);
+        $resolver           = new TypeResolver();
+        $context            = new Context('');
+
+        $descriptionFactory->shouldReceive('create')->andReturn(new Description(''));
+
+        $fixture = Method::create(
+            $body,
+            $resolver,
+            $descriptionFactory,
+            $context
+        );
+
+        self::assertSame($expectedBody, (string) $fixture);
+        self::assertEquals($arguments, $fixture->getArguments());
+        self::assertEquals($parameters, $fixture->getParameters());
+
+    }
+
+    public function parameterNotationProvider(): array
+    {
+        return [
+            'no parameters' => [
+                'int myMethod()',
+                [],
+                [],
+                'int myMethod()'
+            ],
+            'simple arguments' => [
+                'int myMethod($arg1, $arg2)',
+                [
+                    new Param('arg1', null, false, new Description(''), false),
+                    new Param('arg2', null, false, new Description(''), false)
+                ],
+                [
+                    [
+                        'name' => 'arg1',
+                        'type' => new Mixed_()
+                    ],
+                    [
+                        'name' => 'arg2',
+                        'type' => new Mixed_()
+                    ],
+                ],
+                'int myMethod(mixed $arg1, mixed $arg2)',
+            ],
+            'with by reference argument' => [
+                'int myMethod($arg1, &$arg2)',
+                [
+                    new Param('arg1', null, false, new Description(''), false),
+                    new Param('arg2', null, false, new Description(''), true)
+                ],
+                [
+                    [
+                        'name' => 'arg1',
+                        'type' => new Mixed_()
+                    ],
+                    [
+                        'name' => 'arg2',
+                        'type' => new Mixed_()
+                    ],
+                ],
+                'int myMethod(mixed $arg1, mixed &$arg2)',
+            ],
+            'with variadic argument' => [
+                'int myMethod($arg1, string & ... $arg2)',
+                [
+                    new Param('arg1', null, false, new Description(''), false),
+                    new Param('arg2', new String_(), true, new Description(''), true)
+                ],
+                [
+                    [
+                        'name' => 'arg1',
+                        'type' => new Mixed_()
+                    ],
+                    [
+                        'name' => 'arg2',
+                        'type' => new String_()
+                    ],
+                ],
+                'int myMethod(mixed $arg1, string &...$arg2)',
+            ],
+        ];
     }
 }

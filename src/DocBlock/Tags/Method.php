@@ -57,6 +57,9 @@ final class Method extends BaseTag implements Factory\StaticMethod
     /** @var Type */
     private $returnType;
 
+    /** @var Param[] */
+    private $parameters;
+
     /**
      * @param array<int, array<string, Type|string>> $arguments
      * @phpstan-param array<int, array{name: string, type: Type}|string> $arguments
@@ -66,7 +69,8 @@ final class Method extends BaseTag implements Factory\StaticMethod
         array $arguments = [],
         ?Type $returnType = null,
         bool $static = false,
-        ?Description $description = null
+        ?Description $description = null,
+        array $parameters = []
     ) {
         Assert::stringNotEmpty($methodName);
 
@@ -79,6 +83,7 @@ final class Method extends BaseTag implements Factory\StaticMethod
         $this->returnType  = $returnType;
         $this->isStatic    = $static;
         $this->description = $description;
+        $this->parameters = $this->fromLegacyArguments($parameters, $this->arguments);
     }
 
     public static function create(
@@ -150,29 +155,29 @@ final class Method extends BaseTag implements Factory\StaticMethod
         $returnType  = $typeResolver->resolve($returnType, $context);
         $description = $descriptionFactory->create($description, $context);
 
-        /** @phpstan-var array<int, array{name: string, type: Type}> $arguments */
-        $arguments = [];
+        $parameters = [];
         if ($argumentLines !== '') {
             $argumentsExploded = explode(',', $argumentLines);
             foreach ($argumentsExploded as $argument) {
-                $argument = explode(' ', self::stripRestArg(trim($argument)), 2);
-                if (strpos($argument[0], '$') === 0) {
-                    $argumentName = substr($argument[0], 1);
-                    $argumentType = new Mixed_();
-                } else {
-                    $argumentType = $typeResolver->resolve($argument[0], $context);
-                    $argumentName = '';
-                    if (isset($argument[1])) {
-                        $argument[1]  = self::stripRestArg($argument[1]);
-                        $argumentName = substr($argument[1], 1);
-                    }
-                }
-
-                $arguments[] = ['name' => $argumentName, 'type' => $argumentType];
+                $parameters[] = Param::create(trim($argument), $typeResolver, $descriptionFactory, $context);
             }
         }
 
-        return new static($methodName, $arguments, $returnType, $static, $description);
+        return new static($methodName, self::toLegacyArguments($parameters), $returnType, $static, $description, $parameters);
+    }
+
+    /** @return array<int, array{name: string, type: Type}> */
+    private static function toLegacyArguments(array $parameters): array
+    {
+        return array_map(
+            static function (Param $param): array {
+                return [
+                    'name' => $param->getVariableName(),
+                    'type' => $param->getType()
+                ];
+            },
+            $parameters
+        );
     }
 
     /**
@@ -184,12 +189,20 @@ final class Method extends BaseTag implements Factory\StaticMethod
     }
 
     /**
+     * @deprecated arguments are a limited way to express method arguments, use {@see self::getParameters} to have full
+     *  featured method parameters. This method will be removed in v6.0
      * @return array<int, array<string, Type|string>>
      * @phpstan-return array<int, array{name: string, type: Type}>
      */
     public function getArguments(): array
     {
         return $this->arguments;
+    }
+
+    /** @return Param[] */
+    public function getParameters(): array
+    {
+        return $this->parameters;
     }
 
     /**
@@ -210,8 +223,11 @@ final class Method extends BaseTag implements Factory\StaticMethod
     public function __toString(): string
     {
         $arguments = [];
-        foreach ($this->arguments as $argument) {
-            $arguments[] = $argument['type'] . ' $' . $argument['name'];
+        foreach ($this->parameters as $parameter) {
+            $arguments[] = ($parameter->getType() ?? new Mixed_()) . ' ' .
+                ($parameter->isReference() ? '&' : '') .
+                ($parameter->isVariadic() ? '...' : '') .
+                '$' . $parameter->getVariableName();
         }
 
         $argumentStr = '(' . implode(', ', $arguments) . ')';
@@ -275,5 +291,19 @@ final class Method extends BaseTag implements Factory\StaticMethod
         }
 
         return $argument;
+    }
+
+    private function fromLegacyArguments(array $parameters, array $arguments) : array
+    {
+        if (!empty($parameters)) {
+            return $parameters;
+        }
+
+        return array_map(
+            static function ($argument) {
+                return new Param($argument['name'], $argument['type']);
+            },
+            $arguments
+        );
     }
 }
