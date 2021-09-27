@@ -34,6 +34,8 @@ use const PREG_SPLIT_DELIM_CAPTURE;
  */
 final class Param extends TagWithType implements Factory\StaticMethod
 {
+    private const VARIABLE_PATTERN = '^\s*((?>&\s*)?(?>\.{3}\s*)?\$[^\s]+)';
+
     /** @var string|null */
     private $variableName;
 
@@ -63,15 +65,14 @@ final class Param extends TagWithType implements Factory\StaticMethod
         ?TypeResolver $typeResolver = null,
         ?DescriptionFactory $descriptionFactory = null,
         ?TypeContext $context = null
-    ): self {
+    ): ?self {
         Assert::stringNotEmpty($body);
         Assert::notNull($typeResolver);
         Assert::notNull($descriptionFactory);
 
-        [$firstPart, $body] = self::extractTypeFromBody($body);
+        [$firstPart, $bodyWithoutType] = self::extractTypeFromBody($body);
 
         $type         = null;
-        $parts        = Utils::pregSplit('/(\s+)/Su', $body, 2, PREG_SPLIT_DELIM_CAPTURE);
         $variableName = '';
         $isVariadic   = false;
         $isReference   = false;
@@ -79,36 +80,19 @@ final class Param extends TagWithType implements Factory\StaticMethod
         // if the first item that is encountered is not a variable; it is a type
         if ($firstPart && !self::strStartsWithVariable($firstPart)) {
             $type = $typeResolver->resolve($firstPart, $context);
-        } else {
-            // first part is not a type; we should prepend it to the parts array for further processing
-            array_unshift($parts, $firstPart);
+            $body = $bodyWithoutType;
         }
 
-        // if the next item starts with a $ or ...$ or &$ or &...$ it must be the variable name
-        if (isset($parts[0]) && self::strStartsWithVariable($parts[0])) {
-            $variableName = array_shift($parts);
-            if ($type) {
-                array_shift($parts);
-            }
-
-            Assert::notNull($variableName);
-
-            if (strpos($variableName, '$') === 0) {
-                $variableName = substr($variableName, 1);
-            } elseif (strpos($variableName, '&$') === 0) {
-                $isReference = true;
-                $variableName = substr($variableName, 2);
-            } elseif (strpos($variableName, '...$') === 0) {
-                $isVariadic = true;
-                $variableName = substr($variableName, 4);
-            } elseif (strpos($variableName, '&...$') === 0) {
-                $isVariadic   = true;
-                $isReference  = true;
-                $variableName = substr($variableName, 5);
-            }
+        $parts = [];
+        preg_match('/'. self::VARIABLE_PATTERN . '?(.*)$/Su', $body, $parts);
+        $var = $parts[1] ?? '';
+        if ($var !== '') {
+            $variableName = substr($var, strpos($var, '$') + 1);
+            $isReference = strpos($var, '&') !== false;
+            $isVariadic = strpos($var, '...') !== false;
         }
 
-        $description = $descriptionFactory->create(implode('', $parts), $context);
+        $description = $descriptionFactory->create(trim($parts[2]), $context);
 
         return new static($variableName, $type, $isVariadic, $description, $isReference);
     }
@@ -163,12 +147,6 @@ final class Param extends TagWithType implements Factory\StaticMethod
 
     private static function strStartsWithVariable(string $str): bool
     {
-        return strpos($str, '$') === 0
-               ||
-               strpos($str, '...$') === 0
-               ||
-               strpos($str, '&$') === 0
-               ||
-               strpos($str, '&...$') === 0;
+        return preg_match('/' . self::VARIABLE_PATTERN . '/Su', $str) === 1;
     }
 }

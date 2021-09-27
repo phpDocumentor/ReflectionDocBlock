@@ -428,4 +428,15 @@ class ParamTest extends TestCase
         $this->expectException('InvalidArgumentException');
         Param::create('body', new TypeResolver());
     }
+
+    public function testSpacedNotations(): void
+    {
+        $descriptionFactory = m::mock(DescriptionFactory::class);
+        $descriptionFactory->shouldReceive('create')->andReturn(new Description('Description'));
+        $param = Param::create('array & ... $var description', new TypeResolver(), $descriptionFactory);
+
+        self::assertSame('var', $param->getVariableName());
+        self::assertTrue($param->isVariadic());
+        self::assertTrue($param->isReference());
+    }
 }
