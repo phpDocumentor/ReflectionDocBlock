@@ -6,7 +6,7 @@
 require_once(__DIR__ . '/../vendor/autoload.php');
 
 use phpDocumentor\Reflection\DocBlock\Serializer;
-use phpDocumentor\Reflection\DocBlock\Tags\Factory\StaticMethod;
+use phpDocumentor\Reflection\DocBlock\Tag;
 use phpDocumentor\Reflection\DocBlockFactory;
 use phpDocumentor\Reflection\DocBlock\Description;
 use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
@@ -30,9 +30,10 @@ use Webmozart\Assert\Assert;
  * documentation in the form of a Value Object whose properties should not be changed after instantiation (it should be
  * immutable).
  *
- * > Important: Tag classes that act as Factories using the `create` method should implement the TagFactory interface.
+ * > Important: Tag classes that act as Factories using the `create` method should implement the Tag interface.
+ * > Instead, you could extend the abstract class BaseTag that already implements the Tag interface
  */
-final class MyTag extends BaseTag implements StaticMethod
+final class MyTag extends BaseTag
 {
     /**
      * A required property that is used by Formatters to reconstitute the complete tag line.
