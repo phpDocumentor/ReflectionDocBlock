@@ -50,12 +50,16 @@ class DescriptionFactory
     /** @var TagFactory */
     private $tagFactory;
 
+    /** @var class-string */
+    private $descriptionClass;
+
     /**
      * Initializes this factory with the means to construct (inline) tags.
      */
-    public function __construct(TagFactory $tagFactory)
+    public function __construct(TagFactory $tagFactory, string $descriptionClass = Description::class)
     {
         $this->tagFactory = $tagFactory;
+        $this->descriptionClass = $descriptionClass;
     }
 
     /**
@@ -81,7 +85,7 @@ class DescriptionFactory
             $tokens[$i] = str_replace(['{@}', '{}', '%'], ['@', '}', '%%'], $tokens[$i]);
         }
 
-        return new Description(implode('', $tokens), $tags);
+        return new $this->descriptionClass(implode('', $tokens), $tags);
     }
 
     /**
