@@ -93,6 +93,10 @@ class Description
      */
     public function render(?Formatter $formatter = null): string
     {
+        if ($this->tags === []) {
+            return $this->bodyTemplate;
+        }
+
         if ($formatter === null) {
             $formatter = new PassthroughFormatter();
         }
