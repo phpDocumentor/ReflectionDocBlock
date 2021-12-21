@@ -47,6 +47,12 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Send code coverage to Scrutinizer
+        uses: sudo-bot/action-scrutinizer@latest
+        if: github.repository == 'phpDocumentor/ReflectionDocBlock'
+        with:
+          cli-args: "--format=php-clover build/logs/clover.xml --revision=${{ github.event.pull_request.head.sha || github.sha }}"
+
       - name: Quick check code coverage level
         run: php tests/coverage-checker.php 91
 
