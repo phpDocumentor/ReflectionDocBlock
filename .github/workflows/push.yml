@@ -110,7 +110,7 @@ jobs:
         run: phive --no-progress install --copy --trust-gpg-keys ${{ env.phiveGPGKeys }} phpunit:^8.5
 
       - name: Install Composer ${{ matrix.dependencies }} dependencies & cache dependencies
-        uses: "ramsey/composer-install@v1"
+        uses: "ramsey/composer-install@v2"
         with:
           composer-options: --optimize-autoloader
           dependency-versions: ${{ matrix.dependencies }}
@@ -196,7 +196,7 @@ jobs:
           ini-values: memory_limit=2G, display_errors=On, error_reporting=-1
 
       - name: Install Composer dependencies & cache dependencies
-        uses: "ramsey/composer-install@v1"
+        uses: "ramsey/composer-install@v2"
         with:
           composer-options: --optimize-autoloader
 
