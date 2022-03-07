@@ -12,7 +12,7 @@ jobs:
   setup:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: composer
         uses: docker://composer
@@ -33,7 +33,7 @@ jobs:
     name: Unit tests
     needs: setup
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: composer
         uses: docker://composer
@@ -80,7 +80,7 @@ jobs:
       - phpunit-with-coverage
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Setup cache environment
         id: cache-env
@@ -128,7 +128,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [setup, phpunit]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Restore/cache vendor folder
         uses: actions/cache@v2.1.7
         with:
@@ -146,7 +146,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [setup, phpunit]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: composer
         uses: docker://composer
         env:
@@ -178,7 +178,7 @@ jobs:
       - phpunit
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Setup cache environment
         id: cache-env
@@ -215,7 +215,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [setup, phpunit]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: fetch tags
         run: git fetch --depth=1 origin +refs/tags/*:refs/tags/*
       - name: BC Check
