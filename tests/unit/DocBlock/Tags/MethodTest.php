@@ -339,6 +339,7 @@ class MethodTest extends TestCase
         $this->assertEquals($expectedArguments, $fixture->getArguments());
         $this->assertInstanceOf(Void_::class, $fixture->getReturnType());
         $this->assertSame($description, $fixture->getDescription());
+        $this->assertFalse($fixture->returnsReference());
     }
 
     /**
@@ -370,6 +371,7 @@ class MethodTest extends TestCase
         $this->assertSame('static $this myMethod()', (string) $fixture);
         $this->assertSame('myMethod', $fixture->getMethodName());
         $this->assertInstanceOf(This::class, $fixture->getReturnType());
+        $this->assertFalse($fixture->returnsReference());
     }
 
     /**
@@ -401,6 +403,7 @@ class MethodTest extends TestCase
         $this->assertSame('void myVeryLongMethodName(mixed $node)', (string) $fixture);
         $this->assertSame('myVeryLongMethodName', $fixture->getMethodName());
         $this->assertInstanceOf(Void_::class, $fixture->getReturnType());
+        $this->assertFalse($fixture->returnsReference());
     }
 
     /**
@@ -542,6 +545,7 @@ class MethodTest extends TestCase
         $this->assertEquals([], $fixture->getArguments());
         $this->assertInstanceOf(Void_::class, $fixture->getReturnType());
         $this->assertSame($description, $fixture->getDescription());
+        $this->assertFalse($fixture->returnsReference());
     }
 
     /**
@@ -578,6 +582,7 @@ class MethodTest extends TestCase
         $this->assertEquals([], $fixture->getArguments());
         $this->assertInstanceOf(Void_::class, $fixture->getReturnType());
         $this->assertSame($description, $fixture->getDescription());
+        $this->assertFalse($fixture->returnsReference());
     }
 
     /**
@@ -613,6 +618,7 @@ class MethodTest extends TestCase
         $this->assertEquals([], $fixture->getArguments());
         $this->assertInstanceOf(Void_::class, $fixture->getReturnType());
         $this->assertSame($description, $fixture->getDescription());
+        $this->assertFalse($fixture->returnsReference());
     }
 
     /**
@@ -655,5 +661,41 @@ class MethodTest extends TestCase
             ]),
             $fixture->getReturnType()
         );
+    }
+
+    /**
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Method::<public>
+     * @uses \phpDocumentor\Reflection\DocBlock\DescriptionFactory
+     * @uses \phpDocumentor\Reflection\TypeResolver
+     * @uses \phpDocumentor\Reflection\DocBlock\Description
+     * @uses \phpDocumentor\Reflection\Fqsen
+     * @uses \phpDocumentor\Reflection\Types\Context
+     * @uses \phpDocumentor\Reflection\Types\String_
+     *
+     * @covers ::create
+     */
+    public function testCreateWithReference(): void
+    {
+        $descriptionFactory = m::mock(DescriptionFactory::class);
+        $resolver           = new TypeResolver();
+        $context            = new Context('');
+
+        $description = new Description('');
+
+        $descriptionFactory->shouldReceive('create')->with('', $context)->andReturn($description);
+
+        $fixture = Method::create(
+            'string &myMethod()',
+            $resolver,
+            $descriptionFactory,
+            $context
+        );
+
+        $this->assertSame('string &myMethod()', (string) $fixture);
+        $this->assertSame('myMethod', $fixture->getMethodName());
+        $this->assertEquals([], $fixture->getArguments());
+        $this->assertInstanceOf(String_::class, $fixture->getReturnType());
+        $this->assertSame($description, $fixture->getDescription());
+        $this->assertTrue($fixture->returnsReference());
     }
 }
