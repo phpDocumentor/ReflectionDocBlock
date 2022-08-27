@@ -1,8 +1,8 @@
-includes:
-    - /composer/vendor/phpstan/phpstan-mockery/extension.neon
-    - /composer/vendor/phpstan/phpstan-webmozart-assert/extension.neon
-
 parameters:
     level: max
     ignoreErrors:
+        - '#Method phpDocumentor\\Reflection\\DocBlock\\StandardTagFactory::createTag\(\) should return phpDocumentor\\Reflection\\DocBlock\\Tag but returns mixed#'
+        - "#Strict comparison using !== between array{'name', 'type'} and array{'name', 'type'} will always evaluate to false#"
         - '#Call to static method Webmozart\\Assert\\Assert::implementsInterface\(\) with class-string#'
+    paths:
+        - src

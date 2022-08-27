@@ -1,0 +1,60 @@
+# https://docs.github.com/en/actions
+
+name: "Integrate"
+
+on: # yamllint disable-line rule:truthy
+  push:
+    branches:
+      - "5.x"
+  pull_request: null
+  # Allow manually triggering the workflow.
+  workflow_dispatch: null
+
+jobs:
+  code-coverage:
+    name: "Code Coverage"
+    uses: "phpDocumentor/.github/.github/workflows/code-coverage.yml@main"
+    with:
+      composer-root-version: "5.x-dev"
+
+  coding-standards:
+    name: "Coding Standards"
+    uses: "phpDocumentor/.github/.github/workflows/coding-standards.yml@v0.1.0"
+    with:
+      composer-root-version: "5.x-dev"
+
+  dependency-analysis:
+    name: "Dependency analysis"
+    uses: "phpDocumentor/.github/.github/workflows/dependency-analysis.yml@v0.1.0"
+    with:
+      composer-root-version: "5.x-dev"
+
+  lint-root:
+    name: "Lint root"
+    uses: "phpDocumentor/.github/.github/workflows/lint.yml@main"
+    with:
+      composer-options: "--no-check-publish --ansi"
+
+  static-analysis:
+    name: "Static analysis"
+    uses: "phpDocumentor/.github/.github/workflows/static-analysis.yml@v0.1.0"
+    with:
+      php-extensions: "none, ctype, dom, json, mbstring, phar, simplexml, tokenizer, xml, xmlwriter, fileinfo, pcntl, posix"
+      composer-root-version: "5.x-dev"
+
+  unit-tests:
+    name: "Unit test"
+    uses: "phpDocumentor/.github/.github/workflows/continues-integration.yml@v0.1.0"
+    with:
+      composer-root-version: "5.x-dev"
+      php-versions: "['7.4', '8.0', '8.1', '8.2']"
+
+  bc_check:
+    name: "BC Check"
+    runs-on: "ubuntu-latest"
+    steps:
+      - uses: "actions/checkout@v3"
+      - name: "fetch tags"
+        run: "git fetch --depth=1 origin +refs/tags/*:refs/tags/*"
+      - name: "BC Check"
+        uses: "docker://nyholm/roave-bc-check-ga"
