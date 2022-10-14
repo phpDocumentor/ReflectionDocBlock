@@ -14,11 +14,12 @@
         }
     ],
     "require": {
-        "php": "^7.2 || ^8.0",
+        "php": "^7.4 || ^8.0",
         "phpdocumentor/type-resolver": "^1.3",
         "webmozart/assert": "^1.9.1",
         "phpdocumentor/reflection-common": "^2.2",
-        "ext-filter": "*"
+        "ext-filter": "*",
+        "phpstan/phpdoc-parser": "^1.7"
     },
     "require-dev": {
         "mockery/mockery": "~1.3.5",

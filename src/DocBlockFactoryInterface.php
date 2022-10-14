@@ -14,7 +14,7 @@ interface DocBlockFactoryInterface
      *
      * @param array<string, class-string<Tag>> $additionalTags
      */
-    public static function createInstance(array $additionalTags = []): DocBlockFactory;
+    public static function createInstance(array $additionalTags = []): self;
 
     /**
      * @param string|object $docblock
