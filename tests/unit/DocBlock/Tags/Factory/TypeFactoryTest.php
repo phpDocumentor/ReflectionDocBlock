@@ -2,6 +2,15 @@
 
 declare(strict_types=1);
 
+/**
+ * This file is part of phpDocumentor.
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ * @link      http://phpdoc.org
+ */
+
 namespace phpDocumentor\Reflection\DocBlock\Tags\Factory;
 
 use phpDocumentor\Reflection\Fqsen;
@@ -56,6 +65,9 @@ final class TypeFactoryTest extends TestCase
         self::assertEquals($expected, $actual);
     }
 
+    /**
+     * @return array<array{0: string, 1: Type}>
+     */
     public function typeProvider(): array
     {
         return [
@@ -126,6 +138,9 @@ final class TypeFactoryTest extends TestCase
         ];
     }
 
+    /**
+     * @return array<array{0: string, 1: Type}>
+     */
     public function genericsProvider(): array
     {
         return [
@@ -169,6 +184,9 @@ final class TypeFactoryTest extends TestCase
         ];
     }
 
+    /**
+     * @return array<array{0: string, 1: Type}>
+     */
     public function callableProvider(): array
     {
         return [
@@ -195,6 +213,9 @@ final class TypeFactoryTest extends TestCase
         ];
     }
 
+    /**
+     * @return array<array{0: string, 1: Type}>
+     */
     public function constExpressions(): array
     {
         return [

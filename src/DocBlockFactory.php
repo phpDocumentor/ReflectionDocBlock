@@ -42,13 +42,13 @@ final class DocBlockFactory implements DocBlockFactoryInterface
     /** @var DocBlock\DescriptionFactory */
     private $descriptionFactory;
 
-    /** @var Factory */
+    /** @var TagFactory */
     private $tagFactory;
 
     /**
      * Initializes this factory with the required subcontractors.
      */
-    public function __construct(DescriptionFactory $descriptionFactory, Factory $tagFactory)
+    public function __construct(DescriptionFactory $descriptionFactory, TagFactory $tagFactory)
     {
         $this->descriptionFactory = $descriptionFactory;
         $this->tagFactory = $tagFactory;
@@ -57,7 +57,7 @@ final class DocBlockFactory implements DocBlockFactoryInterface
     /**
      * Factory method for easy instantiation.
      *
-     * @param array<string, class-string<Tag>|TagFactory> $additionalTags
+     * @param array<string, class-string<Tag>|Factory> $additionalTags
      */
     public static function createInstance(array $additionalTags = []): self
     {
@@ -74,6 +74,7 @@ final class DocBlockFactory implements DocBlockFactoryInterface
         $tagFactory->addService($descriptionFactory);
         $tagFactory->addService($typeResolver);
         $tagFactory->registerTagHandler('param', $phpstanTagFactory);
+        $tagFactory->registerTagHandler('var', $phpstanTagFactory);
 
         $docBlockFactory = new self($descriptionFactory, $tagFactory);
         foreach ($additionalTags as $tagName => $tagHandler) {
@@ -122,9 +123,9 @@ final class DocBlockFactory implements DocBlockFactoryInterface
     }
 
     /**
-     * @param class-string<Tag> $handler
+     * @param class-string<Tag>|Factory $handler
      */
-    public function registerTagHandler(string $tagName, string $handler): void
+    public function registerTagHandler(string $tagName, $handler): void
     {
         $this->tagFactory->registerTagHandler($tagName, $handler);
     }

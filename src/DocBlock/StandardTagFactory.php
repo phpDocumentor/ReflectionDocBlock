@@ -76,7 +76,7 @@ final class StandardTagFactory implements TagFactory
     public const REGEX_TAGNAME = '[\w\-\_\\\\:]+';
 
     /**
-     * @var array<class-string<Tag>> An array with a tag as a key, and an
+     * @var array<class-string<Tag>|Factory> An array with a tag as a key, and an
      *                               FQCN to a class that handles it as an array value.
      */
     private $tagHandlerMappings = [
@@ -177,7 +177,7 @@ final class StandardTagFactory implements TagFactory
         }
 
         if (is_object($handler)) {
-            Assert::implementsInterface($handler, TagFactory::class);
+            Assert::implementsInterface($handler, Factory::class);
             $this->tagHandlerMappings[$tagName] = $handler;
 
             return;
@@ -283,12 +283,12 @@ final class StandardTagFactory implements TagFactory
                 }
             }
 
+            $parameterName = $parameter->getName();
             if (isset($locator[$typeHint])) {
-                $arguments[] = $locator[$typeHint];
+                $arguments[$parameterName] = $locator[$typeHint];
                 continue;
             }
 
-            $parameterName = $parameter->getName();
             if (isset($locator[$parameterName])) {
                 $arguments[$parameterName] = $locator[$parameterName];
                 continue;

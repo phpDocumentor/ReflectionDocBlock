@@ -44,7 +44,7 @@ use function strtolower;
 /**
  * @internal This class is not part of the BC promise of this library.
  */
-class TypeFactory
+final class TypeFactory
 {
     private TypeResolver $resolver;
 
@@ -53,7 +53,7 @@ class TypeFactory
         $this->resolver = $resolver;
     }
 
-    public function createType(TypeNode $type, Context $context): ?Type
+    public function createType(TypeNode $type, ?Context $context): ?Type
     {
         switch (get_class($type)) {
             case ArrayTypeNode::class:
@@ -77,6 +77,7 @@ class TypeFactory
                 return $this->createFromCallable($type, $context);
 
             case ConstTypeNode::class:
+                return null;
             case GenericTypeNode::class:
                 return $this->createFromGeneric($type, $context);
 
@@ -85,22 +86,29 @@ class TypeFactory
 
             case IntersectionTypeNode::class:
                 return new Intersection(
-                    array_map(
-                        fn (TypeNode $nestedType) => $this->createType($nestedType, $context),
-                        $type->types
+                    array_filter(
+                        array_map(
+                            fn (TypeNode $nestedType) => $this->createType($nestedType, $context),
+                            $type->types
+                        )
                     )
                 );
 
             case NullableTypeNode::class:
-                return new Nullable(
-                    $this->createType($type->type, $context)
-                );
+                $nestedType = $this->createType($type->type, $context);
+                if ($nestedType === null) {
+                    return null;
+                }
+
+                return new Nullable($nestedType);
 
             case UnionTypeNode::class:
                 return new Compound(
-                    array_map(
-                        fn (TypeNode $nestedType) => $this->createType($nestedType, $context),
-                        $type->types
+                    array_filter(
+                        array_map(
+                            fn (TypeNode $nestedType) => $this->createType($nestedType, $context),
+                            $type->types
+                        )
                     )
                 );
 
@@ -115,7 +123,7 @@ class TypeFactory
         }
     }
 
-    private function createFromGeneric(GenericTypeNode $type, Context $context): Type
+    private function createFromGeneric(GenericTypeNode $type, ?Context $context): Type
     {
         switch (strtolower($type->type->name)) {
             case 'array':
@@ -162,7 +170,7 @@ class TypeFactory
         }
     }
 
-    private function createFromCallable(CallableTypeNode $type, Context $context): Callable_
+    private function createFromCallable(CallableTypeNode $type, ?Context $context): Callable_
     {
         return new Callable_();
     }

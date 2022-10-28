@@ -6,6 +6,7 @@ namespace phpDocumentor\Reflection\PseudoTypes;
 
 use phpDocumentor\Reflection\Type;
 
+use phpDocumentor\Reflection\Types\Mixed_;
 use function sprintf;
 
 final class ArrayShapeItem
@@ -14,10 +15,10 @@ final class ArrayShapeItem
     private Type $value;
     private bool $optional;
 
-    public function __construct(?string $key, Type $value, bool $optional)
+    public function __construct(?string $key, ?Type $value, bool $optional)
     {
         $this->key = $key;
-        $this->value = $value;
+        $this->value = $value ?? new Mixed_();
         $this->optional = $optional;
     }
 
@@ -36,7 +37,7 @@ final class ArrayShapeItem
         return $this->optional;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         if ($this->key !== null) {
             return sprintf(
