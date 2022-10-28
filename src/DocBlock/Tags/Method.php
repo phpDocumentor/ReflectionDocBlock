@@ -31,8 +31,11 @@ use function preg_match;
 use function sort;
 use function strpos;
 use function substr;
+use function trigger_error;
 use function trim;
 use function var_export;
+
+use const E_USER_DEPRECATED;
 
 /**
  * Reflection class for an {@}method in a Docblock.

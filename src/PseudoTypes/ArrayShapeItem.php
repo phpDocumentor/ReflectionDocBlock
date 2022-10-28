@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace phpDocumentor\Reflection\PseudoTypes;
 
 use phpDocumentor\Reflection\Type;
-
 use phpDocumentor\Reflection\Types\Mixed_;
+
 use function sprintf;
 
 final class ArrayShapeItem

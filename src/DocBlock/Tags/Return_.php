@@ -20,6 +20,10 @@ use phpDocumentor\Reflection\TypeResolver;
 use phpDocumentor\Reflection\Types\Context as TypeContext;
 use Webmozart\Assert\Assert;
 
+use function trigger_error;
+
+use const E_USER_DEPRECATED;
+
 /**
  * Reflection class for a {@}return tag in a Docblock.
  */

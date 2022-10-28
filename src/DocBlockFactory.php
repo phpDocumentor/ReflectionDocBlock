@@ -22,7 +22,9 @@ use phpDocumentor\Reflection\DocBlock\TagFactory;
 use phpDocumentor\Reflection\DocBlock\Tags\Factory\AbstractPHPStanFactory;
 use phpDocumentor\Reflection\DocBlock\Tags\Factory\Factory;
 use phpDocumentor\Reflection\DocBlock\Tags\Factory\ParamFactory;
+use phpDocumentor\Reflection\DocBlock\Tags\Factory\ReturnFactory;
 use phpDocumentor\Reflection\DocBlock\Tags\Factory\TypeFactory;
+use phpDocumentor\Reflection\DocBlock\Tags\Factory\VarFactory;
 use Webmozart\Assert\Assert;
 
 use function array_shift;
@@ -68,13 +70,16 @@ final class DocBlockFactory implements DocBlockFactoryInterface
         $typeFactory = new TypeFactory($typeResolver);
 
         $phpstanTagFactory = new AbstractPHPStanFactory(
-            new ParamFactory($typeFactory, $descriptionFactory)
+            new ParamFactory($typeFactory, $descriptionFactory),
+            new VarFactory($typeFactory, $descriptionFactory),
+            new ReturnFactory($typeFactory, $descriptionFactory),
         );
 
         $tagFactory->addService($descriptionFactory);
         $tagFactory->addService($typeResolver);
         $tagFactory->registerTagHandler('param', $phpstanTagFactory);
         $tagFactory->registerTagHandler('var', $phpstanTagFactory);
+        $tagFactory->registerTagHandler('return', $phpstanTagFactory);
 
         $docBlockFactory = new self($descriptionFactory, $tagFactory);
         foreach ($additionalTags as $tagName => $tagHandler) {

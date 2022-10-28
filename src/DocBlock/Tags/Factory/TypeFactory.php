@@ -36,6 +36,7 @@ use PHPStan\PhpDocParser\Ast\Type\ThisTypeNode;
 use PHPStan\PhpDocParser\Ast\Type\TypeNode;
 use PHPStan\PhpDocParser\Ast\Type\UnionTypeNode;
 
+use function array_filter;
 use function array_map;
 use function array_reverse;
 use function get_class;
@@ -78,6 +79,7 @@ final class TypeFactory
 
             case ConstTypeNode::class:
                 return null;
+
             case GenericTypeNode::class:
                 return $this->createFromGeneric($type, $context);
 

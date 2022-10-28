@@ -26,7 +26,9 @@ use function array_unshift;
 use function implode;
 use function strpos;
 use function substr;
+use function trigger_error;
 
+use const E_USER_DEPRECATED;
 use const PREG_SPLIT_DELIM_CAPTURE;
 
 /**
