@@ -49,12 +49,6 @@ final class Method extends BaseTag implements Factory\StaticMethod
     /** @var string */
     private $methodName;
 
-    /**
-     * @phpstan-var array<int, array{name: string, type: Type}>
-     * @var array<int, array<string, Type|string>>
-     */
-    private $arguments;
-
     /** @var bool */
     private $isStatic;
 
@@ -89,7 +83,6 @@ final class Method extends BaseTag implements Factory\StaticMethod
         $arguments = $this->filterArguments($arguments);
 
         $this->methodName       = $methodName;
-        $this->arguments        = $arguments;
         $this->returnType       = $returnType;
         $this->isStatic         = $static;
         $this->description      = $description;
@@ -103,7 +96,11 @@ final class Method extends BaseTag implements Factory\StaticMethod
         ?DescriptionFactory $descriptionFactory = null,
         ?TypeContext $context = null
     ): ?self {
-        trigger_error('Create using static factory is deprecated, this method should not be called directly by library consumers', E_USER_DEPRECATED);
+        trigger_error(
+            'Create using static factory is deprecated, this method should not be called directly
+             by library consumers',
+            E_USER_DEPRECATED
+        );
         Assert::stringNotEmpty($body);
         Assert::notNull($typeResolver);
         Assert::notNull($descriptionFactory);
@@ -217,12 +214,21 @@ final class Method extends BaseTag implements Factory\StaticMethod
     }
 
     /**
+     * @deprecated Method deprecated, use {@see self::getParameters()}
+     *
      * @return array<int, array<string, Type|string>>
      * @phpstan-return array<int, array{name: string, type: Type}>
      */
     public function getArguments(): array
     {
-        return $this->arguments;
+        trigger_error('Method deprecated, use ::getParameters()', E_USER_DEPRECATED);
+
+        return array_map(
+            static function (MethodParameter $methodParameter) {
+                return ['name' => $methodParameter->getName(), 'type' => $methodParameter->getType()];
+            },
+            $this->parameters
+        );
     }
 
     /** @return MethodParameter[] */
