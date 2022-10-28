@@ -24,6 +24,7 @@ use phpDocumentor\Reflection\Types\Void_;
 use Webmozart\Assert\Assert;
 
 use function array_keys;
+use function array_map;
 use function explode;
 use function implode;
 use function is_string;
@@ -63,6 +64,9 @@ final class Method extends BaseTag implements Factory\StaticMethod
     /** @var bool */
     private $returnsReference;
 
+    /** @var MethodParameter[] */
+    private array $parameters;
+
     /**
      * @param array<int, array<string, Type|string>> $arguments
      * @phpstan-param array<int, array{name: string, type: Type}|string> $arguments
@@ -73,7 +77,8 @@ final class Method extends BaseTag implements Factory\StaticMethod
         ?Type $returnType = null,
         bool $static = false,
         ?Description $description = null,
-        bool $returnsReference = false
+        bool $returnsReference = false,
+        ?array $parameters = null
     ) {
         Assert::stringNotEmpty($methodName);
 
@@ -81,12 +86,15 @@ final class Method extends BaseTag implements Factory\StaticMethod
             $returnType = new Void_();
         }
 
+        $arguments = $this->filterArguments($arguments);
+
         $this->methodName       = $methodName;
-        $this->arguments        = $this->filterArguments($arguments);
+        $this->arguments        = $arguments;
         $this->returnType       = $returnType;
         $this->isStatic         = $static;
         $this->description      = $description;
         $this->returnsReference = $returnsReference;
+        $this->parameters = $parameters ?? $this->fromLegacyArguments($arguments);
     }
 
     public static function create(
@@ -190,7 +198,14 @@ final class Method extends BaseTag implements Factory\StaticMethod
             }
         }
 
-        return new static($methodName, $arguments, $returnType, $static, $description, $returnsReference);
+        return new static(
+            $methodName,
+            $arguments,
+            $returnType,
+            $static,
+            $description,
+            $returnsReference
+        );
     }
 
     /**
@@ -208,6 +223,12 @@ final class Method extends BaseTag implements Factory\StaticMethod
     public function getArguments(): array
     {
         return $this->arguments;
+    }
+
+    /** @return MethodParameter[] */
+    public function getParameters(): array
+    {
+        return $this->parameters;
     }
 
     /**
@@ -233,8 +254,11 @@ final class Method extends BaseTag implements Factory\StaticMethod
     public function __toString(): string
     {
         $arguments = [];
-        foreach ($this->arguments as $argument) {
-            $arguments[] = $argument['type'] . ' $' . $argument['name'];
+        foreach ($this->parameters as $parameter) {
+            $arguments[] = ($parameter->getType() ?? new Mixed_()) . ' ' .
+                ($parameter->isReference() ? '&' : '') .
+                ($parameter->isVariadic() ? '...' : '') .
+                '$' . $parameter->getName();
         }
 
         $argumentStr = '(' . implode(', ', $arguments) . ')';
@@ -300,5 +324,27 @@ final class Method extends BaseTag implements Factory\StaticMethod
         }
 
         return $argument;
+    }
+
+    /**
+     * @param array{name: string, type: Type} $arguments
+     * @return MethodParameter[]
+     */
+    private function fromLegacyArguments(array $arguments): array
+    {
+        trigger_error(
+            'Create method parameters via legacy format is deprecated add parameters via the constructor',
+            E_USER_DEPRECATED
+        );
+
+        return array_map(
+            static function ($arg) {
+                return new MethodParameter(
+                    $arg['name'],
+                    $arg['type']
+                );
+            },
+            $arguments
+        );
     }
 }

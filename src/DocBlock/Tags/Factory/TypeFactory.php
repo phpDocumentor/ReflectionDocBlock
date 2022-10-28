@@ -54,8 +54,12 @@ final class TypeFactory
         $this->resolver = $resolver;
     }
 
-    public function createType(TypeNode $type, ?Context $context): ?Type
+    public function createType(?TypeNode $type, ?Context $context): ?Type
     {
+        if ($type === null) {
+            return null;
+        }
+
         switch (get_class($type)) {
             case ArrayTypeNode::class:
                 return new Array_(

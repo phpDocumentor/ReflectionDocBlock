@@ -89,6 +89,7 @@ final class DocBlockFactory implements DocBlockFactoryInterface
         $tagFactory->registerTagHandler('property', $phpstanTagFactory);
         $tagFactory->registerTagHandler('property-read', $phpstanTagFactory);
         $tagFactory->registerTagHandler('property-write', $phpstanTagFactory);
+        $tagFactory->registerTagHandler('method', $phpstanTagFactory);
 
         $docBlockFactory = new self($descriptionFactory, $tagFactory);
         foreach ($additionalTags as $tagName => $tagHandler) {
