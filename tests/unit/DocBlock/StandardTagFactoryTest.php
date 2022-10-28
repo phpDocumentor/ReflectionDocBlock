@@ -228,7 +228,7 @@ class StandardTagFactoryTest extends TestCase
 
     public function testTagWithHandlerObject(): void
     {
-        $fqsenResolver      = new FqsenResolver();
+        $fqsenResolver = new FqsenResolver();
 
         $customFactory = new CustomTagFactory();
         $injectedClass = new CustomServiceClass();

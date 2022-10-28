@@ -41,6 +41,7 @@ use ReflectionNamedType;
 use ReflectionParameter;
 use Webmozart\Assert\Assert;
 
+use function array_key_exists;
 use function array_merge;
 use function array_slice;
 use function call_user_func_array;
@@ -48,6 +49,7 @@ use function count;
 use function get_class;
 use function is_object;
 use function preg_match;
+use function sprintf;
 use function strpos;
 use function trim;
 
@@ -164,6 +166,7 @@ final class StandardTagFactory implements TagFactory
         $this->serviceLocator[$alias ?: get_class($service)] = $service;
     }
 
+    /** {@inheritDoc} */
     public function registerTagHandler(string $tagName, $handler): void
     {
         Assert::stringNotEmpty($tagName);
@@ -176,6 +179,7 @@ final class StandardTagFactory implements TagFactory
         if (is_object($handler)) {
             Assert::implementsInterface($handler, TagFactory::class);
             $this->tagHandlerMappings[$tagName] = $handler;
+
             return;
         }
 
@@ -217,7 +221,9 @@ final class StandardTagFactory implements TagFactory
             $this->getServiceLocatorWithDynamicParameters($context, $name, $body)
         );
 
-        $arguments['tagLine'] = sprintf('@%s %s', $name, $body);
+        if (array_key_exists('tagLine', $arguments)) {
+            $arguments['tagLine'] = sprintf('@%s %s', $name, $body);
+        }
 
         try {
             $callable = [$handlerClassName, 'create'];

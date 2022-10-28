@@ -28,7 +28,6 @@ use phpDocumentor\Reflection\Types\Context as TypeContext;
 
 interface Factory
 {
-
     /**
      * Factory method responsible for instantiating the correct sub type.
      *

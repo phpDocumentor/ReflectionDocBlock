@@ -16,11 +16,11 @@ namespace phpDocumentor\Reflection;
 use InvalidArgumentException;
 use LogicException;
 use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
-use phpDocumentor\Reflection\DocBlock\Tags\Factory\Factory;
 use phpDocumentor\Reflection\DocBlock\StandardTagFactory;
 use phpDocumentor\Reflection\DocBlock\Tag;
 use phpDocumentor\Reflection\DocBlock\TagFactory;
 use phpDocumentor\Reflection\DocBlock\Tags\Factory\AbstractPHPStanFactory;
+use phpDocumentor\Reflection\DocBlock\Tags\Factory\Factory;
 use phpDocumentor\Reflection\DocBlock\Tags\Factory\ParamFactory;
 use phpDocumentor\Reflection\DocBlock\Tags\Factory\TypeFactory;
 use Webmozart\Assert\Assert;
@@ -42,7 +42,7 @@ final class DocBlockFactory implements DocBlockFactoryInterface
     /** @var DocBlock\DescriptionFactory */
     private $descriptionFactory;
 
-    /** @var \phpDocumentor\Reflection\DocBlock\Tags\Factory\Factory */
+    /** @var Factory */
     private $tagFactory;
 
     /**

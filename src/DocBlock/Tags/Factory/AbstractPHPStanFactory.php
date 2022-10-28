@@ -13,9 +13,7 @@ declare(strict_types=1);
 
 namespace phpDocumentor\Reflection\DocBlock\Tags\Factory;
 
-use phpDocumentor\Reflection\DocBlock\Tags\Factory\Factory;
 use phpDocumentor\Reflection\DocBlock\Tag;
-use phpDocumentor\Reflection\DocBlock\TagFactory;
 use phpDocumentor\Reflection\DocBlock\Tags\InvalidTag;
 use phpDocumentor\Reflection\Types\Context as TypeContext;
 use PHPStan\PhpDocParser\Lexer\Lexer;
@@ -36,6 +34,7 @@ class AbstractPHPStanFactory implements Factory
 {
     private PhpDocParser $parser;
     private Lexer $lexer;
+    /** @var PHPStanFactory[] */
     private array $factories;
 
     public function __construct(PHPStanFactory ...$factories)
