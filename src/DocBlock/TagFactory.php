@@ -16,7 +16,7 @@ namespace phpDocumentor\Reflection\DocBlock;
 use InvalidArgumentException;
 use phpDocumentor\Reflection\Types\Context as TypeContext;
 
-interface TagFactory
+interface TagFactory extends SimpleTagFactory
 {
     /**
      * Adds a parameter to the service locator that can be injected in a tag's factory method.
@@ -39,17 +39,6 @@ interface TagFactory
      * @param mixed $value
      */
     public function addParameter(string $name, $value): void;
-
-    /**
-     * Factory method responsible for instantiating the correct sub type.
-     *
-     * @param string $tagLine The text for this tag, including description.
-     *
-     * @return Tag A new tag object.
-     *
-     * @throws InvalidArgumentException If an invalid tag line was presented.
-     */
-    public function create(string $tagLine, ?TypeContext $context = null): Tag;
 
     /**
      * Registers a service with the Service Locator using the FQCN of the class or the alias, if provided.

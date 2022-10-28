@@ -233,7 +233,7 @@ final class StandardTagFactory implements TagFactory
     /**
      * Determines the Fully Qualified Class Name of the Factory or Tag (containing a Factory Method `create`).
      *
-     * @return class-string<Tag>|TagFactory
+     * @return class-string<Tag>|SimpleTagFactory
      */
     private function findHandlerClassName(string $tagName, TypeContext $context)
     {
@@ -297,7 +297,7 @@ final class StandardTagFactory implements TagFactory
      * Retrieves a series of ReflectionParameter objects for the static 'create' method of the given
      * tag handler class name.
      *
-     * @param class-string|TagFactory $handler
+     * @param class-string|SimpleTagFactory $handler
      *
      * @return ReflectionParameter[]
      */

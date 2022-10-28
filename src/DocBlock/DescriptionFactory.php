@@ -47,13 +47,13 @@ use const PREG_SPLIT_DELIM_CAPTURE;
  */
 class DescriptionFactory
 {
-    /** @var TagFactory */
+    /** @var SimpleTagFactory */
     private $tagFactory;
 
     /**
      * Initializes this factory with the means to construct (inline) tags.
      */
-    public function __construct(TagFactory $tagFactory)
+    public function __construct(SimpleTagFactory $tagFactory)
     {
         $this->tagFactory = $tagFactory;
     }
