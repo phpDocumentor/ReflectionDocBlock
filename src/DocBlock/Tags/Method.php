@@ -328,6 +328,7 @@ final class Method extends BaseTag implements Factory\StaticMethod
 
     /**
      * @param array{name: string, type: Type} $arguments
+     *
      * @return MethodParameter[]
      */
     private function fromLegacyArguments(array $arguments): array

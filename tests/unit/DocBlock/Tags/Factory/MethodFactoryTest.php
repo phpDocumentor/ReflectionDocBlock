@@ -18,6 +18,7 @@ use phpDocumentor\Reflection\DocBlock\Tags\Method;
 use phpDocumentor\Reflection\DocBlock\Tags\MethodParameter;
 use phpDocumentor\Reflection\Types\Context;
 use phpDocumentor\Reflection\Types\Integer;
+use phpDocumentor\Reflection\Types\Mixed_;
 use phpDocumentor\Reflection\Types\String_;
 use phpDocumentor\Reflection\Types\Void_;
 
@@ -80,6 +81,30 @@ final class MethodFactoryTest extends TagFactoryTestCase
                     new Description(''),
                     false,
                     []
+                ),
+            ],
+            [
+                '@method myMethod($a)',
+                new Method(
+                    'myMethod',
+                    [],
+                    new Void_(),
+                    false,
+                    new Description(''),
+                    false,
+                    [new MethodParameter('a', new Mixed_())]
+                ),
+            ],
+            [
+                '@method myMethod($a = 1)',
+                new Method(
+                    'myMethod',
+                    [],
+                    new Void_(),
+                    false,
+                    new Description(''),
+                    false,
+                    [new MethodParameter('a', new Mixed_(), false, false, '1')]
                 ),
             ],
             [

@@ -10,6 +10,7 @@ use phpDocumentor\Reflection\DocBlock\Tags\Method;
 use phpDocumentor\Reflection\DocBlock\Tags\MethodParameter;
 use phpDocumentor\Reflection\Type;
 use phpDocumentor\Reflection\Types\Context;
+use phpDocumentor\Reflection\Types\Mixed_;
 use phpDocumentor\Reflection\Types\Void_;
 use PHPStan\PhpDocParser\Ast\PhpDoc\MethodTagValueNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\MethodTagValueParameterNode;
@@ -49,7 +50,7 @@ final class MethodFactory implements PHPStanFactory
                 function (MethodTagValueParameterNode $param) use ($context) {
                     return new MethodParameter(
                         trim($param->parameterName, '$'),
-                        $this->typeFactory->createType($param->type, $context),
+                        $this->typeFactory->createType($param->type, $context) ?? new Mixed_(),
                         $param->isReference,
                         $param->isVariadic,
                         (string) $param->defaultValue
