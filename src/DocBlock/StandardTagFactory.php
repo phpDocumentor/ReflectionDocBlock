@@ -17,6 +17,7 @@ use InvalidArgumentException;
 use phpDocumentor\Reflection\DocBlock\Tags\Author;
 use phpDocumentor\Reflection\DocBlock\Tags\Covers;
 use phpDocumentor\Reflection\DocBlock\Tags\Deprecated;
+use phpDocumentor\Reflection\DocBlock\Tags\Factory\Factory;
 use phpDocumentor\Reflection\DocBlock\Tags\Generic;
 use phpDocumentor\Reflection\DocBlock\Tags\InvalidTag;
 use phpDocumentor\Reflection\DocBlock\Tags\Link as LinkTag;
@@ -233,7 +234,7 @@ final class StandardTagFactory implements TagFactory
     /**
      * Determines the Fully Qualified Class Name of the Factory or Tag (containing a Factory Method `create`).
      *
-     * @return class-string<Tag>|SimpleTagFactory
+     * @return class-string<Tag>|Factory
      */
     private function findHandlerClassName(string $tagName, TypeContext $context)
     {
@@ -297,7 +298,7 @@ final class StandardTagFactory implements TagFactory
      * Retrieves a series of ReflectionParameter objects for the static 'create' method of the given
      * tag handler class name.
      *
-     * @param class-string|SimpleTagFactory $handler
+     * @param class-string|Factory $handler
      *
      * @return ReflectionParameter[]
      */

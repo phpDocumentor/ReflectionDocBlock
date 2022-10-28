@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace phpDocumentor\Reflection\DocBlock\Tags\Factory;
 
-use phpDocumentor\Reflection\DocBlock\SimpleTagFactory;
+use phpDocumentor\Reflection\DocBlock\Tags\Factory\Factory;
 use phpDocumentor\Reflection\DocBlock\Tag;
 use phpDocumentor\Reflection\DocBlock\TagFactory;
 use phpDocumentor\Reflection\DocBlock\Tags\InvalidTag;
@@ -32,7 +32,7 @@ use PHPStan\PhpDocParser\Parser\TypeParser;
  *
  * @internal This class is not part of the BC promise of this library.
  */
-class AbstractPHPStanFactory implements SimpleTagFactory
+class AbstractPHPStanFactory implements Factory
 {
     private PhpDocParser $parser;
     private Lexer $lexer;

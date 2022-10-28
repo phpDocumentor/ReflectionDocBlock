@@ -14,9 +14,10 @@ declare(strict_types=1);
 namespace phpDocumentor\Reflection\DocBlock;
 
 use InvalidArgumentException;
+use phpDocumentor\Reflection\DocBlock\Tags\Factory\Factory;
 use phpDocumentor\Reflection\Types\Context as TypeContext;
 
-interface TagFactory extends SimpleTagFactory
+interface TagFactory extends Factory
 {
     /**
      * Adds a parameter to the service locator that can be injected in a tag's factory method.

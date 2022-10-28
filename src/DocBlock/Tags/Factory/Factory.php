@@ -1,4 +1,13 @@
 <?php
+/*
+ * This file is part of phpDocumentor.
+ *
+ *  For the full copyright and license information, please view the LICENSE
+ *  file that was distributed with this source code.
+ *
+ *  @link      http://phpdoc.org
+ *
+ */
 
 declare(strict_types=1);
 
@@ -11,12 +20,13 @@ declare(strict_types=1);
  * @link http://phpdoc.org
  */
 
-namespace phpDocumentor\Reflection\DocBlock;
+namespace phpDocumentor\Reflection\DocBlock\Tags\Factory;
 
 use InvalidArgumentException;
+use phpDocumentor\Reflection\DocBlock\Tag;
 use phpDocumentor\Reflection\Types\Context as TypeContext;
 
-interface SimpleTagFactory
+interface Factory
 {
 
     /**

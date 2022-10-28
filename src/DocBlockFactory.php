@@ -16,7 +16,7 @@ namespace phpDocumentor\Reflection;
 use InvalidArgumentException;
 use LogicException;
 use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
-use phpDocumentor\Reflection\DocBlock\SimpleTagFactory;
+use phpDocumentor\Reflection\DocBlock\Tags\Factory\Factory;
 use phpDocumentor\Reflection\DocBlock\StandardTagFactory;
 use phpDocumentor\Reflection\DocBlock\Tag;
 use phpDocumentor\Reflection\DocBlock\TagFactory;
@@ -42,13 +42,13 @@ final class DocBlockFactory implements DocBlockFactoryInterface
     /** @var DocBlock\DescriptionFactory */
     private $descriptionFactory;
 
-    /** @var DocBlock\SimpleTagFactory */
+    /** @var \phpDocumentor\Reflection\DocBlock\Tags\Factory\Factory */
     private $tagFactory;
 
     /**
      * Initializes this factory with the required subcontractors.
      */
-    public function __construct(DescriptionFactory $descriptionFactory, SimpleTagFactory $tagFactory)
+    public function __construct(DescriptionFactory $descriptionFactory, Factory $tagFactory)
     {
         $this->descriptionFactory = $descriptionFactory;
         $this->tagFactory = $tagFactory;
