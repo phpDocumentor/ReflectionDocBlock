@@ -14,26 +14,27 @@ declare(strict_types=1);
 namespace phpDocumentor\Reflection\DocBlock\Tags\Factory;
 
 use phpDocumentor\Reflection\DocBlock\Description;
-use phpDocumentor\Reflection\DocBlock\Tags\Return_;
+use phpDocumentor\Reflection\DocBlock\Tags\PropertyRead;
 use phpDocumentor\Reflection\Types\Context;
 use phpDocumentor\Reflection\Types\String_;
 
-final class ReturnFactoryTest extends TagFactoryTestCase
+final class PropertyReadFactoryTest extends TagFactoryTestCase
 {
     /**
-     * @covers \phpDocumentor\Reflection\DocBlock\Tags\Factory\ReturnFactory::__construct
-     * @covers \phpDocumentor\Reflection\DocBlock\Tags\Factory\ReturnFactory::create
-     * @covers \phpDocumentor\Reflection\DocBlock\Tags\Factory\ReturnFactory::supports
+     * @covers \phpDocumentor\Reflection\DocBlock\Tags\Factory\PropertyReadFactory::__construct
+     * @covers \phpDocumentor\Reflection\DocBlock\Tags\Factory\PropertyReadFactory::create
+     * @covers \phpDocumentor\Reflection\DocBlock\Tags\Factory\PropertyReadFactory::supports
      */
     public function testParamIsCreated(): void
     {
-        $ast = $this->parseTag('@return string');
-        $factory = new ReturnFactory($this->giveTypeFactory(), $this->givenDescriptionFactory());
+        $ast = $this->parseTag('@property-read string $var');
+        $factory = new PropertyReadFactory($this->giveTypeFactory(), $this->givenDescriptionFactory());
         $context = new Context('global');
 
         self::assertTrue($factory->supports($ast, $context));
         self::assertEquals(
-            new Return_(
+            new PropertyRead(
+                'var',
                 new String_(),
                 new Description('')
             ),

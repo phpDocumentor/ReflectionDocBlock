@@ -14,26 +14,27 @@ declare(strict_types=1);
 namespace phpDocumentor\Reflection\DocBlock\Tags\Factory;
 
 use phpDocumentor\Reflection\DocBlock\Description;
-use phpDocumentor\Reflection\DocBlock\Tags\Return_;
+use phpDocumentor\Reflection\DocBlock\Tags\PropertyWrite;
 use phpDocumentor\Reflection\Types\Context;
 use phpDocumentor\Reflection\Types\String_;
 
-final class ReturnFactoryTest extends TagFactoryTestCase
+final class PropertyWriteFactoryTest extends TagFactoryTestCase
 {
     /**
-     * @covers \phpDocumentor\Reflection\DocBlock\Tags\Factory\ReturnFactory::__construct
-     * @covers \phpDocumentor\Reflection\DocBlock\Tags\Factory\ReturnFactory::create
-     * @covers \phpDocumentor\Reflection\DocBlock\Tags\Factory\ReturnFactory::supports
+     * @covers \phpDocumentor\Reflection\DocBlock\Tags\Factory\PropertyWriteFactory::__construct
+     * @covers \phpDocumentor\Reflection\DocBlock\Tags\Factory\PropertyWriteFactory::create
+     * @covers \phpDocumentor\Reflection\DocBlock\Tags\Factory\PropertyWriteFactory::supports
      */
     public function testParamIsCreated(): void
     {
-        $ast = $this->parseTag('@return string');
-        $factory = new ReturnFactory($this->giveTypeFactory(), $this->givenDescriptionFactory());
+        $ast = $this->parseTag('@property-write string $var');
+        $factory = new PropertyWriteFactory($this->giveTypeFactory(), $this->givenDescriptionFactory());
         $context = new Context('global');
 
         self::assertTrue($factory->supports($ast, $context));
         self::assertEquals(
-            new Return_(
+            new PropertyWrite(
+                'var',
                 new String_(),
                 new Description('')
             ),

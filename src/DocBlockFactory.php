@@ -22,6 +22,9 @@ use phpDocumentor\Reflection\DocBlock\TagFactory;
 use phpDocumentor\Reflection\DocBlock\Tags\Factory\AbstractPHPStanFactory;
 use phpDocumentor\Reflection\DocBlock\Tags\Factory\Factory;
 use phpDocumentor\Reflection\DocBlock\Tags\Factory\ParamFactory;
+use phpDocumentor\Reflection\DocBlock\Tags\Factory\PropertyFactory;
+use phpDocumentor\Reflection\DocBlock\Tags\Factory\PropertyReadFactory;
+use phpDocumentor\Reflection\DocBlock\Tags\Factory\PropertyWriteFactory;
 use phpDocumentor\Reflection\DocBlock\Tags\Factory\ReturnFactory;
 use phpDocumentor\Reflection\DocBlock\Tags\Factory\TypeFactory;
 use phpDocumentor\Reflection\DocBlock\Tags\Factory\VarFactory;
@@ -73,6 +76,9 @@ final class DocBlockFactory implements DocBlockFactoryInterface
             new ParamFactory($typeFactory, $descriptionFactory),
             new VarFactory($typeFactory, $descriptionFactory),
             new ReturnFactory($typeFactory, $descriptionFactory),
+            new PropertyFactory($typeFactory, $descriptionFactory),
+            new PropertyReadFactory($typeFactory, $descriptionFactory),
+            new PropertyWriteFactory($typeFactory, $descriptionFactory),
         );
 
         $tagFactory->addService($descriptionFactory);
@@ -80,6 +86,9 @@ final class DocBlockFactory implements DocBlockFactoryInterface
         $tagFactory->registerTagHandler('param', $phpstanTagFactory);
         $tagFactory->registerTagHandler('var', $phpstanTagFactory);
         $tagFactory->registerTagHandler('return', $phpstanTagFactory);
+        $tagFactory->registerTagHandler('property', $phpstanTagFactory);
+        $tagFactory->registerTagHandler('property-read', $phpstanTagFactory);
+        $tagFactory->registerTagHandler('property-write', $phpstanTagFactory);
 
         $docBlockFactory = new self($descriptionFactory, $tagFactory);
         foreach ($additionalTags as $tagName => $tagHandler) {

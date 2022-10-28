@@ -21,9 +21,9 @@ use phpDocumentor\Reflection\Types\String_;
 final class VarFactoryTest extends TagFactoryTestCase
 {
     /**
-     * @covers \phpDocumentor\Reflection\DocBlock\Tags\Factory\ParamFactory::__construct
-     * @covers \phpDocumentor\Reflection\DocBlock\Tags\Factory\ParamFactory::create
-     * @covers \phpDocumentor\Reflection\DocBlock\Tags\Factory\ParamFactory::supports
+     * @covers \phpDocumentor\Reflection\DocBlock\Tags\Factory\VarFactory::__construct
+     * @covers \phpDocumentor\Reflection\DocBlock\Tags\Factory\VarFactory::create
+     * @covers \phpDocumentor\Reflection\DocBlock\Tags\Factory\VarFactory::supports
      */
     public function testParamIsCreated(): void
     {
