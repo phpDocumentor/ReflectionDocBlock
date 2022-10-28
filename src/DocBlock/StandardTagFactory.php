@@ -45,6 +45,7 @@ use function array_slice;
 use function call_user_func_array;
 use function count;
 use function get_class;
+use function is_object;
 use function preg_match;
 use function strpos;
 use function trim;
@@ -162,18 +163,23 @@ final class StandardTagFactory implements TagFactory
         $this->serviceLocator[$alias ?: get_class($service)] = $service;
     }
 
-    public function registerTagHandler(string $tagName, string $handler): void
+    public function registerTagHandler(string $tagName, $handler): void
     {
         Assert::stringNotEmpty($tagName);
-        Assert::classExists($handler);
-        Assert::implementsInterface($handler, Tag::class);
-
         if (strpos($tagName, '\\') && $tagName[0] !== '\\') {
             throw new InvalidArgumentException(
                 'A namespaced tag must have a leading backslash as it must be fully qualified'
             );
         }
 
+        if (is_object($handler)) {
+            Assert::implementsInterface($handler, TagFactory::class);
+            $this->tagHandlerMappings[$tagName] = $handler;
+            return;
+        }
+
+        Assert::classExists($handler);
+        Assert::implementsInterface($handler, Tag::class);
         $this->tagHandlerMappings[$tagName] = $handler;
     }
 
@@ -210,6 +216,8 @@ final class StandardTagFactory implements TagFactory
             $this->getServiceLocatorWithDynamicParameters($context, $name, $body)
         );
 
+        $arguments['tagLine'] = sprintf('@%s %s', $name, $body);
+
         try {
             $callable = [$handlerClassName, 'create'];
             Assert::isCallable($callable);
@@ -225,9 +233,9 @@ final class StandardTagFactory implements TagFactory
     /**
      * Determines the Fully Qualified Class Name of the Factory or Tag (containing a Factory Method `create`).
      *
-     * @return class-string<Tag>
+     * @return class-string<Tag>|TagFactory
      */
-    private function findHandlerClassName(string $tagName, TypeContext $context): string
+    private function findHandlerClassName(string $tagName, TypeContext $context)
     {
         $handlerClassName = Generic::class;
         if (isset($this->tagHandlerMappings[$tagName])) {
@@ -275,11 +283,11 @@ final class StandardTagFactory implements TagFactory
 
             $parameterName = $parameter->getName();
             if (isset($locator[$parameterName])) {
-                $arguments[] = $locator[$parameterName];
+                $arguments[$parameterName] = $locator[$parameterName];
                 continue;
             }
 
-            $arguments[] = null;
+            $arguments[$parameterName] = null;
         }
 
         return $arguments;
@@ -289,12 +297,14 @@ final class StandardTagFactory implements TagFactory
      * Retrieves a series of ReflectionParameter objects for the static 'create' method of the given
      * tag handler class name.
      *
-     * @param class-string $handlerClassName
+     * @param class-string|TagFactory $handler
      *
      * @return ReflectionParameter[]
      */
-    private function fetchParametersForHandlerFactoryMethod(string $handlerClassName): array
+    private function fetchParametersForHandlerFactoryMethod($handler): array
     {
+        $handlerClassName = is_object($handler) ? get_class($handler) : $handler;
+
         if (!isset($this->tagHandlerParameterCache[$handlerClassName])) {
             $methodReflection                                  = new ReflectionMethod($handlerClassName, 'create');
             $this->tagHandlerParameterCache[$handlerClassName] = $methodReflection->getParameters();

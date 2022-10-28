@@ -6,6 +6,8 @@ namespace phpDocumentor\Reflection\PseudoTypes;
 
 use phpDocumentor\Reflection\Type;
 
+use function sprintf;
+
 final class ArrayShapeItem
 {
     private ?string $key;
@@ -19,17 +21,17 @@ final class ArrayShapeItem
         $this->optional = $optional;
     }
 
-    public function getKey() : ?string
+    public function getKey(): ?string
     {
         return $this->key;
     }
 
-    public function getValue() : Type
+    public function getValue(): Type
     {
         return $this->value;
     }
 
-    public function isOptional() : bool
+    public function isOptional(): bool
     {
         return $this->optional;
     }

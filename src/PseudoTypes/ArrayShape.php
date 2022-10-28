@@ -10,6 +10,8 @@ use phpDocumentor\Reflection\Types\Array_;
 use phpDocumentor\Reflection\Types\ArrayKey;
 use phpDocumentor\Reflection\Types\Mixed_;
 
+use function implode;
+
 class ArrayShape implements PseudoType
 {
     /** @var ArrayShapeItem[] */
@@ -20,7 +22,7 @@ class ArrayShape implements PseudoType
         $this->items = $items;
     }
 
-    public function underlyingType() : Type
+    public function underlyingType(): Type
     {
         return new Array_(new Mixed_(), new ArrayKey());
     }
