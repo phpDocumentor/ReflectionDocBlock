@@ -92,6 +92,7 @@ final class Method extends BaseTag implements Factory\StaticMethod
         ?DescriptionFactory $descriptionFactory = null,
         ?TypeContext $context = null
     ): ?self {
+        trigger_error('Create using static factory is deprecated, this method should not be called directly by library consumers', E_USER_DEPRECATED);
         Assert::stringNotEmpty($body);
         Assert::notNull($typeResolver);
         Assert::notNull($descriptionFactory);
