@@ -39,7 +39,7 @@ abstract class TagFactoryTestCase extends TestCase
 
     public function giveTypeFactory(): TypeFactory
     {
-        return new TypeFactory(new TypeResolver(new FqsenResolver()));
+        return new TypeFactory(new TypeResolver(new FqsenResolver()), new FqsenResolver());
     }
 
     public function givenDescriptionFactory(): DescriptionFactory

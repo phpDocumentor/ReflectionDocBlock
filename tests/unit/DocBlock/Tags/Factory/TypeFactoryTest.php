@@ -15,8 +15,13 @@ namespace phpDocumentor\Reflection\DocBlock\Tags\Factory;
 
 use phpDocumentor\Reflection\Fqsen;
 use phpDocumentor\Reflection\FqsenResolver;
+use phpDocumentor\Reflection\PseudoTypes\ConstExpression;
+use phpDocumentor\Reflection\PseudoTypes\FloatValue;
 use phpDocumentor\Reflection\PseudoTypes\IntegerRange;
+use phpDocumentor\Reflection\PseudoTypes\IntegerValue;
 use phpDocumentor\Reflection\PseudoTypes\List_;
+use phpDocumentor\Reflection\PseudoTypes\StringValue;
+use phpDocumentor\Reflection\PseudoTypes\True_;
 use phpDocumentor\Reflection\Type;
 use phpDocumentor\Reflection\TypeResolver;
 use phpDocumentor\Reflection\Types\Array_;
@@ -50,6 +55,8 @@ final class TypeFactoryTest extends TestCase
      * @dataProvider typeProvider
      * @dataProvider genericsProvider
      * @dataProvider callableProvider
+     * @dataProvider constExpressions
+     * @testdox create type from $type
      */
     public function testTypeBuilding(string $type, Type $expected): void
     {
@@ -58,8 +65,9 @@ final class TypeFactoryTest extends TestCase
         $constParser = new ConstExprParser();
         $parser = new TypeParser($constParser);
         $ast = $parser->parse(new TokenIterator($tokens));
+        $fqsenResolver = new FqsenResolver();
 
-        $factory = new TypeFactory(new TypeResolver(new FqsenResolver()));
+        $factory = new TypeFactory(new TypeResolver($fqsenResolver), $fqsenResolver);
         $actual = $factory->createType($ast, new Context('phpDocumentor'));
 
         self::assertEquals($expected, $actual);
@@ -219,72 +227,29 @@ final class TypeFactoryTest extends TestCase
     public function constExpressions(): array
     {
         return [
-            ['Foo::FOO_CONSTANT'],
             [
                 '123',
-                //new ConstTypeNode(new ConstExprIntegerNode('123')),
+                new IntegerValue(123),
+            ],
+            [
+                'true',
+                new True_(),
             ],
             [
                 '123.2',
-                //new ConstTypeNode(new ConstExprFloatNode('123.2')),
+                new FloatValue(123.2),
             ],
             [
                 '"bar"',
-                //new ConstTypeNode(new ConstExprStringNode('bar')),
+                new StringValue('bar'),
+            ],
+            [
+                'Foo::FOO_CONSTANT',
+                new ConstExpression(new Fqsen('\\phpDocumentor\\Foo'), 'FOO_CONSTANT'),
             ],
             [
                 'Foo::FOO_*',
-                //new ConstTypeNode(new ConstFetchNode('Foo', 'FOO_*')),
-            ],
-            [
-                'Foo::FOO_*BAR',
-                //new ConstTypeNode(new ConstFetchNode('Foo', 'FOO_*BAR')),
-            ],
-            [
-                'Foo::*FOO*',
-                //new ConstTypeNode(new ConstFetchNode('Foo', '*FOO*')),
-            ],
-            [
-                'Foo::A*B*C',
-                //new ConstTypeNode(new ConstFetchNode('Foo', 'A*B*C')),
-            ],
-            [
-                'self::*BAR',
-                //new ConstTypeNode(new ConstFetchNode('self', '*BAR')),
-            ],
-            [
-                'Foo::*',
-                //new ConstTypeNode(new ConstFetchNode('Foo', '*')),
-            ],
-            [
-                'Foo::**',
-                //new ConstTypeNode(new ConstFetchNode('Foo', '*')), // fails later in PhpDocParser
-                //Lexer::TOKEN_WILDCARD,
-            ],
-            [
-                'Foo::*a',
-                //new ConstTypeNode(new ConstFetchNode('Foo', '*a')),
-            ],
-            [
-                '( "foo" | Foo::FOO_* )',
-//                new UnionTypeNode([
-//                    new ConstTypeNode(new ConstExprStringNode('foo')),
-//                    new ConstTypeNode(new ConstFetchNode('Foo', 'FOO_*')),
-//                ]),
-            ],
-            [
-                'DateTimeImmutable::*|DateTime::*',
-//                new UnionTypeNode([
-//                    new ConstTypeNode(new ConstFetchNode('DateTimeImmutable', '*')),
-//                    new ConstTypeNode(new ConstFetchNode('DateTime', '*')),
-//                ]),
-            ],
-            [
-                'ParameterTier::*|null',
-//                new UnionTypeNode([
-//                    new ConstTypeNode(new ConstFetchNode('ParameterTier', '*')),
-//                    new IdentifierTypeNode('null'),
-//                ]),
+                new ConstExpression(new Fqsen('\\phpDocumentor\\Foo'), 'FOO_*'),
             ],
         ];
     }
