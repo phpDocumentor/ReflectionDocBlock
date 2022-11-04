@@ -27,6 +27,7 @@ use phpDocumentor\Reflection\TypeResolver;
 use phpDocumentor\Reflection\Types\Array_;
 use phpDocumentor\Reflection\Types\ArrayKey;
 use phpDocumentor\Reflection\Types\Callable_;
+use phpDocumentor\Reflection\Types\CallableParameter;
 use phpDocumentor\Reflection\Types\ClassString;
 use phpDocumentor\Reflection\Types\Collection;
 use phpDocumentor\Reflection\Types\Compound;
@@ -49,9 +50,9 @@ use PHPUnit\Framework\TestCase;
 final class TypeFactoryTest extends TestCase
 {
     /**
-     * @covers \phpDocumentor\Reflection\DocBlock\Tags\Factory\TypeFactory::createType
-     * @covers \phpDocumentor\Reflection\DocBlock\Tags\Factory\TypeFactory::createFromGeneric
-     * @covers \phpDocumentor\Reflection\DocBlock\Tags\Factory\TypeFactory::createFromCallable
+     * @covers       \phpDocumentor\Reflection\DocBlock\Tags\Factory\TypeFactory::createType
+     * @covers       \phpDocumentor\Reflection\DocBlock\Tags\Factory\TypeFactory::createFromGeneric
+     * @covers       \phpDocumentor\Reflection\DocBlock\Tags\Factory\TypeFactory::createFromCallable
      * @dataProvider typeProvider
      * @dataProvider genericsProvider
      * @dataProvider callableProvider
@@ -208,15 +209,49 @@ final class TypeFactoryTest extends TestCase
             ],
             [
                 'callable(): Foo',
-                new Callable_(),
+                new Callable_([], new Object_(new Fqsen('\\phpDocumentor\\Foo'))),
             ],
             [
                 'callable(): (Foo&Bar)',
-                new Callable_(),
+                new Callable_(
+                    [],
+                    new Intersection(
+                        [
+                            new Object_(new Fqsen('\\phpDocumentor\\Foo')),
+                            new Object_(new Fqsen('\\phpDocumentor\\Bar'))
+                        ]
+                    )
+                ),
             ],
             [
                 'callable(A&...$a=, B&...=, C): Foo',
-                new Callable_(),
+                new Callable_(
+                    [
+                        new CallableParameter(
+                            'a',
+                            new Object_(new Fqsen('\\phpDocumentor\\A')),
+                            true,
+                            true,
+                            true
+                        ),
+                        new CallableParameter(
+                            null,
+                            new Object_(new Fqsen('\\phpDocumentor\\B')),
+                            true,
+                            true,
+                            true
+                        ),
+                        new CallableParameter(
+                            null,
+                            new Object_(new Fqsen('\\phpDocumentor\\C')),
+                            false,
+                            false,
+                            false
+                        ),
+                    ],
+                    new Object_(new Fqsen('\\phpDocumentor\\Foo')
+                    )
+                ),
             ],
         ];
     }

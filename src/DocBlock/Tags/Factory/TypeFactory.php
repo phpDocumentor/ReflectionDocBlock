@@ -17,6 +17,7 @@ use phpDocumentor\Reflection\Type;
 use phpDocumentor\Reflection\TypeResolver;
 use phpDocumentor\Reflection\Types\Array_;
 use phpDocumentor\Reflection\Types\Callable_;
+use phpDocumentor\Reflection\Types\CallableParameter;
 use phpDocumentor\Reflection\Types\ClassString;
 use phpDocumentor\Reflection\Types\Collection;
 use phpDocumentor\Reflection\Types\Compound;
@@ -33,6 +34,7 @@ use PHPStan\PhpDocParser\Ast\Type\ArrayShapeItemNode;
 use PHPStan\PhpDocParser\Ast\Type\ArrayShapeNode;
 use PHPStan\PhpDocParser\Ast\Type\ArrayTypeNode;
 use PHPStan\PhpDocParser\Ast\Type\CallableTypeNode;
+use PHPStan\PhpDocParser\Ast\Type\CallableTypeParameterNode;
 use PHPStan\PhpDocParser\Ast\Type\ConditionalTypeForParameterNode;
 use PHPStan\PhpDocParser\Ast\Type\ConditionalTypeNode;
 use PHPStan\PhpDocParser\Ast\Type\ConstTypeNode;
@@ -189,7 +191,21 @@ final class TypeFactory
 
     private function createFromCallable(CallableTypeNode $type, ?Context $context): Callable_
     {
-        return new Callable_();
+        return new Callable_(
+            array_map(
+                function (CallableTypeParameterNode $param) use ($context) {
+                    return new CallableParameter(
+                        $param->parameterName !== '' ? trim($param->parameterName, '$') : null,
+                        $this->createType($param->type, $context),
+                        $param->isReference,
+                        $param->isVariadic,
+                        $param->isOptional
+                    );
+                },
+                $type->parameters
+            ),
+            $this->createType($type->returnType, $context),
+        );
     }
 
     private function createFromConst(ConstTypeNode $type, ?Context $context): ?Type
