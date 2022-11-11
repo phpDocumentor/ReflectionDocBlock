@@ -26,7 +26,6 @@ use phpDocumentor\Reflection\DocBlock\Tags\Factory\PropertyFactory;
 use phpDocumentor\Reflection\DocBlock\Tags\Factory\PropertyReadFactory;
 use phpDocumentor\Reflection\DocBlock\Tags\Factory\PropertyWriteFactory;
 use phpDocumentor\Reflection\DocBlock\Tags\Factory\ReturnFactory;
-use phpDocumentor\Reflection\DocBlock\Tags\Factory\TypeFactory;
 use phpDocumentor\Reflection\DocBlock\Tags\Factory\VarFactory;
 use Webmozart\Assert\Assert;
 
@@ -64,7 +63,7 @@ final class DocBlockFactory implements DocBlockFactoryInterface
      *
      * @param array<string, class-string<Tag>|Factory> $additionalTags
      */
-    public static function createInstance(array $additionalTags = []): self
+    public static function createInstance(array $additionalTags = []): DocBlockFactoryInterface
     {
         $fqsenResolver = new FqsenResolver();
         $tagFactory = new StandardTagFactory($fqsenResolver);

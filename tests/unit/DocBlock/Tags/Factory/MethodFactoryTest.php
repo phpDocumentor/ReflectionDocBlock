@@ -76,7 +76,7 @@ final class MethodFactoryTest extends TagFactoryTestCase
                 new Method(
                     'myMethod',
                     [],
-                    new Mixed_(),
+                    new Void_(),
                     false,
                     new Description(''),
                     false,
@@ -88,7 +88,7 @@ final class MethodFactoryTest extends TagFactoryTestCase
                 new Method(
                     'myMethod',
                     [],
-                    new Mixed_(),
+                    new Void_(),
                     false,
                     new Description(''),
                     false,
@@ -100,7 +100,7 @@ final class MethodFactoryTest extends TagFactoryTestCase
                 new Method(
                     'myMethod',
                     [],
-                    new Mixed_(),
+                    new Void_(),
                     false,
                     new Description(''),
                     false,
@@ -112,7 +112,7 @@ final class MethodFactoryTest extends TagFactoryTestCase
                 new Method(
                     'myMethod',
                     [],
-                    new Mixed_(),
+                    new Void_(),
                     false,
                     new Description(''),
                     false,
@@ -124,7 +124,7 @@ final class MethodFactoryTest extends TagFactoryTestCase
                 new Method(
                     'myMethod',
                     [],
-                    new Mixed_(),
+                    new Void_(),
                     false,
                     new Description(''),
                     false,
@@ -136,7 +136,7 @@ final class MethodFactoryTest extends TagFactoryTestCase
                 new Method(
                     'myMethod',
                     [],
-                    new Mixed_(),
+                    new Void_(),
                     false,
                     new Description(''),
                     false,

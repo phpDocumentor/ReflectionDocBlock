@@ -51,7 +51,10 @@ final class MethodFactory implements PHPStanFactory
                 function (MethodTagValueParameterNode $param) use ($context) {
                     return new MethodParameter(
                         trim($param->parameterName, '$'),
-                        $this->typeResolver->createType($param->type, $context) ?? new Mixed_(),
+                        $param->type === null ? new Mixed_() : $this->typeResolver->createType(
+                            $param->type,
+                            $context
+                        ),
                         $param->isReference,
                         $param->isVariadic,
                         (string) $param->defaultValue
@@ -69,6 +72,10 @@ final class MethodFactory implements PHPStanFactory
 
     private function createReturnType(MethodTagValueNode $tagValue, Context $context): Type
     {
-        return $this->typeResolver->createType($tagValue->returnType, $context) ?? new Void_();
+        if ($tagValue->returnType === null) {
+            return new Void_();
+        }
+
+        return $this->typeResolver->createType($tagValue->returnType, $context);
     }
 }

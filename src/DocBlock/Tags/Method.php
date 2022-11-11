@@ -63,6 +63,7 @@ final class Method extends BaseTag implements Factory\StaticMethod
 
     /**
      * @param array<int, array<string, Type|string>> $arguments
+     * @param MethodParameter[] $parameters
      * @phpstan-param array<int, array{name: string, type: Type}|string> $arguments
      */
     public function __construct(
@@ -90,6 +91,10 @@ final class Method extends BaseTag implements Factory\StaticMethod
         $this->parameters = $parameters ?? $this->fromLegacyArguments($arguments);
     }
 
+    /**
+     * @deprecated Create using static factory is deprecated,
+     *  this method should not be called directly by library consumers
+     */
     public static function create(
         string $body,
         ?TypeResolver $typeResolver = null,
@@ -261,7 +266,7 @@ final class Method extends BaseTag implements Factory\StaticMethod
     {
         $arguments = [];
         foreach ($this->parameters as $parameter) {
-            $arguments[] = ($parameter->getType() ?? new Mixed_()) . ' ' .
+            $arguments[] = $parameter->getType() . ' ' .
                 ($parameter->isReference() ? '&' : '') .
                 ($parameter->isVariadic() ? '...' : '') .
                 '$' . $parameter->getName();
@@ -334,6 +339,7 @@ final class Method extends BaseTag implements Factory\StaticMethod
 
     /**
      * @param array{name: string, type: Type} $arguments
+     * @phpstan-param array<int, array{name: string, type: Type}> $arguments
      *
      * @return MethodParameter[]
      */

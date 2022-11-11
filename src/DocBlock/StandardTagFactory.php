@@ -177,7 +177,7 @@ final class StandardTagFactory implements TagFactory
         }
 
         if (is_object($handler)) {
-            Assert::implementsInterface($handler, Factory::class);
+            Assert::isInstanceOf($handler, Factory::class);
             $this->tagHandlerMappings[$tagName] = $handler;
 
             return;

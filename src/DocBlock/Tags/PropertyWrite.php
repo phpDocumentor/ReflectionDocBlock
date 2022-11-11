@@ -49,13 +49,21 @@ final class PropertyWrite extends TagWithType implements Factory\StaticMethod
         $this->description  = $description;
     }
 
+    /**
+     * @deprecated Create using static factory is deprecated,
+     *  this method should not be called directly by library consumers
+     */
     public static function create(
         string $body,
         ?TypeResolver $typeResolver = null,
         ?DescriptionFactory $descriptionFactory = null,
         ?TypeContext $context = null
     ): self {
-        trigger_error('Create using static factory is deprecated, this method should not be called directly by library consumers', E_USER_DEPRECATED);
+        trigger_error(
+            'Create using static factory is deprecated, this method should not be called directly
+             by library consumers',
+            E_USER_DEPRECATED
+        );
         Assert::stringNotEmpty($body);
         Assert::notNull($typeResolver);
         Assert::notNull($descriptionFactory);
