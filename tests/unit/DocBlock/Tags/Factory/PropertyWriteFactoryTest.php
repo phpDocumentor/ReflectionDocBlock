@@ -28,7 +28,7 @@ final class PropertyWriteFactoryTest extends TagFactoryTestCase
     public function testParamIsCreated(): void
     {
         $ast = $this->parseTag('@property-write string $var');
-        $factory = new PropertyWriteFactory($this->giveTypeFactory(), $this->givenDescriptionFactory());
+        $factory = new PropertyWriteFactory($this->giveTypeResolver(), $this->givenDescriptionFactory());
         $context = new Context('global');
 
         self::assertTrue($factory->supports($ast, $context));

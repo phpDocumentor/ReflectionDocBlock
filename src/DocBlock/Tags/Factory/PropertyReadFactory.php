@@ -7,6 +7,7 @@ namespace phpDocumentor\Reflection\DocBlock\Tags\Factory;
 use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
 use phpDocumentor\Reflection\DocBlock\Tag;
 use phpDocumentor\Reflection\DocBlock\Tags\PropertyRead;
+use phpDocumentor\Reflection\TypeResolver;
 use phpDocumentor\Reflection\Types\Context;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PropertyTagValueNode;
@@ -19,28 +20,28 @@ use function trim;
  */
 final class PropertyReadFactory implements PHPStanFactory
 {
-    private TypeFactory $typeFactory;
     private DescriptionFactory $descriptionFactory;
+    private TypeResolver $typeResolver;
 
-    public function __construct(TypeFactory $typeFactory, DescriptionFactory $descriptionFactory)
+    public function __construct(TypeResolver $typeResolver, DescriptionFactory $descriptionFactory)
     {
-        $this->typeFactory = $typeFactory;
+        $this->typeResolver = $typeResolver;
         $this->descriptionFactory = $descriptionFactory;
     }
 
-    public function create(PhpDocTagNode $node, ?Context $context): Tag
+    public function create(PhpDocTagNode $node, Context $context): Tag
     {
         $tagValue = $node->value;
         Assert::isInstanceOf($tagValue, PropertyTagValueNode::class);
 
         return new PropertyRead(
             trim($tagValue->propertyName, '$'),
-            $this->typeFactory->createType($tagValue->type, $context),
+            $this->typeResolver->createType($tagValue->type, $context),
             $this->descriptionFactory->create($tagValue->description, $context)
         );
     }
 
-    public function supports(PhpDocTagNode $node, ?Context $context): bool
+    public function supports(PhpDocTagNode $node, Context $context): bool
     {
         return $node->value instanceof PropertyTagValueNode && $node->name === '@property-read';
     }

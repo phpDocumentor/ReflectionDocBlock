@@ -37,9 +37,9 @@ abstract class TagFactoryTestCase extends TestCase
         return (new PhpDocParser(new TypeParser($constParser), $constParser))->parseTag(new TokenIterator($tokens));
     }
 
-    public function giveTypeFactory(): TypeFactory
+    public function giveTypeResolver(): TypeResolver
     {
-        return new TypeFactory(new TypeResolver(new FqsenResolver()), new FqsenResolver());
+        return new TypeResolver(new FqsenResolver());
     }
 
     public function givenDescriptionFactory(): DescriptionFactory

@@ -9,6 +9,7 @@ use phpDocumentor\Reflection\DocBlock\Tag;
 use phpDocumentor\Reflection\DocBlock\Tags\Method;
 use phpDocumentor\Reflection\DocBlock\Tags\MethodParameter;
 use phpDocumentor\Reflection\Type;
+use phpDocumentor\Reflection\TypeResolver;
 use phpDocumentor\Reflection\Types\Context;
 use phpDocumentor\Reflection\Types\Mixed_;
 use phpDocumentor\Reflection\Types\Void_;
@@ -25,16 +26,16 @@ use function trim;
  */
 final class MethodFactory implements PHPStanFactory
 {
-    private TypeFactory $typeFactory;
     private DescriptionFactory $descriptionFactory;
+    private TypeResolver $typeResolver;
 
-    public function __construct(TypeFactory $typeFactory, DescriptionFactory $descriptionFactory)
+    public function __construct(TypeResolver $typeResolver, DescriptionFactory $descriptionFactory)
     {
-        $this->typeFactory = $typeFactory;
         $this->descriptionFactory = $descriptionFactory;
+        $this->typeResolver = $typeResolver;
     }
 
-    public function create(PhpDocTagNode $node, ?Context $context): Tag
+    public function create(PhpDocTagNode $node, Context $context): Tag
     {
         $tagValue = $node->value;
         Assert::isInstanceOf($tagValue, MethodTagValueNode::class);
@@ -50,7 +51,7 @@ final class MethodFactory implements PHPStanFactory
                 function (MethodTagValueParameterNode $param) use ($context) {
                     return new MethodParameter(
                         trim($param->parameterName, '$'),
-                        $this->typeFactory->createType($param->type, $context) ?? new Mixed_(),
+                        $this->typeResolver->createType($param->type, $context) ?? new Mixed_(),
                         $param->isReference,
                         $param->isVariadic,
                         (string) $param->defaultValue
@@ -61,13 +62,13 @@ final class MethodFactory implements PHPStanFactory
         );
     }
 
-    public function supports(PhpDocTagNode $node, ?Context $context): bool
+    public function supports(PhpDocTagNode $node, Context $context): bool
     {
         return $node->value instanceof MethodTagValueNode;
     }
 
-    private function createReturnType(MethodTagValueNode $tagValue, ?Context $context): Type
+    private function createReturnType(MethodTagValueNode $tagValue, Context $context): Type
     {
-        return $this->typeFactory->createType($tagValue->returnType, $context) ?? new Void_();
+        return $this->typeResolver->createType($tagValue->returnType, $context) ?? new Void_();
     }
 }

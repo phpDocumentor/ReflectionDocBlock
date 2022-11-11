@@ -28,7 +28,7 @@ final class PropertyReadFactoryTest extends TagFactoryTestCase
     public function testParamIsCreated(): void
     {
         $ast = $this->parseTag('@property-read string $var');
-        $factory = new PropertyReadFactory($this->giveTypeFactory(), $this->givenDescriptionFactory());
+        $factory = new PropertyReadFactory($this->giveTypeResolver(), $this->givenDescriptionFactory());
         $context = new Context('global');
 
         self::assertTrue($factory->supports($ast, $context));

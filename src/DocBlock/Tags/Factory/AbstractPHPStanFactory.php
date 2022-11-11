@@ -50,6 +50,10 @@ class AbstractPHPStanFactory implements Factory
         $tokens = $this->lexer->tokenize($tagLine);
         $ast = $this->parser->parseTag(new TokenIterator($tokens));
 
+        if ($context === null) {
+            $context = new TypeContext('');
+        }
+
         foreach ($this->factories as $factory) {
             if ($factory->supports($ast, $context)) {
                 return $factory->create($ast, $context);

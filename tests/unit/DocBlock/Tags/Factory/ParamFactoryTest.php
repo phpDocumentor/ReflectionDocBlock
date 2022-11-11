@@ -28,7 +28,7 @@ final class ParamFactoryTest extends TagFactoryTestCase
     public function testParamIsCreated(): void
     {
         $ast = $this->parseTag('@param string $var');
-        $factory = new ParamFactory($this->giveTypeFactory(), $this->givenDescriptionFactory());
+        $factory = new ParamFactory($this->giveTypeResolver(), $this->givenDescriptionFactory());
         $context = new Context('global');
 
         self::assertTrue($factory->supports($ast, $context));

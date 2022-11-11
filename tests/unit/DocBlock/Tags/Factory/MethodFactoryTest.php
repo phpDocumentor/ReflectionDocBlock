@@ -33,7 +33,7 @@ final class MethodFactoryTest extends TagFactoryTestCase
     public function testIsCreated(string $tagLine, Method $tag): void
     {
         $ast = $this->parseTag($tagLine);
-        $factory = new MethodFactory($this->giveTypeFactory(), $this->givenDescriptionFactory());
+        $factory = new MethodFactory($this->giveTypeResolver(), $this->givenDescriptionFactory());
         $context = new Context('global');
 
         self::assertTrue($factory->supports($ast, $context));
@@ -76,7 +76,7 @@ final class MethodFactoryTest extends TagFactoryTestCase
                 new Method(
                     'myMethod',
                     [],
-                    new Void_(),
+                    new Mixed_(),
                     false,
                     new Description(''),
                     false,
@@ -88,7 +88,7 @@ final class MethodFactoryTest extends TagFactoryTestCase
                 new Method(
                     'myMethod',
                     [],
-                    new Void_(),
+                    new Mixed_(),
                     false,
                     new Description(''),
                     false,
@@ -100,7 +100,7 @@ final class MethodFactoryTest extends TagFactoryTestCase
                 new Method(
                     'myMethod',
                     [],
-                    new Void_(),
+                    new Mixed_(),
                     false,
                     new Description(''),
                     false,
@@ -112,7 +112,7 @@ final class MethodFactoryTest extends TagFactoryTestCase
                 new Method(
                     'myMethod',
                     [],
-                    new Void_(),
+                    new Mixed_(),
                     false,
                     new Description(''),
                     false,
@@ -124,7 +124,7 @@ final class MethodFactoryTest extends TagFactoryTestCase
                 new Method(
                     'myMethod',
                     [],
-                    new Void_(),
+                    new Mixed_(),
                     false,
                     new Description(''),
                     false,
@@ -136,7 +136,7 @@ final class MethodFactoryTest extends TagFactoryTestCase
                 new Method(
                     'myMethod',
                     [],
-                    new Void_(),
+                    new Mixed_(),
                     false,
                     new Description(''),
                     false,

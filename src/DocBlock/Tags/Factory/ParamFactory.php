@@ -7,6 +7,7 @@ namespace phpDocumentor\Reflection\DocBlock\Tags\Factory;
 use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
 use phpDocumentor\Reflection\DocBlock\Tag;
 use phpDocumentor\Reflection\DocBlock\Tags\Param;
+use phpDocumentor\Reflection\TypeResolver;
 use phpDocumentor\Reflection\Types\Context;
 use PHPStan\PhpDocParser\Ast\PhpDoc\ParamTagValueNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagNode;
@@ -19,30 +20,30 @@ use function trim;
  */
 final class ParamFactory implements PHPStanFactory
 {
-    private TypeFactory $typeFactory;
     private DescriptionFactory $descriptionFactory;
+    private TypeResolver $typeResolver;
 
-    public function __construct(TypeFactory $typeFactory, DescriptionFactory $descriptionFactory)
+    public function __construct(TypeResolver $typeResolver, DescriptionFactory $descriptionFactory)
     {
-        $this->typeFactory = $typeFactory;
         $this->descriptionFactory = $descriptionFactory;
+        $this->typeResolver = $typeResolver;
     }
 
-    public function create(PhpDocTagNode $node, ?Context $context): Tag
+    public function create(PhpDocTagNode $node, Context $context): Tag
     {
         $tagValue = $node->value;
         Assert::isInstanceOf($tagValue, ParamTagValueNode::class);
 
         return new Param(
             trim($tagValue->parameterName, '$'),
-            $this->typeFactory->createType($tagValue->type, $context),
+            $this->typeResolver->createType($tagValue->type, $context),
             $tagValue->isVariadic,
             $this->descriptionFactory->create($tagValue->description, $context),
             $tagValue->isReference
         );
     }
 
-    public function supports(PhpDocTagNode $node, ?Context $context): bool
+    public function supports(PhpDocTagNode $node, Context $context): bool
     {
         return $node->value instanceof ParamTagValueNode;
     }

@@ -28,7 +28,7 @@ final class ReturnFactoryTest extends TagFactoryTestCase
     public function testParamIsCreated(): void
     {
         $ast = $this->parseTag('@return string');
-        $factory = new ReturnFactory($this->giveTypeFactory(), $this->givenDescriptionFactory());
+        $factory = new ReturnFactory($this->giveTypeResolver(), $this->givenDescriptionFactory());
         $context = new Context('global');
 
         self::assertTrue($factory->supports($ast, $context));

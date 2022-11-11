@@ -70,15 +70,14 @@ final class DocBlockFactory implements DocBlockFactoryInterface
         $tagFactory = new StandardTagFactory($fqsenResolver);
         $descriptionFactory = new DescriptionFactory($tagFactory);
         $typeResolver = new TypeResolver($fqsenResolver);
-        $typeFactory = new TypeFactory($typeResolver, $fqsenResolver);
 
         $phpstanTagFactory = new AbstractPHPStanFactory(
-            new ParamFactory($typeFactory, $descriptionFactory),
-            new VarFactory($typeFactory, $descriptionFactory),
-            new ReturnFactory($typeFactory, $descriptionFactory),
-            new PropertyFactory($typeFactory, $descriptionFactory),
-            new PropertyReadFactory($typeFactory, $descriptionFactory),
-            new PropertyWriteFactory($typeFactory, $descriptionFactory),
+            new ParamFactory($typeResolver, $descriptionFactory),
+            new VarFactory($typeResolver, $descriptionFactory),
+            new ReturnFactory($typeResolver, $descriptionFactory),
+            new PropertyFactory($typeResolver, $descriptionFactory),
+            new PropertyReadFactory($typeResolver, $descriptionFactory),
+            new PropertyWriteFactory($typeResolver, $descriptionFactory),
         );
 
         $tagFactory->addService($descriptionFactory);
