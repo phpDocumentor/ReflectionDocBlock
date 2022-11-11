@@ -24,6 +24,7 @@ use phpDocumentor\Reflection\Types\Void_;
 use Webmozart\Assert\Assert;
 
 use function array_keys;
+use function array_map;
 use function explode;
 use function implode;
 use function is_string;
@@ -31,8 +32,11 @@ use function preg_match;
 use function sort;
 use function strpos;
 use function substr;
+use function trigger_error;
 use function trim;
 use function var_export;
+
+use const E_USER_DEPRECATED;
 
 /**
  * Reflection class for an {@}method in a Docblock.
@@ -45,12 +49,6 @@ final class Method extends BaseTag implements Factory\StaticMethod
     /** @var string */
     private $methodName;
 
-    /**
-     * @phpstan-var array<int, array{name: string, type: Type}>
-     * @var array<int, array<string, Type|string>>
-     */
-    private $arguments;
-
     /** @var bool */
     private $isStatic;
 
@@ -60,8 +58,12 @@ final class Method extends BaseTag implements Factory\StaticMethod
     /** @var bool */
     private $returnsReference;
 
+    /** @var MethodParameter[] */
+    private array $parameters;
+
     /**
      * @param array<int, array<string, Type|string>> $arguments
+     * @param MethodParameter[] $parameters
      * @phpstan-param array<int, array{name: string, type: Type}|string> $arguments
      */
     public function __construct(
@@ -70,7 +72,8 @@ final class Method extends BaseTag implements Factory\StaticMethod
         ?Type $returnType = null,
         bool $static = false,
         ?Description $description = null,
-        bool $returnsReference = false
+        bool $returnsReference = false,
+        ?array $parameters = null
     ) {
         Assert::stringNotEmpty($methodName);
 
@@ -78,20 +81,31 @@ final class Method extends BaseTag implements Factory\StaticMethod
             $returnType = new Void_();
         }
 
+        $arguments = $this->filterArguments($arguments);
+
         $this->methodName       = $methodName;
-        $this->arguments        = $this->filterArguments($arguments);
         $this->returnType       = $returnType;
         $this->isStatic         = $static;
         $this->description      = $description;
         $this->returnsReference = $returnsReference;
+        $this->parameters = $parameters ?? $this->fromLegacyArguments($arguments);
     }
 
+    /**
+     * @deprecated Create using static factory is deprecated,
+     *  this method should not be called directly by library consumers
+     */
     public static function create(
         string $body,
         ?TypeResolver $typeResolver = null,
         ?DescriptionFactory $descriptionFactory = null,
         ?TypeContext $context = null
     ): ?self {
+        trigger_error(
+            'Create using static factory is deprecated, this method should not be called directly
+             by library consumers',
+            E_USER_DEPRECATED
+        );
         Assert::stringNotEmpty($body);
         Assert::notNull($typeResolver);
         Assert::notNull($descriptionFactory);
@@ -186,7 +200,14 @@ final class Method extends BaseTag implements Factory\StaticMethod
             }
         }
 
-        return new static($methodName, $arguments, $returnType, $static, $description, $returnsReference);
+        return new static(
+            $methodName,
+            $arguments,
+            $returnType,
+            $static,
+            $description,
+            $returnsReference
+        );
     }
 
     /**
@@ -198,12 +219,27 @@ final class Method extends BaseTag implements Factory\StaticMethod
     }
 
     /**
+     * @deprecated Method deprecated, use {@see self::getParameters()}
+     *
      * @return array<int, array<string, Type|string>>
      * @phpstan-return array<int, array{name: string, type: Type}>
      */
     public function getArguments(): array
     {
-        return $this->arguments;
+        trigger_error('Method deprecated, use ::getParameters()', E_USER_DEPRECATED);
+
+        return array_map(
+            static function (MethodParameter $methodParameter) {
+                return ['name' => $methodParameter->getName(), 'type' => $methodParameter->getType()];
+            },
+            $this->parameters
+        );
+    }
+
+    /** @return MethodParameter[] */
+    public function getParameters(): array
+    {
+        return $this->parameters;
     }
 
     /**
@@ -229,8 +265,11 @@ final class Method extends BaseTag implements Factory\StaticMethod
     public function __toString(): string
     {
         $arguments = [];
-        foreach ($this->arguments as $argument) {
-            $arguments[] = $argument['type'] . ' $' . $argument['name'];
+        foreach ($this->parameters as $parameter) {
+            $arguments[] = $parameter->getType() . ' ' .
+                ($parameter->isReference() ? '&' : '') .
+                ($parameter->isVariadic() ? '...' : '') .
+                '$' . $parameter->getName();
         }
 
         $argumentStr = '(' . implode(', ', $arguments) . ')';
@@ -296,5 +335,29 @@ final class Method extends BaseTag implements Factory\StaticMethod
         }
 
         return $argument;
+    }
+
+    /**
+     * @param array{name: string, type: Type} $arguments
+     * @phpstan-param array<int, array{name: string, type: Type}> $arguments
+     *
+     * @return MethodParameter[]
+     */
+    private function fromLegacyArguments(array $arguments): array
+    {
+        trigger_error(
+            'Create method parameters via legacy format is deprecated add parameters via the constructor',
+            E_USER_DEPRECATED
+        );
+
+        return array_map(
+            static function ($arg) {
+                return new MethodParameter(
+                    $arg['name'],
+                    $arg['type']
+                );
+            },
+            $arguments
+        );
     }
 }

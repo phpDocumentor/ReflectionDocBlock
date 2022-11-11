@@ -10,13 +10,10 @@
 
     <!-- Set the minimum PHP version for PHPCompatibility.
          This should be kept in sync with the requirements in the composer.json file. -->
-    <config name="testVersion" value="7.2-"/>
+    <config name="testVersion" value="7.4-"/>
 
     <rule ref="phpDocumentor">
         <exclude name="SlevomatCodingStandard.Exceptions.ReferenceThrowableOnly.ReferencedGeneralException" />
-
-        <!-- Property type declarations are a PHP 7.4 feature. -->
-        <exclude name="SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint"/>
     </rule>
 
     <rule ref="SlevomatCodingStandard.Classes.SuperfluousAbstractClassNaming.SuperfluousPrefix">

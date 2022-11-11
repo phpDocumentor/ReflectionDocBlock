@@ -18,6 +18,7 @@ use Mockery as m;
 use phpDocumentor\Reflection\Assets\CustomParam;
 use phpDocumentor\Reflection\Assets\CustomServiceClass;
 use phpDocumentor\Reflection\Assets\CustomServiceInterface;
+use phpDocumentor\Reflection\Assets\CustomTagFactory;
 use phpDocumentor\Reflection\DocBlock\Tags\Author;
 use phpDocumentor\Reflection\DocBlock\Tags\Formatter;
 use phpDocumentor\Reflection\DocBlock\Tags\Formatter\PassthroughFormatter;
@@ -223,6 +224,22 @@ class StandardTagFactoryTest extends TestCase
 
         $this->assertInstanceOf(Author::class, $tag);
         $this->assertSame('author', $tag->getName());
+    }
+
+    public function testTagWithHandlerObject(): void
+    {
+        $fqsenResolver = new FqsenResolver();
+
+        $customFactory = new CustomTagFactory();
+        $injectedClass = new CustomServiceClass();
+
+        $tagFactory = new StandardTagFactory($fqsenResolver);
+        $tagFactory->addService($injectedClass);
+        $tagFactory->registerTagHandler('param', $customFactory);
+        $tag = $tagFactory->create('@param foo');
+
+        self::assertSame('custom', $tag->getName());
+        self::assertSame($injectedClass, $customFactory->class);
     }
 
     /**

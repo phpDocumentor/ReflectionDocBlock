@@ -17,7 +17,11 @@ use Mockery as m;
 use phpDocumentor\Reflection\DocBlock\Description;
 use phpDocumentor\Reflection\DocBlock\StandardTagFactory;
 use phpDocumentor\Reflection\DocBlock\Tag;
+use phpDocumentor\Reflection\DocBlock\Tags\Param;
 use phpDocumentor\Reflection\DocBlock\Tags\See;
+use phpDocumentor\Reflection\Types\Array_;
+use phpDocumentor\Reflection\Types\Integer;
+use phpDocumentor\Reflection\Types\String_;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -83,7 +87,7 @@ DESCRIPTION;
             str_replace(
                 PHP_EOL,
                 "\n",
-            $descriptionText
+                $descriptionText
             ),
             $description->render()
         );
@@ -134,7 +138,7 @@ DESCRIPTION;
             str_replace(
                 PHP_EOL,
                 "\n",
-            <<<'DESCRIPTION'
+                <<<'DESCRIPTION'
 You can escape the @-sign by surrounding it with braces, for example: @. And escape a closing brace within an
 inline tag by adding an opening brace in front of it like this: }.
 
@@ -148,5 +152,37 @@ DESCRIPTION
             ),
             $foundDescription
         );
+    }
+
+    public function testMultilineTags(): void
+    {
+        $docCommment = <<<DOC
+/**
+ * This is an example of a summary.
+ *
+ * @param array<
+ *   int,
+ *   string     
+ * > \$store
+ */
+DOC;
+        $factory = DocBlockFactory::createInstance();
+        $docblock = $factory->create($docCommment);
+
+        self::assertEquals(
+            [
+                new Param(
+                    'store',
+                    new Array_(
+                        new String_(),
+                        new Integer()
+                    ),
+                    false,
+                    new Description(''),
+                ),
+            ],
+            $docblock->getTags()
+        );
+
     }
 }

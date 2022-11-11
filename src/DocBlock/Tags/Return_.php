@@ -20,6 +20,10 @@ use phpDocumentor\Reflection\TypeResolver;
 use phpDocumentor\Reflection\Types\Context as TypeContext;
 use Webmozart\Assert\Assert;
 
+use function trigger_error;
+
+use const E_USER_DEPRECATED;
+
 /**
  * Reflection class for a {@}return tag in a Docblock.
  */
@@ -32,12 +36,21 @@ final class Return_ extends TagWithType implements Factory\StaticMethod
         $this->description = $description;
     }
 
+    /**
+     * @deprecated Create using static factory is deprecated,
+     *  this method should not be called directly by library consumers
+     */
     public static function create(
         string $body,
         ?TypeResolver $typeResolver = null,
         ?DescriptionFactory $descriptionFactory = null,
         ?TypeContext $context = null
     ): self {
+        trigger_error(
+            'Create using static factory is deprecated, this method should not be called directly
+             by library consumers',
+            E_USER_DEPRECATED
+        );
         Assert::notNull($typeResolver);
         Assert::notNull($descriptionFactory);
 
