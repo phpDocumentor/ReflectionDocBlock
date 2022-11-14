@@ -17,11 +17,14 @@ use Mockery as m;
 use phpDocumentor\Reflection\DocBlock\Description;
 use phpDocumentor\Reflection\DocBlock\StandardTagFactory;
 use phpDocumentor\Reflection\DocBlock\Tag;
+use phpDocumentor\Reflection\DocBlock\Tags\Method;
+use phpDocumentor\Reflection\DocBlock\Tags\MethodParameter;
 use phpDocumentor\Reflection\DocBlock\Tags\Param;
 use phpDocumentor\Reflection\DocBlock\Tags\See;
 use phpDocumentor\Reflection\Types\Array_;
 use phpDocumentor\Reflection\Types\Integer;
 use phpDocumentor\Reflection\Types\String_;
+use phpDocumentor\Reflection\Types\Void_;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -179,6 +182,37 @@ DOC;
                     ),
                     false,
                     new Description(''),
+                ),
+            ],
+            $docblock->getTags()
+        );
+
+    }
+
+    public function testMethodRegression(): void
+    {
+        $docCommment = <<<DOC
+/**
+ * This is an example of a summary.
+ *
+ * @method void setInteger(integer \$integer)
+ */
+DOC;
+        $factory = DocBlockFactory::createInstance();
+        $docblock = $factory->create($docCommment);
+
+        self::assertEquals(
+            [
+                new Method(
+                    'setInteger',
+                    [],
+                    new Void_(),
+                    false,
+                    new Description(''),
+                    false,
+                    [
+                        new MethodParameter('integer', new Integer())
+                    ]
                 ),
             ],
             $docblock->getTags()

@@ -96,6 +96,18 @@ final class MethodFactoryTest extends TagFactoryTestCase
                 ),
             ],
             [
+                '@method void setInteger(integer $integer)',
+                new Method(
+                    'setInteger',
+                    [],
+                    new Void_(),
+                    false,
+                    new Description(''),
+                    false,
+                    [new MethodParameter('integer', new Integer())]
+                ),
+            ],
+            [
                 '@method myMethod($a = 1)',
                 new Method(
                     'myMethod',

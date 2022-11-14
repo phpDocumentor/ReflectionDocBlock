@@ -21,6 +21,7 @@ use phpDocumentor\Reflection\DocBlock\Tag;
 use phpDocumentor\Reflection\DocBlock\TagFactory;
 use phpDocumentor\Reflection\DocBlock\Tags\Factory\AbstractPHPStanFactory;
 use phpDocumentor\Reflection\DocBlock\Tags\Factory\Factory;
+use phpDocumentor\Reflection\DocBlock\Tags\Factory\MethodFactory;
 use phpDocumentor\Reflection\DocBlock\Tags\Factory\ParamFactory;
 use phpDocumentor\Reflection\DocBlock\Tags\Factory\PropertyFactory;
 use phpDocumentor\Reflection\DocBlock\Tags\Factory\PropertyReadFactory;
@@ -77,6 +78,7 @@ final class DocBlockFactory implements DocBlockFactoryInterface
             new PropertyFactory($typeResolver, $descriptionFactory),
             new PropertyReadFactory($typeResolver, $descriptionFactory),
             new PropertyWriteFactory($typeResolver, $descriptionFactory),
+            new MethodFactory($typeResolver, $descriptionFactory)
         );
 
         $tagFactory->addService($descriptionFactory);
