@@ -9,8 +9,10 @@ use phpDocumentor\Reflection\DocBlock\Tag;
 use phpDocumentor\Reflection\DocBlock\Tags\Param;
 use phpDocumentor\Reflection\TypeResolver;
 use phpDocumentor\Reflection\Types\Context;
+use PHPStan\PhpDocParser\Ast\PhpDoc\InvalidTagValueNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\ParamTagValueNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagNode;
+use PHPStan\PhpDocParser\Ast\PhpDoc\TypelessParamTagValueNode;
 use Webmozart\Assert\Assert;
 
 use function trim;
@@ -32,7 +34,13 @@ final class ParamFactory implements PHPStanFactory
     public function create(PhpDocTagNode $node, Context $context): Tag
     {
         $tagValue = $node->value;
-        Assert::isInstanceOf($tagValue, ParamTagValueNode::class);
+        Assert::isInstanceOfAny(
+            $tagValue,
+            [
+                ParamTagValueNode::class,
+                TypelessParamTagValueNode::class
+            ]
+        );
 
         return new Param(
             trim($tagValue->parameterName, '$'),
@@ -45,6 +53,7 @@ final class ParamFactory implements PHPStanFactory
 
     public function supports(PhpDocTagNode $node, Context $context): bool
     {
-        return $node->value instanceof ParamTagValueNode;
+        return $node->value instanceof ParamTagValueNode
+            || $node->value instanceof TypelessParamTagValueNode;
     }
 }
