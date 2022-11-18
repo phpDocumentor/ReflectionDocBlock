@@ -25,7 +25,7 @@ final class VarFactoryTest extends TagFactoryTestCase
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\Factory\VarFactory::create
      * @covers \phpDocumentor\Reflection\DocBlock\Tags\Factory\VarFactory::supports
      */
-    public function testParamIsCreated(): void
+    public function testVarIsCreated(): void
     {
         $ast = $this->parseTag('@var string $var');
         $factory = new VarFactory($this->giveTypeResolver(), $this->givenDescriptionFactory());

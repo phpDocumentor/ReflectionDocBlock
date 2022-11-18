@@ -45,7 +45,7 @@ abstract class TagFactoryTestCase extends TestCase
     public function givenDescriptionFactory(): DescriptionFactory
     {
         $factory =  m::mock(DescriptionFactory::class);
-        $factory->shouldReceive('create')->andReturn(new Description(''));
+        $factory->shouldReceive('create')->andReturnUsing(static fn ($args) => new Description($args));
 
         return $factory;
     }
