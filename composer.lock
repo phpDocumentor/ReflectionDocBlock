@@ -65,12 +65,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/TypeResolver.git",
-                "reference": "662b17f56786e34354684f6c141c1909b1ee3ac0"
+                "reference": "2dc9aff0e6ca4e4600355c68c4a38bfaeccf54e2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/662b17f56786e34354684f6c141c1909b1ee3ac0",
-                "reference": "662b17f56786e34354684f6c141c1909b1ee3ac0",
+                "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/2dc9aff0e6ca4e4600355c68c4a38bfaeccf54e2",
+                "reference": "2dc9aff0e6ca4e4600355c68c4a38bfaeccf54e2",
                 "shasum": ""
             },
             "require": {
@@ -115,7 +115,7 @@
                 "issues": "https://github.com/phpDocumentor/TypeResolver/issues",
                 "source": "https://github.com/phpDocumentor/TypeResolver/tree/1.x"
             },
-            "time": "2022-11-11T10:44:03+00:00"
+            "time": "2022-11-19T20:09:31+00:00"
         },
         {
             "name": "phpstan/phpdoc-parser",
