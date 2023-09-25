@@ -127,7 +127,7 @@ final class DocBlockFactory implements DocBlockFactoryInterface
         [$templateMarker, $summary, $description, $tags] = $parts;
 
         return new DocBlock(
-            $summary,
+            $this->descriptionFactory->create($summary, $context)->render(),
             $description ? $this->descriptionFactory->create($description, $context) : null,
             $this->parseTagBlock($tags, $context),
             $context,
