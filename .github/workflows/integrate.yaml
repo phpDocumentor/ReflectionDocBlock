@@ -47,7 +47,7 @@ jobs:
     uses: "phpDocumentor/.github/.github/workflows/continues-integration.yml@v0.3.0"
     with:
       composer-root-version: "5.x-dev"
-      php-versions: "['7.4', '8.0', '8.1', '8.2']"
+      php-versions: "['7.4', '8.0', '8.1', '8.2', '8.3']"
 
   bc_check:
     name: "BC Check"
