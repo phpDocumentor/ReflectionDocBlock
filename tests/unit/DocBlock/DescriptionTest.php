@@ -142,4 +142,31 @@ class DescriptionTest extends TestCase
         . 'inverseJoinColumns={@JoinColumn (name="column_id_2", referencedColumnName="id")})';
         $this->assertSame($expected, (string) $fixture);
     }
+
+    /**
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Formatter\PassthroughFormatter
+     *
+     * @covers ::__construct
+     * @covers ::render
+     * @covers ::__toString
+     */
+    public function testDescriptionWithEscapedCharactersAndNoTagsCanBeCastToString(): void
+    {
+        //% chars are escaped in \phpDocumentor\Reflection\DocBlock\DescriptionFactory::create
+        $body = <<<'EOT'
+        {%% for user in users %%}
+            {{ user.name }}
+        {%% endfor %%}';
+        EOT;
+
+        $expected = <<<'EOT'
+        {% for user in users %}
+            {{ user.name }}
+        {% endfor %}';
+        EOT;
+
+        $fixture  = new Description($body, []);
+
+        $this->assertSame($expected, (string) $fixture);
+    }
 }
