@@ -10,12 +10,12 @@
         },
         {
             "name": "Jaap van Otterdijk",
-            "email": "account@ijaap.nl"
+            "email": "opensource@ijaap.nl"
         }
     ],
     "require": {
         "php": "^7.2 || ^8.0",
-        "phpdocumentor/type-resolver": "1.x-dev@dev",
+        "phpdocumentor/type-resolver": "^1.7",
         "webmozart/assert": "^1.9.1",
         "phpdocumentor/reflection-common": "^2.2",
         "ext-filter": "*",
