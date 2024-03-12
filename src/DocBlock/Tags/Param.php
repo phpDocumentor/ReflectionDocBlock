@@ -36,14 +36,13 @@ use const PREG_SPLIT_DELIM_CAPTURE;
  */
 final class Param extends TagWithType implements Factory\StaticMethod
 {
-    /** @var string|null */
-    private $variableName;
+    private ?string $variableName = null;
 
     /** @var bool determines whether this is a variadic argument */
-    private $isVariadic;
+    private bool $isVariadic;
 
     /** @var bool determines whether this is passed by reference */
-    private $isReference;
+    private bool $isReference;
 
     public function __construct(
         ?string $variableName,

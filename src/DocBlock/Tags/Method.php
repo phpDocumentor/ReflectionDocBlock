@@ -43,20 +43,15 @@ use const E_USER_DEPRECATED;
  */
 final class Method extends BaseTag implements Factory\StaticMethod
 {
-    /** @var string */
-    protected $name = 'method';
+    protected string $name = 'method';
 
-    /** @var string */
-    private $methodName;
+    private string $methodName;
 
-    /** @var bool */
-    private $isStatic;
+    private bool $isStatic;
 
-    /** @var Type */
-    private $returnType;
+    private Type $returnType;
 
-    /** @var bool */
-    private $returnsReference;
+    private bool $returnsReference;
 
     /** @var MethodParameter[] */
     private array $parameters;

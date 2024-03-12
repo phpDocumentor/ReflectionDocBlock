@@ -42,7 +42,7 @@ final class MyTag extends BaseTag
      *
      * @var string
      */
-    protected $name = 'my-tag';
+    protected string $name = 'my-tag';
 
     /**
      * The constructor for this Tag; this should contain all properties for this object.

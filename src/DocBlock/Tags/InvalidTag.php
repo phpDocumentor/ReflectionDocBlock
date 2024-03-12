@@ -32,14 +32,11 @@ use function sprintf;
  */
 final class InvalidTag implements Tag
 {
-    /** @var string */
-    private $name;
+    private string $name;
 
-    /** @var string */
-    private $body;
+    private string $body;
 
-    /** @var Throwable|null */
-    private $throwable;
+    private ?Throwable $throwable = null;
 
     private function __construct(string $name, string $body)
     {

@@ -25,14 +25,13 @@ use function preg_match;
  */
 final class Source extends BaseTag implements Factory\StaticMethod
 {
-    /** @var string */
-    protected $name = 'source';
+    protected string $name = 'source';
 
     /** @var int The starting line, relative to the structural element's location. */
-    private $startingLine;
+    private int $startingLine;
 
     /** @var int|null The number of lines, relative to the starting line. NULL means "to the end". */
-    private $lineCount;
+    private ?int $lineCount = null;
 
     /**
      * @param int|string      $startingLine should be a to int convertible value

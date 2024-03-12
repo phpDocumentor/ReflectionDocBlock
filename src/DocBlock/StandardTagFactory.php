@@ -79,7 +79,7 @@ final class StandardTagFactory implements TagFactory
      * @var array<class-string<Tag>|Factory> An array with a tag as a key, and an
      *                               FQCN to a class that handles it as an array value.
      */
-    private $tagHandlerMappings = [
+    private array $tagHandlerMappings = [
         'author' => Author::class,
         'covers' => Covers::class,
         'deprecated' => Deprecated::class,
@@ -105,22 +105,21 @@ final class StandardTagFactory implements TagFactory
      * @var array<class-string<Tag>> An array with a anotation s a key, and an
      *      FQCN to a class that handles it as an array value.
      */
-    private $annotationMappings = [];
+    private array $annotationMappings = [];
 
     /**
      * @var ReflectionParameter[][] a lazy-loading cache containing parameters
      *      for each tagHandler that has been used.
      */
-    private $tagHandlerParameterCache = [];
+    private array $tagHandlerParameterCache = [];
 
-    /** @var FqsenResolver */
-    private $fqsenResolver;
+    private FqsenResolver $fqsenResolver;
 
     /**
      * @var mixed[] an array representing a simple Service Locator where we can store parameters and
      *     services that can be inserted into the Factory Methods of Tag Handlers.
      */
-    private $serviceLocator = [];
+    private array $serviceLocator = [];
 
     /**
      * Initialize this tag factory with the means to resolve an FQSEN and optionally a list of tag handlers.

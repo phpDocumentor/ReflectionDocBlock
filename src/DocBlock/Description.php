@@ -52,11 +52,10 @@ use function vsprintf;
  */
 class Description
 {
-    /** @var string */
-    private $bodyTemplate;
+    private string $bodyTemplate;
 
     /** @var Tag[] */
-    private $tags;
+    private array $tags;
 
     /**
      * Initializes a Description with its body (template) and a listing of the tags used in the body template.

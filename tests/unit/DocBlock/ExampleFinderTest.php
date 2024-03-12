@@ -14,8 +14,7 @@ use PHPUnit\Framework\TestCase;
  */
 class ExampleFinderTest extends TestCase
 {
-    /** @var ExampleFinder */
-    private $fixture;
+    private ExampleFinder $fixture;
 
     /**
      * Call Mockery::close after each test.

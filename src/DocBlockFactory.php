@@ -44,11 +44,9 @@ use function trim;
 
 final class DocBlockFactory implements DocBlockFactoryInterface
 {
-    /** @var DocBlock\DescriptionFactory */
-    private $descriptionFactory;
+    private DocBlock\DescriptionFactory $descriptionFactory;
 
-    /** @var TagFactory */
-    private $tagFactory;
+    private TagFactory $tagFactory;
 
     /**
      * Initializes this factory with the required subcontractors.

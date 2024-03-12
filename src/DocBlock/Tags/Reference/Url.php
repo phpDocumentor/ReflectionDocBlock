@@ -20,8 +20,7 @@ use Webmozart\Assert\Assert;
  */
 final class Url implements Reference
 {
-    /** @var string */
-    private $uri;
+    private string $uri;
 
     public function __construct(string $uri)
     {

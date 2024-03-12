@@ -31,11 +31,10 @@ use const DIRECTORY_SEPARATOR;
  */
 class ExampleFinder
 {
-    /** @var string */
-    private $sourceDirectory = '';
+    private string $sourceDirectory = '';
 
     /** @var string[] */
-    private $exampleDirectories = [];
+    private array $exampleDirectories = [];
 
     /**
      * Attempts to find the example contents for the given descriptor.

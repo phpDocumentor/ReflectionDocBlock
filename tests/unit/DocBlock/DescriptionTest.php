@@ -165,7 +165,7 @@ class DescriptionTest extends TestCase
         {% endfor %}';
         EOT;
 
-        $fixture  = new Description($body, []);
+        $fixture = new Description($body, []);
 
         $this->assertSame($expected, (string) $fixture);
     }

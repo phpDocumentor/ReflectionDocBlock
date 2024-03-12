@@ -23,7 +23,7 @@ use function trim;
 abstract class TagWithType extends BaseTag
 {
     /** @var ?Type */
-    protected $type;
+    protected ?Type $type = null;
 
     /**
      * Returns the type section of the variable.

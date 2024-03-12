@@ -23,7 +23,7 @@ use function strlen;
 class AlignFormatter implements Formatter
 {
     /** @var int The maximum tag name length. */
-    protected $maxLen = 0;
+    protected int $maxLen = 0;
 
     /**
      * @param Tag[] $tags All tags that should later be aligned with the formatter.

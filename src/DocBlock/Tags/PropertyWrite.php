@@ -36,8 +36,7 @@ use const PREG_SPLIT_DELIM_CAPTURE;
  */
 final class PropertyWrite extends TagWithType implements Factory\StaticMethod
 {
-    /** @var string */
-    protected $variableName;
+    protected string $variableName;
 
     public function __construct(?string $variableName, ?Type $type = null, ?Description $description = null)
     {

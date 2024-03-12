@@ -24,11 +24,9 @@ use Webmozart\Assert\Assert;
  */
 final class Link extends BaseTag implements Factory\StaticMethod
 {
-    /** @var string */
-    protected $name = 'link';
+    protected string $name = 'link';
 
-    /** @var string */
-    private $link;
+    private string $link;
 
     /**
      * Initializes a link to a URL.

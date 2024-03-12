@@ -16,20 +16,15 @@ use phpDocumentor\Reflection\Type;
 
 final class MethodParameter
 {
-    /** @var Type */
-    private $type;
+    private Type $type;
 
-    /** @var bool */
-    private $isReference;
+    private bool $isReference;
 
-    /** @var bool */
-    private $isVariadic;
+    private bool $isVariadic;
 
-    /** @var string */
-    private $name;
+    private string $name;
 
-    /** @var string|null */
-    private $defaultValue;
+    private ?string $defaultValue = null;
 
     public function __construct(
         string $name,

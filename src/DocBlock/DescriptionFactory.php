@@ -48,8 +48,7 @@ use const PREG_SPLIT_DELIM_CAPTURE;
  */
 class DescriptionFactory
 {
-    /** @var Factory */
-    private $tagFactory;
+    private Factory $tagFactory;
 
     /**
      * Initializes this factory with the means to construct (inline) tags.
