@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace phpDocumentor\Reflection\DocBlock\Tags\Factory;
 
+use Doctrine\Deprecations\Deprecation;
 use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
 use phpDocumentor\Reflection\DocBlock\Tag;
 use phpDocumentor\Reflection\DocBlock\Tags\Param;
@@ -16,6 +17,7 @@ use PHPStan\PhpDocParser\Ast\PhpDoc\TypelessParamTagValueNode;
 use PHPStan\PhpDocParser\Ast\Type\IdentifierTypeNode;
 use Webmozart\Assert\Assert;
 
+use function sprintf;
 use function trim;
 
 /**
@@ -37,6 +39,15 @@ final class ParamFactory implements PHPStanFactory
         $tagValue = $node->value;
 
         if ($tagValue instanceof InvalidTagValueNode) {
+            Deprecation::trigger(
+                'phpdocumentor/reflection-docblock',
+                'https://github.com/phpDocumentor/ReflectionDocBlock/issues/362',
+                sprintf(
+                    'Param tag value "%s" is invalid, falling back to legacy parsing. Please update your docblocks.',
+                    $tagValue->value
+                )
+            );
+
             return Param::create($tagValue->value, $this->typeResolver, $this->descriptionFactory, $context);
         }
 
