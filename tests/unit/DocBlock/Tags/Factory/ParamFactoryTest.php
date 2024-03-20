@@ -99,7 +99,7 @@ final class ParamFactoryTest extends TagFactoryTestCase
                     new Compound(
                         [
                             new StringValue('GET'),
-                            new Object_(new Fqsen('\SomeClass'))
+                            new Object_(new Fqsen('\SomeClass')),
                         ]
                     ),
                     false,
@@ -114,7 +114,7 @@ final class ParamFactoryTest extends TagFactoryTestCase
                     new Compound(
                         [
                             new IntegerValue(8),
-                            new Object_(new Fqsen('\SomeClass'))
+                            new Object_(new Fqsen('\SomeClass')),
                         ]
                     ),
                     false,
