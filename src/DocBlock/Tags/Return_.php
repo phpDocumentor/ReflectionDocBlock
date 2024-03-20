@@ -13,16 +13,13 @@ declare(strict_types=1);
 
 namespace phpDocumentor\Reflection\DocBlock\Tags;
 
+use Doctrine\Deprecations\Deprecation;
 use phpDocumentor\Reflection\DocBlock\Description;
 use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
 use phpDocumentor\Reflection\Type;
 use phpDocumentor\Reflection\TypeResolver;
 use phpDocumentor\Reflection\Types\Context as TypeContext;
 use Webmozart\Assert\Assert;
-
-use function trigger_error;
-
-use const E_USER_DEPRECATED;
 
 /**
  * Reflection class for a {@}return tag in a Docblock.
@@ -46,11 +43,13 @@ final class Return_ extends TagWithType implements Factory\StaticMethod
         ?DescriptionFactory $descriptionFactory = null,
         ?TypeContext $context = null
     ): self {
-        trigger_error(
+        Deprecation::triggerIfCalledFromOutside(
+            'phpdocumentor/reflection-docblock',
+            'https://github.com/phpDocumentor/ReflectionDocBlock/issues/361',
             'Create using static factory is deprecated, this method should not be called directly
              by library consumers',
-            E_USER_DEPRECATED
         );
+
         Assert::notNull($typeResolver);
         Assert::notNull($descriptionFactory);
 

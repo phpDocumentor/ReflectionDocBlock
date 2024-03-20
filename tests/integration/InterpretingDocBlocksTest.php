@@ -217,6 +217,5 @@ DOC;
             ],
             $docblock->getTags()
         );
-
     }
 }

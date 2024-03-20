@@ -34,6 +34,19 @@
             </errorLevel>
         </DeprecatedInterface>
 
+        <DeprecatedMethod>
+            <errorLevel type="info">
+                <!-- Will be removed in 6.0.0 issues/361 -->
+                <referencedMethod name="phpDocumentor\Reflection\DocBlock\Tags\Param::create"/>
+            </errorLevel>
+        </DeprecatedMethod>
+
+        <NoInterfaceProperties>
+            <errorLevel type="info">
+                <file name="src/DocBlock/Tags/Factory/ParamFactory.php"/>
+            </errorLevel>
+        </NoInterfaceProperties>
+
         <RedundantConditionGivenDocblockType>
             <errorLevel type="info">
                 <!-- Psalm manage to infer a more precise type than PHPStan. notNull assert is needed for PHPStan but
