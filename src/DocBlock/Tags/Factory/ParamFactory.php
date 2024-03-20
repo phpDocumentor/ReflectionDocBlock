@@ -13,6 +13,7 @@ use PHPStan\PhpDocParser\Ast\PhpDoc\InvalidTagValueNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\ParamTagValueNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\PhpDocTagNode;
 use PHPStan\PhpDocParser\Ast\PhpDoc\TypelessParamTagValueNode;
+use PHPStan\PhpDocParser\Ast\Type\IdentifierTypeNode;
 use Webmozart\Assert\Assert;
 
 use function trim;
@@ -34,17 +35,22 @@ final class ParamFactory implements PHPStanFactory
     public function create(PhpDocTagNode $node, Context $context): Tag
     {
         $tagValue = $node->value;
+
+        if ($tagValue instanceof InvalidTagValueNode) {
+            return Param::create($tagValue->value, $this->typeResolver, $this->descriptionFactory, $context);
+        }
+
         Assert::isInstanceOfAny(
             $tagValue,
             [
                 ParamTagValueNode::class,
-                TypelessParamTagValueNode::class
+                TypelessParamTagValueNode::class,
             ]
         );
 
         return new Param(
             trim($tagValue->parameterName, '$'),
-            $this->typeResolver->createType($tagValue->type, $context),
+            $this->typeResolver->createType($tagValue->type ?? new IdentifierTypeNode('mixed'), $context),
             $tagValue->isVariadic,
             $this->descriptionFactory->create($tagValue->description, $context),
             $tagValue->isReference
@@ -54,6 +60,7 @@ final class ParamFactory implements PHPStanFactory
     public function supports(PhpDocTagNode $node, Context $context): bool
     {
         return $node->value instanceof ParamTagValueNode
-            || $node->value instanceof TypelessParamTagValueNode;
+            || $node->value instanceof TypelessParamTagValueNode
+            || $node->name === '@param';
     }
 }

@@ -87,16 +87,6 @@ final class ParamFactoryTest extends TagFactoryTestCase
                     false
                 ),
             ],
-            [
-                '@param foo',
-                new Param(
-                    null,
-                    new Mixed_(),
-                    false,
-                    new Description(''),
-                    false
-                ),
-            ],
         ];
     }
 }

@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace phpDocumentor\Reflection\DocBlock\Tags;
 
+use Doctrine\Deprecations\Deprecation;
 use phpDocumentor\Reflection\DocBlock\Description;
 use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
 use phpDocumentor\Reflection\Type;
@@ -26,9 +27,7 @@ use function array_unshift;
 use function implode;
 use function strpos;
 use function substr;
-use function trigger_error;
 
-use const E_USER_DEPRECATED;
 use const PREG_SPLIT_DELIM_CAPTURE;
 
 /**
@@ -58,11 +57,13 @@ final class Property extends TagWithType implements Factory\StaticMethod
         ?DescriptionFactory $descriptionFactory = null,
         ?TypeContext $context = null
     ): self {
-        trigger_error(
+        Deprecation::triggerIfCalledFromOutside(
+            'phpdocumentor/reflection-docblock',
+            'https://github.com/phpDocumentor/ReflectionDocBlock/issues/361',
             'Create using static factory is deprecated, this method should not be called directly
              by library consumers',
-            E_USER_DEPRECATED
         );
+
         Assert::stringNotEmpty($body);
         Assert::notNull($typeResolver);
         Assert::notNull($descriptionFactory);
