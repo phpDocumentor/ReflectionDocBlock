@@ -15,9 +15,14 @@ namespace phpDocumentor\Reflection\DocBlock\Tags\Factory;
 
 use phpDocumentor\Reflection\DocBlock\Description;
 use phpDocumentor\Reflection\DocBlock\Tags\Param;
+use phpDocumentor\Reflection\Fqsen;
+use phpDocumentor\Reflection\PseudoTypes\IntegerValue;
+use phpDocumentor\Reflection\PseudoTypes\StringValue;
+use phpDocumentor\Reflection\Types\Compound;
 use phpDocumentor\Reflection\Types\Context;
 use phpDocumentor\Reflection\Types\Integer;
 use phpDocumentor\Reflection\Types\Mixed_;
+use phpDocumentor\Reflection\Types\Object_;
 use phpDocumentor\Reflection\Types\String_;
 
 final class ParamFactoryTest extends TagFactoryTestCase
@@ -82,6 +87,36 @@ final class ParamFactoryTest extends TagFactoryTestCase
                 new Param(
                     null,
                     new Integer(),
+                    false,
+                    new Description('My Description'),
+                    false
+                ),
+            ],
+            [
+                '@param \'GET\'|SomeClass $arg My Description',
+                new Param(
+                    'arg',
+                    new Compound(
+                        [
+                            new StringValue('GET'),
+                            new Object_(new Fqsen('\SomeClass'))
+                        ]
+                    ),
+                    false,
+                    new Description('My Description'),
+                    false
+                ),
+            ],
+            [
+                '@param 8|SomeClass $arg My Description',
+                new Param(
+                    'arg',
+                    new Compound(
+                        [
+                            new IntegerValue(8),
+                            new Object_(new Fqsen('\SomeClass'))
+                        ]
+                    ),
                     false,
                     new Description('My Description'),
                     false
