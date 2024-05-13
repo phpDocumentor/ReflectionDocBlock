@@ -338,7 +338,8 @@ DOC;
                         false,
                         new Description(
                             '{' . "\n" .
-                            'Optional. Array or string of arguments for installing a package. Default empty array.' . "\n" .
+                            "\n" .
+                            '    Optional. Array or string of arguments for installing a package. Default empty array.' . "\n" .
                             "\n" .
                             '    @type string $source                      Required path to the package source. Default empty.' . "\n" .
                             '    @type string $destination                 Required path to a folder to install the package in.' . "\n" .
@@ -357,6 +358,74 @@ DOC;
                     new Return_(
                         new Compound([new Array_(new Mixed_()), new Object_(new Fqsen('\WP_Error'))]),
                         new Description('The result (also stored in `WP_Upgrader::$result`), or a WP_Error on failure.')
+                    ),
+                ],
+                new Context('\\')
+            ),
+            $docblock
+        );
+    }
+
+    public function testIndentationIsKept(): void
+    {
+        $docComment = <<<DOC
+	/**
+	 * Registers the script module if no script module with that script module
+	 * identifier has already been registered.
+	 *
+	 * @since 6.5.0
+	 *
+	 * @param array             \$deps     {
+	 *                                        Optional. List of dependencies.
+	 *
+	 *                                        @type string|array ...$0 {
+	 *                                            An array of script module identifiers of the dependencies of this script
+	 *                                            module. The dependencies can be strings or arrays. If they are arrays,
+	 *                                            they need an `id` key with the script module identifier, and can contain
+	 *                                            an `import` key with either `static` or `dynamic`. By default,
+	 *                                            dependencies that don't contain an `import` key are considered static.
+	 *
+	 *                                            @type string \$id     The script module identifier.
+	 *                                            @type string \$import Optional. Import type. May be either `static` or
+	 *                                                                 `dynamic`. Defaults to `static`.
+	 *                                        }
+	 *                                    }
+	 */
+DOC;
+
+        $factory = DocBlockFactory::createInstance();
+        $docblock = $factory->create($docComment);
+
+        self::assertEquals(
+            new DocBlock(
+                'Registers the script module if no script module with that script module
+identifier has already been registered.',
+                new Description(
+                    ''
+                ),
+                [
+                    new Since('6.5.0', new Description('')),
+                    new Param(
+                        'deps',
+                        new Array_(new Mixed_()),
+                        false,
+                        new Description("{
+
+    Optional. List of dependencies.
+
+    @type string|array ...$0 {
+        An array of script module identifiers of the dependencies of this script
+        module. The dependencies can be strings or arrays. If they are arrays,
+        they need an `id` key with the script module identifier, and can contain
+        an `import` key with either `static` or `dynamic`. By default,
+        dependencies that don't contain an `import` key are considered static.
+
+        @type string \$id     The script module identifier.
+        @type string \$import Optional. Import type. May be either `static` or
+                             `dynamic`. Defaults to `static`.
+    }
+}"
+                        )
                     ),
                 ],
                 new Context('\\')
