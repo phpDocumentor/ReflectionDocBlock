@@ -24,19 +24,33 @@ use PHPStan\PhpDocParser\Parser\ConstExprParser;
 use PHPStan\PhpDocParser\Parser\PhpDocParser;
 use PHPStan\PhpDocParser\Parser\TokenIterator;
 use PHPStan\PhpDocParser\Parser\TypeParser;
+use PHPStan\PhpDocParser\ParserConfig;
 use PHPUnit\Framework\TestCase;
 
+use function class_exists;
 use function property_exists;
 
 abstract class TagFactoryTestCase extends TestCase
 {
     public function parseTag(string $tag): PhpDocTagNode
     {
-        $lexer = new Lexer();
+		if (class_exists(ParserConfig::class)) {
+			$parserConfig = new ParserConfig([]);
+			$lexer = new Lexer($parserConfig);
+			$constParser = new ConstExprParser($parserConfig);
+			$phpDocParser = new PhpDocParser(
+				$parserConfig,
+				new TypeParser($parserConfig, $constParser),
+				$constParser
+			);
+		} else {
+			$lexer = new Lexer();
+			$constParser = new ConstExprParser();
+			$phpDocParser = new PhpDocParser(new TypeParser($constParser), $constParser);
+		}
         $tokens = $lexer->tokenize($tag);
-        $constParser = new ConstExprParser();
 
-        $tagNode = (new PhpDocParser(new TypeParser($constParser), $constParser))->parseTag(new TokenIterator($tokens));
+        $tagNode = $phpDocParser->parseTag(new TokenIterator($tokens));
         if (property_exists($tagNode->value, 'description') === true) {
             $tagNode->value->setAttribute('description', $tagNode->value->description);
         }

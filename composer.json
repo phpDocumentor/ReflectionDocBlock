@@ -19,7 +19,7 @@
         "webmozart/assert": "^1.9.1",
         "phpdocumentor/reflection-common": "^2.2",
         "ext-filter": "*",
-        "phpstan/phpdoc-parser": "^1.7",
+        "phpstan/phpdoc-parser": "^1.7 || ^2.0",
         "doctrine/deprecations": "^1.1"
     },
     "require-dev": {

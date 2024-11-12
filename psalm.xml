@@ -68,5 +68,26 @@
                 <file name="src/Utils.php"/>
             </errorLevel>
         </ArgumentTypeCoercion>
+
+		<InvalidArgument>
+			<errorLevel type="suppress">
+				<referencedFunction name="PHPStan\PhpDocParser\Lexer\Lexer::__construct"/>
+				<referencedFunction name="PHPStan\PhpDocParser\Parser\ConstExprParser::__construct"/>
+				<referencedFunction name="PHPStan\PhpDocParser\Parser\TypeParser::__construct"/>
+				<referencedFunction name="PHPStan\PhpDocParser\Parser\PhpDocParser::__construct"/>
+			</errorLevel>
+		</InvalidArgument>
+		<UndefinedDocblockClass>
+			<errorLevel type="suppress">
+				<referencedClass name="PHPStan\PhpDocParser\ParserConfig"/>
+			</errorLevel>
+		</UndefinedDocblockClass>
+		<MixedArgument>
+			<errorLevel type="suppress">
+				<referencedFunction name="PHPStan\PhpDocParser\Lexer\Lexer::__construct"/>
+				<referencedFunction name="PHPStan\PhpDocParser\Parser\ConstExprParser::__construct"/>
+				<referencedFunction name="PHPStan\PhpDocParser\Parser\TypeParser::__construct"/>
+			</errorLevel>
+		</MixedArgument>
     </issueHandlers>
 </psalm>

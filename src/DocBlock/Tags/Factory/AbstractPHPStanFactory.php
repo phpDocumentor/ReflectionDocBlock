@@ -21,6 +21,7 @@ use PHPStan\PhpDocParser\Parser\ConstExprParser;
 use PHPStan\PhpDocParser\Parser\PhpDocParser;
 use PHPStan\PhpDocParser\Parser\TokenIterator;
 use PHPStan\PhpDocParser\Parser\TypeParser;
+use PHPStan\PhpDocParser\ParserConfig;
 use RuntimeException;
 
 use function ltrim;
@@ -44,16 +45,28 @@ class AbstractPHPStanFactory implements Factory
 
     public function __construct(PHPStanFactory ...$factories)
     {
-        $this->lexer = new Lexer(true);
-        $constParser = new ConstExprParser(true, true, ['lines' => true, 'indexes' => true]);
-        $this->parser = new PhpDocParser(
-            new TypeParser($constParser, true, ['lines' => true, 'indexes' => true]),
-            $constParser,
-            true,
-            true,
-            ['lines' => true, 'indexes' => true],
-            true
-        );
+		if (class_exists(ParserConfig::class)) {
+			$parserConfig = new ParserConfig(['lines' => true, 'indexes' => true]);
+			$this->lexer = new Lexer($parserConfig);
+			$constParser = new ConstExprParser($parserConfig);
+			$this->parser = new PhpDocParser(
+				$parserConfig,
+				new TypeParser($parserConfig, $constParser),
+				$constParser
+			);
+		} else {
+			$this->lexer = new Lexer(true);
+			$constParser = new ConstExprParser(true, true, ['lines' => true, 'indexes' => true]);
+			$this->parser = new PhpDocParser(
+				new TypeParser($constParser, true, ['lines' => true, 'indexes' => true]),
+				$constParser,
+				true,
+				true,
+				['lines' => true, 'indexes' => true],
+				true
+			);
+		}
+
         $this->factories = $factories;
     }
 
