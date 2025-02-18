@@ -29,7 +29,7 @@
         "phpstan/phpstan-mockery": "^1.1",
         "phpstan/extension-installer": "^1.1",
         "phpstan/phpstan-webmozart-assert": "^1.2",
-        "psalm/phar": "^5.26"
+        "psalm/phar": "^5.26 || ^6.0"
     },
     "autoload": {
         "psr-4": {
