@@ -43,7 +43,7 @@ abstract class Utils
      *      Note that this changes the return value in an array where every element is an array consisting of the
      *      matched string at offset 0 and its string offset into subject at offset 1.
      *
-     * @return string[] Returns an array containing substrings of subject
+     * @return list<list{string, int}|string> Returns an array containing substrings of subject
      *                                                      split along boundaries matched by pattern
      *
      * @throws PcreException
