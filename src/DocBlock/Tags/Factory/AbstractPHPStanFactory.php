@@ -61,7 +61,7 @@ class AbstractPHPStanFactory implements Factory
     public function create(string $tagLine, ?TypeContext $context = null): Tag
     {
         try {
-            $tokens = $this->tokenizeLine($tagLine . "\n");
+            $tokens = $this->tokenizeLine($tagLine);
             $ast = $this->parser->parseTag($tokens);
             if (property_exists($ast->value, 'description') === true) {
                 $ast->value->setAttribute(
@@ -104,21 +104,15 @@ class AbstractPHPStanFactory implements Factory
      */
     private function tokenizeLine(string $tagLine): TokenIterator
     {
-        $tokens = $this->lexer->tokenize($tagLine);
+        // Prefix continuation lines with "* ", which is consumed by the phpstan parser as TOKEN_PHPDOC_EOL.
+        $tagLine = str_replace("\n", "\n* ", $tagLine);
+        $tokens = $this->lexer->tokenize($tagLine . "\n");
         $fixed = [];
         foreach ($tokens as $token) {
-            if (($token[1] === Lexer::TOKEN_PHPDOC_EOL) && rtrim($token[0], " \t") !== $token[0]) {
-                $fixed[] = [
-                    rtrim($token[Lexer::VALUE_OFFSET], " \t"),
-                    Lexer::TOKEN_PHPDOC_EOL,
-                    $token[2] ?? 0,
-                ];
-                $fixed[] = [
-                    ltrim($token[Lexer::VALUE_OFFSET], "\n\r"),
-                    Lexer::TOKEN_HORIZONTAL_WS,
-                    ($token[2] ?? 0) + 1,
-                ];
-                continue;
+            if ($token[Lexer::TYPE_OFFSET] === Lexer::TOKEN_PHPDOC_EOL) {
+                // Strip "* " prefix (and other horizontal whitespace) again so it doesn't and up in the
+                // description when we joinUntil() in create().
+                $token[Lexer::VALUE_OFFSET] = trim($token[Lexer::VALUE_OFFSET], "* \t");
             }
 
             $fixed[] = $token;
