@@ -71,4 +71,4 @@ $description = (string) $docblock->getDescription();
 $description = $docblock->getDescription()->render();
 ```
 
-> For more examples it would be best to review the scripts in the [`/examples` folder](/examples).
+> For more examples it would be best to review the scripts in the [`/docs/examples` folder](/docs/examples).
