@@ -489,4 +489,43 @@ DOCBLOCK;
         self::assertSame('Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas varius, tellus in cursus
 dictum, justo odio sagittis velit, id iaculis mi dui id nisi.', (string) $paramTags->getDescription());
     }
+
+    public function testParamBlockDescriptionPreservesStarContinuationLines(): void
+    {
+        $docComment = <<<DOC
+/**
+ * @param array \$foo {
+ *     Description of foo.
+ *
+ *     @type string \$bar Description of bar with
+ *                       * a list
+ *                       * spanning *multiple* lines
+ * }
+ */
+DOC;
+
+        $factory = DocBlockFactory::createInstance();
+        $docblock = $factory->create($docComment);
+
+        self::assertEquals(
+            [
+                new Param(
+                    'foo',
+                    new Array_(),
+                    false,
+                    new Description(<<<'DESCRIPTION'
+{
+    Description of foo.
+
+    @type string $bar Description of bar with
+                      * a list
+                      * spanning *multiple* lines
+}
+DESCRIPTION
+                    ),
+                ),
+            ],
+            $docblock->getTags()
+        );
+    }
 }

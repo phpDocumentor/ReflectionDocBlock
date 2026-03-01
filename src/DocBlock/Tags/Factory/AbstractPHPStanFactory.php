@@ -25,9 +25,10 @@ use PHPStan\PhpDocParser\Parser\TypeParser;
 use PHPStan\PhpDocParser\ParserConfig;
 use RuntimeException;
 
-use function ltrim;
 use function property_exists;
 use function rtrim;
+use function str_replace;
+use function trim;
 
 /**
  * Factory class creating tags using phpstan's parser
@@ -61,7 +62,7 @@ class AbstractPHPStanFactory implements Factory
     public function create(string $tagLine, ?TypeContext $context = null): Tag
     {
         try {
-            $tokens = $this->tokenizeLine($tagLine . "\n");
+            $tokens = $this->tokenizeLine($tagLine);
             $ast = $this->parser->parseTag($tokens);
             if (property_exists($ast->value, 'description') === true) {
                 $ast->value->setAttribute(
@@ -104,20 +105,20 @@ class AbstractPHPStanFactory implements Factory
      */
     private function tokenizeLine(string $tagLine): TokenIterator
     {
-        $tokens = $this->lexer->tokenize($tagLine);
+        // Prefix continuation lines with "* ", which is consumed by the phpstan parser as TOKEN_PHPDOC_EOL.
+        $tagLine = str_replace("\n", "\n* ", $tagLine);
+        $tokens = $this->lexer->tokenize($tagLine . "\n");
         $fixed = [];
         foreach ($tokens as $token) {
-            if (($token[1] === Lexer::TOKEN_PHPDOC_EOL) && rtrim($token[0], " \t") !== $token[0]) {
+            if ($token[Lexer::TYPE_OFFSET] === Lexer::TOKEN_PHPDOC_EOL) {
+                // Strip "* " prefix (and other horizontal whitespace) again so it doesn't and up in the
+                // description when we joinUntil() in create().
                 $fixed[] = [
-                    rtrim($token[Lexer::VALUE_OFFSET], " \t"),
-                    Lexer::TOKEN_PHPDOC_EOL,
-                    $token[2] ?? 0,
+                    Lexer::VALUE_OFFSET => trim($token[Lexer::VALUE_OFFSET], "* \t"),
+                    Lexer::TYPE_OFFSET => $token[Lexer::TYPE_OFFSET],
+                    Lexer::LINE_OFFSET => $token[Lexer::LINE_OFFSET] ?? 0,
                 ];
-                $fixed[] = [
-                    ltrim($token[Lexer::VALUE_OFFSET], "\n\r"),
-                    Lexer::TOKEN_HORIZONTAL_WS,
-                    ($token[2] ?? 0) + 1,
-                ];
+
                 continue;
             }
 
