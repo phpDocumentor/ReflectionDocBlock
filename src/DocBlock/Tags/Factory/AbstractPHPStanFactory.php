@@ -113,7 +113,13 @@ class AbstractPHPStanFactory implements Factory
             if ($token[Lexer::TYPE_OFFSET] === Lexer::TOKEN_PHPDOC_EOL) {
                 // Strip "* " prefix (and other horizontal whitespace) again so it doesn't and up in the
                 // description when we joinUntil() in create().
-                $token[Lexer::VALUE_OFFSET] = trim($token[Lexer::VALUE_OFFSET], "* \t");
+                $fixed[] = [
+                    Lexer::VALUE_OFFSET => trim($token[Lexer::VALUE_OFFSET], "* \t"),
+                    Lexer::TYPE_OFFSET => $token[Lexer::TYPE_OFFSET],
+                    Lexer::LINE_OFFSET => $token[Lexer::LINE_OFFSET] ?? 0,
+                ];
+
+                continue;
             }
 
             $fixed[] = $token;
