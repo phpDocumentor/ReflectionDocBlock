@@ -513,14 +513,15 @@ DOC;
                     'foo',
                     new Array_(),
                     false,
-                    new Description(
-                        '{' . "\n" .
-                        '    Description of foo.' . "\n" .
-                        "\n" .
-                        '    @type string $bar Description of bar with' . "\n" .
-                        '                      * a list' . "\n" .
-                        '                      * spanning *multiple* lines' . "\n" .
-                        '}'
+                    new Description(<<<'DESCRIPTION'
+{
+    Description of foo.
+
+    @type string $bar Description of bar with
+                      * a list
+                      * spanning *multiple* lines
+}
+DESCRIPTION
                     ),
                 ),
             ],
