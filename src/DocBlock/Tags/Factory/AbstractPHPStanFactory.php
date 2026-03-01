@@ -25,9 +25,10 @@ use PHPStan\PhpDocParser\Parser\TypeParser;
 use PHPStan\PhpDocParser\ParserConfig;
 use RuntimeException;
 
-use function ltrim;
 use function property_exists;
 use function rtrim;
+use function str_replace;
+use function trim;
 
 /**
  * Factory class creating tags using phpstan's parser
