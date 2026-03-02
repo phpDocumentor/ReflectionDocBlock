@@ -53,7 +53,7 @@ final class MyTag extends BaseTag
      *
      * @see BaseTag for the declaration of the description property and getDescription method.
      */
-    public function __construct(Description $description = null)
+    public function __construct(?Description $description = null)
     {
         $this->description = $description;
     }
