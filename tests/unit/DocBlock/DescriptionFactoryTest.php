@@ -246,6 +246,7 @@ DESCRIPTION;
     {
         return [
             ['This is text for a description with a {@}.', 'This is text for a description with a @.'],
+            ['This is text for a description with a {@*}.', 'This is text for a description with a {@*}.'],
             ['This is text for a description with a {}.', 'This is text for a description with a }.'],
         ];
     }
