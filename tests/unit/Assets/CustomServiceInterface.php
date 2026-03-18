@@ -19,7 +19,7 @@ final class CustomServiceInterface implements Tag
         return 'spy';
     }
 
-    public static function create(string $body, Formatter $formatter = null)
+    public static function create(string $body, ?Formatter $formatter = null)
     {
         $tag = new self();
         $tag->formatter = $formatter;

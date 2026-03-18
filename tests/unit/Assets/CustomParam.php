@@ -21,7 +21,7 @@ final class CustomParam implements Tag
         return 'spy';
     }
 
-    public static function create(string $body, FqsenResolver $fqsenResolver = null, ?string $myParam = null)
+    public static function create(string $body, ?FqsenResolver $fqsenResolver = null, ?string $myParam = null)
     {
         $tag = new self();
         $tag->fqsenResolver = $fqsenResolver;

@@ -85,7 +85,7 @@ final class MyTag extends BaseTag
      * @see Tag for the interface declaration of the `create` method.
      * @see Tag::create() for more information on this method's workings.
      */
-    public static function create(string $body, DescriptionFactory $descriptionFactory = null, Context $context = null): self
+    public static function create(string $body, ?DescriptionFactory $descriptionFactory = null, ?Context $context = null): self
     {
         Assert::notNull($descriptionFactory);
 

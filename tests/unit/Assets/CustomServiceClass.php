@@ -18,7 +18,7 @@ final class CustomServiceClass implements Tag
         return 'spy';
     }
 
-    public static function create(string $body, PassthroughFormatter $formatter = null)
+    public static function create(string $body, ?PassthroughFormatter $formatter = null)
     {
         $tag = new self();
         $tag->formatter = $formatter;
