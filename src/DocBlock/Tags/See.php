@@ -62,7 +62,16 @@ final class See extends BaseTag
             return new static(new Url($parts[0]), $description);
         }
 
-        return new static(new FqsenRef(self::resolveFqsen($parts[0], $typeResolver, $context)), $description);
+        $fragments = explode('#', $parts[0], 2);
+        $bookmark = $fragments[1] ?? null;
+
+        return new static(
+            new FqsenRef(
+                self::resolveFqsen($fragments[0], $typeResolver, $context),
+                $bookmark === '' ? null : $bookmark
+            ),
+            $description
+        );
     }
 
     private static function resolveFqsen(string $parts, ?FqsenResolver $fqsenResolver, ?TypeContext $context): Fqsen
@@ -98,6 +107,9 @@ final class See extends BaseTag
         }
 
         $refers = (string) $this->refers;
+        if ($this->refers instanceof FqsenRef && $this->refers->getBookmark() !== null) {
+            $refers .= '#' . $this->refers->getBookmark();
+        }
 
         return $refers . ($description !== '' ? ($refers !== '' ? ' ' : '') . $description : '');
     }
