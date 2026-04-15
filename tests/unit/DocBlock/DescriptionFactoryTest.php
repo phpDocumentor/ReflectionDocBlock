@@ -109,6 +109,22 @@ class DescriptionFactoryTest extends TestCase
      * @covers ::__construct
      * @covers ::create
      */
+    public function testDescriptionCanParseAStringStartingWithInlineTag(): void
+    {
+        $contents   = '{@link http://phpdoc.org/ This} is text for a description that starts with an inline tag.';
+        $context    = new Context('');
+        $tagFactory = m::mock(TagFactory::class);
+        $tagFactory->shouldReceive('create')
+            ->once()
+            ->with('@link http://phpdoc.org/ This', $context)
+            ->andReturn(new LinkTag('http://phpdoc.org/', new Description('This')));
+
+        $factory     = new DescriptionFactory($tagFactory);
+        $description = $factory->create($contents, $context);
+
+        $this->assertSame($contents, $description->render());
+    }
+
     /**
      * @uses \phpDocumentor\Reflection\DocBlock\Description
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\Link
@@ -134,22 +150,6 @@ class DescriptionFactoryTest extends TestCase
 
         $this->assertSame($contents, $description->render());
         $this->assertSame('This description has a %1$s in it.', $description->getBodyTemplate());
-    }
-
-    public function testDescriptionCanParseAStringStartingWithInlineTag(): void
-    {
-        $contents   = '{@link http://phpdoc.org/ This} is text for a description that starts with an inline tag.';
-        $context    = new Context('');
-        $tagFactory = m::mock(TagFactory::class);
-        $tagFactory->shouldReceive('create')
-            ->once()
-            ->with('@link http://phpdoc.org/ This', $context)
-            ->andReturn(new LinkTag('http://phpdoc.org/', new Description('This')));
-
-        $factory     = new DescriptionFactory($tagFactory);
-        $description = $factory->create($contents, $context);
-
-        $this->assertSame($contents, $description->render());
     }
 
     /**
