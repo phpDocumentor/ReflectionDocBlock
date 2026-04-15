@@ -40,6 +40,10 @@ final class InvalidTag implements Tag
 
     private ?Throwable $throwable = null;
 
+    private ?string $expectedFormat = null;
+
+    private ?string $documentationUrl = null;
+
     private function __construct(string $name, string $body)
     {
         $this->name = $name;
@@ -49,6 +53,23 @@ final class InvalidTag implements Tag
     public function getException(): ?Throwable
     {
         return $this->throwable;
+    }
+
+    /**
+     * Returns a short description of the format the corresponding tag handler expected, or null when the handler
+     * did not advertise one via {@see ExpectedFormat}.
+     */
+    public function getExpectedFormat(): ?string
+    {
+        return $this->expectedFormat;
+    }
+
+    /**
+     * Returns a URL pointing to the canonical documentation of the tag, or null when none is available.
+     */
+    public function getDocumentationUrl(): ?string
+    {
+        return $this->documentationUrl;
     }
 
     public function getName(): string
@@ -64,8 +85,31 @@ final class InvalidTag implements Tag
     public function withError(Throwable $exception): self
     {
         $this->flattenExceptionBacktrace($exception);
-        $tag            = new self($this->name, $this->body);
+        $tag            = $this->copy();
         $tag->throwable = $exception;
+
+        return $tag;
+    }
+
+    /**
+     * Returns a copy of this invalid tag that also carries hints about the syntax expected by the originating tag
+     * handler. Both arguments are optional so callers can advertise whichever information they have.
+     */
+    public function withFormatHint(?string $expectedFormat, ?string $documentationUrl = null): self
+    {
+        $tag                   = $this->copy();
+        $tag->expectedFormat   = $expectedFormat;
+        $tag->documentationUrl = $documentationUrl;
+
+        return $tag;
+    }
+
+    private function copy(): self
+    {
+        $tag                   = new self($this->name, $this->body);
+        $tag->throwable        = $this->throwable;
+        $tag->expectedFormat   = $this->expectedFormat;
+        $tag->documentationUrl = $this->documentationUrl;
 
         return $tag;
     }

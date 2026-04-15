@@ -21,6 +21,7 @@ use phpDocumentor\Reflection\Assets\CustomServiceClass;
 use phpDocumentor\Reflection\Assets\CustomServiceInterface;
 use phpDocumentor\Reflection\Assets\CustomTagFactory;
 use phpDocumentor\Reflection\DocBlock\Tags\Author;
+use phpDocumentor\Reflection\DocBlock\Tags\InvalidTag;
 use phpDocumentor\Reflection\DocBlock\Tags\Deprecated;
 use phpDocumentor\Reflection\DocBlock\Tags\Extends_;
 use phpDocumentor\Reflection\DocBlock\Tags\Formatter;
@@ -133,6 +134,28 @@ class StandardTagFactoryTest extends TestCase
 
         $this->assertInstanceOf(Author::class, $tag);
         $this->assertSame('author', $tag->getName());
+    }
+
+    /**
+     * @uses \phpDocumentor\Reflection\DocBlock\StandardTagFactory::addService
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Author
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\BaseTag
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\InvalidTag
+     *
+     * @covers ::__construct
+     * @covers ::create
+     */
+    public function testInvalidTagReceivesFormatHintFromHandler(): void
+    {
+        $context    = new Context('');
+        $tagFactory = StandardTagFactory::createInstance(m::mock(FqsenResolver::class));
+
+        $tag = $tagFactory->create('@author Mike <not-an-email>', $context);
+
+        $this->assertInstanceOf(InvalidTag::class, $tag);
+        $this->assertSame('author', $tag->getName());
+        $this->assertSame(Author::getExpectedFormat(), $tag->getExpectedFormat());
+        $this->assertSame(Author::getDocumentationUrl(), $tag->getDocumentationUrl());
     }
 
     /**

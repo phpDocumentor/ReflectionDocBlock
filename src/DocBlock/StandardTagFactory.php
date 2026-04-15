@@ -32,6 +32,7 @@ use phpDocumentor\Reflection\DocBlock\Tags\Factory\TemplateCovariantFactory;
 use phpDocumentor\Reflection\DocBlock\Tags\Factory\TemplateFactory;
 use phpDocumentor\Reflection\DocBlock\Tags\Factory\ThrowsFactory;
 use phpDocumentor\Reflection\DocBlock\Tags\Factory\VarFactory;
+use phpDocumentor\Reflection\DocBlock\Tags\ExpectedFormat;
 use phpDocumentor\Reflection\DocBlock\Tags\Generic;
 use phpDocumentor\Reflection\DocBlock\Tags\InvalidTag;
 use phpDocumentor\Reflection\DocBlock\Tags\Link as LinkTag;
@@ -54,6 +55,8 @@ use function array_slice;
 use function call_user_func_array;
 use function get_class;
 use function is_object;
+use function is_string;
+use function is_subclass_of;
 use function preg_match;
 use function sprintf;
 use function strpos;
@@ -258,10 +261,27 @@ final class StandardTagFactory implements TagFactory
             /** @phpstan-var callable(string): ?Tag $callable */
             $tag = call_user_func_array($callable, $arguments);
 
-            return $tag ?? InvalidTag::create($body, $name);
+            return $tag ?? $this->createInvalidTag($handlerClassName, $body, $name);
         } catch (InvalidArgumentException $e) {
-            return InvalidTag::create($body, $name)->withError($e);
+            return $this->createInvalidTag($handlerClassName, $body, $name)->withError($e);
         }
+    }
+
+    /**
+     * @param class-string<Tag>|Tag|Factory $handlerClassName
+     */
+    private function createInvalidTag($handlerClassName, string $body, string $name): InvalidTag
+    {
+        $invalidTag = InvalidTag::create($body, $name);
+
+        if (is_string($handlerClassName) && is_subclass_of($handlerClassName, ExpectedFormat::class)) {
+            $invalidTag = $invalidTag->withFormatHint(
+                $handlerClassName::getExpectedFormat(),
+                $handlerClassName::getDocumentationUrl()
+            );
+        }
+
+        return $invalidTag;
     }
 
     /**
