@@ -57,7 +57,7 @@ final class InvalidTag implements Tag
 
     /**
      * Returns a short description of the format the corresponding tag handler expected, or null when the handler
-     * did not advertise one via {@see ExpectedFormat}.
+     * did not advertise one via {@see \phpDocumentor\Reflection\DocBlock\Tags\ExpectedFormat}.
      */
     public function getExpectedFormat(): ?string
     {

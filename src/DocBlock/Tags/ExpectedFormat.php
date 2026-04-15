@@ -15,9 +15,9 @@ namespace phpDocumentor\Reflection\DocBlock\Tags;
 
 /**
  * Tag handlers may implement this contract to describe what they expect as input. When the handler rejects a body
- * and an {@see InvalidTag} is produced, the factory forwards these hints to the invalid tag so downstream tooling
- * (for example phpDocumentor's error reporting) can explain the expected syntax instead of only showing the raw
- * exception.
+ * and an {@see \phpDocumentor\Reflection\DocBlock\Tags\InvalidTag} is produced, the factory forwards these hints to
+ * the invalid tag so downstream tooling (for example phpDocumentor's error reporting) can explain the expected
+ * syntax instead of only showing the raw exception.
  */
 interface ExpectedFormat
 {
