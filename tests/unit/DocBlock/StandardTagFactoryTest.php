@@ -171,7 +171,6 @@ class StandardTagFactoryTest extends TestCase
     {
         $context    = new Context('');
         $tagFactory = StandardTagFactory::createInstance(m::mock(FqsenResolver::class));
-        $tagFactory->addService(new DescriptionFactory($tagFactory), DescriptionFactory::class);
 
         $tag = $tagFactory->create('@link https://phpdoc.org {@example "path/to/example.php"}', $context);
 
