@@ -158,6 +158,32 @@ class StandardTagFactoryTest extends TestCase
     }
 
     /**
+     * @uses \phpDocumentor\Reflection\DocBlock\DescriptionFactory
+     * @uses \phpDocumentor\Reflection\DocBlock\Description
+     * @uses \phpDocumentor\Reflection\DocBlock\StandardTagFactory::addService
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\BaseTag
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Example
+     *
+     * @covers ::__construct
+     * @covers ::create
+     */
+    public function testExampleTagIsRecognisedInInlineForm(): void
+    {
+        $context    = new Context('');
+        $tagFactory = StandardTagFactory::createInstance(m::mock(FqsenResolver::class));
+        $tagFactory->addService(new DescriptionFactory($tagFactory), DescriptionFactory::class);
+
+        $tag = $tagFactory->create('@link https://phpdoc.org {@example "path/to/example.php"}', $context);
+
+        $description = $tag->getDescription();
+        $this->assertNotNull($description);
+        $inlineTags = $description->getTags();
+        $this->assertCount(1, $inlineTags);
+        $this->assertInstanceOf(Example::class, $inlineTags[0]);
+        $this->assertSame('path/to/example.php', $inlineTags[0]->getFilePath());
+    }
+
+    /**
      * @uses \phpDocumentor\Reflection\DocBlock\StandardTagFactory::addService
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\See
      * @uses \phpDocumentor\Reflection\DocBlock\Tags\BaseTag
