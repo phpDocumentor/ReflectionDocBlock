@@ -17,7 +17,7 @@ use Webmozart\Assert\Assert;
 
 /**
  * Variable reference used by {@see \phpDocumentor\Reflection\DocBlock\Tags\See} to refer to a variable that
- * is not addressable through an FQSEN, typically a global variable such as {@example @see $varname}.
+ * is not addressable through an FQSEN, typically a global variable referenced with {@}see $varname.
  */
 final class Variable implements Reference
 {
