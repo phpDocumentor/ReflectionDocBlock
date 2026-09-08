@@ -18,6 +18,7 @@ use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
 use phpDocumentor\Reflection\DocBlock\Tags\Reference\Fqsen as FqsenRef;
 use phpDocumentor\Reflection\DocBlock\Tags\Reference\Reference;
 use phpDocumentor\Reflection\DocBlock\Tags\Reference\Url;
+use phpDocumentor\Reflection\DocBlock\Tags\Reference\Variable;
 use phpDocumentor\Reflection\Fqsen;
 use phpDocumentor\Reflection\FqsenResolver;
 use phpDocumentor\Reflection\Types\Context as TypeContext;
@@ -60,6 +61,11 @@ final class See extends BaseTag
         // https://tools.ietf.org/html/rfc2396#section-3
         if (preg_match('#\w://\w#', $parts[0])) {
             return new static(new Url($parts[0]), $description);
+        }
+
+        // Variables are not addressable through an FQSEN but are a valid target for {@}see, e.g. a global `$varname`.
+        if (preg_match('/^\$[a-zA-Z_\x80-\xff][a-zA-Z0-9_\x80-\xff]*$/', $parts[0])) {
+            return new static(new Variable($parts[0]), $description);
         }
 
         return new static(new FqsenRef(self::resolveFqsen($parts[0], $typeResolver, $context)), $description);
