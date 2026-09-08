@@ -22,6 +22,7 @@ use phpDocumentor\Reflection\Assets\CustomServiceInterface;
 use phpDocumentor\Reflection\Assets\CustomTagFactory;
 use phpDocumentor\Reflection\DocBlock\Tags\Author;
 use phpDocumentor\Reflection\DocBlock\Tags\Deprecated;
+use phpDocumentor\Reflection\DocBlock\Tags\Example;
 use phpDocumentor\Reflection\DocBlock\Tags\Extends_;
 use phpDocumentor\Reflection\DocBlock\Tags\Formatter;
 use phpDocumentor\Reflection\DocBlock\Tags\Formatter\PassthroughFormatter;
@@ -133,6 +134,52 @@ class StandardTagFactoryTest extends TestCase
 
         $this->assertInstanceOf(Author::class, $tag);
         $this->assertSame('author', $tag->getName());
+    }
+
+    /**
+     * @uses \phpDocumentor\Reflection\DocBlock\StandardTagFactory::addService
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Example
+     *
+     * @covers ::__construct
+     * @covers ::create
+     */
+    public function testExampleTagIsRecognisedOutOfTheBox(): void
+    {
+        $context    = new Context('');
+        $tagFactory = StandardTagFactory::createInstance(m::mock(FqsenResolver::class));
+
+        $tag = $tagFactory->create('@example "path/to/example.php" 3 10 Example description.', $context);
+
+        $this->assertInstanceOf(Example::class, $tag);
+        $this->assertSame('example', $tag->getName());
+        $this->assertSame('path/to/example.php', $tag->getFilePath());
+        $this->assertSame(3, $tag->getStartingLine());
+        $this->assertSame(10, $tag->getLineCount());
+    }
+
+    /**
+     * @uses \phpDocumentor\Reflection\DocBlock\DescriptionFactory
+     * @uses \phpDocumentor\Reflection\DocBlock\Description
+     * @uses \phpDocumentor\Reflection\DocBlock\StandardTagFactory::addService
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\BaseTag
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Example
+     *
+     * @covers ::__construct
+     * @covers ::create
+     */
+    public function testExampleTagIsRecognisedInInlineForm(): void
+    {
+        $context    = new Context('');
+        $tagFactory = StandardTagFactory::createInstance(m::mock(FqsenResolver::class));
+
+        $tag = $tagFactory->create('@link https://phpdoc.org {@example "path/to/example.php"}', $context);
+
+        $description = $tag->getDescription();
+        $this->assertNotNull($description);
+        $inlineTags = $description->getTags();
+        $this->assertCount(1, $inlineTags);
+        $this->assertInstanceOf(Example::class, $inlineTags[0]);
+        $this->assertSame('path/to/example.php', $inlineTags[0]->getFilePath());
     }
 
     /**
