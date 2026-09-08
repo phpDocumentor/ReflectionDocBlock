@@ -24,7 +24,7 @@ use const FILTER_VALIDATE_EMAIL;
 /**
  * Reflection class for an {@}author tag in a Docblock.
  */
-final class Author extends BaseTag
+final class Author extends BaseTag implements ExpectedFormat
 {
     /** @var string register that this is the author tag. */
     protected string $name = 'author';
@@ -98,5 +98,15 @@ final class Author extends BaseTag
         $email      = isset($matches[2]) ? trim($matches[2]) : '';
 
         return new static($authorName, $email);
+    }
+
+    public static function getExpectedFormat(): string
+    {
+        return 'name [<email@example.com>]';
+    }
+
+    public static function getDocumentationUrl(): ?string
+    {
+        return 'https://docs.phpdoc.org/3.0/guide/references/phpdoc/tags/author.html';
     }
 }
