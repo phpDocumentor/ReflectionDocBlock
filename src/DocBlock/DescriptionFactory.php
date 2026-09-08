@@ -115,6 +115,10 @@ class DescriptionFactory
                             # Notice that this also matches "{}", as a way to later introduce it as an escape sequence.
                             \{(?1)?\}
                             |
+                            # Match a balanced pair of braces that is not an inline tag, e.g. "{braces}" used as part
+                            # of the description of a surrounding inline tag.
+                            \{[^{}]*\}
+                            |
                             # Make sure we match hanging "{".
                             \{
                         )
