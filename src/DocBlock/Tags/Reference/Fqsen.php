@@ -22,13 +22,25 @@ final class Fqsen implements Reference
 {
     private RealFqsen $fqsen;
 
-    public function __construct(RealFqsen $fqsen)
+    private ?string $bookmark;
+
+    public function __construct(RealFqsen $fqsen, ?string $bookmark = null)
     {
         $this->fqsen = $fqsen;
+        $this->bookmark = $bookmark;
     }
 
     /**
-     * @return string string representation of the referenced fqsen
+     * Returns the bookmark suffix declared with `#<bookmark>` in the docblock, or null when none was given.
+     */
+    public function getBookmark(): ?string
+    {
+        return $this->bookmark;
+    }
+
+    /**
+     * @return string string representation of the referenced fqsen, without the bookmark suffix so
+     *                callers can feed it back to {@see \phpDocumentor\Reflection\Fqsen} safely
      */
     public function __toString(): string
     {
