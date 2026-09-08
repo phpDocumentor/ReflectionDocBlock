@@ -33,6 +33,14 @@ final class InvalidTagTest extends TestCase
         self::assertNull($tag->getException());
     }
 
+    public function testCreationStripsLeadingAtFromName(): void
+    {
+        $tag = InvalidTag::create('Body', '@var');
+
+        self::assertSame('var', $tag->getName());
+        self::assertSame('@var Body', $tag->render());
+    }
+
     /**
      * @covers ::withError
      * @covers ::__toString
