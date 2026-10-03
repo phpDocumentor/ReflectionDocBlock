@@ -68,7 +68,7 @@ class AbstractPHPStanFactoryTest extends TestCase
         $result = $sut->create('@unknown string $param');
 
         self::assertInstanceOf(InvalidTag::class, $result);
-        self::assertEquals('@unknown', $result->getName());
+        self::assertEquals('unknown', $result->getName());
     }
 
     /**

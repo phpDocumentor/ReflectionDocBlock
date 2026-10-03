@@ -18,6 +18,7 @@ use function get_resource_type;
 use function is_array;
 use function is_object;
 use function is_resource;
+use function ltrim;
 use function sprintf;
 
 use const PHP_VERSION_ID;
@@ -58,7 +59,9 @@ final class InvalidTag implements Tag
 
     public static function create(string $body, string $name = ''): self
     {
-        return new self($name, $body);
+        // Some upstream parsers (e.g. phpstan/phpdoc-parser) keep the leading "@" in the tag name they expose.
+        // All other tags strip it before reaching the Tag layer, so normalize here to keep getName() consistent.
+        return new self(ltrim($name, '@'), $body);
     }
 
     public function withError(Throwable $exception): self
