@@ -283,6 +283,166 @@ class SeeTest extends TestCase
     }
 
     /**
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\See::<public>
+     * @uses \phpDocumentor\Reflection\DocBlock\DescriptionFactory
+     * @uses \phpDocumentor\Reflection\FqsenResolver
+     * @uses \phpDocumentor\Reflection\DocBlock\Description
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Reference\Fqsen
+     * @uses \phpDocumentor\Reflection\Fqsen
+     * @uses \phpDocumentor\Reflection\Types\Context
+     *
+     * @covers ::create
+     */
+    public function testFactoryMethodWithBookmark(): void
+    {
+        $fqsenResolver      = new FqsenResolver();
+        $descriptionFactory = new DescriptionFactory($this->createMock(TagFactory::class));
+        $context            = new Context('');
+
+        $fixture = See::create(
+            '\DateTime::format()#42 Jumps inside the formatter',
+            $fqsenResolver,
+            $descriptionFactory,
+            $context
+        );
+
+        $reference = $fixture->getReference();
+        $this->assertInstanceOf(TagsFqsen::class, $reference);
+        $this->assertSame('42', $reference->getBookmark());
+        $this->assertSame('\DateTime::format()', (string) $reference);
+        $this->assertSame(
+            '\DateTime::format()#42 Jumps inside the formatter',
+            (string) $fixture
+        );
+    }
+
+    /**
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\See::<public>
+     * @uses \phpDocumentor\Reflection\DocBlock\DescriptionFactory
+     * @uses \phpDocumentor\Reflection\FqsenResolver
+     * @uses \phpDocumentor\Reflection\DocBlock\Description
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Reference\Fqsen
+     * @uses \phpDocumentor\Reflection\Fqsen
+     * @uses \phpDocumentor\Reflection\Types\Context
+     *
+     * @covers ::create
+     * @covers ::__toString
+     */
+    public function testFactoryMethodRendersBookmarkWithoutDescription(): void
+    {
+        $fqsenResolver      = new FqsenResolver();
+        $descriptionFactory = new DescriptionFactory($this->createMock(TagFactory::class));
+        $context            = new Context('');
+
+        $fixture = See::create('\DateTime::format()#42', $fqsenResolver, $descriptionFactory, $context);
+
+        $reference = $fixture->getReference();
+        $this->assertInstanceOf(TagsFqsen::class, $reference);
+        $this->assertSame('42', $reference->getBookmark());
+        $this->assertSame('\DateTime::format()#42', (string) $fixture);
+    }
+
+    /**
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\See::<public>
+     * @uses \phpDocumentor\Reflection\DocBlock\DescriptionFactory
+     * @uses \phpDocumentor\Reflection\FqsenResolver
+     * @uses \phpDocumentor\Reflection\DocBlock\Description
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Reference\Fqsen
+     * @uses \phpDocumentor\Reflection\Fqsen
+     * @uses \phpDocumentor\Reflection\Types\Context
+     *
+     * @covers ::create
+     */
+    public function testFactoryMethodPreservesAdditionalHashesInBookmark(): void
+    {
+        $fqsenResolver      = new FqsenResolver();
+        $descriptionFactory = new DescriptionFactory($this->createMock(TagFactory::class));
+        $context            = new Context('');
+
+        $fixture = See::create('\DateTime::format()#a#b', $fqsenResolver, $descriptionFactory, $context);
+
+        $reference = $fixture->getReference();
+        $this->assertInstanceOf(TagsFqsen::class, $reference);
+        $this->assertSame('a#b', $reference->getBookmark());
+        $this->assertSame('\DateTime::format()#a#b', (string) $fixture);
+    }
+
+    /**
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\See::<public>
+     * @uses \phpDocumentor\Reflection\DocBlock\DescriptionFactory
+     * @uses \phpDocumentor\Reflection\FqsenResolver
+     * @uses \phpDocumentor\Reflection\DocBlock\Description
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Reference\Fqsen
+     * @uses \phpDocumentor\Reflection\Fqsen
+     * @uses \phpDocumentor\Reflection\Types\Context
+     *
+     * @covers ::create
+     */
+    public function testFactoryMethodNormalizesTrailingHashToNullBookmark(): void
+    {
+        $fqsenResolver      = new FqsenResolver();
+        $descriptionFactory = new DescriptionFactory($this->createMock(TagFactory::class));
+        $context            = new Context('');
+
+        $fixture = See::create('\DateTime#', $fqsenResolver, $descriptionFactory, $context);
+
+        $reference = $fixture->getReference();
+        $this->assertInstanceOf(TagsFqsen::class, $reference);
+        $this->assertNull($reference->getBookmark());
+        $this->assertSame('\DateTime', (string) $reference);
+    }
+
+    /**
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\See::<public>
+     * @uses \phpDocumentor\Reflection\DocBlock\DescriptionFactory
+     * @uses \phpDocumentor\Reflection\FqsenResolver
+     * @uses \phpDocumentor\Reflection\DocBlock\Description
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Reference\Url
+     * @uses \phpDocumentor\Reflection\Types\Context
+     *
+     * @covers ::create
+     */
+    public function testFactoryMethodKeepsUrlFragmentWithinUrlReference(): void
+    {
+        $descriptionFactory = m::mock(DescriptionFactory::class);
+        $resolver           = m::mock(FqsenResolver::class);
+        $context            = new Context('');
+
+        $descriptionFactory->shouldReceive('create')->andReturn(new Description(''));
+        $resolver->shouldNotReceive('resolve');
+
+        $fixture = See::create('https://example.org/page#section', $resolver, $descriptionFactory, $context);
+
+        $this->assertInstanceOf(UrlRef::class, $fixture->getReference());
+        $this->assertSame('https://example.org/page#section', (string) $fixture->getReference());
+    }
+
+    /**
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\See::<public>
+     * @uses \phpDocumentor\Reflection\DocBlock\DescriptionFactory
+     * @uses \phpDocumentor\Reflection\FqsenResolver
+     * @uses \phpDocumentor\Reflection\DocBlock\Description
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Reference\Fqsen
+     * @uses \phpDocumentor\Reflection\Fqsen
+     * @uses \phpDocumentor\Reflection\Types\Context
+     *
+     * @covers ::create
+     */
+    public function testFactoryMethodLeavesBookmarkNullWhenAbsent(): void
+    {
+        $fqsenResolver      = new FqsenResolver();
+        $descriptionFactory = new DescriptionFactory($this->createMock(TagFactory::class));
+        $context            = new Context('');
+
+        $fixture = See::create('\DateTime::format()', $fqsenResolver, $descriptionFactory, $context);
+
+        $reference = $fixture->getReference();
+        $this->assertInstanceOf(TagsFqsen::class, $reference);
+        $this->assertNull($reference->getBookmark());
+        $this->assertSame('\DateTime::format()', (string) $reference);
+    }
+
+    /**
      * @covers ::create
      */
     public function testFactoryMethodFailsIfBodyIsNotEmpty(): void
