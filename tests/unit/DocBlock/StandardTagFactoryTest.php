@@ -27,6 +27,7 @@ use phpDocumentor\Reflection\DocBlock\Tags\Formatter;
 use phpDocumentor\Reflection\DocBlock\Tags\Formatter\PassthroughFormatter;
 use phpDocumentor\Reflection\DocBlock\Tags\Generic;
 use phpDocumentor\Reflection\DocBlock\Tags\Implements_;
+use phpDocumentor\Reflection\DocBlock\Tags\InvalidTag;
 use phpDocumentor\Reflection\DocBlock\Tags\Method;
 use phpDocumentor\Reflection\DocBlock\Tags\Mixin;
 use phpDocumentor\Reflection\DocBlock\Tags\Param;
@@ -133,6 +134,52 @@ class StandardTagFactoryTest extends TestCase
 
         $this->assertInstanceOf(Author::class, $tag);
         $this->assertSame('author', $tag->getName());
+    }
+
+    /**
+     * @uses \phpDocumentor\Reflection\DocBlock\StandardTagFactory::addService
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Author
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\BaseTag
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\InvalidTag
+     *
+     * @covers ::__construct
+     * @covers ::create
+     */
+    public function testInvalidTagReceivesFormatHintFromHandler(): void
+    {
+        $context    = new Context('');
+        $tagFactory = StandardTagFactory::createInstance(m::mock(FqsenResolver::class));
+
+        $tag = $tagFactory->create('@author Mike <not-an-email>', $context);
+
+        $this->assertInstanceOf(InvalidTag::class, $tag);
+        $this->assertSame('author', $tag->getName());
+        $this->assertSame(Author::getExpectedFormat(), $tag->getExpectedFormat());
+        $this->assertSame(Author::getDocumentationUrl(), $tag->getDocumentationUrl());
+    }
+
+    /**
+     * @uses \phpDocumentor\Reflection\DocBlock\StandardTagFactory::addService
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Generic
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\BaseTag
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\InvalidTag
+     *
+     * @covers ::__construct
+     * @covers ::create
+     */
+    public function testInvalidTagKeepsNullHintsWhenHandlerDoesNotAdvertiseAny(): void
+    {
+        $context    = new Context('');
+        $descriptionFactory = m::mock(DescriptionFactory::class);
+        $descriptionFactory->shouldReceive('create')->andThrow(new InvalidArgumentException('boom'));
+        $tagFactory = StandardTagFactory::createInstance(m::mock(FqsenResolver::class));
+        $tagFactory->addService($descriptionFactory, DescriptionFactory::class);
+
+        $tag = $tagFactory->create('@custom anything', $context);
+
+        $this->assertInstanceOf(InvalidTag::class, $tag);
+        $this->assertNull($tag->getExpectedFormat());
+        $this->assertNull($tag->getDocumentationUrl());
     }
 
     /**
