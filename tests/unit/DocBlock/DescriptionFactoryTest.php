@@ -135,6 +135,33 @@ class DescriptionFactoryTest extends TestCase
      * @covers ::__construct
      * @covers ::create
      */
+    public function testDescriptionCanParseStringWithInlineTagContainingBalancedBraces(): void
+    {
+        $contents   = 'This description has a {@link http://phpdoc.org/ This contains {braces}} in it.';
+        $context    = new Context('');
+        $tagFactory = m::mock(TagFactory::class);
+        $tagFactory->shouldReceive('create')
+            ->once()
+            ->with('@link http://phpdoc.org/ This contains {braces}', $context)
+            ->andReturn(new LinkTag('http://phpdoc.org/', new Description('This contains {braces}')));
+
+        $factory     = new DescriptionFactory($tagFactory);
+        $description = $factory->create($contents, $context);
+
+        $this->assertSame($contents, $description->render());
+        $this->assertSame('This description has a %1$s in it.', $description->getBodyTemplate());
+    }
+
+    /**
+     * @uses \phpDocumentor\Reflection\DocBlock\Description
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Link
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\BaseTag
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Formatter\PassthroughFormatter
+     * @uses \phpDocumentor\Reflection\Types\Context
+     *
+     * @covers ::__construct
+     * @covers ::create
+     */
     public function testDescriptionCanParseAStringContainingMultipleTags(): void
     {
         $contents   = 'This description has a {@link http://phpdoc.org/ This} another {@link http://phpdoc.org/ This2}';
