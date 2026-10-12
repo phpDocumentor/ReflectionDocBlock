@@ -20,6 +20,7 @@ use phpDocumentor\Reflection\DocBlock\TagFactory;
 use phpDocumentor\Reflection\DocBlock\Tags\Reference\Fqsen as FqsenRef;
 use phpDocumentor\Reflection\DocBlock\Tags\Reference\Fqsen as TagsFqsen;
 use phpDocumentor\Reflection\DocBlock\Tags\Reference\Url as UrlRef;
+use phpDocumentor\Reflection\DocBlock\Tags\Reference\Variable as VariableRef;
 use phpDocumentor\Reflection\Fqsen;
 use phpDocumentor\Reflection\FqsenResolver;
 use phpDocumentor\Reflection\Types\Context;
@@ -250,6 +251,37 @@ class SeeTest extends TestCase
         $this->assertSame('https://test.org My Description', (string) $fixture);
         $this->assertInstanceOf(UrlRef::class, $fixture->getReference());
         $this->assertSame('https://test.org', (string) $fixture->getReference());
+        $this->assertSame($description, $fixture->getDescription());
+    }
+
+    /**
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\See::<public>
+     * @uses \phpDocumentor\Reflection\DocBlock\DescriptionFactory
+     * @uses \phpDocumentor\Reflection\FqsenResolver
+     * @uses \phpDocumentor\Reflection\DocBlock\Description
+     * @uses \phpDocumentor\Reflection\DocBlock\Tags\Reference\Variable
+     * @uses \phpDocumentor\Reflection\Types\Context
+     *
+     * @covers ::create
+     */
+    public function testFactoryMethodWithVariable(): void
+    {
+        $descriptionFactory = m::mock(DescriptionFactory::class);
+        $resolver           = m::mock(FqsenResolver::class);
+        $context            = new Context('');
+
+        $description = new Description('My Description');
+
+        $descriptionFactory
+            ->shouldReceive('create')->with('My Description', $context)->andReturn($description);
+
+        $resolver->shouldNotReceive('resolve');
+
+        $fixture = See::create('$varname My Description', $resolver, $descriptionFactory, $context);
+
+        $this->assertSame('$varname My Description', (string) $fixture);
+        $this->assertInstanceOf(VariableRef::class, $fixture->getReference());
+        $this->assertSame('$varname', (string) $fixture->getReference());
         $this->assertSame($description, $fixture->getDescription());
     }
 
