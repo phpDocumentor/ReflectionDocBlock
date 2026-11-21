@@ -37,7 +37,7 @@ jobs:
 
   static-analysis:
     name: "Static analysis"
-    uses: "phpDocumentor/.github/.github/workflows/static-analysis.yml@v0.9"
+    uses: "phpDocumentor/.github/.github/workflows/static-analysis.yml@v0.10"
     with:
       php-extensions: "none, ctype, dom, json, mbstring, phar, simplexml, tokenizer, xml, xmlwriter, fileinfo, pcntl, posix"
       composer-root-version: "6.x-dev"
