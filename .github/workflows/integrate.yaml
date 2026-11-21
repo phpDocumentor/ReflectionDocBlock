@@ -13,7 +13,7 @@ on: # yamllint disable-line rule:truthy
 jobs:
   code-coverage:
     name: "Code Coverage"
-    uses: "phpDocumentor/.github/.github/workflows/code-coverage.yml@v0.9"
+    uses: "phpDocumentor/.github/.github/workflows/code-coverage.yml@v0.10"
     with:
       composer-root-version: "6.x-dev"
 
