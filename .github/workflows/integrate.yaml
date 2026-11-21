@@ -25,7 +25,7 @@ jobs:
 
   dependency-analysis:
     name: "Dependency analysis"
-    uses: "phpDocumentor/.github/.github/workflows/dependency-analysis.yml@v0.9"
+    uses: "phpDocumentor/.github/.github/workflows/dependency-analysis.yml@v0.10"
     with:
       composer-root-version: "6.x-dev"
 
