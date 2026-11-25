@@ -31,6 +31,37 @@ final class InvalidTagTest extends TestCase
         self::assertSame('name', $tag->getName());
         self::assertSame('@name Body', $tag->render());
         self::assertNull($tag->getException());
+        self::assertNull($tag->getExpectedFormat());
+        self::assertNull($tag->getDocumentationUrl());
+    }
+
+    /**
+     * @covers ::withFormatHint
+     * @covers ::getExpectedFormat
+     * @covers ::getDocumentationUrl
+     */
+    public function testCreationWithFormatHint(): void
+    {
+        $tag = InvalidTag::create('Body', 'name')
+            ->withFormatHint('expected format', 'https://example.com/doc');
+
+        self::assertSame('expected format', $tag->getExpectedFormat());
+        self::assertSame('https://example.com/doc', $tag->getDocumentationUrl());
+    }
+
+    /**
+     * @covers ::withFormatHint
+     * @covers ::withError
+     */
+    public function testFormatHintSurvivesWithError(): void
+    {
+        $tag = InvalidTag::create('Body', 'name')
+            ->withFormatHint('expected format', 'https://example.com/doc')
+            ->withError(new Exception('boom'));
+
+        self::assertSame('expected format', $tag->getExpectedFormat());
+        self::assertSame('https://example.com/doc', $tag->getDocumentationUrl());
+        self::assertNotNull($tag->getException());
     }
 
     /**
