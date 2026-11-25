@@ -17,6 +17,7 @@ use InvalidArgumentException;
 use phpDocumentor\Reflection\DocBlock\Tags\Author;
 use phpDocumentor\Reflection\DocBlock\Tags\Covers;
 use phpDocumentor\Reflection\DocBlock\Tags\Deprecated;
+use phpDocumentor\Reflection\DocBlock\Tags\Example;
 use phpDocumentor\Reflection\DocBlock\Tags\Factory\AbstractPHPStanFactory;
 use phpDocumentor\Reflection\DocBlock\Tags\Factory\ExtendsFactory;
 use phpDocumentor\Reflection\DocBlock\Tags\Factory\Factory;
@@ -89,6 +90,7 @@ final class StandardTagFactory implements TagFactory
         'author'             => Author::class,
         'covers'             => Covers::class,
         'deprecated'         => Deprecated::class,
+        'example'            => Example::class,
         'link'               => LinkTag::class,
         'see'                => SeeTag::class,
         'since'              => Since::class,
