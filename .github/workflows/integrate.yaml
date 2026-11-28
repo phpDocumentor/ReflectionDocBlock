@@ -31,7 +31,7 @@ jobs:
 
   lint-root:
     name: "Lint root"
-    uses: "phpDocumentor/.github/.github/workflows/lint.yml@v0.9"
+    uses: "phpDocumentor/.github/.github/workflows/lint.yml@v0.10"
     with:
       composer-options: "--no-check-publish --ansi"
 
